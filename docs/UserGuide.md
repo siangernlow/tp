@@ -176,40 +176,6 @@ Format: `stats`
 * Statistics include high risk locations, number of infection cases, number of people
   currently infected, and more.
 
-### Update infection status of a person
-
-Updates the infection status of the specified person.
-
-Format: `update /i INDEX true|false`
-
-* Updates the infection status of the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
-* `true` means that the person is infected, `false` means he is not infected.
-* There would be no change if `true` is called for an infected person, and vice versa.
-
-Examples:
-* `update /i 1 true` updates the person with ID 1 to be infected.
-* `update /i 2 false` updates the person with ID 2 to not be infected.
-
-### Update quarantine status of a person
-
-Updates the quarantine status of the specified person.
-
-Format: `update /q INDEX true|false`
-
-* Updates the quarantine status of the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
-* `true` means that the person is quarantined, `false` means he is no longer in
-   quarantine.
-* There would be no change if `true` is called for a quarantined person,
-  and vice versa.
-
-Examples:
-* `update /q 1 true` updates the person with ID 1 to be quarantined.
-* `update /q 2 false` updates the person with ID 2 to not be in quarantine.
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
