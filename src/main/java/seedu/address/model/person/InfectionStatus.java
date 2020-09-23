@@ -1,9 +1,9 @@
 package seedu.address.model.person;
 
-import java.util.regex.Pattern;
-
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
+
+import java.util.regex.Pattern;
 
 /**
  * Represents a Person's infection status in the tracker.
@@ -19,7 +19,7 @@ public class InfectionStatus {
      */
     public static final String VALIDATION_REGEX = "(?i)(true|false)";
 
-    public boolean isInfected;
+    private boolean isInfected;
 
     /**
      * Constructs an {@code InfectionStatus}.
@@ -37,6 +37,15 @@ public class InfectionStatus {
      */
     public static boolean isValidInfectionStatus(String test) {
         return Pattern.matches(VALIDATION_REGEX, test);
+    }
+
+    /**
+     * Returns the String format of the infection status
+     * 
+     * @return A String either containing true or false.
+     */
+    public String getStatusAsString() {
+        return String.valueOf(isInfected);
     }
 
     @Override
