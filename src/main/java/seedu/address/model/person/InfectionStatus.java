@@ -41,7 +41,7 @@ public class InfectionStatus {
 
     /**
      * Returns the String format of the infection status
-     * 
+     *
      * @return A String either containing true or false.
      */
     public String getStatusAsString() {
@@ -57,7 +57,7 @@ public class InfectionStatus {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof InfectionStatus // instanceof handles nulls
-                && (isInfected && ((InfectionStatus) other).isInfected)); // state check
+                && isInfected == ((InfectionStatus) other).isInfected); // state check
     }
 
     @Override
