@@ -156,6 +156,26 @@ AddressBook data are saved in the hard disk automatically after any command that
 
 _{explain the feature here}_
 
+### Viewing high risk locations
+
+Lists the top ten locations with highest risk of Covid infection.
+
+Format: `list highrisk`
+
+* Risk is treated as the number of infected people entering the location.
+* The list is presented in order of highest risk to lowest.
+* If there are less than ten locations that are infected, all locations will
+  be shown.
+  
+### Viewing daily statistics
+
+Shows the statistics related to Covid for the day.
+
+Format: `stats`
+
+* Statistics include high risk locations, number of infection cases, number of people
+  currently infected, and more.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
