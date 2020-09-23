@@ -255,6 +255,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | user                                       | add a new person               |                                                                        |
 | `* * *`  | user                                       | delete a person                | remove entries that I no longer need                                   |
 | `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
+| `* * *`  | healthcare official setting up SafeEntry checkpoints | identify locations with high risk of infection | know which places need these checkpoints the most |
+| `* * *`  | healthcare official publishing daily reports | generate daily statistics quickly and easily|                                                         |
 | `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
 | `*`      | user with many persons in the address book | sort persons by name           | locate a person easily                                                 |
 
@@ -262,7 +264,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `VirusTracker` and the **Actor** is the `user`, unless specified otherwise)
 
 **Use case: Delete a person**
 
@@ -286,6 +288,51 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 3a1. AddressBook shows an error message.
 
       Use case resumes at step 2.
+      
+**UC06: View all infected people**
+
+**MSS**
+
+1. User requests to list all infected people
+2. VirusTracker shows a list of all infected people.
+
+    Use case ends.
+    
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+  
+**UC10: View high-risk locations**
+
+**MSS**
+
+1. User requests to list locations with high risk of infection.
+2. VirusTracker shows a list of locations with high risk.
+
+  Use case ends.
+  
+**Extensions**
+
+* 2a. The list is empty.
+
+Use case ends.
+
+**UC11: View daily statistics**
+
+**MSS**
+
+1. User requests to view statistics for that day.
+2. VirusTracker shows the statistics for that day.
+
+  Use case ends.
+  
+**Extensions**
+
+* 2a. There is not enough information to produce statistics for that day.
+
+Use case ends.
 
 *{More to be added}*
 
