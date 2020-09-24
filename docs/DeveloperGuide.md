@@ -255,6 +255,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | user                                       | add a new person               |                                                                        |
 | `* * *`  | user                                       | delete a person                | remove entries that I no longer need                                   |
 | `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
+| `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
+| `* * *`  | healthcare official with access to visits data from SafeEntry app   | add visit data to a list | generate desired lists and track contacts with the infected cases|
+| `* * *`  | healthcare official with access to the visit list| delete all visits by date | remove all the outdated visits inside the list |
 | `* * *`  | healthcare official setting up SafeEntry checkpoints | identify locations with high risk of infection | know which places need these checkpoints the most |
 | `* * *`  | healthcare official publishing daily reports | generate daily statistics quickly and easily|                                                         |
 | `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
