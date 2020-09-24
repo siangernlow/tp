@@ -298,16 +298,37 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User chooses to add a visit to the visits history list.
-2. VirusTracker requests for details of the visit. 
-3. User enters the required details (Date, Location, Person).
+2. VirusTracker requests for details of the visit in a specific format. 
+3. User enters the required details (Person, Date, Location).
 4. VirusTracker updates the visits list and adds the new visit.
+5. VirusTracker acknowledges and displays the added visit
       Use case ends.
 
 **Extensions**
 
 * 2a. The personId is invalid.
-      Use case ends.
+         2a.1 VirusTracker prompts user for correct personId
+         2a.2 User re-enters details
+         2a.3 VirusTracker checks the personId
+         2a.1 - 2a.3 are repeated until the correct personId is provided
+         2a.4 VirusTracker updates the visits list and adds the new visit.
+         2a.5 VirusTracker acknowledges and displays the added visit 
+         Use case ends.
       
+* 2b. VirusTracker detects error in data format
+         2b.1 VirusTracker prompts user for correct personId
+         2b.2 User re-enters details
+         2b.3 VirusTracker checks the personId
+         2b.1 - 2b.3 are repeated until the correct personId is provided
+         2b.4 VirusTracker updates the visits list and adds the new visit.
+         2b.5 VirusTracker acknowledges and displays the added visit 
+         Use case ends
+         
+* 2c. User wishes to cancel the add command
+         2c.1 User enters “Cancel”
+         2c.2 VirusTracker acknowledges and returns user to main page
+         Use case ends
+
 **UC02 - Delete visits by Date**
 
 **MSS**
