@@ -289,6 +289,39 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
       
+      
+**UC01 - Add a visit using Date, Location, Person**
+
+**MSS**
+
+1. User chooses to add a visit to the visits history list.
+2. VirusTracker requests for details of the visit. 
+3. User enters the required details (Date, Location, Person).
+4. VirusTracker updates the visits list and adds the new visit.
+      Use case ends.
+
+**Extensions**
+
+* 2a. The personId is invalid.
+      Use case ends.
+      
+**UC02 - Delete visits by Date**
+
+**MSS**
+
+1. User chooses to clear the visit history before a date.
+2. VirusTracker requests for details of the date.
+3. User enters the required information of the date.
+4. VirusTracker updates the visits list and deletes the visits
+   before the entered date.
+      Use case ends.
+      
+**Extensions**
+
+* 2a. The date is not contained in the visits list.
+      Use case ends.
+
+
 **UC06: View all infected people**
 
 **MSS**
