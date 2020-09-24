@@ -337,13 +337,25 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2. VirusTracker requests for details of the date.
 3. User enters the required information of the date.
 4. VirusTracker updates the visits list and deletes the visits
-   before the entered date.
-      Use case ends.
+   up to the entered date.
+   
+    Use case ends.
       
 **Extensions**
 
 * 2a. The date is not contained in the visits list.
+      2a.1 VirusTracker prompts user for correct date
+      2a.2 User re-enters date
+      2a.3 VirusTracker checks the date entered
+      2a.1 - 2a.3 are repeated until the correct date is provided
+      2a.4 VirusTracker updates the visits list and deletes the visits up to the entered date.
+      2a.5 VirusTracker acknowledges and displays the added visit 
       Use case ends.
+
+* 2b. User wishes to cancel the add command
+         2b.1 User enters “Cancel”
+         2b.2 VirusTracker acknowledges and returns user to main page
+         Use case ends
 
 
 **UC06: View all infected people**
