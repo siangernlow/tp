@@ -34,7 +34,7 @@ public class QuarantineStatus {
 
     @Override
     public String toString() {
-        return "Quarantine status: " + value;
+        return value;
     }
 
     @Override
