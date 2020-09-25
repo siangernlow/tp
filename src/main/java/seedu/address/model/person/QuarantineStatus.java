@@ -12,7 +12,7 @@ public class QuarantineStatus {
     public static final String MESSAGE_CONSTRAINTS =
             "Quarantine status should either be true or false, and it should not be blank";
 
-    public final Boolean value;
+    public final String value;
 
     /**
      * Constructs a {@code QuarantineStatus}.
@@ -22,7 +22,7 @@ public class QuarantineStatus {
     public QuarantineStatus(String quarantineStatus) {
         requireNonNull(quarantineStatus);
         checkArgument(isValidQuarantineStatus(quarantineStatus), MESSAGE_CONSTRAINTS);
-        value = Boolean.parseBoolean(quarantineStatus);
+        value = quarantineStatus.toLowerCase();
     }
 
     /**
@@ -34,7 +34,7 @@ public class QuarantineStatus {
 
     @Override
     public String toString() {
-        return "Quarantine status: " + value.toString();
+        return "Quarantine status: " + value;
     }
 
     @Override
