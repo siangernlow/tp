@@ -257,6 +257,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
 | `* * *`  | healthcare official setting up SafeEntry checkpoints | identify locations with high risk of infection | know which places need these checkpoints the most |
 | `* * *`  | healthcare official publishing daily reports | generate daily statistics quickly and easily|                                                         |
+| `* * *`  | healthcare official managing infected patient | update people's infection status | keep the current epidemic situation up to date |
+| `* * *`  | healthcare official managing quarantined people | update people's quarantine status | be aware of a person's quarantine status |
 | `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
 | `*`      | user with many persons in the address book | sort persons by name           | locate a person easily                                                 |
 
