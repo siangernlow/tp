@@ -345,26 +345,28 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 2a. The personId is invalid.
-         2a.1 VirusTracker prompts user for correct personId
-         2a.2 User re-enters details
-         2a.3 VirusTracker checks the personId
-         2a.1 - 2a.3 are repeated until the correct personId is provided
-         2a.4 VirusTracker updates the visits list and adds the new visit.
-         2a.5 VirusTracker acknowledges and displays the added visit 
-         Use case ends.
+    * 2a.1 VirusTracker prompts user for correct personId
+    * 2a.2 User re-enters details
+    * 2a.3 VirusTracker checks the personId
+    * 2a.1 - 2a.3 are repeated until the correct personId is provided
+    * 2a.4 VirusTracker updates the visits list and adds the new visit.
+    * 2a.5 VirusTracker acknowledges and displays the added visit 
+    
+    Use case ends.
 
 * 2b. VirusTracker detects error in data format
-         2b.1 VirusTracker prompts user for correct personId
-         2b.2 User re-enters details
-         2b.3 VirusTracker checks the personId
-         2b.1 - 2b.3 are repeated until the correct personId is provided
-         2b.4 VirusTracker updates the visits list and adds the new visit.
-         2b.5 VirusTracker acknowledges and displays the added visit 
-         Use case ends
+    * 2b.1 VirusTracker prompts user for correct personId
+    * 2b.2 User re-enters details
+    * 2b.3 VirusTracker checks the personId
+    * 2b.1 - 2b.3 are repeated until the correct personId is provided
+    * 2b.4 VirusTracker updates the visits list and adds the new visit.
+    * 2b.5 VirusTracker acknowledges and displays the added visit 
+    
+    Use case ends
 
 * 2c. User wishes to cancel the add command
-         2c.1 User enters “Cancel”
-         2c.2 VirusTracker acknowledges and returns user to main page
+    * 2c.1 User enters “Cancel”
+    * 2c.2 VirusTracker acknowledges and returns user to main page
          Use case ends
 
 
@@ -403,24 +405,23 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
          
       Use case ends
 
-
-    Use case ends.
-
 **Extensions**
 
 * 2a. The date is not contained in the visits list.
-      2a.1 VirusTracker prompts user for correct date
-      2a.2 User re-enters date
-      2a.3 VirusTracker checks the date entered
-      2a.1 - 2a.3 are repeated until the correct date is provided
-      2a.4 VirusTracker updates the visits list and deletes the visits up to the entered date.
-      2a.5 VirusTracker acknowledges and displays the added visit
-      Use case ends.
+    * 2a.1 VirusTracker prompts user for correct date
+    * 2a.2 User re-enters date
+    * 2a.3 VirusTracker checks the date entered
+    * 2a.1 - 2a.3 are repeated until the correct date is provided
+    * 2a.4 VirusTracker updates the visits list and deletes the visits up to the entered date.
+    * 2a.5 VirusTracker acknowledges and displays the added visit
+      
+    Use case ends.
 
 * 2b. User wishes to cancel the add command
-         2b.1 User enters “Cancel”
-         2b.2 VirusTracker acknowledges and returns user to main page
-         Use case ends
+    * 2b.1 User enters “Cancel”
+    * 2b.2 VirusTracker acknowledges and returns user to main page
+    
+    Use case ends
 
 
 
@@ -486,7 +487,7 @@ Use case ends.
   Steps 4a1 - 4a2 are repeated until the person specified by the user exist
   Use case resume from step 4
   
-* a. At any time, user choose to cancel the update.  
+* *a. At any time, user choose to cancel the update.  
     Use case ends.  
     
 **UC13: Update quarantine status**
@@ -506,7 +507,7 @@ Use case ends.
   Steps 4a1 - 4a2 are repeated until the person specified by the user exist
   Use case resume from step 4
   
-* a. At any time, user choose to cancel the update.  
+* *a. At any time, user choose to cancel the update.  
     Use case ends.  
 
 ### Non-Functional Requirements
