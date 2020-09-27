@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyLocationBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
 
@@ -18,14 +19,18 @@ public class StorageManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private AddressBookStorage addressBookStorage;
+    private LocationBookStorage locationBookStorage;
     private UserPrefsStorage userPrefsStorage;
 
     /**
-     * Creates a {@code StorageManager} with the given {@code AddressBookStorage} and {@code UserPrefStorage}.
+     * Creates a {@code StorageManager} with the given {@code AddressBookStorage}, {@code LocationBookStorage}
+     * and {@code UserPrefStorage}.
      */
-    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(AddressBookStorage addressBookStorage, LocationBookStorage locationBookStorage,
+                          UserPrefsStorage userPrefsStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
+        this.locationBookStorage = locationBookStorage;
         this.userPrefsStorage = userPrefsStorage;
     }
 
@@ -76,4 +81,32 @@ public class StorageManager implements Storage {
         addressBookStorage.saveAddressBook(addressBook, filePath);
     }
 
+    // ================ LocationBook methods ==============================
+
+    @Override
+    public Path getLocationBookFilePath() {
+        return locationBookStorage.getLocationBookFilePath();
+    }
+
+    @Override
+    public Optional<ReadOnlyLocationBook> readLocationBook() throws DataConversionException, IOException {
+        return readLocationBook(locationBookStorage.getLocationBookFilePath());
+    }
+
+    @Override
+    public Optional<ReadOnlyLocationBook> readLocationBook(Path filePath) throws DataConversionException, IOException {
+        logger.fine("Attempting to read data from file: " + filePath);
+        return locationBookStorage.readLocationBook(filePath);
+    }
+
+    @Override
+    public void saveLocationBook(ReadOnlyLocationBook locationBook) throws IOException {
+        saveLocationBook(locationBook, locationBookStorage.getLocationBookFilePath());
+    }
+
+    @Override
+    public void saveLocationBook(ReadOnlyLocationBook locationBook, Path filePath) throws IOException {
+        logger.fine("Attempting to write to data file: " + filePath);
+        locationBookStorage.saveLocationBook(locationBook, filePath);
+    }
 }
