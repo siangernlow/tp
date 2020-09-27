@@ -15,6 +15,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.InfectionStatus;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.QuarantineStatus;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -95,6 +96,21 @@ public class ParserUtil {
             throw new ParseException(Email.MESSAGE_CONSTRAINTS);
         }
         return new Email(trimmedEmail);
+    }
+
+    /**
+     * Parses a {@code String quarantineStatus} into a {@code QuarantineStatus}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code quarantineStatus} is invalid.
+     */
+    public static QuarantineStatus parseQuarantineStatus(String quarantineStatus) throws ParseException {
+        requireNonNull(quarantineStatus);
+        String trimmedQuarantineStatus = quarantineStatus.trim();
+        if (!QuarantineStatus.isValidQuarantineStatus(trimmedQuarantineStatus)) {
+            throw new ParseException(QuarantineStatus.MESSAGE_CONSTRAINTS);
+        }
+        return new QuarantineStatus(trimmedQuarantineStatus);
     }
 
     /**

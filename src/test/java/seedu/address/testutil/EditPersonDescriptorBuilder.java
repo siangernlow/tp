@@ -11,6 +11,7 @@ import seedu.address.model.person.InfectionStatus;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.QuarantineStatus;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -37,6 +38,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
+        descriptor.setQuarantineStatus(person.getQuarantineStatus());
         descriptor.setInfectionStatus(person.getInfectionStatus());
         descriptor.setTags(person.getTags());
     }
@@ -73,6 +75,13 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code QuarantineStatus} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withQuarantineStatus(String quarantineStatus) {
+        descriptor.setQuarantineStatus(new QuarantineStatus(quarantineStatus));
+        return this;
+    }
     /**
      * Sets the {@code InfectionStatus } of the {@code EditPersonDescriptor} that we are building.
      */
