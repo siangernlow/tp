@@ -31,8 +31,9 @@ public class ListCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        if (listType.equals(ListType.ALL_PEOPLE))
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        if (listType.equals(ListType.ALL_PEOPLE)) {
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        }
         return new CommandResult(MESSAGE_SUCCESS_ALL_PEOPLE);
     }
 }
