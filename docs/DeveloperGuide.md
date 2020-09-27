@@ -309,7 +309,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. The personId is invalid.
 
-    * 2a1. VirusTracker prompts user for correct personId
+    * 3a1. VirusTracker prompts user for correct personId
    
       Use case resumes at step 3.
       
@@ -355,7 +355,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
        
 * 3b. VirusTracker detects error in data format
 
-    * 2b1. VirusTracker prompts user for correct data format
+    * 3b1. VirusTracker prompts user for correct data format
     
       Use case resumes at step 3.       
        
