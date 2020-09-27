@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
 
 /**
@@ -20,25 +21,29 @@ public class ModelManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
+    private final LocationBook locationBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyUserPrefs userPrefs) {
+    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyLocationBook locationBook,
+                        ReadOnlyUserPrefs userPrefs) {
         super();
-        requireAllNonNull(addressBook, userPrefs);
+        requireAllNonNull(addressBook, locationBook, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs
+                + " and location book: " + locationBook);
 
         this.addressBook = new AddressBook(addressBook);
+        this.locationBook = new LocationBook(locationBook);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new AddressBook(), new LocationBook(), new UserPrefs());
     }
 
     //=========== UserPrefs ==================================================================================
@@ -127,6 +132,20 @@ public class ModelManager implements Model {
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    //=========== LocationBook ================================================================================
+
+    @Override
+    public boolean hasLocation(Location location) {
+        requireNonNull(location);
+        return locationBook.hasLocation(location);
+    }
+
+    @Override
+    public void addLocation(Location location) {
+        locationBook.addLocation(location);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS); // needs to be updated to persons when doing list command
     }
 
     @Override
