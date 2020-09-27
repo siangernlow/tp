@@ -348,8 +348,8 @@ Use case ends.
 **Extension**
 
 * 4a. System not able to find the person specified by the user    
-  4a1. System shows the message that the person does not exist   
-  4a2. System requests for another person's ID  
+    * 4a1. System shows the message that the person does not exist   
+    * 4a2. System requests for another person's ID  
   Steps 4a1 - 4a2 are repeated until the person specified by the user exist
   Use case resume from step 4
   
@@ -368,8 +368,8 @@ Use case ends.
 **Extension**
 
 * 4a. System not able to find the person specified by the user    
-  4a1. System shows the message that the person does not exist   
-  4a2. System requests for another person's ID  
+  * 4a1. System shows the message that the person does not exist   
+  * 4a2. System requests for another person's ID  
   Steps 4a1 - 4a2 are repeated until the person specified by the user exist
   Use case resume from step 4
   
