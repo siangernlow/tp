@@ -14,11 +14,13 @@ public class ListCommand extends Command {
     public static final String COMMAND_WORD = "list";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the person identified by the index number used in the displayed person list.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + ": Lists information based on a given type.\n"
+            + "Parameters: LIST_TYPE (must be either people, locations or visits)\n"
+            + "Example: " + COMMAND_WORD + " people";
 
-    public static final String MESSAGE_SUCCESS = "Listed all";
+    public static final String MESSAGE_SUCCESS_ALL_PEOPLE = "Listed all people";
+    public static final String MESSAGE_SUCCESS_ALL_LOCATIONS = "Listed all locations";
+    public static final String MESSAGE_SUCCESS_ALL_VISITS = "Listed all visits";
 
     private final ListType listType;
 
@@ -29,7 +31,8 @@ public class ListCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        //model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(MESSAGE_SUCCESS);
+        if (listType.equals(ListType.ALL_PEOPLE))
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        return new CommandResult(MESSAGE_SUCCESS_ALL_PEOPLE);
     }
 }
