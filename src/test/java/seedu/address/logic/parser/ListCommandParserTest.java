@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LIST;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -20,21 +21,21 @@ public class ListCommandParserTest {
     public void parseListType_people() {
         ListCommand expectedListCommand =
                 new ListCommand(PEOPLE_LIST);
-        assertParseSuccess(parser, "people", expectedListCommand);
+        assertParseSuccess(parser, " " + PREFIX_LIST + "people", expectedListCommand);
     }
 
     @Test
     public void parseListType_locations() {
         ListCommand expectedListCommand =
                 new ListCommand(LOCATIONS_LIST);
-        assertParseSuccess(parser, "locations", expectedListCommand);
+        assertParseSuccess(parser, " " + PREFIX_LIST + "locations", expectedListCommand);
     }
 
     @Test
     public void parseListType_visits() {
         ListCommand expectedListCommand =
                 new ListCommand(VISITS_LIST);
-        assertParseSuccess(parser, "visits", expectedListCommand);
+        assertParseSuccess(parser, " " + PREFIX_LIST + "visits", expectedListCommand);
     }
 
     @Test
@@ -43,18 +44,23 @@ public class ListCommandParserTest {
     }
 
     @Test
+    public void parse_prefixMissing_throwsParseException() {
+        assertParseFailure(parser, " people", String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
+    }
+
+    @Test
     public void parse_validArgs_returnsListCommand() {
         ListCommand expectedListCommand =
                 new ListCommand(PEOPLE_LIST);
 
         // multiple whitespaces between keywords
-        assertParseSuccess(parser, "        people    ", expectedListCommand);
+        assertParseSuccess(parser, " " + PREFIX_LIST + "        people    ", expectedListCommand);
 
         // all upper case
-        assertParseSuccess(parser, "PEOPLE", expectedListCommand);
+        assertParseSuccess(parser, " " + PREFIX_LIST + "PEOPLE", expectedListCommand);
 
         // mixed case
-        assertParseSuccess(parser, "PEopLE", expectedListCommand);
+        assertParseSuccess(parser, " " + PREFIX_LIST + "PEopLE", expectedListCommand);
     }
 
 }

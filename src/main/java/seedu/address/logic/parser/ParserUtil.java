@@ -165,7 +165,9 @@ public class ParserUtil {
     public static ListType parseListType(String listType) throws ParseException {
         requireNonNull(listType);
 
-        switch (listType) {
+        String trimmedListType = listType.trim().toLowerCase();
+
+        switch (trimmedListType) {
         case "people":
             return ListType.ALL_PEOPLE;
         case "locations":
