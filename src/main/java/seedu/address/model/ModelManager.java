@@ -81,6 +81,17 @@ public class ModelManager implements Model {
         userPrefs.setAddressBookFilePath(addressBookFilePath);
     }
 
+    @Override
+    public Path getLocationBookFilePath() {
+        return userPrefs.getLocationBookFilePath();
+    }
+
+    @Override
+    public void setLocationBookFilePath(Path locationBookFilePath) {
+        requireNonNull(locationBookFilePath);
+        userPrefs.setLocationBookFilePath(locationBookFilePath);
+    }
+
     //=========== AddressBook ================================================================================
 
     @Override
@@ -135,6 +146,16 @@ public class ModelManager implements Model {
     }
 
     //=========== LocationBook ================================================================================
+
+    @Override
+    public void setLocationBook(ReadOnlyLocationBook locationBook) {
+        this.locationBook.resetData(locationBook);
+    }
+
+    @Override
+    public ReadOnlyLocationBook getLocationBook() {
+        return locationBook;
+    }
 
     @Override
     public boolean hasLocation(Location location) {

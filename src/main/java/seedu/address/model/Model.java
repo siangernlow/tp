@@ -92,6 +92,24 @@ public interface Model {
     boolean hasLocation(Location location);
 
     /**
+     * Returns the user prefs' address book file path.
+     */
+    Path getLocationBookFilePath();
+
+    /**
+     * Sets the user prefs' address book file path.
+     */
+    void setLocationBookFilePath(Path locationBookFilePath);
+
+    /**
+     * Replaces address book data with the data in {@code addressBook}.
+     */
+    void setLocationBook(ReadOnlyLocationBook locationBook);
+
+    /** Returns the AddressBook */
+    ReadOnlyLocationBook getLocationBook();
+
+    /**
      * Adds the given location.
      * {@code location} must not already exist in the address book.
      */
