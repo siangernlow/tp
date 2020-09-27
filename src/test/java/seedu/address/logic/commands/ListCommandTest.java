@@ -13,8 +13,6 @@ import org.junit.jupiter.api.Test;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Person;
-import seedu.address.testutil.PersonBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
@@ -23,7 +21,6 @@ public class ListCommandTest {
 
     private Model model;
     private Model expectedModel;
-    private final ListCommand.ListType defaultListType = ListCommand.ListType.PERSONS;
 
     @BeforeEach
     public void setUp() {
@@ -32,26 +29,30 @@ public class ListCommandTest {
     }
 
     @Test
-    public void execute_listIsNotFiltered_showsSameList() {
-        assertCommandSuccess(new ListCommand(defaultListType), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+    public void execute_personsListIsNotFiltered_showsSameList() {
+        assertCommandSuccess(new ListCommand("persons"), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
-    public void execute_listIsFiltered_showsEverything() {
+    public void execute_personsListIsFiltered_showsEverything() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
-        assertCommandSuccess(new ListCommand(defaultListType), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new ListCommand("persons"), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
     public void equals() {
-        ListCommand listPersonsCommand = new ListCommand(ListCommand.ListType.PERSONS);
+        ListCommand listPersonsCommand = new ListCommand("persons");
 
         // same object -> returns true
         assertTrue(listPersonsCommand.equals(listPersonsCommand));
 
         // same values -> returns true
-        ListCommand listPersonsCommandCopy = new ListCommand(ListCommand.ListType.PERSONS);
+        ListCommand listPersonsCommandCopy = new ListCommand("persons");
         assertTrue(listPersonsCommand.equals(listPersonsCommandCopy));
+
+        // different values -> returns false
+        ListCommand differentListCommand = new ListCommand("invalid");
+        assertFalse(listPersonsCommand.equals(differentListCommand));
 
         // different types -> returns false
         assertFalse(listPersonsCommand.equals(1));

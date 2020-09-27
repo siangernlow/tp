@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import org.junit.jupiter.api.Test;
+
 import seedu.address.logic.commands.ListCommand;
 
 public class ListCommandParserTest {
@@ -19,7 +20,7 @@ public class ListCommandParserTest {
     public void parse_validArgs_returnsListCommand() {
         // no leading and trailing whitespaces
         ListCommand expectedListCommand =
-                new ListCommand(ListCommand.ListType.PERSONS);
+                new ListCommand("persons");
         assertParseSuccess(parser, "persons", expectedListCommand);
 
         // multiple whitespaces between keywords
