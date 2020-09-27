@@ -41,8 +41,7 @@ public class ModelManager implements Model {
         this.locationBook = new LocationBook(locationBook);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
-        LocationListStub stub = new LocationListStub();
-        filteredLocations = new FilteredList<Location>(stub.getList());
+        filteredLocations = new FilteredList<>(this.locationBook.getLocationList());
     }
 
     public ModelManager() {
