@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -120,5 +121,31 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parse list type
+     * @param listType Type of list
+     * @return Type of list
+     * @throws ParseException When invalid type is given
+     */
+    public static ListType parseListType(String listType) throws ParseException {
+        requireNonNull(listType);
+        String trimmedListType = listType.trim();
+        ListType type;
+        switch (trimmedListType.toLowerCase()) {
+        case "people":
+            type = ListType.ALL_PEOPLE;
+            break;
+        case "locations":
+            type = ListType.ALL_LOCATIONS;
+            break;
+        case "visits":
+            type = ListType.ALL_VISITS;
+            break;
+        default:
+            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+        }
+        return type;
     }
 }
