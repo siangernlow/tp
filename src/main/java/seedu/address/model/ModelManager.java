@@ -24,6 +24,7 @@ public class ModelManager implements Model {
     private final LocationBook locationBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
+    private final FilteredList<Location> filteredLocations;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -40,6 +41,8 @@ public class ModelManager implements Model {
         this.locationBook = new LocationBook(locationBook);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        LocationListStub stub = new LocationListStub();
+        filteredLocations = new FilteredList<Location>(stub.getList());
     }
 
     public ModelManager() {
