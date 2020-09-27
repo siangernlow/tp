@@ -260,6 +260,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | healthcare official with access to the visit list| delete all visits by date | remove all the outdated visits inside the list |
 | `* * *`  | healthcare official setting up SafeEntry checkpoints | identify locations with high risk of infection | know which places need these checkpoints the most |
 | `* * *`  | healthcare official publishing daily reports | generate daily statistics quickly and easily|                                                         |
+| `* * *`  | healthcare official managing infected patient | update people's infection status | keep the current epidemic situation up to date |
+| `* * *`  | healthcare official managing quarantined people | update people's quarantine status | be aware of a person's quarantine status |
 | `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
 | `*`      | user with many persons in the address book | sort persons by name           | locate a person easily                                                 |
 
@@ -467,7 +469,45 @@ Use case ends.
 
 Use case ends.
 
-*{More to be added}*
+**UC12: Update infection status**
+
+**MSS**
+
+1. User requests to update the infection status of a person
+2. System requests for details of the person's ID
+3. User enters the person's ID to the 
+4. System looks for the specified person and toggle the person's infection status
+
+**Extension**
+
+* 4a. System not able to find the person specified by the user    
+    * 4a1. System shows the message that the person does not exist   
+    * 4a2. System requests for another person's ID  
+  Steps 4a1 - 4a2 are repeated until the person specified by the user exist
+  Use case resume from step 4
+  
+* a. At any time, user choose to cancel the update.  
+    Use case ends.  
+    
+**UC13: Update quarantine status**
+
+**MSS**
+
+1. User requests to update the quarantine status of a person
+2. System requests for details of the person's ID
+3. User enters the person's ID to the 
+4. System looks for the specified person and toggle the person's quarantine status
+
+**Extension**
+
+* 4a. System not able to find the person specified by the user    
+  * 4a1. System shows the message that the person does not exist   
+  * 4a2. System requests for another person's ID  
+  Steps 4a1 - 4a2 are repeated until the person specified by the user exist
+  Use case resume from step 4
+  
+* a. At any time, user choose to cancel the update.  
+    Use case ends.  
 
 ### Non-Functional Requirements
 
