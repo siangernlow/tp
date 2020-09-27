@@ -1,7 +1,7 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -9,6 +9,7 @@ import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -156,28 +157,25 @@ public class ParserUtil {
     }
 
     /**
-     * Parse list type
-     * @param listType Type of list
-     * @return Type of list
+     * Parses the given {@code listType} and returns the enum representing it.
+     * @param listType The type of list.
+     * @return The enum representing the {@code listType}.
      * @throws ParseException When invalid type is given
      */
     public static ListType parseListType(String listType) throws ParseException {
         requireNonNull(listType);
-        String trimmedListType = listType.trim();
-        ListType type;
-        switch (trimmedListType.toLowerCase()) {
+
+        String trimmedListType = listType.trim().toLowerCase();
+
+        switch (trimmedListType) {
         case "people":
-            type = ListType.ALL_PEOPLE;
-            break;
+            return ListType.ALL_PEOPLE;
         case "locations":
-            type = ListType.ALL_LOCATIONS;
-            break;
+            return ListType.ALL_LOCATIONS;
         case "visits":
-            type = ListType.ALL_VISITS;
-            break;
+            return ListType.ALL_VISITS;
         default:
-            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
         }
-        return type;
     }
 }
