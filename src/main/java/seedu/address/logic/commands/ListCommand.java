@@ -21,7 +21,7 @@ public class ListCommand extends Command {
     public static final String MESSAGE_SUCCESS_ALL_PEOPLE = "Listed all people";
     public static final String MESSAGE_SUCCESS_ALL_LOCATIONS = "Listed all locations";
     public static final String MESSAGE_SUCCESS_ALL_VISITS = "Listed all visits";
-
+    //test pr
     private final ListType listType;
 
     public ListCommand(ListType listType) {
