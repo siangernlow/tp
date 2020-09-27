@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -8,6 +9,7 @@ import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -120,5 +122,26 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses the given {@code listType} and returns the enum representing it.
+     * @param listType The type of list.
+     * @return The enum representing the {@code listType}.
+     * @throws ParseException When invalid type is given
+     */
+    public static ListType parseListType(String listType) throws ParseException {
+        requireNonNull(listType);
+
+        switch (listType) {
+        case "people":
+            return ListType.ALL_PEOPLE;
+        case "locations":
+            return ListType.ALL_LOCATIONS;
+        case "visits":
+            return ListType.ALL_VISITS;
+        default:
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
+        }
     }
 }

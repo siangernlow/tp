@@ -84,8 +84,9 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_list() throws Exception {
-        String keyword = "persons";
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " " + keyword) instanceof ListCommand);
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " people") instanceof ListCommand);
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " locations") instanceof ListCommand);
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " visits") instanceof ListCommand);
     }
 
     @Test

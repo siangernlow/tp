@@ -6,6 +6,9 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 public class ListCommandParser implements Parser<ListCommand> {
+
+    public static final String VALIDATION_REGEX = "^[a-zA-Z]*$";
+
     /**
      * Parses the given {@code String} of arguments in the context of the ListCommand
      * and returns an ListCommand object for execution.
@@ -14,11 +17,13 @@ public class ListCommandParser implements Parser<ListCommand> {
      */
     public ListCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
+
+        // Checks if the args are just whitespace, or if they are not purely alphabetic.
+        if (trimmedArgs.isEmpty() || !trimmedArgs.matches(VALIDATION_REGEX)) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
         }
-
-        return new ListCommand(trimmedArgs);
+        ListType listType = ParserUtil.parseListType(trimmedArgs.toLowerCase());
+        return new ListCommand(listType);
     }
 }

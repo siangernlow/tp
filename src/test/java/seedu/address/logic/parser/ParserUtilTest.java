@@ -193,4 +193,30 @@ public class ParserUtilTest {
 
         assertEquals(expectedTagSet, actualTagSet);
     }
+
+    @Test
+    public void parseListType_peopleList_returnsPeopleEnum() throws Exception {
+        ListType expectedListType = ListType.ALL_PEOPLE;
+        ListType actualListType = ParserUtil.parseListType("people");
+        assertEquals(expectedListType, actualListType);
+    }
+
+    @Test
+    public void parseListType_locationsList_returnsLocationsEnum() throws Exception {
+        ListType expectedListType = ListType.ALL_LOCATIONS;
+        ListType actualListType = ParserUtil.parseListType("locations");
+        assertEquals(expectedListType, actualListType);
+    }
+
+    @Test
+    public void parseListType_visitsList_returnsVisitsEnum() throws Exception {
+        ListType expectedListType = ListType.ALL_VISITS;
+        ListType actualListType = ParserUtil.parseListType("visits");
+        assertEquals(expectedListType, actualListType);
+    }
+
+    @Test
+    public void parseListType_invalidListType_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseListType("invalid keyword"));
+    }
 }
