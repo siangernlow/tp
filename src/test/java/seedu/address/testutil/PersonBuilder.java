@@ -5,6 +5,7 @@ import java.util.Set;
 
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.InfectionStatus;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -22,12 +23,14 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_QUARANTINE_STATUS = "false";
+    public static final String DEFAULT_INFECTION_STATUS = "false";
 
     private Name name;
     private Phone phone;
     private Email email;
     private Address address;
     private QuarantineStatus quarantineStatus;
+    private InfectionStatus infectionStatus;
     private Set<Tag> tags;
 
     /**
@@ -39,6 +42,7 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         quarantineStatus = new QuarantineStatus(DEFAULT_QUARANTINE_STATUS);
+        infectionStatus = new InfectionStatus(DEFAULT_INFECTION_STATUS);
         tags = new HashSet<>();
     }
 
@@ -51,6 +55,7 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         quarantineStatus = personToCopy.getQuarantineStatus();
+        infectionStatus = personToCopy.getInfectionStatus();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -102,7 +107,18 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code InfectionStatus} of the {@code Person} that we are building.
+     *
+     * @param infectionStatus The new infection status.
+     * @return The updated PersonBuilder.
+     */
+    public PersonBuilder withInfectionStatus(String infectionStatus) {
+        this.infectionStatus = new InfectionStatus(infectionStatus);
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, address, quarantineStatus, tags);
+        return new Person(name, phone, email, address, quarantineStatus, infectionStatus, tags);
     }
 }

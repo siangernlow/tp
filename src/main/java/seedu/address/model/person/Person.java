@@ -23,19 +23,21 @@ public class Person {
     // Data fields
     private final Address address;
     private final QuarantineStatus quarantineStatus;
+    private final InfectionStatus infectionStatus;
     private final Set<Tag> tags = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, QuarantineStatus quarantineStatus,
-                  Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, quarantineStatus, tags);
+                  InfectionStatus infectionStatus, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, quarantineStatus, infectionStatus, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.quarantineStatus = quarantineStatus;
+        this.infectionStatus = infectionStatus;
         this.tags.addAll(tags);
     }
 
@@ -57,6 +59,10 @@ public class Person {
 
     public QuarantineStatus getQuarantineStatus() {
         return quarantineStatus;
+    }
+
+    public InfectionStatus getInfectionStatus() {
+        return infectionStatus;
     }
 
     /**
@@ -101,13 +107,14 @@ public class Person {
                 && otherPerson.getEmail().equals(getEmail())
                 && otherPerson.getAddress().equals(getAddress())
                 && otherPerson.getQuarantineStatus().equals(getQuarantineStatus())
+                && otherPerson.getInfectionStatus().equals(getInfectionStatus())
                 && otherPerson.getTags().equals(getTags());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, quarantineStatus, tags);
+        return Objects.hash(name, phone, email, address, quarantineStatus, infectionStatus, tags);
     }
 
     @Override
@@ -122,6 +129,8 @@ public class Person {
                 .append(getAddress())
                 .append(" Quarantine Status: ")
                 .append(getQuarantineStatus())
+                .append(" Infected: ")
+                .append(getInfectionStatus())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

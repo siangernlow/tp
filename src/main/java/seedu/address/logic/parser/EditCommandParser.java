@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INFECTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_QUARANTINE_STATUS;
@@ -34,7 +35,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_QUARANTINE_STATUS, PREFIX_TAG);
+                        PREFIX_QUARANTINE_STATUS, PREFIX_INFECTION, PREFIX_TAG);
 
         Index index;
 
@@ -60,6 +61,11 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (argMultimap.getValue(PREFIX_QUARANTINE_STATUS).isPresent()) {
             editPersonDescriptor.setQuarantineStatus(ParserUtil.parseQuarantineStatus(
                     argMultimap.getValue(PREFIX_QUARANTINE_STATUS).get()));
+        }
+        if (argMultimap.getValue(PREFIX_INFECTION).isPresent()) {
+            editPersonDescriptor.setInfectionStatus(
+                    ParserUtil.parseInfectionStatus(argMultimap.getValue(PREFIX_INFECTION).get())
+            );
         }
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
 

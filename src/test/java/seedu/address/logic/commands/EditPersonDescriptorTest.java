@@ -6,6 +6,7 @@ import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_INFECTION_STATUS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_QUARANTINE_STATUS_BOB;
@@ -54,6 +55,10 @@ public class EditPersonDescriptorTest {
 
         // different quarantine status -> returns false
         editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withQuarantineStatus(VALID_QUARANTINE_STATUS_BOB).build();
+        assertFalse(DESC_AMY.equals(editedAmy));
+
+        // different infection status -> returns false
+        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withAddress(VALID_INFECTION_STATUS_BOB).build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
         // different tags -> returns false
