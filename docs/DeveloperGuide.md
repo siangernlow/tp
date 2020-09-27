@@ -299,6 +299,42 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
+
+1.  User chooses to add a visit to the visits history list.
+2.  VirusTracker requests for details of the visit in a specific format. 
+3.  User enters the required details.
+4.  VirusTracker updates the visits list and adds the new visit.
+5.  VirusTracker acknowledges and displays the added visit
+
+    Use case ends.
+
+**Extensions**
+
+* 3a. The personId is invalid.
+
+    * 3a1. VirusTracker prompts user for correct personId
+   
+      Use case resumes at step 3.
+      
+* 3b. The locationId is invalid.
+
+    * 3b1. VirusTracker prompts user for correct locationId
+   
+      Use case resumes at step 3.
+      
+* 3c. VirusTracker detects error in data format
+
+    * 3c1. VirusTracker prompts user for correct data format
+    
+      Use case resumes at step 3.
+
+* *a. At any time, User wishes to cancel the command
+ 
+    * a1. User enters required details
+    * a2. VirusTracker acknowledges and returns user to main page
+         
+    Use case ends
+
 1. User chooses to add a visit to the visits history list.
 2. VirusTracker requests for details of the visit in a specific format.
 3. User enters the required details (Person, Date, Location).
@@ -331,6 +367,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
          2c.2 VirusTracker acknowledges and returns user to main page
          Use case ends
 
+
 **UC02 - Delete visits by Date**
 
 **MSS**
@@ -340,6 +377,32 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 3. User enters the required information of the date.
 4. VirusTracker updates the visits list and deletes the visits
    up to the entered date.
+
+5. VirusTracker acknowledges and displays the deleted visit
+   
+   Use case ends.
+      
+**Extensions**
+
+* 3a. The date is not contained in the visits list.
+      
+     * 3a1. VirusTracker prompts user for a valid date
+    
+       Use case resumes at step 3.
+       
+* 3b. VirusTracker detects error in data format
+
+    * 3b1. VirusTracker prompts user for correct data format
+    
+      Use case resumes at step 3.       
+       
+* *a. At any time, User wishes to cancel the command
+ 
+    * a1. User enters required details
+    * a2. VirusTracker acknowledges and returns user to main page
+         
+      Use case ends
+
 
     Use case ends.
 
@@ -358,6 +421,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
          2b.1 User enters “Cancel”
          2b.2 VirusTracker acknowledges and returns user to main page
          Use case ends
+
 
 
 **UC06: View all infected people**
