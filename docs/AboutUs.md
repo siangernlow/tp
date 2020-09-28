@@ -1,11 +1,10 @@
 ---
-layout: page
-title: About Us
+About Us
 ---
 
 We are a team based in the [School of Computing, National University of Singapore](http://www.comp.nus.edu.sg).
 
-You can reach us at the email `seer[at]comp.nus.edu.sg`
+You can reach us at the email `seer@comp.nus.edu.sg`
 
 ## Project team
 
@@ -14,45 +13,45 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 <img src="images/shulong.png" width="200px">
 
 [[homepage](http://www.comp.nus.edu.sg/~damithch)]
-[[github](https://github.com/johndoe)]
+[[github](https://github.com/DreamerDragon)]
 [[portfolio](team/johndoe.md)]
 
 * Role: Project Advisor
 
-### Jane Doe
+### Qirui
 
 <img src="images/wuqirui.jpg" width="200px">
 
-[[github](http://github.com/johndoe)]
+[[github](https://github.com/hhdqirui)]
 [[portfolio](team/johndoe.md)]
 
 * Role: Team Lead
 * Responsibilities: UI
 
-### Johnny Doe
+### Siang Ern
 
 <img src="images/siangernlow.png" width="200px">
 
-[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
+[[github](http://github.com/siangernlow)] [[portfolio](team/johndoe.md)]
 
 * Role: Developer
 * Responsibilities: Data
 
-### Jean Doe
+### Pin Xian
 
 <img src="images/johndoe.png" width="200px">
 
-[[github](http://github.com/johndoe)]
+[[github](https://github.com/hopinxian)]
 [[portfolio](team/johndoe.md)]
 
 * Role: Developer
 * Responsibilities: Dev Ops + Threading
 
-### James Doe
+### Han Ming
 
 <img src="images/johndoe.png" width="200px">
 
-[[github](http://github.com/johndoe)]
+[[github](https://github.com/KohHanMing)]
 [[portfolio](team/johndoe.md)]
 
 * Role: Developer
