@@ -26,7 +26,7 @@ public class CommandResult {
         this.feedbackToUser = requireNonNull(feedbackToUser);
         this.showHelp = showHelp;
         this.exit = exit;
-        this.switcher =switcher;
+        this.switcher = switcher;
     }
 
     /**

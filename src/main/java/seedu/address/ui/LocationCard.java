@@ -7,8 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import seedu.address.model.Location;
-import seedu.address.model.person.Person;
+import seedu.address.model.location.Location;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -31,7 +30,10 @@ public class LocationCard extends UiPart<Region> {
     private HBox cardPane;
 
     @FXML
-    private Label locationLabel;
+    private Label name;
+
+    @FXML
+    private Label address;
 
     @FXML
     private Label id;
@@ -44,7 +46,8 @@ public class LocationCard extends UiPart<Region> {
         super(FXML);
         this.location = location;
         id.setText(displayedIndex + ". ");
-        locationLabel.setText(location.getLocation());
+        name.setText(location.getName().fullName);
+        address.setText(location.getAddress().value);
     }
 
     @Override

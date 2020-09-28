@@ -128,23 +128,6 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * Fills up all the placeholders of this window.
-     */
-    void fillInnerParts2() {
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        //personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
-
-        resultDisplay = new ResultDisplay();
-        resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
-
-        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getAddressBookFilePath());
-        statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
-
-        CommandBox commandBox = new CommandBox(this::executeCommand);
-        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
-    }
-
-    /**
      * Sets the default size based on {@code guiSettings}.
      */
     private void setWindowDefaultSize(GuiSettings guiSettings) {
@@ -208,17 +191,13 @@ public class MainWindow extends UiPart<Stage> {
             }
 
             if (commandResult.getSwitcher() == 1) {
-                listPanelPlaceholder.getChildren().remove(locationListPanel.getRoot());
-                if (!listPanelPlaceholder.getChildren().contains(personListPanel.getRoot())) {
-                    listPanelPlaceholder.getChildren().add(personListPanel.getRoot());
-                }
+                listPanelPlaceholder.getChildren().clear();
+                listPanelPlaceholder.getChildren().add(personListPanel.getRoot());
             }
 
             if (commandResult.getSwitcher() == 2) {
-                listPanelPlaceholder.getChildren().remove(personListPanel.getRoot());
-                if (!listPanelPlaceholder.getChildren().contains(locationListPanel.getRoot())) {
-                    listPanelPlaceholder.getChildren().add(locationListPanel.getRoot());
-                }
+                listPanelPlaceholder.getChildren().clear();
+                listPanelPlaceholder.getChildren().add(locationListPanel.getRoot());
             }
 
             return commandResult;

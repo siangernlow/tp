@@ -84,6 +84,9 @@ public class MainApp extends Application {
         Optional<ReadOnlyLocationBook> locationBookOptional;
         ReadOnlyLocationBook initialLocationData;
 
+        initialPersonData = SampleDataUtil.getSampleAddressBook();
+        initialLocationData = SampleDataUtil.getSampleLocationBook();
+        /*
         try {
             addressBookOptional = storage.readAddressBook();
             if (!addressBookOptional.isPresent()) {
@@ -110,7 +113,7 @@ public class MainApp extends Application {
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty LocationBook");
             initialLocationData = new LocationBook();
-        }
+        }*/
 
         return new ModelManager(initialPersonData, initialLocationData, userPrefs);
     }
