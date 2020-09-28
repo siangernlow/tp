@@ -19,7 +19,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyLocationBook;
 import seedu.address.model.ReadOnlyUserPrefs;
+import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
 
@@ -145,6 +147,36 @@ public class AddCommandTest {
 
         @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean hasLocation(Location location) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Path getLocationBookFilePath() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setLocationBookFilePath(Path locationBookFilePath) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setLocationBook(ReadOnlyLocationBook locationBook) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ReadOnlyLocationBook getLocationBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addLocation(Location location) {
             throw new AssertionError("This method should not be called.");
         }
     }

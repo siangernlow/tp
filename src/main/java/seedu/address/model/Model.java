@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
 
 /**
@@ -87,4 +88,33 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    /**
+     * Returns true if a location with the same identity as {@code location} exists in the virus tracker.
+     */
+    boolean hasLocation(Location location);
+
+    /**
+     * Returns the user prefs' address book file path.
+     */
+    Path getLocationBookFilePath();
+
+    /**
+     * Sets the user prefs' address book file path.
+     */
+    void setLocationBookFilePath(Path locationBookFilePath);
+
+    /**
+     * Replaces address book data with the data in {@code addressBook}.
+     */
+    void setLocationBook(ReadOnlyLocationBook locationBook);
+
+    /** Returns the AddressBook */
+    ReadOnlyLocationBook getLocationBook();
+
+    /**
+     * Adds the given location.
+     * {@code location} must not already exist in the address book.
+     */
+    void addLocation(Location location);
 }

@@ -4,8 +4,8 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Person's address in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
+ * Represents a Location which a Person can Visit.
+ * Guarantees: immutable; is valid as declared in {@link #isValidLocation(String)}
  */
 public class Location {
 
@@ -14,20 +14,20 @@ public class Location {
     public final String value;
 
     /**
-     * Constructs an {@code Address}.
+     * Constructs an {@code Location}.
      *
      * @param location A valid location.
      */
     public Location(String location) {
         requireNonNull(location);
-        checkArgument(isValidAddress(location), MESSAGE_CONSTRAINTS);
+        checkArgument(isValidLocation(location), MESSAGE_CONSTRAINTS);
         value = location;
     }
 
     /**
-     * Returns true if a given string is a valid email.
+     * Returns true if a given string is a valid location.
      */
-    public static boolean isValidAddress(String test) {
+    public static boolean isValidLocation(String test) {
         return !test.isEmpty();
     }
 

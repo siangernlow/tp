@@ -1,0 +1,9 @@
+{
+  "locations": [ {
+    "name": "Valid Location",
+    "address": "4th street"
+  }, {
+    "name": "Location With Invalid Address Field",
+    "address": "   4th street"
+  } ]
+}
