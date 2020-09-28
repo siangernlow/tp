@@ -37,11 +37,14 @@ public class ListCommand extends Command {
         switch (listType) {
         case ALL_PEOPLE:
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-            return new CommandResult(MESSAGE_SUCCESS_ALL_PEOPLE, false, false, 1);
+            return new CommandResult(MESSAGE_SUCCESS_ALL_PEOPLE, false, false,
+                    CommandResult.SWITCH_TO_VIEW_ALL_PEOPLE);
         case ALL_LOCATIONS:
-            return new CommandResult(MESSAGE_SUCCESS_ALL_LOCATIONS, false, false, 2);
+            return new CommandResult(MESSAGE_SUCCESS_ALL_LOCATIONS, false, false,
+                    CommandResult.SWITCH_TO_VIEW_ALL_LOCATIONS);
         case ALL_VISITS:
-            return new CommandResult(MESSAGE_SUCCESS_ALL_VISITS, false, false, 3);
+            return new CommandResult(MESSAGE_SUCCESS_ALL_VISITS, false, false,
+                    CommandResult.SWITCH_TO_VIEW_ALL_VISITS);
         default:
             throw new CommandException(INVALID_LIST_TYPE);
         }

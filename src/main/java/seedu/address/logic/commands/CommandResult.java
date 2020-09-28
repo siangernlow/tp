@@ -9,6 +9,11 @@ import java.util.Objects;
  */
 public class CommandResult {
 
+    public static final String SWITCH_NONE = "No switch";
+    public static final String SWITCH_TO_VIEW_ALL_PEOPLE = "Switch to view all people";
+    public static final String SWITCH_TO_VIEW_ALL_LOCATIONS = "Switch to view all locations";
+    public static final String SWITCH_TO_VIEW_ALL_VISITS = "Switch to view all visits";
+
     private final String feedbackToUser;
 
     /** Help information should be shown to the user. */
@@ -17,16 +22,16 @@ public class CommandResult {
     /** The application should exit. */
     private final boolean exit;
 
-    private final int switcher;
+    private final String switchState;
 
     /**
      * Constructs a {@code CommandResult} with the specified fields.
      */
-    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit, int switcher) {
+    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit, String switchState) {
         this.feedbackToUser = requireNonNull(feedbackToUser);
         this.showHelp = showHelp;
         this.exit = exit;
-        this.switcher = switcher;
+        this.switchState = switchState;
     }
 
     /**
@@ -34,7 +39,7 @@ public class CommandResult {
      * and other fields set to their default value.
      */
     public CommandResult(String feedbackToUser) {
-        this(feedbackToUser, false, false, 0);
+        this(feedbackToUser, false, false, SWITCH_NONE);
     }
 
     public String getFeedbackToUser() {
@@ -71,7 +76,7 @@ public class CommandResult {
         return Objects.hash(feedbackToUser, showHelp, exit);
     }
 
-    public int getSwitcher() {
-        return switcher;
+    public String getSwitchState() {
+        return switchState;
     }
 }

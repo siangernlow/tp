@@ -4,7 +4,6 @@ import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
@@ -190,12 +189,12 @@ public class MainWindow extends UiPart<Stage> {
                 handleExit();
             }
 
-            if (commandResult.getSwitcher() == 1) {
+            if (commandResult.getSwitchState().equals(CommandResult.SWITCH_TO_VIEW_ALL_PEOPLE)) {
                 listPanelPlaceholder.getChildren().clear();
                 listPanelPlaceholder.getChildren().add(personListPanel.getRoot());
             }
 
-            if (commandResult.getSwitcher() == 2) {
+            if (commandResult.getSwitchState().equals(CommandResult.SWITCH_TO_VIEW_ALL_LOCATIONS)) {
                 listPanelPlaceholder.getChildren().clear();
                 listPanelPlaceholder.getChildren().add(locationListPanel.getRoot());
             }
