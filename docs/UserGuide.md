@@ -33,7 +33,7 @@ VirusTracker can help you generate various statistics on the pandemic quickly an
 5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
-   * **`list people`** : Lists all people.
+   * **`list l/people`** : Lists all people.
 
    * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a person named `John Doe` to the VirusTracker.
 
