@@ -17,13 +17,16 @@ public class CommandResult {
     /** The application should exit. */
     private final boolean exit;
 
+    private final int switcher;
+
     /**
      * Constructs a {@code CommandResult} with the specified fields.
      */
-    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit) {
+    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit, int switcher) {
         this.feedbackToUser = requireNonNull(feedbackToUser);
         this.showHelp = showHelp;
         this.exit = exit;
+        this.switcher =switcher;
     }
 
     /**
@@ -31,7 +34,7 @@ public class CommandResult {
      * and other fields set to their default value.
      */
     public CommandResult(String feedbackToUser) {
-        this(feedbackToUser, false, false);
+        this(feedbackToUser, false, false, 0);
     }
 
     public String getFeedbackToUser() {
@@ -68,4 +71,7 @@ public class CommandResult {
         return Objects.hash(feedbackToUser, showHelp, exit);
     }
 
+    public int getSwitcher() {
+        return switcher;
+    }
 }

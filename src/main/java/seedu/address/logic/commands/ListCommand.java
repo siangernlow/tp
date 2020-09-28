@@ -33,7 +33,12 @@ public class ListCommand extends Command {
         requireNonNull(model);
         if (listType.equals(ListType.ALL_PEOPLE)) {
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            return new CommandResult(MESSAGE_SUCCESS_ALL_PEOPLE, false, false, 1);
+        } else if (listType.equals(ListType.ALL_LOCATIONS)) {
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            return new CommandResult(MESSAGE_SUCCESS_ALL_LOCATIONS, false, false, 2);
+        } else {
+            return new CommandResult("Catch all");
         }
-        return new CommandResult(MESSAGE_SUCCESS_ALL_PEOPLE);
     }
 }

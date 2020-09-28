@@ -31,6 +31,10 @@ public class Location {
         return !test.isEmpty();
     }
 
+    public String getLocation() {
+        return value;
+    }
+
     @Override
     public String toString() {
         return value;
