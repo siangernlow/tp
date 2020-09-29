@@ -67,7 +67,7 @@ public class ListCommandTest {
         assertCommandSuccess(new ListCommand(INFECTED_LIST),
                 model, ListCommand.MESSAGE_SUCCESS_ALL_INFECTED, expectedModel_infectd);
     }
-  
+
     @Test
     public void execute_quarantinedList_showsSameList() {
         Model expectedModel_quarantined = expectedModel;
