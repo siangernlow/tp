@@ -10,7 +10,7 @@ You can reach us at the email `seer@comp.nus.edu.sg`
 
 ### Shulong
 
-<img src="images/shulong.png" width="200px">
+<img src="images/DreamerDragon.png" width="200px">
 
 [[homepage](http://www.comp.nus.edu.sg/~damithch)]
 [[github](https://github.com/DreamerDragon)]
@@ -20,7 +20,7 @@ You can reach us at the email `seer@comp.nus.edu.sg`
 
 ### Qirui
 
-<img src="images/wuqirui.jpg" width="200px">
+<img src="images/hhdqirui.jpg" width="200px">
 
 [[github](https://github.com/hhdqirui)]
 [[portfolio](team/johndoe.md)]
