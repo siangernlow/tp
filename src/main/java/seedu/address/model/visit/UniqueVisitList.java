@@ -1,18 +1,22 @@
 package seedu.address.model.visit;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
+import java.util.Iterator;
+
+import java.util.List;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.location.Location;
+
 import seedu.address.model.location.exceptions.DuplicateLocationException;
-import seedu.address.model.location.exceptions.LocationNotFoundException;
 import seedu.address.model.visit.exceptions.DuplicateVisitException;
 import seedu.address.model.visit.exceptions.VisitNotFoundException;
 
-import java.util.Iterator;
-import java.util.List;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
+
 
 /**
  * A list of visits that enforces uniqueness between its elements and does not allow nulls.

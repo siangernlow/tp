@@ -1,12 +1,13 @@
 package seedu.address.storage;
 
+import java.time.LocalDate;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.visit.Visit;
-
-import java.time.LocalDate;
 
 /**
  * Jackson-friendly version of {@link Visit}.
@@ -25,9 +26,9 @@ public class JsonAdaptedVisit {
     public JsonAdaptedVisit(@JsonProperty("personId") Index personId,
                             @JsonProperty("locationId") Index locationId,
                             @JsonProperty("dateOfVisit") LocalDate date) {
-       this.personId = personId;
-       this.locationId = locationId;
-       this.dateOfVisit = date;
+        this.personId = personId;
+        this.locationId = locationId;
+        this.dateOfVisit = date;
     }
 
     /**

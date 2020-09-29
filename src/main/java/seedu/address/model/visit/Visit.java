@@ -1,11 +1,13 @@
 package seedu.address.model.visit;
 
-import seedu.address.commons.core.index.Index;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.util.Objects;
 
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+import seedu.address.commons.core.index.Index;
 
 public class Visit {
 

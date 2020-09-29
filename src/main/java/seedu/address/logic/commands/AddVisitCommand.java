@@ -1,13 +1,11 @@
 package seedu.address.logic.commands;
 
-import seedu.address.logic.commands.exceptions.CommandException;
-
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.visit.Visit;
-
 
 /**
  * Adds the new visit to the visit list by visit details (personId, locationId and date)
@@ -31,9 +29,12 @@ public class AddVisitCommand extends Command {
 
     private final Visit toAdd;
 
+    /**
+     * Creates an AddVisitCommand to add the specified {@code Visit}
+     */
+
     public AddVisitCommand(Visit visit) {
         requireAllNonNull(visit);
-
         toAdd = visit;
     }
 

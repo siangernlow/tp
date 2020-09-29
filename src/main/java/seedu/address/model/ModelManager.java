@@ -205,7 +205,7 @@ public class ModelManager implements Model {
 
 
 
-//=========== VisitBook ================================================================================
+    //=========== VisitBook ================================================================================
 
     @Override
     public void setVisitBook(ReadOnlyVisitBook visitBook) {
