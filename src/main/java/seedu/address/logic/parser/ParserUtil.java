@@ -174,6 +174,8 @@ public class ParserUtil {
             return ListType.ALL_LOCATIONS;
         case "visits":
             return ListType.ALL_VISITS;
+        case "infected":
+            return ListType.ALL_INFECTED;
         case "quarantined":
             return ListType.ALL_QUARANTINED;
         default:
