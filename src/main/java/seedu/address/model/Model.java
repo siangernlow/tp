@@ -15,6 +15,8 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
+    Predicate<Person> PREDICATE_SHOW_ALL_INFECTED = person -> person.getInfectionStatus().getStatusAsBoolean();
+
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
      */
