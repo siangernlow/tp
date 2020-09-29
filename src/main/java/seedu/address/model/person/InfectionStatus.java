@@ -40,6 +40,14 @@ public class InfectionStatus {
     }
 
     /**
+     * Returns the boolean format of the infection status
+     * @return a boolean indicating whether the person is infected or not
+     */
+    public boolean getStatusAsBoolean() {
+        return isInfected;
+    }
+
+    /**
      * Returns the String format of the infection status
      *
      * @return A String either containing true or false.
