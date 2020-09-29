@@ -80,15 +80,15 @@ Format: `help`
 
 Adds a person to VirusTracker.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS q/QUARANTINE_STATUS [t/TAG]…​`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 A person can have any number of tags (including 0)
 </div>
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 q/true`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 q/false t/criminal`
 
 ### Listing all people :
 
@@ -100,7 +100,7 @@ Format: `list l/people`
 
 Edits an existing person in VirusTracker.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [q/QUARANTINE_STATUS] [t/TAG]…​`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -181,6 +181,40 @@ Format: `delete date`
 * Date corresponds to the dates that exist in the visits list, otherwise it will be invalid
 * All the visits before and including the date will be removed from the visits list
 
+### Adding a location: 'addLocation'
+
+Adds a location to VirusTracker.
+
+Format: `addLocation n/NAME a/ADDRESS`
+
+* Locations have an address and a name.
+* Locations are identified by their name.
+* No duplicate locations are allowed in the VirusTracker.
+
+Examples:
+* `addLocation n/Vivocity a/John street, block 123, #01-01`
+* `addLocation n/Betsy Crowe's House a/Newgate Prison`
+
+### Listing all locations visited by a person: `listAllLocationsVisited` `[coming in v1.2]`
+
+Shows a list of locations visited by a specified person in the past 2 weeks. 
+
+Format: `listAllLcationsVisited INDEX`
+
+* Locations listed were visited by the person of the index given.
+* The result given is a filtered list of locations that the person visited in the past 2 weeks.
+* This function can be used to identify locations needing to be disinfected after being visited by an infected person.
+
+### Listing all people in contact with a person: `listAllPersonsInContact` `[coming in v1.2]`
+
+Shows a list of people who have been in the same location as a person in the past 2 weeks. The purpose is to identify people who need to be quarantined for contact with an infectious person.
+
+Format `listAllPersonsInContact PERSONID`
+
+* Persons listed were in contact with the person of the index given.
+* Two people are in contact when they visit the same location on the same day.
+* The result given is a filtered list of persons that the person was in contact with in the past 2 weeks.
+* This function can be used to identify people needing to be quarantined after being in contact with an infected person.
 
 ### Archiving data files `[coming in v2.0]`
 
@@ -222,10 +256,11 @@ of the stats in more detail by using the other `list` commands above.
 
 Action | Format, Examples
 --------|------------------
-**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS q/QUARANTINE_STATUS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 **Clear** | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [q/QUARANTINE_STATUS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List** | `list l/KEYWORD` <br> e.g., `list l/people`, `list l/stats`
 **Help** | `help`
+**addLocation** | `addLocation n/Vivocity a/John street, block 123, #01-01`
