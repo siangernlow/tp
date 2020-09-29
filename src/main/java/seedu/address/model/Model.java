@@ -15,6 +15,8 @@ import seedu.address.model.visit.Visit;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    Predicate<Person> PREDICATE_SHOW_ALL_INFECTED = person -> person.getInfectionStatus().getStatusAsBoolean();
+    Predicate<Person> PREDICATE_SHOW_ALL_QUARANTINED = person -> person.getQuarantineStatus().getStatusAsBoolean();
 
     /** {@code Predicate} that always evaluate to true */
     Predicate<Visit> PREDICATE_SHOW_ALL_VISITS = unused -> true;

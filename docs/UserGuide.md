@@ -1,40 +1,49 @@
 ---
-layout: page
-title: User Guide
+User Guide
 ---
 
-AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB3 can get your contact management tasks done faster than traditional GUI apps.
+VirusTracker is a **desktop app for generating statistics for Covid-19, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI).
+VirusTracker can help you generate various statistics on the pandemic quickly and easily with a few simple commands.
 
-* Table of Contents
-{:toc}
-
+## **Table of Contents**
+* Quick Start
+* Features
+    * Adding data: `add`
+    * Clearing the current list: `clear`
+    * Deleting data: `delete`
+    * Editing data: `edit`
+    * Finding data: `find`
+    * Listing data: `list`
+    * Viewing help: `help`
+* Command Summary
 --------------------------------------------------------------------------------------------------------------------
 
 ## Quick start
 
 1. Ensure you have Java `11` or above installed in your Computer.
 
-1. Download the latest `addressbook.jar` from [here](https://github.com/se-edu/addressbook-level3/releases).
+2. Download the latest `virustracker.jar` from [here](https://github.com/AY2021S1-CS2103T-T13-4/tp/releases). <br>
+   _Note: VirusTracker is still a work-in-progress and official releases are not available yet._
+   
+3. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
-
-1. Double-click the file to start the app. The GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+4. Double-click the file to start the app. The GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
-   * **`list`** : Lists all contacts.
+   * **`list l/people`** : Lists all people.
 
-   * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+   * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a person named `John Doe` to the VirusTracker.
 
-   * **`delete`**`3` : Deletes the 3rd contact shown in the current list.
+   * **`delete`**`3` : Deletes the 3rd element shown in the current list.
 
-   * **`clear`** : Deletes all contacts.
+   * **`clear`** : Deletes all entries from VirusTracker.
 
    * **`exit`** : Exits the app.
 
-1. Refer to the [Features](#features) below for details of each command.
+6. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -69,29 +78,29 @@ Format: `help`
 
 ### Adding a person: `add`
 
-Adds a person to the address book.
+Adds a person to VirusTracker.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS q/QUARANTINE_STATUS [t/TAG]…​`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 A person can have any number of tags (including 0)
 </div>
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 q/true`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 q/false t/criminal`
 
-### Listing all persons : `list`
+### Listing all people :
 
-Shows a list of all persons in the address book.
+Shows a list of all persons in VirusTracker.
 
-Format: `list`
+Format: `list l/people`
 
 ### Editing a person : `edit`
 
-Edits an existing person in the address book.
+Edits an existing person in VirusTracker.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [q/QUARANTINE_STATUS] [t/TAG]…​`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -124,7 +133,7 @@ Examples:
 
 ### Deleting a person : `delete`
 
-Deletes the specified person from the address book.
+Deletes the specified person from the people list.
 
 Format: `delete INDEX`
 
@@ -133,12 +142,12 @@ Format: `delete INDEX`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
+* `list` followed by `delete 2` deletes the 2nd person in the people list.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
 ### Clearing all entries : `clear`
 
-Clears all entries from the address book.
+Clears all entries from VirusTracker.
 
 Format: `clear`
 
@@ -150,7 +159,7 @@ Format: `exit`
 
 ### Saving the data
 
-AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+VirusTracker data saves in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ### Adding a visit: 
 
@@ -172,30 +181,67 @@ Format: `delete date`
 * Date corresponds to the dates that exist in the visits list, otherwise it will be invalid
 * All the visits before and including the date will be removed from the visits list
 
+### Adding a location: 'addLocation'
+
+Adds a location to VirusTracker.
+
+Format: `addLocation n/NAME a/ADDRESS`
+
+* Locations have an address and a name.
+* Locations are identified by their name.
+* No duplicate locations are allowed in the VirusTracker.
+
+Examples:
+* `addLocation n/Vivocity a/John street, block 123, #01-01`
+* `addLocation n/Betsy Crowe's House a/Newgate Prison`
+
+### Listing all locations visited by a person: `listAllLocationsVisited` `[coming in v1.2]`
+
+Shows a list of locations visited by a specified person in the past 2 weeks. 
+
+Format: `listAllLcationsVisited INDEX`
+
+* Locations listed were visited by the person of the index given.
+* The result given is a filtered list of locations that the person visited in the past 2 weeks.
+* This function can be used to identify locations needing to be disinfected after being visited by an infected person.
+
+### Listing all people in contact with a person: `listAllPersonsInContact` `[coming in v1.2]`
+
+Shows a list of people who have been in the same location as a person in the past 2 weeks. The purpose is to identify people who need to be quarantined for contact with an infectious person.
+
+Format `listAllPersonsInContact PERSONID`
+
+* Persons listed were in contact with the person of the index given.
+* Two people are in contact when they visit the same location on the same day.
+* The result given is a filtered list of persons that the person was in contact with in the past 2 weeks.
+* This function can be used to identify people needing to be quarantined after being in contact with an infected person.
 
 ### Archiving data files `[coming in v2.0]`
 
 _{explain the feature here}_
 
-### Viewing high risk locations
+### Listing high risk locations
 
 Lists the top ten locations with highest risk of Covid infection.
 
-Format: `list highrisk`
+Format: `list l/highrisk`
 
 * Risk is treated as the number of infected people entering the location.
 * The list is presented in order of highest risk to lowest.
 * If there are less than ten locations that are infected, all locations will
   be shown.
   
-### Viewing daily statistics
+### Listing daily statistics
 
-Shows the statistics related to Covid for the day.
+Shows the general overview of statistics related to Covid-19 for the day.
 
-Format: `stats`
+Format: `list l/stats`
 
 * Statistics include high risk locations, number of infection cases, number of people
   currently infected, and more.
+* The statistics generated by this command provides a brief summary of the pandemic. You may view a specific aspect
+of the stats in more detail by using the other `list` commands above.
+
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -210,10 +256,11 @@ Format: `stats`
 
 Action | Format, Examples
 --------|------------------
-**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS q/QUARANTINE_STATUS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 **Clear** | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [q/QUARANTINE_STATUS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**List** | `list`
+**List** | `list l/KEYWORD` <br> e.g., `list l/people`, `list l/stats`
 **Help** | `help`
+**addLocation** | `addLocation n/Vivocity a/John street, block 123, #01-01`

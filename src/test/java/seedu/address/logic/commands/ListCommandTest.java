@@ -24,6 +24,8 @@ public class ListCommandTest {
     private static final ListType PEOPLE_LIST = ListType.ALL_PEOPLE;
     private static final ListType LOCATIONS_LIST = ListType.ALL_LOCATIONS;
     private static final ListType VISITS_LIST = ListType.ALL_VISITS;
+    private static final ListType INFECTED_LIST = ListType.ALL_INFECTED;
+    private static final ListType QUARANTINED_LIST = ListType.ALL_QUARANTINED;
 
     private Model model;
     private Model expectedModel;
@@ -59,6 +61,22 @@ public class ListCommandTest {
     public void execute_visitsList_showsSameList() {
         assertCommandSuccess(new ListCommand(VISITS_LIST),
                 model, ListCommand.MESSAGE_SUCCESS_ALL_VISITS, expectedModel);
+    }
+
+    @Test
+    public void execute_infectedList_showsSameList() {
+        Model expectedModel_infectd = expectedModel;
+        expectedModel_infectd.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_INFECTED);
+        assertCommandSuccess(new ListCommand(INFECTED_LIST),
+                model, ListCommand.MESSAGE_SUCCESS_ALL_INFECTED, expectedModel_infectd);
+    }
+
+    @Test
+    public void execute_quarantinedList_showsSameList() {
+        Model expectedModel_quarantined = expectedModel;
+        expectedModel_quarantined.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_QUARANTINED);
+        assertCommandSuccess(new ListCommand(QUARANTINED_LIST),
+                model, ListCommand.MESSAGE_SUCCESS_ALL_QUARANTINED, expectedModel_quarantined);
     }
 
     @Test

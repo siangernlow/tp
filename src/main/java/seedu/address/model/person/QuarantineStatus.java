@@ -32,6 +32,14 @@ public class QuarantineStatus {
         return test.toLowerCase().equals("true") || test.toLowerCase().equals("false");
     }
 
+    /**
+     * Returns the quarantine status in format of boolean
+     * @return the boolean format of quarantine status
+     */
+    public boolean getStatusAsBoolean() {
+        return value.equals("true");
+    }
+
     @Override
     public String toString() {
         return value;
