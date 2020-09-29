@@ -176,6 +176,8 @@ public class ParserUtil {
             return ListType.ALL_VISITS;
         case "infected":
             return ListType.ALL_INFECTED;
+        case "quarantined":
+            return ListType.ALL_QUARANTINED;
         default:
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
         }

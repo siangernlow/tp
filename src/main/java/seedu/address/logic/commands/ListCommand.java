@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_INFECTED;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_QUARANTINED;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.ListType;
@@ -17,13 +18,15 @@ public class ListCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Lists information based on a given type.\n"
-            + "Parameters: l/LIST_TYPE (must be either people, locations, visits or infected)\n"
+            + "Parameters: l/LIST_TYPE (must be either people, locations, visits,"
+            + " infected or quarantined)\n"
             + "Example: " + COMMAND_WORD + " people";
 
     public static final String MESSAGE_SUCCESS_ALL_PEOPLE = "Listed all people";
     public static final String MESSAGE_SUCCESS_ALL_LOCATIONS = "Listed all locations";
     public static final String MESSAGE_SUCCESS_ALL_VISITS = "Listed all visits";
     public static final String MESSAGE_SUCCESS_ALL_INFECTED = "Listed all infected people";
+    public static final String MESSAGE_SUCCESS_ALL_QUARANTINED = "Listed all quarantined people";
     public static final String INVALID_LIST_TYPE = "There is no such list type.";
 
     private final ListType listType;
@@ -47,6 +50,9 @@ public class ListCommand extends Command {
         case ALL_INFECTED:
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
             return new CommandResult(MESSAGE_SUCCESS_ALL_INFECTED);
+        case ALL_QUARANTINED:
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_QUARANTINED);
+            return new CommandResult(MESSAGE_SUCCESS_ALL_QUARANTINED);
         default:
             throw new CommandException(INVALID_LIST_TYPE);
         }
