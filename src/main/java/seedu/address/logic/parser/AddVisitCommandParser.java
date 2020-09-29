@@ -2,13 +2,15 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.*;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddVisitCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.visit.Visit;
 
 import java.time.LocalDate;
+import java.util.stream.Stream;
 
 /**
  * Parses input arguments and creates a new AddVisitCommand object
@@ -16,21 +18,45 @@ import java.time.LocalDate;
 
 public class AddVisitCommandParser implements Parser<AddVisitCommand>{
 
+    /**
+     * Parses the given {@code String} of arguments in the context of the AddCommand
+     * and returns an AddCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
     public AddVisitCommand parse(String args) throws ParseException {
-        requireNonNull(args);
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args);
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_DATE);
+
+        if (!arePrefixesPresent(argMultimap,  PREFIX_DATE) || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddVisitCommand.MESSAGE_USAGE));
+        }
+
+
+        String[] ids = argMultimap.getPreamble().split("\\s+");
 
         Index personId;
         Index locationId;
-        String date =  "2020-09-09";
+
         try {
-            personId = ParserUtil.parseIndex(argMultimap.getPreamble());
-            locationId = ParserUtil.parseIndex(argMultimap.getPreamble());
-        } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,  AddVisitCommand.MESSAGE_USAGE), ive);
+            personId = ParserUtil.parseIndex(ids[0]);
+            locationId =  ParserUtil.parseIndex(ids[1]);
+        } catch (ParseException pe) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddVisitCommand.MESSAGE_USAGE), pe);
         }
 
-        return new AddVisitCommand(personId, locationId, date);
+        LocalDate date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
+
+        Visit visit = new Visit(personId, locationId, date);
+
+        return new AddVisitCommand(visit);
+    }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 
 }

@@ -11,7 +11,9 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
+import seedu.address.model.visit.Visit;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -20,25 +22,35 @@ public class ModelManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
+    private final LocationBook locationBook;
     private final UserPrefs userPrefs;
+    private final VisitBook visitBook;
     private final FilteredList<Person> filteredPersons;
+    private final FilteredList<Location> filteredLocations;
+    private final FilteredList<Visit> filteredVisits;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyUserPrefs userPrefs) {
+    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyLocationBook locationBook,
+                        ReadOnlyUserPrefs userPrefs, ReadOnlyVisitBook visitBook) {
         super();
-        requireAllNonNull(addressBook, userPrefs);
+        requireAllNonNull(addressBook, locationBook, visitBook, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs
+                + " and location book: " + locationBook);
 
         this.addressBook = new AddressBook(addressBook);
+        this.locationBook = new LocationBook(locationBook);
+        this.visitBook = new VisitBook(visitBook);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredLocations = new FilteredList<>(this.locationBook.getLocationList());
+        filteredVisits = new FilteredList<>(this.visitBook.getVisitList());
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new AddressBook(), new LocationBook(), new UserPrefs(), new VisitBook());
     }
 
     //=========== UserPrefs ==================================================================================
@@ -76,6 +88,27 @@ public class ModelManager implements Model {
         userPrefs.setAddressBookFilePath(addressBookFilePath);
     }
 
+    @Override
+    public Path getLocationBookFilePath() {
+        return userPrefs.getLocationBookFilePath();
+    }
+
+    @Override
+    public void setLocationBookFilePath(Path locationBookFilePath) {
+        requireNonNull(locationBookFilePath);
+        userPrefs.setLocationBookFilePath(locationBookFilePath);
+    }
+
+    @Override
+    public Path getVisitBookFilePath() {
+        return userPrefs.getVisitBookFilePath();
+    }
+
+    @Override
+    public void setVisitBookFilePath(Path visitBookFilePath) {
+        requireNonNull(visitBookFilePath);
+        userPrefs.setVisitBookFilePath(visitBookFilePath);
+    }
     //=========== AddressBook ================================================================================
 
     @Override
@@ -129,6 +162,77 @@ public class ModelManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //=========== Filtered Visit List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Visit} backed by the internal list of
+     * {@code versionedVisitBook}
+     */
+    @Override
+    public ObservableList<Visit> getFilteredVisitList() {
+        return filteredVisits;
+    }
+
+    @Override
+    public void updateFilteredVisitList(Predicate<Visit> predicate) {
+        requireNonNull(predicate);
+        filteredVisits.setPredicate(predicate);
+    }
+
+    //=========== LocationBook ================================================================================
+
+    @Override
+    public void setLocationBook(ReadOnlyLocationBook locationBook) {
+        this.locationBook.resetData(locationBook);
+    }
+
+    @Override
+    public ReadOnlyLocationBook getLocationBook() {
+        return locationBook;
+    }
+
+    @Override
+    public boolean hasLocation(Location location) {
+        requireNonNull(location);
+        return locationBook.hasLocation(location);
+    }
+
+    @Override
+    public void addLocation(Location location) {
+        locationBook.addLocation(location);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS); // needs to be updated to persons when doing list command
+    }
+
+
+
+//=========== VisitBook ================================================================================
+
+    @Override
+    public void setVisitBook(ReadOnlyVisitBook visitBook) {
+        this.visitBook.resetData(visitBook);
+    }
+
+    @Override
+    public ReadOnlyVisitBook getVisitBook() {
+        return visitBook;
+    }
+
+    @Override
+    public boolean hasVisit(Visit visit) {
+        requireNonNull(visit);
+        return visitBook.hasVisit(visit);
+    }
+
+    @Override
+    public void deleteVisit(Visit visit) {
+    }
+
+    @Override
+    public void addVisit(Visit visit) {
+        visitBook.addVisit(visit);
+        updateFilteredVisitList(PREDICATE_SHOW_ALL_VISITS); // needs to be updated to persons when doing list command
+    }
+
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
@@ -144,6 +248,8 @@ public class ModelManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
+                && locationBook.equals(other.locationBook)
+                && visitBook.equals(other.visitBook)
                 && userPrefs.equals(other.userPrefs)
                 && filteredPersons.equals(other.filteredPersons);
     }

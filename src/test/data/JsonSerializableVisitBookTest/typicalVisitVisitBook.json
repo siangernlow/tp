@@ -1,0 +1,28 @@
+{
+  "_comment": "VisitBook save file which contains the same Visit values as in TypicalVisits#getTypicalVisitBook()",
+  "visits" : [ {
+    "personId" : 1,
+    "locationId" : 2,
+    "date": "2020-09-12"
+  },{
+    "personId" : 2,
+    "locationId" : 3,
+    "date": "2020-09-12"
+  },{
+    "personId" : 3,
+    "locationId" : 1,
+    "date": "2020-09-12"
+  },{
+    "personId" : 1,
+    "locationId" : 4,
+    "date": "2020-09-12"
+  },{
+    "personId" : 1,
+    "locationId" : 5,
+    "date": "2020-09-13"
+  },{
+    "personId" : 2,
+    "locationId" : 1,
+    "date": "2020-09-13"
+  }]
+}

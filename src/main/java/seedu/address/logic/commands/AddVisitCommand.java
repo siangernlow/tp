@@ -1,12 +1,13 @@
 package seedu.address.logic.commands;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import seedu.address.model.Model;
+import seedu.address.model.visit.Visit;
 
-import java.time.LocalDate;
 
 /**
  * Adds the new visit to the visit list by visit details (personId, locationId and date)
@@ -16,20 +17,9 @@ public class AddVisitCommand extends Command {
 
     public static final String COMMAND_WORD = "addVisit";
 
-    public static final String MESSAGE_ARGUMENTS = "personId: %1$d, locationId: %2$d, date: %3$s";
 
-    private final Index personId;
-    private final Index locationId;
-    private final LocalDate dateOfVisit;
-
-    public AddVisitCommand(Index personId, Index locationId, String date) {
-        requireAllNonNull(personId, locationId, date);
-
-        this.personId = personId;
-        this.locationId = locationId;
-        this.dateOfVisit = date;
-    }
-
+    public static final String MESSAGE_SUCCESS = "New visit added: %1$s";
+    public static final String MESSAGE_DUPLICATE_VISIT = "This visit already exists in the address book";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add a new visit to the visits list "
             + "by the personId of visit, locationId of visit and date of visit "
@@ -39,30 +29,30 @@ public class AddVisitCommand extends Command {
             + "Date (must be in the format of yyyy-MM-dd "
             + "Example: " + COMMAND_WORD + " 1 " + " 2 " + "2020-09-09";
 
-    public static final String MESSAGE_NOT_IMPLEMENTED_YET = "Remark command not implemented yet";
+    private final Visit toAdd;
 
-    @Override
-    public boolean equals(Object other) {
-        // short circuit if same object
-        if (other == this) {
-            return true;
-        }
+    public AddVisitCommand(Visit visit) {
+        requireAllNonNull(visit);
 
-        // instanceof handles nulls
-        if (!(other instanceof AddVisitCommand)) {
-            return false;
-        }
-
-        // state check
-        AddVisitCommand e = (AddVisitCommand) other;
-        return personId.equals(e.personId)&&
-                locationId.equals(e.locationId)
-                && dateOfVisit.equals(e.dateOfVisit);
+        toAdd = visit;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
-        throw new CommandException(String.format(MESSAGE_ARGUMENTS, personId.getOneBased()
-                ,personId.getOneBased(), dateOfVisit));
+        requireNonNull(model);
+
+        if (model.hasVisit(toAdd)) {
+            throw new CommandException(MESSAGE_DUPLICATE_VISIT);
+        }
+
+        model.addVisit(toAdd);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AddVisitCommand // instanceof handles nulls
+                && toAdd.equals(((AddVisitCommand) other).toAdd));
     }
 }
