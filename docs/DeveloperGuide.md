@@ -236,34 +236,33 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
+* is a healthcare official involved in the Covid-19 pandemic
+* has a need to generate statistics based on input data of the pandemic
 * prefer desktop apps over other types
 * can type fast
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**: produce useful statistics quickly and efficiently
 
 
 ### User stories
+
+(For all user stories below, the **user** is a healthcare official, unless stated otherwise)
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
 | Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
 | -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |
-| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person               |                                                                        |
-| `* * *`  | user                                       | delete a person                | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
-| `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
-| `* * *`  | healthcare official with access to visits data from SafeEntry app   | add visit data to a list | generate desired lists and track contacts with the infected cases|
-| `* * *`  | healthcare official with access to the visit list| delete all visits by date | remove all the outdated visits inside the list |
-| `* * *`  | healthcare official setting up SafeEntry checkpoints | identify locations with high risk of infection | know which places need these checkpoints the most |
-| `* * *`  | healthcare official publishing daily reports | generate daily statistics quickly and easily|                                                         |
-| `* * *`  | healthcare official managing infected patient | update people's infection status | keep the current epidemic situation up to date |
-| `* * *`  | healthcare official managing quarantined people | update people's quarantine status | be aware of a person's quarantine status |
-| `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name           | locate a person easily                                                 |
+| `* * *`  | user | generate a list of people currently stored in VirusTracker|  
+| `* * *`  | user | generate a list of locations currently stored in VirusTracker|    
+| `* * *`  | user | generate a list of visits currently stored in VirusTracker|    
+| `* * *`  | user with access to visits data from SafeEntry app   | add visit data to a list | generate desired lists and track contacts with the infected cases|
+| `* * *`  | user with access to the visit list| delete all visits by date | remove all the outdated visits inside the list |
+| `* * *`  | user setting up SafeEntry checkpoints | identify locations with high risk of infection | know which places need these checkpoints the most |
+| `* * *`  | user publishing daily reports | generate daily statistics quickly and easily|                                                         |
+| `* * *`  | user managing infected patient | update people's infection status | keep the current epidemic situation up to date |
+| `* * *`  | user managing quarantined people | update people's quarantine status | be aware of a person's quarantine status |
 
 *{More to be added}*
 
@@ -271,165 +270,63 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `VirusTracker` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
-
-**MSS**
-
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
-
-    Use case ends.
-
-**Extensions**
-
-* 2a. The list is empty.
-
-  Use case ends.
-
-* 3a. The given index is invalid.
-
-    * 3a1. AddressBook shows an error message.
-
-      Use case resumes at step 2.
-
-
-**UC01 - Add a visit using Date, Location, Person**
+**UC01 - Add a visit**
 
 **MSS**
 
 
-1.  User chooses to add a visit to the visits history list.
-2.  VirusTracker requests for details of the visit in a specific format. 
+1.  User chooses to add a visit.
+2.  System requests for details of the visit. 
 3.  User enters the required details.
-4.  VirusTracker updates the visits list and adds the new visit.
-5.  VirusTracker acknowledges and displays the added visit
+4.  System adds the new visit.
+5. System displays the updated visits list.
 
     Use case ends.
 
 **Extensions**
-
-* 3a. The personId is invalid.
-
-    * 3a1. VirusTracker prompts user for correct personId
-   
-      Use case resumes at step 3.
       
-* 3b. The locationId is invalid.
+* 3a. System detects error in the entered data.
+    * 3a1. System prompts user for correct data.
+    * 3a2. User enters new data.  
+    Steps 3a1-3a2 are repeated until the data entered are correct.  
+    Use case resumes at step 4.
 
-    * 3b1. VirusTracker prompts user for correct locationId
-   
-      Use case resumes at step 3.
-      
-* 3c. VirusTracker detects error in data format
-
-    * 3c1. VirusTracker prompts user for correct data format
-    
-      Use case resumes at step 3.
-
-* *a. At any time, User wishes to cancel the command
- 
-    * a1. User enters required details
-    * a2. VirusTracker acknowledges and returns user to main page
+* *a. At any time, User wishes to cancel the command.
+    * a1. System acknowledges and returns user to main page.
          
-    Use case ends
+    Use case ends.
 
-1. User chooses to add a visit to the visits history list.
-2. VirusTracker requests for details of the visit in a specific format.
-3. User enters the required details (Person, Date, Location).
-4. VirusTracker updates the visits list and adds the new visit.
-5. VirusTracker acknowledges and displays the added visit
-      Use case ends.
-
-**Extensions**
-
-* 2a. The personId is invalid.
-         2a.1 VirusTracker prompts user for correct personId
-         2a.2 User re-enters details
-         2a.3 VirusTracker checks the personId
-         2a.1 - 2a.3 are repeated until the correct personId is provided
-         2a.4 VirusTracker updates the visits list and adds the new visit.
-         2a.5 VirusTracker acknowledges and displays the added visit 
-         Use case ends.
-
-* 2b. VirusTracker detects error in data format
-         2b.1 VirusTracker prompts user for correct personId
-         2b.2 User re-enters details
-         2b.3 VirusTracker checks the personId
-         2b.1 - 2b.3 are repeated until the correct personId is provided
-         2b.4 VirusTracker updates the visits list and adds the new visit.
-         2b.5 VirusTracker acknowledges and displays the added visit 
-         Use case ends
-
-* 2c. User wishes to cancel the add command
-         2c.1 User enters “Cancel”
-         2c.2 VirusTracker acknowledges and returns user to main page
-         Use case ends
-
-
-**UC02 - Delete visits by Date**
+**UC02 - Delete visits**
 
 **MSS**
 
-1. User chooses to clear the visit history before a date.
-2. VirusTracker requests for details of the date.
-3. User enters the required information of the date.
-4. VirusTracker updates the visits list and deletes the visits
-   up to the entered date.
-
-5. VirusTracker acknowledges and displays the deleted visit
+1. User chooses to clear the visit history.
+2. System requests for details.
+3. User enters the required information.
+4. System deletes the visits based on the information entered.
+5. System displays the updated visits list.  
    
    Use case ends.
       
 **Extensions**
-
-* 3a. The date is not contained in the visits list.
-      
-     * 3a1. VirusTracker prompts user for a valid date
-    
-       Use case resumes at step 3.
        
-* 3b. VirusTracker detects error in data format
-
-    * 3b1. VirusTracker prompts user for correct data format
-    
-      Use case resumes at step 3.       
+* 3a. System detects error in the entered data.
+    * 3a1. System prompts user for correct data.
+    * 3a2. User enters new data.  
+    Steps 3a1-3a2 are repeated until the data entered are correct.  
+    Use case resumes at step 4.
        
-* *a. At any time, User wishes to cancel the command
- 
-    * a1. User enters required details
-    * a2. VirusTracker acknowledges and returns user to main page
+* *a. At any time, User wishes to cancel the command.
+    * a1. System acknowledges and returns user to main page.
          
-      Use case ends
-
-
     Use case ends.
-
-**Extensions**
-
-* 2a. The date is not contained in the visits list.
-      2a.1 VirusTracker prompts user for correct date
-      2a.2 User re-enters date
-      2a.3 VirusTracker checks the date entered
-      2a.1 - 2a.3 are repeated until the correct date is provided
-      2a.4 VirusTracker updates the visits list and deletes the visits up to the entered date.
-      2a.5 VirusTracker acknowledges and displays the added visit
-      Use case ends.
-
-* 2b. User wishes to cancel the add command
-         2b.1 User enters “Cancel”
-         2b.2 VirusTracker acknowledges and returns user to main page
-         Use case ends
-
-
 
 **UC06: View all infected people**
 
 **MSS**
 
 1. User requests to list all infected people
-2. VirusTracker shows a list of all infected people.
+2. System shows a list of all infected people.
 
     Use case ends.
 
@@ -439,12 +336,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   Use case ends.
 
+* 2b. There are no infected people.
+    * 2b1. Go to 2a.
+    
 **UC10: View high-risk locations**
 
 **MSS**
 
 1. User requests to list locations with high risk of infection.
-2. VirusTracker shows a list of locations with high risk.
+2. System shows a list of locations with high risk.  
 
   Use case ends.
 
@@ -452,73 +352,81 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2a. The list is empty.
 
-Use case ends.
+    Use case ends.
 
 **UC11: View daily statistics**
 
 **MSS**
 
 1. User requests to view statistics for that day.
-2. VirusTracker shows the statistics for that day.
+2. System shows the statistics for that day.
 
   Use case ends.
 
 **Extensions**
 
-* 2a. There is not enough information to produce statistics for that day.
+* 2a. There is not enough information to produce statistics for that day.  
 
-Use case ends.
+    Use case ends.
 
 **UC12: Update infection status**
 
 **MSS**
 
-1. User requests to update the infection status of a person
-2. System requests for details of the person's ID
-3. User enters the person's ID to the 
-4. System looks for the specified person and toggle the person's infection status
+1. User requests to update the infection status of a person.
+2. System requests for details of the person to be updated.
+3. User enters the person's details.
+4. System toggles the person's infection status.  
+
+Use case ends.
 
 **Extension**
 
-* 4a. System not able to find the person specified by the user    
-    * 4a1. System shows the message that the person does not exist   
-    * 4a2. System requests for another person's ID  
-  Steps 4a1 - 4a2 are repeated until the person specified by the user exist
-  Use case resume from step 4
+* 4a. System is unable to find the person specified by the user.     
+    * 4a1. System requests for correct details of the person.
+    * 4a2. User enters the new details.  
+    
+  Steps 4a1 - 4a2 are repeated until the person specified by the user exists.  
   
-* a. At any time, user choose to cancel the update.  
+  Use case resumes from step 4.
+  
+* *a. At any time, user choose to cancel the update.  
+    
     Use case ends.  
     
 **UC13: Update quarantine status**
 
 **MSS**
 
-1. User requests to update the quarantine status of a person
-2. System requests for details of the person's ID
-3. User enters the person's ID to the 
-4. System looks for the specified person and toggle the person's quarantine status
+1. User requests to update the quarantine status of a person.
+2. System requests for details of the person to be updated.
+3. User enters the person's details.
+4. System toggles the person's quarantine status.
 
 **Extension**
 
-* 4a. System not able to find the person specified by the user    
-  * 4a1. System shows the message that the person does not exist   
-  * 4a2. System requests for another person's ID  
-  Steps 4a1 - 4a2 are repeated until the person specified by the user exist
-  Use case resume from step 4
+* 4a. System is unable to find the person specified by the user.     
+    * 4a1. System requests for correct details of the person.
+    * 4a2. User enters the new details.  
+    
+  Steps 4a1 - 4a2 are repeated until the person specified by the user exists.  
+  Use case resumes from step 4.
   
-* a. At any time, user choose to cancel the update.  
+* *a. At any time, user choose to cancel the update.    
     Use case ends.  
 
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+2.  Should be able to hold up to 1000 items for each type of list without a noticeable sluggishness in performance for typical usage.
+3.  Should be able to switch between different types of data and manipulate them efficiently and quickly.
+4.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 
 *{More to be added}*
 
 ### Glossary
 
+* **Visits**: A visit event occurs whenever a `Person` enters a `Location`. The `Date` of this visit is also recorded.
 * **Mainstream OS**: Windows, Linux, Unix, OS-X
 * **Private contact detail**: A contact detail that is not meant to be shared with others
 
