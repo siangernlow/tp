@@ -39,10 +39,10 @@ You can reach us at the email `seer@comp.nus.edu.sg`
 
 ### Pin Xian
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/hopinxian.png" width="200px">
 
 [[github](https://github.com/hopinxian)]
-[[portfolio](team/johndoe.md)]
+[[portfolio](team/hopinxian.md)]
 
 * Role: Developer
 * Responsibilities: Dev Ops + Threading
@@ -56,3 +56,4 @@ You can reach us at the email `seer@comp.nus.edu.sg`
 
 * Role: Developer
 * Responsibilities: UI
+
