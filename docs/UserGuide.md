@@ -39,7 +39,7 @@ VirusTracker can help you generate various statistics on the pandemic quickly an
 
    * **`delete`**`3` : Deletes the 3rd element shown in the current list.
 
-   * **`clear`** : Deletes all .
+   * **`clear`** : Deletes all entries from VirusTracker.
 
    * **`exit`** : Exits the app.
 
@@ -133,7 +133,7 @@ Examples:
 
 ### Deleting a person : `delete`
 
-Deletes the specified person from the address book.
+Deletes the specified person from the people list.
 
 Format: `delete INDEX`
 
@@ -142,12 +142,12 @@ Format: `delete INDEX`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
+* `list` followed by `delete 2` deletes the 2nd person in the people list.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
 ### Clearing all entries : `clear`
 
-Clears all entries in the current list view from VirusTracker.
+Clears all entries from VirusTracker.
 
 Format: `clear`
 
@@ -159,7 +159,7 @@ Format: `exit`
 
 ### Saving the data
 
-AddressBook data saves in the hard disk automatically after any command that changes the data. There is no need to save manually.
+VirusTracker data saves in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ### Adding a visit: 
 
@@ -227,5 +227,5 @@ Action | Format, Examples
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**List** | `list l/KEYWORD` <br> e.g., `list people`, `list stats`
+**List** | `list l/KEYWORD` <br> e.g., `list l/people`, `list l/stats`
 **Help** | `help`
