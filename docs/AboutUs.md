@@ -56,3 +56,4 @@ You can reach us at the email `seer@comp.nus.edu.sg`
 
 * Role: Developer
 * Responsibilities: UI
+
