@@ -263,7 +263,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | user publishing daily reports | generate daily statistics quickly and easily|                                                         |
 | `* * *`  | user managing infected patient | update people's infection status | keep the current epidemic situation up to date |
 | `* * *`  | user managing quarantined people | update people's quarantine status | be aware of a person's quarantine status |
-
+| `* * *`  | user managing infected people | update people's infection status | be aware of a person's infection status |
+| `* * *`  | user | add location data to a list | generate information about which location needs to be disinfected |
+| `* * *`  | user worried about virus outbreaks | generate locations that infected people have been to | disinfect those locations |
+| `* * *`  | user worried about virus outbreaks | generate people that have been in contact with infected people | quarantine them for safety measures |
+ 
 *{More to be added}*
 
 ### Use cases
@@ -321,6 +325,27 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
          
     Use case ends.
 
+**UC03 - Add a location**
+
+**MSS**
+
+
+1.  User adds a location.
+2.  System adds the new location.
+3.  System displays the updated locations list.
+
+    Use case ends.
+
+**Extensions**
+      
+* 2a. System detects error in the entered data.
+    * 3a1. System prompts user for correct data.
+    * 3a2. User enters new data.  
+    Steps 3a1-3a2 are repeated until the data entered are correct.  
+    Use case resumes at step 3.
+    
+    Use case ends.
+
 **UC06: View all infected people**
 
 **MSS**
@@ -338,6 +363,36 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2b. There are no infected people.
     * 2b1. Go to 2a.
+    
+**UC8: View locations that infected people have been to**
+
+**MSS**
+
+1. User requests to list locations that infected people have been to.
+2. System shows a list of locations that infected people have been to.  
+
+  Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+    Use case ends.    
+    
+**UC9: View people in contact with an infected person**
+
+**MSS**
+
+1. User requests to list people in contact with an infected person.
+2. System shows a list of people in contact with an infected person.  
+
+  Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+    Use case ends.   
     
 **UC10: View high-risk locations**
 
