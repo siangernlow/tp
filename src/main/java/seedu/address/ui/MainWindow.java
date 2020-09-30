@@ -32,6 +32,8 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private PersonListPanel personListPanel;
+    private LocationListPanel locationListPanel;
+    private VisitListPanel visitListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
 
@@ -42,7 +44,7 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
+    private StackPane listPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -111,7 +113,10 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        listPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        locationListPanel = new LocationListPanel(logic.getFilteredLocationList());
+        visitListPanel = new VisitListPanel(logic.getFilteredVisitList());
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -184,6 +189,21 @@ public class MainWindow extends UiPart<Stage> {
 
             if (commandResult.isExit()) {
                 handleExit();
+            }
+
+            if (commandResult.getSwitchState().equals(CommandResult.SWITCH_TO_VIEW_ALL_PEOPLE)) {
+                listPanelPlaceholder.getChildren().clear();
+                listPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+            }
+
+            if (commandResult.getSwitchState().equals(CommandResult.SWITCH_TO_VIEW_ALL_LOCATIONS)) {
+                listPanelPlaceholder.getChildren().clear();
+                listPanelPlaceholder.getChildren().add(locationListPanel.getRoot());
+            }
+
+            if (commandResult.getSwitchState().equals(CommandResult.SWITCH_TO_VIEW_ALL_VISITS)) {
+                listPanelPlaceholder.getChildren().clear();
+                listPanelPlaceholder.getChildren().add(visitListPanel.getRoot());
             }
 
             return commandResult;

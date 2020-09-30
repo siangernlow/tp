@@ -185,6 +185,12 @@ public class AddVisitCommandTest {
         }
 
         @Override
+        public ObservableList<Location> getFilteredLocationList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+
+        @Override
         public Path getVisitBookFilePath() {
             throw new AssertionError("This method should not be called.");
         }

@@ -234,6 +234,11 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public ObservableList<Location> getFilteredLocationList() {
+        return filteredLocations;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         // short circuit if same object
         if (obj == this) {
