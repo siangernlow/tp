@@ -7,7 +7,6 @@ import java.util.logging.Logger;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Version;
@@ -25,14 +24,14 @@ import seedu.address.model.ReadOnlyLocationBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.ReadOnlyVisitBook;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.util.SampleDataUtil;
 import seedu.address.model.VisitBook;
+import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
-import seedu.address.storage.LocationBookStorage;
 import seedu.address.storage.JsonAddressBookStorage;
 import seedu.address.storage.JsonLocationBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.JsonVisitBookStorage;
+import seedu.address.storage.LocationBookStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
@@ -133,7 +132,7 @@ public class MainApp extends Application {
             initialVisitData = new VisitBook();
         }
 
-        return new ModelManager(initialPersonData, initialLocationData, userPrefs, initialVisitData );
+        return new ModelManager(initialPersonData, initialLocationData, userPrefs, initialVisitData);
     }
 
     private void initLogging(Config config) {
