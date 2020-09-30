@@ -7,6 +7,7 @@ import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,14 +24,18 @@ public class ListCommandTest {
     private static final ListType PEOPLE_LIST = ListType.ALL_PEOPLE;
     private static final ListType LOCATIONS_LIST = ListType.ALL_LOCATIONS;
     private static final ListType VISITS_LIST = ListType.ALL_VISITS;
+    private static final ListType INFECTED_LIST = ListType.ALL_INFECTED;
+    private static final ListType QUARANTINED_LIST = ListType.ALL_QUARANTINED;
 
     private Model model;
     private Model expectedModel;
 
     @BeforeEach
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(), new UserPrefs());
-        expectedModel = new ModelManager(model.getAddressBook(), model.getLocationBook(), new UserPrefs());
+        model = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
+                new UserPrefs(), getTypicalVisitBook());
+        expectedModel = new ModelManager(model.getAddressBook(), model.getLocationBook(),
+                new UserPrefs(), model.getVisitBook());
     }
 
     @Test
@@ -56,6 +61,22 @@ public class ListCommandTest {
     public void execute_visitsList_showsSameList() {
         assertCommandSuccess(new ListCommand(VISITS_LIST),
                 model, ListCommand.MESSAGE_SUCCESS_ALL_VISITS, expectedModel);
+    }
+
+    @Test
+    public void execute_infectedList_showsSameList() {
+        Model expectedModelInfected = expectedModel;
+        expectedModelInfected.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_INFECTED);
+        assertCommandSuccess(new ListCommand(INFECTED_LIST),
+                model, ListCommand.MESSAGE_SUCCESS_ALL_INFECTED, expectedModelInfected);
+    }
+
+    @Test
+    public void execute_quarantinedList_showsSameList() {
+        Model expectedModelQuarantined = expectedModel;
+        expectedModelQuarantined.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_QUARANTINED);
+        assertCommandSuccess(new ListCommand(QUARANTINED_LIST),
+                model, ListCommand.MESSAGE_SUCCESS_ALL_QUARANTINED, expectedModelQuarantined);
     }
 
     @Test

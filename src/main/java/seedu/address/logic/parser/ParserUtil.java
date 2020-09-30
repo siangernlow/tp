@@ -3,6 +3,8 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -100,6 +102,20 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String email} into an {@code Email}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code email} is invalid.
+     */
+    public static LocalDate parseDate(String date) throws ParseException {
+        requireNonNull(date);
+        String trimmedDate = date.trim();
+        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return LocalDate.parse(trimmedDate, inputFormat);
+    }
+
+
+    /**
      * Parses a {@code String quarantineStatus} into a {@code QuarantineStatus}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -174,6 +190,10 @@ public class ParserUtil {
             return ListType.ALL_LOCATIONS;
         case "visits":
             return ListType.ALL_VISITS;
+        case "infected":
+            return ListType.ALL_INFECTED;
+        case "quarantined":
+            return ListType.ALL_QUARANTINED;
         default:
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
         }

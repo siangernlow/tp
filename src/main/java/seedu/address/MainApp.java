@@ -20,16 +20,20 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyLocationBook;
 import seedu.address.model.ReadOnlyUserPrefs;
+import seedu.address.model.ReadOnlyVisitBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.VisitBook;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonAddressBookStorage;
 import seedu.address.storage.JsonLocationBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.JsonVisitBookStorage;
 import seedu.address.storage.LocationBookStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
+import seedu.address.storage.VisitBookStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
@@ -60,7 +64,8 @@ public class MainApp extends Application {
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new JsonAddressBookStorage(userPrefs.getAddressBookFilePath());
         LocationBookStorage locationBookStorage = new JsonLocationBookStorage(userPrefs.getLocationBookFilePath());
-        storage = new StorageManager(addressBookStorage, locationBookStorage, userPrefsStorage);
+        VisitBookStorage visitBookStorage = new JsonVisitBookStorage(userPrefs.getVisitBookFilePath());
+        storage = new StorageManager(addressBookStorage, locationBookStorage, userPrefsStorage, visitBookStorage);
 
         initLogging(config);
 
@@ -81,6 +86,8 @@ public class MainApp extends Application {
         ReadOnlyAddressBook initialPersonData;
         Optional<ReadOnlyLocationBook> locationBookOptional;
         ReadOnlyLocationBook initialLocationData;
+        Optional<ReadOnlyVisitBook> visitBookOptional;
+        ReadOnlyVisitBook initialVisitData;
 
         initialPersonData = SampleDataUtil.getSampleAddressBook();
         initialLocationData = SampleDataUtil.getSampleLocationBook();
@@ -112,8 +119,21 @@ public class MainApp extends Application {
             logger.warning("Problem while reading from the file. Will be starting with an empty LocationBook");
             initialLocationData = new LocationBook();
         }*/
+        try {
+            visitBookOptional = storage.readVisitBook();
+            if (!visitBookOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with a sample VisitBook");
+            }
+            initialVisitData = visitBookOptional.orElseGet(SampleDataUtil::getSampleVisitBook);
+        } catch (DataConversionException e) {
+            logger.warning("Data file not in the correct format. Will be starting with an empty VisitBook");
+            initialVisitData = new VisitBook();
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. Will be starting with an empty VisitBook");
+            initialVisitData = new VisitBook();
+        }
 
-        return new ModelManager(initialPersonData, initialLocationData, userPrefs);
+        return new ModelManager(initialPersonData, initialLocationData, userPrefs, initialVisitData);
     }
 
     private void initLogging(Config config) {

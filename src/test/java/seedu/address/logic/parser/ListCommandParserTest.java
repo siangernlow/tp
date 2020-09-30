@@ -14,6 +14,7 @@ public class ListCommandParserTest {
     private static final ListType LOCATIONS_LIST = ListType.ALL_LOCATIONS;
     private static final ListType PEOPLE_LIST = ListType.ALL_PEOPLE;
     private static final ListType VISITS_LIST = ListType.ALL_VISITS;
+    private static final ListType INFECTED_LIST = ListType.ALL_INFECTED;
 
     private ListCommandParser parser = new ListCommandParser();
 
@@ -36,6 +37,13 @@ public class ListCommandParserTest {
         ListCommand expectedListCommand =
                 new ListCommand(VISITS_LIST);
         assertParseSuccess(parser, " " + PREFIX_LIST + "visits", expectedListCommand);
+    }
+
+    @Test
+    public void parseListType_infected() {
+        ListCommand expectedListCommand =
+                new ListCommand(INFECTED_LIST);
+        assertParseSuccess(parser, " " + PREFIX_LIST + "infected", expectedListCommand);
     }
 
     @Test

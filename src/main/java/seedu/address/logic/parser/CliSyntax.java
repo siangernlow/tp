@@ -14,4 +14,5 @@ public class CliSyntax {
     public static final Prefix PREFIX_INFECTION = new Prefix("i/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
     public static final Prefix PREFIX_LIST = new Prefix("l/");
+    public static final Prefix PREFIX_DATE = new Prefix("d/");
 }

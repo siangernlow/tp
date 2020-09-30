@@ -21,8 +21,10 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyLocationBook;
 import seedu.address.model.ReadOnlyUserPrefs;
+import seedu.address.model.ReadOnlyVisitBook;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
+import seedu.address.model.visit.Visit;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -182,6 +184,51 @@ public class AddCommandTest {
 
         @Override
         public void addLocation(Location location) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean hasVisit(Visit visit) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void deleteVisit(Visit visit) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addVisit(Visit visit) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Path getVisitBookFilePath() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setVisitBookFilePath(Path visitBookFilePath) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setVisitBook(ReadOnlyVisitBook visitBook) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ReadOnlyVisitBook getVisitBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Visit> getFilteredVisitList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredVisitList(Predicate<Visit> predicate) {
             throw new AssertionError("This method should not be called.");
         }
     }
