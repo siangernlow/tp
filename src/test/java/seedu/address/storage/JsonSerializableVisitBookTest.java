@@ -15,7 +15,7 @@ import seedu.address.testutil.TypicalVisits;
 
 public class JsonSerializableVisitBookTest {
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "JsonSerializableVisitBookTest");
-    private static final Path TYPICAL_VISITS_FILE = TEST_DATA_FOLDER.resolve("typicalVisitsVisitBook.json");
+    private static final Path TYPICAL_VISITS_FILE = TEST_DATA_FOLDER.resolve("typicalVisitVisitBook.json");
     private static final Path INVALID_VISIT_FILE = TEST_DATA_FOLDER.resolve("invalidVisitVisitBook.json");
     private static final Path DUPLICATE_VISIT_FILE = TEST_DATA_FOLDER.resolve("duplicateVisitVisitBook.json");
 
@@ -24,8 +24,8 @@ public class JsonSerializableVisitBookTest {
         JsonSerializableVisitBook dataFromFile = JsonUtil.readJsonFile(TYPICAL_VISITS_FILE,
                 JsonSerializableVisitBook.class).get();
         VisitBook visitBookFromFile = dataFromFile.toModelType();
-        VisitBook typicalVisitsVisitBook = TypicalVisits.getTypicalVisitBook();
-        assertEquals(visitBookFromFile, typicalVisitsVisitBook);
+        VisitBook typicalVisitVisitBook = TypicalVisits.getTypicalVisitBook();
+        assertEquals(visitBookFromFile, typicalVisitVisitBook);
     }
 
     @Test

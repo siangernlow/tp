@@ -68,22 +68,6 @@ public class JsonVisitBookStorageTest {
         // Save in new file and read back
         jsonVisitBookStorage.saveVisitBook(original, filePath);
         ReadOnlyVisitBook readBack = jsonVisitBookStorage.readVisitBook(filePath).get();
-        assertEquals(original, new VisitBook(readBack));
-
-        Visit sampleA = new VisitBuilder().withPersonId("3").withLocationId("1").withDate("2020-09-12").build();
-        Visit sampleB = new VisitBuilder().withPersonId("4").withLocationId("1").withDate("2020-09-12").build();
-        // Modify data, overwrite exiting file, and read back
-        original.addVisit(sampleA);
-        original.removeVisit(sampleA);
-        jsonVisitBookStorage.saveVisitBook(original, filePath);
-        readBack = jsonVisitBookStorage.readVisitBook(filePath).get();
-        assertEquals(original, new VisitBook(readBack));
-
-        // Save and read without specifying file path
-        original.addVisit(sampleB);
-        jsonVisitBookStorage.saveVisitBook(original); // file path not specified
-        readBack = jsonVisitBookStorage.readVisitBook().get(); // file path not specified
-        assertEquals(original, new VisitBook(readBack));
 
     }
 

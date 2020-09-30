@@ -3,11 +3,11 @@
   "visits" : [ {
     "personId" : "1",
     "locationId" : "2",
-    "date": "2020-09-12"
+    "dateOfVisit": "2020-09-12"
   },{
     "personId" : "2",
     "locationId" : "3",
-    "date": "2020-09-12"
+    "dateOfVisit": "2020-09-12"
   },{
     "personId" : "3",
     "locationId" : "1",
@@ -15,15 +15,15 @@
   },{
     "personId" : "1",
     "locationId" : "4",
-    "date": "2020-09-12"
+    "dateOfVisit": "2020-09-12"
   },{
     "personId" : "1",
     "locationId" : "5",
-    "date": "2020-09-13"
+    "dateOfVisit": "2020-09-13"
   },{
     "personId" : "1",
     "locationId" : "2",
-    "date": "2020-09-13"
+    "dateOfVisit": "2020-09-13"
   }]
 
 }

@@ -12,15 +12,17 @@ import seedu.address.model.visit.Visit;
  */
 public class TypicalVisits {
     public static final Visit FIRST_VISIT = new VisitBuilder().withPersonId("1")
-            .withLocationId("1").withDate("2020-02-02").build();
+            .withLocationId("2").withDate("2020-09-12").build();
     public static final Visit SECOND_VISIT = new VisitBuilder().withPersonId("2")
-            .withLocationId("1").withDate("2020-02-02").build();
+            .withLocationId("3").withDate("2020-09-12").build();
     public static final Visit THIRD_VISIT = new VisitBuilder().withPersonId("3")
-            .withLocationId("1").withDate("2020-02-02").build();
-    public static final Visit FOURTH_VISIT = new VisitBuilder().withPersonId("4")
-            .withLocationId("1").withDate("2020-02-02").build();
-    public static final Visit FIFTH_VISIT = new VisitBuilder().withPersonId("5")
-            .withLocationId("1").withDate("2020-02-02").build();
+            .withLocationId("1").withDate("2020-09-12").build();
+    public static final Visit FOURTH_VISIT = new VisitBuilder().withPersonId("1")
+            .withLocationId("4").withDate("2020-09-12").build();
+    public static final Visit FIFTH_VISIT = new VisitBuilder().withPersonId("1")
+            .withLocationId("5").withDate("2020-09-13").build();
+    public static final Visit SIXTH_VISIT = new VisitBuilder().withPersonId("1")
+            .withLocationId("2").withDate("2020-09-13").build();
 
     private TypicalVisits() {} // prevents instantiation
 
@@ -36,6 +38,7 @@ public class TypicalVisits {
     }
 
     public static List<Visit> getTypicalVisits() {
-        return new ArrayList<>(Arrays.asList(FIRST_VISIT, SECOND_VISIT, THIRD_VISIT, FOURTH_VISIT, FIFTH_VISIT));
+        return new ArrayList<>(Arrays.asList(FIRST_VISIT, SECOND_VISIT, THIRD_VISIT,
+                FOURTH_VISIT, FIFTH_VISIT, SIXTH_VISIT));
     }
 }

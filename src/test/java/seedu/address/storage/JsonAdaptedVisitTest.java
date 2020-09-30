@@ -1,16 +1,12 @@
 package seedu.address.storage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static seedu.address.storage.JsonAdaptedLocation.MISSING_FIELD_MESSAGE_FORMAT;
+import static seedu.address.storage.JsonAdaptedVisit.MISSING_FIELD_MESSAGE_FORMAT;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalVisits.FIRST_VISIT;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 import org.junit.jupiter.api.Test;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 public class JsonAdaptedVisitTest {
@@ -19,33 +15,24 @@ public class JsonAdaptedVisitTest {
     private static final String INVALID_DATE = " ";
     private static final String VALID_PERSONID = "1";
     private static final String VALID_LOCATIONID = "2";
-    private static final String VALID_DATE = "2020-02-02";
+    private static final String VALID_DATE = "2020-09-12";
+
     @Test
     public void toModelType_validVisitDetails_returnsVisit() throws Exception {
-        JsonAdaptedVisit visit = new JsonAdaptedVisit(FIRST_VISIT);
+        JsonAdaptedVisit visit = new JsonAdaptedVisit(VALID_PERSONID, VALID_LOCATIONID, VALID_DATE);
         assertEquals(FIRST_VISIT, visit.toModelType());
     }
 
     @Test
     public void toModelType_invalidPersonId_throwsIllegalValueException() {
-        Index personId = Index.fromOneBased(Integer.parseInt(INVALID_PERSONID));
-        Index locationId = Index.fromOneBased(Integer.parseInt(VALID_LOCATIONID));
-        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate dateOfVisit = LocalDate.parse(VALID_DATE, inputFormat);
-
-        JsonAdaptedVisit visit = new JsonAdaptedVisit(personId, locationId, dateOfVisit);
+        JsonAdaptedVisit visit = new JsonAdaptedVisit(INVALID_PERSONID, VALID_LOCATIONID, VALID_DATE);
         String expectedMessage = "Please enter the correct personId";
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
     }
 
     @Test
     public void toModelType_invalidLocationId_throwsIllegalValueException() {
-        Index personId = Index.fromOneBased(Integer.parseInt(VALID_PERSONID));
-        Index locationId = Index.fromOneBased(Integer.parseInt(INVALID_LOCATIONID));
-        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate dateOfVisit = LocalDate.parse(VALID_DATE, inputFormat);
-
-        JsonAdaptedVisit visit = new JsonAdaptedVisit(personId, locationId, dateOfVisit);
+        JsonAdaptedVisit visit = new JsonAdaptedVisit(VALID_PERSONID, INVALID_LOCATIONID, VALID_DATE);
         String expectedMessage = "Please enter the correct locationId";
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
     }
@@ -53,48 +40,27 @@ public class JsonAdaptedVisitTest {
     // To be further implemented
     @Test
     public void toModelType_invalidDate_throwsIllegalValueException() {
-        Index personId = Index.fromOneBased(Integer.parseInt(VALID_PERSONID));
-        Index locationId = Index.fromOneBased(Integer.parseInt(VALID_LOCATIONID));
-        JsonAdaptedVisit visit = new JsonAdaptedVisit(personId, locationId, null);
+        JsonAdaptedVisit visit = new JsonAdaptedVisit(VALID_PERSONID, VALID_LOCATIONID, INVALID_DATE);
         String expectedMessage = "Please enter the correct date format";
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
     }
 
     @Test
     public void toModelType_nullPersonId_throwsIllegalValueException() {
-
-        Index locationId = Index.fromOneBased(Integer.parseInt(VALID_LOCATIONID));
-
-        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate dateOfVisit = LocalDate.parse(VALID_DATE, inputFormat);
-
-        JsonAdaptedVisit visit = new JsonAdaptedVisit(null, locationId, dateOfVisit);
-
+        JsonAdaptedVisit visit = new JsonAdaptedVisit(null, VALID_LOCATIONID, VALID_DATE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, "personId is missing");
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
     }
     @Test
     public void toModelType_nullLocationId_throwsIllegalValueException() {
-
-        Index personId = Index.fromOneBased(Integer.parseInt(VALID_PERSONID));
-
-        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate dateOfVisit = LocalDate.parse(VALID_DATE, inputFormat);
-
-        JsonAdaptedVisit visit = new JsonAdaptedVisit(personId, null, dateOfVisit);
-
+        JsonAdaptedVisit visit = new JsonAdaptedVisit(VALID_PERSONID, null, INVALID_DATE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, "locationId is missing");
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
     }
 
     @Test
     public void toModelType_nullDate_throwsIllegalValueException() {
-
-        Index personId = Index.fromOneBased(Integer.parseInt(VALID_PERSONID));
-        Index locationId = Index.fromOneBased(Integer.parseInt(VALID_LOCATIONID));
-
-        JsonAdaptedVisit visit = new JsonAdaptedVisit(personId, locationId, null);
-
+        JsonAdaptedVisit visit = new JsonAdaptedVisit(VALID_PERSONID, VALID_LOCATIONID, null);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, "date is missing");
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
     }

@@ -37,6 +37,7 @@ class JsonSerializableVisitBook {
      * @param source future changes to this will not affect the created {@code JsonSerializableVisitBook}.
      */
     public JsonSerializableVisitBook(ReadOnlyVisitBook source) {
+
         visits.addAll(source.getVisitList().stream().map(JsonAdaptedVisit::new).collect(Collectors.toList()));
     }
 

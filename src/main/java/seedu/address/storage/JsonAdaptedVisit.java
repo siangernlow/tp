@@ -1,6 +1,7 @@
 package seedu.address.storage;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -15,17 +16,18 @@ import seedu.address.model.visit.Visit;
 public class JsonAdaptedVisit {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Visit's %s field is missing!";
 
-    private final Index personId;
-    private final Index locationId;
-    private final LocalDate dateOfVisit;
+    private final String personId;
+    private final String locationId;
+    private final String dateOfVisit;
+
 
     /**
      * Constructs a {@code JsonAdaptedVisit} with the given visit details.
      */
     @JsonCreator
-    public JsonAdaptedVisit(@JsonProperty("personId") Index personId,
-                            @JsonProperty("locationId") Index locationId,
-                            @JsonProperty("dateOfVisit") LocalDate date) {
+    public JsonAdaptedVisit(@JsonProperty("personId") String personId,
+                            @JsonProperty("locationId") String locationId,
+                            @JsonProperty("dateOfVisit") String date) {
         this.personId = personId;
         this.locationId = locationId;
         this.dateOfVisit = date;
@@ -35,9 +37,9 @@ public class JsonAdaptedVisit {
      * Converts a given {@code Visit} into this class for Jackson use.
      */
     public JsonAdaptedVisit(Visit source) {
-        personId = source.getPersonId();
-        locationId = source.getLocationId();
-        dateOfVisit = source.getDate();
+        personId = source.getPersonId().toString();
+        locationId = source.getLocationId().toString();
+        dateOfVisit = source.getDate().toString();
     }
 
     /**
@@ -48,24 +50,35 @@ public class JsonAdaptedVisit {
     public Visit toModelType() throws IllegalValueException {
         //to be further implemented
 
-        if (personId == null) {
-            throw new IllegalValueException((MISSING_FIELD_MESSAGE_FORMAT));
-        }
 
-        final Index modelPersonId = personId;
+        if (personId == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "personId is missing"));
+        }
 
         if (locationId == null) {
-            throw new IllegalValueException((MISSING_FIELD_MESSAGE_FORMAT));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "locationId is missing"));
         }
-
-        final Index modelLocationId = locationId;
 
         if (dateOfVisit == null) {
-            throw new IllegalValueException((MISSING_FIELD_MESSAGE_FORMAT));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "date is missing"));
         }
 
-        final LocalDate modelDate = dateOfVisit;
+        if (personId.trim().equals("")) {
+            throw new IllegalValueException("Please enter the correct personId");
+        }
 
+        if (locationId.trim().equals("")) {
+            throw new IllegalValueException("Please enter the correct locationId");
+        }
+
+        if (dateOfVisit.trim().equals("")) {
+            throw new IllegalValueException("Please enter the correct date format");
+        }
+
+        final Index modelPersonId = Index.fromOneBased(Integer.parseInt(personId));
+        final Index modelLocationId = Index.fromOneBased(Integer.parseInt(locationId));
+        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate modelDate = LocalDate.parse(dateOfVisit, inputFormat);
         return new Visit(modelPersonId, modelLocationId, modelDate);
     }
 }
