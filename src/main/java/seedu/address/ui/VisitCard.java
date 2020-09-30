@@ -1,7 +1,5 @@
 package seedu.address.ui;
 
-import java.util.Comparator;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -43,7 +41,7 @@ public class VisitCard extends UiPart<Region> {
         super(FXML);
         this.visit = visit;
         id.setText(displayedIndex + ". ");
-        date.setText("Date: " +visit.getDate().toString());
+        date.setText("Date: " + visit.getDate().toString());
         personName.setText("Visit by: " + visit.getPersonName(visit.getPersonId()));
         locationName.setText("Location: " + visit.getLocationName(visit.getLocationId()));
     }
