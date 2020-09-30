@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-
 import seedu.address.commons.core.index.Index;
 
 public class Visit {
