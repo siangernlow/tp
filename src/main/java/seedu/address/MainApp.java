@@ -15,6 +15,8 @@ import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
+import seedu.address.model.AddressBook;
+import seedu.address.model.LocationBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -89,9 +91,6 @@ public class MainApp extends Application {
         Optional<ReadOnlyVisitBook> visitBookOptional;
         ReadOnlyVisitBook initialVisitData;
 
-        initialPersonData = SampleDataUtil.getSampleAddressBook();
-        initialLocationData = SampleDataUtil.getSampleLocationBook();
-        /*
         try {
             addressBookOptional = storage.readAddressBook();
             if (!addressBookOptional.isPresent()) {
@@ -118,7 +117,7 @@ public class MainApp extends Application {
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty LocationBook");
             initialLocationData = new LocationBook();
-        }*/
+        }
         try {
             visitBookOptional = storage.readVisitBook();
             if (!visitBookOptional.isPresent()) {

@@ -339,14 +339,65 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
       
 * 2a. System detects error in the entered data.
-    * 3a1. System prompts user for correct data.
-    * 3a2. User enters new data.  
-    Steps 3a1-3a2 are repeated until the data entered are correct.  
+    * 2a1. System prompts user for correct data.
+    * 2a2. User enters new data.  
+    Steps 2a1-2a2 are repeated until the data entered are correct.  
     Use case resumes at step 3.
     
     Use case ends.
 
-**UC06: View all infected people**
+**UC04 - View all people**
+
+**MSS**
+
+1. User requests to list all people.
+2. System shows a list of all people.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+    * 2a1. System generates a sample list.
+    * 2a2. System shows the sample list.
+    
+  Use case ends.
+    
+**UC05 - View all locations**
+
+**MSS**
+
+1. User requests to list all locations.
+2. System shows a list of all locations.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+    * 2a1. System generates a sample list.
+    * 2a2. System shows the sample list.
+    
+  Use case ends.
+    
+**UC06 - View all visits**
+
+**MSS**
+
+1. User requests to list all visits.
+2. System shows a list of all visits.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+    * 2a1. System generates a sample list.
+    * 2a2. System shows the sample list.
+    
+  Use case ends.
+    
+**UC07 - View all infected people**
 
 **MSS**
 
@@ -364,7 +415,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 2b. There are no infected people.
     * 2b1. Go to 2a.
     
-**UC8: View locations that infected people have been to**
+**UC08 - View locations that infected people have been to**
 
 **MSS**
 
@@ -379,7 +430,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.    
     
-**UC9: View people in contact with an infected person**
+**UC09 - View people in contact with an infected person**
 
 **MSS**
 
@@ -394,7 +445,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.   
     
-**UC10: View high-risk locations**
+**UC10 - View high-risk locations**
 
 **MSS**
 
@@ -409,7 +460,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-**UC11: View daily statistics**
+**UC11 - View daily statistics**
 
 **MSS**
 
@@ -424,7 +475,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-**UC12: Update infection status**
+**UC12 - Update infection status**
 
 **MSS**
 
@@ -449,7 +500,7 @@ Use case ends.
     
     Use case ends.  
     
-**UC13: Update quarantine status**
+**UC13 - Update quarantine status**
 
 **MSS**
 

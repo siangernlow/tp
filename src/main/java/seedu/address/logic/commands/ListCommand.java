@@ -50,13 +50,14 @@ public class ListCommand extends Command {
         case ALL_VISITS:
             return new CommandResult(MESSAGE_SUCCESS_ALL_VISITS, false, false,
                     CommandResult.SWITCH_TO_VIEW_ALL_VISITS);
-            return new CommandResult(MESSAGE_SUCCESS_ALL_VISITS);
         case ALL_INFECTED:
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
-            return new CommandResult(MESSAGE_SUCCESS_ALL_INFECTED);
+            return new CommandResult(MESSAGE_SUCCESS_ALL_INFECTED, false, false,
+                    CommandResult.SWITCH_TO_VIEW_ALL_INFECTED);
         case ALL_QUARANTINED:
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_QUARANTINED);
-            return new CommandResult(MESSAGE_SUCCESS_ALL_QUARANTINED);
+            return new CommandResult(MESSAGE_SUCCESS_ALL_QUARANTINED, false, false,
+                    CommandResult.SWITCH_TO_VIEW_ALL_QUARANTINED);
         default:
             throw new CommandException(INVALID_LIST_TYPE);
         }

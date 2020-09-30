@@ -33,6 +33,7 @@ public class MainWindow extends UiPart<Stage> {
     // Independent Ui parts residing in this Ui container
     private PersonListPanel personListPanel;
     private LocationListPanel locationListPanel;
+    private VisitListPanel visitListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
 
@@ -115,6 +116,7 @@ public class MainWindow extends UiPart<Stage> {
         listPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         locationListPanel = new LocationListPanel(logic.getFilteredLocationList());
+        visitListPanel = new VisitListPanel(logic.getFilteredVisitList());
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -197,6 +199,11 @@ public class MainWindow extends UiPart<Stage> {
             if (commandResult.getSwitchState().equals(CommandResult.SWITCH_TO_VIEW_ALL_LOCATIONS)) {
                 listPanelPlaceholder.getChildren().clear();
                 listPanelPlaceholder.getChildren().add(locationListPanel.getRoot());
+            }
+
+            if (commandResult.getSwitchState().equals(CommandResult.SWITCH_TO_VIEW_ALL_VISITS)) {
+                listPanelPlaceholder.getChildren().clear();
+                listPanelPlaceholder.getChildren().add(visitListPanel.getRoot());
             }
 
             return commandResult;
