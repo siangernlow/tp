@@ -21,7 +21,7 @@ You can reach us at the email `seer@comp.nus.edu.sg`
 
 ### Qirui
 
-<img src="images/hhdqirui.jpg" width="200px">
+<img src="images/hhdqirui.png" width="200px">
 
 [[github](https://github.com/hhdqirui)]
 [[portfolio](team/johndoe.md)]
