@@ -9,6 +9,10 @@ import java.util.stream.Collectors;
 import seedu.address.commons.core.index.Index;
 import seedu.address.model.AddressBook;
 import seedu.address.model.LocationBook;
+import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyLocationBook;
+import seedu.address.model.ReadOnlyVisitBook;
+import seedu.address.model.VisitBook;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -16,14 +20,9 @@ import seedu.address.model.person.InfectionStatus;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.ReadOnlyLocationBook;
-import seedu.address.model.ReadOnlyVisitBook;
 import seedu.address.model.person.QuarantineStatus;
-import seedu.address.model.VisitBook;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.visit.Visit;
-
 
 /**
  * Contains utility methods for populating {@code AddressBook} and {@code LocationBook} with sample data.
