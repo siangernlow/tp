@@ -1,13 +1,18 @@
 package seedu.address.model.util;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.AddressBook;
 import seedu.address.model.LocationBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyLocationBook;
+import seedu.address.model.ReadOnlyVisitBook;
+import seedu.address.model.VisitBook;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -17,6 +22,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.QuarantineStatus;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.visit.Visit;
 
 /**
  * Contains utility methods for populating {@code AddressBook} and {@code LocationBook} with sample data.
@@ -54,6 +60,14 @@ public class SampleDataUtil {
         };
     }
 
+    public static Visit[] getSampleVisits() {
+        Index samplePersonId = Index.fromOneBased(Integer.parseInt("1"));
+        Index sampleLocationId = Index.fromOneBased(Integer.parseInt("2"));
+        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate sampleDate = LocalDate.parse("2020-02-02", inputFormat);
+        return new Visit[] { new Visit(samplePersonId, sampleLocationId, sampleDate) };
+    }
+
     public static ReadOnlyAddressBook getSampleAddressBook() {
         AddressBook sampleAb = new AddressBook();
         for (Person samplePerson : getSamplePersons()) {
@@ -70,6 +84,13 @@ public class SampleDataUtil {
         return sampleLb;
     }
 
+    public static ReadOnlyVisitBook getSampleVisitBook() {
+        VisitBook sampleVb = new VisitBook();
+        for (Visit sampleVisit : getSampleVisits()) {
+            sampleVb.addVisit(sampleVisit);
+        }
+        return sampleVb;
+    }
     /**
      * Returns a tag set containing the list of strings given.
      */

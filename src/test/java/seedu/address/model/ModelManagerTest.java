@@ -18,8 +18,11 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.visit.Visit;
 import seedu.address.testutil.AddressBookBuilder;
 import seedu.address.testutil.LocationBookBuilder;
+import seedu.address.testutil.VisitBookBuilder;
+import seedu.address.testutil.VisitBuilder;
 
 public class ModelManagerTest {
 
@@ -31,6 +34,7 @@ public class ModelManagerTest {
         assertEquals(new GuiSettings(), modelManager.getGuiSettings());
         assertEquals(new AddressBook(), new AddressBook(modelManager.getAddressBook()));
         assertEquals(new LocationBook(), new LocationBook(modelManager.getLocationBook()));
+        assertEquals(new VisitBook(), new VisitBook(modelManager.getVisitBook()));
     }
 
     @Test
@@ -126,17 +130,51 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void setVisitBookFilePath_nullPath_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.setLocationBookFilePath(null));
+    }
+
+    @Test
+    public void setVisitBookFilePath_validPath_setsVisitBookFilePath() {
+        Path path = Paths.get("address/book/file/path");
+        modelManager.setVisitBookFilePath(path);
+        assertEquals(path, modelManager.getVisitBookFilePath());
+    }
+
+    @Test
+    public void hasVisit_nullLocation_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.hasVisit(null));
+    }
+
+    @Test
+    public void hasVisit_visitNotInVisitBook_returnsFalse() {
+        Visit sampleA = new VisitBuilder().withPersonId("1").withLocationId("2").withDate("2020-09-09").build();
+        assertFalse(modelManager.hasVisit(sampleA));
+    }
+
+    @Test
+    public void hasVisit_visitInAddressBook_returnsTrue() {
+        Visit sampleA = new VisitBuilder().withPersonId("1").withLocationId("2").withDate("2020-02-09").build();
+        modelManager.addVisit(sampleA);
+        assertTrue(modelManager.hasVisit(sampleA));
+    }
+
+    @Test
     public void equals() {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
         AddressBook differentAddressBook = new AddressBook();
         LocationBook locationBook = new LocationBookBuilder().withLocation(CARL_LOCATION).withLocation(DANIEL_LOCATION)
                 .build();
         LocationBook differentLocationBook = new LocationBook();
+
+        Visit sampleB = new VisitBuilder().withPersonId("1").withLocationId("2").withDate("2020-02-09").build();
+        VisitBook visitBook = new VisitBookBuilder().withVisit(sampleB).build();
+        VisitBook differentVisitBook = new VisitBook();
         UserPrefs userPrefs = new UserPrefs();
 
         // same values -> returns true
-        modelManager = new ModelManager(addressBook, locationBook, userPrefs);
-        ModelManager modelManagerCopy = new ModelManager(addressBook, locationBook, userPrefs);
+        modelManager = new ModelManager(addressBook, locationBook, userPrefs, visitBook);
+        ModelManager modelManagerCopy = new ModelManager(addressBook, locationBook, userPrefs, visitBook);
         assertTrue(modelManager.equals(modelManagerCopy));
 
         // same object -> returns true
@@ -149,15 +187,15 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(5));
 
         // different addressBook -> returns false
-        assertFalse(modelManager.equals(new ModelManager(differentAddressBook, locationBook, userPrefs)));
+        assertFalse(modelManager.equals(new ModelManager(differentAddressBook, locationBook, userPrefs, visitBook)));
 
         // different locationBook -> returns false
-        assertFalse(modelManager.equals(new ModelManager(addressBook, differentLocationBook, userPrefs)));
+        assertFalse(modelManager.equals(new ModelManager(addressBook, differentLocationBook, userPrefs, visitBook)));
 
         // different filteredList -> returns false
         String[] keywords = ALICE.getName().fullName.split("\\s+");
         modelManager.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
-        assertFalse(modelManager.equals(new ModelManager(addressBook, locationBook, userPrefs)));
+        assertFalse(modelManager.equals(new ModelManager(addressBook, locationBook, userPrefs, visitBook)));
 
         // resets modelManager to initial state for upcoming tests
         modelManager.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
@@ -165,6 +203,6 @@ public class ModelManagerTest {
         // different userPrefs -> returns false
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setAddressBookFilePath(Paths.get("differentFilePath"));
-        assertFalse(modelManager.equals(new ModelManager(addressBook, locationBook, differentUserPrefs)));
+        assertFalse(modelManager.equals(new ModelManager(addressBook, locationBook, differentUserPrefs, visitBook)));
     }
 }

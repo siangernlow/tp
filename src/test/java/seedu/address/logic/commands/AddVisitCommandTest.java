@@ -16,68 +16,68 @@ import org.junit.jupiter.api.Test;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.LocationBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyLocationBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.ReadOnlyVisitBook;
+import seedu.address.model.VisitBook;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
 import seedu.address.model.visit.Visit;
-import seedu.address.testutil.LocationBuilder;
+import seedu.address.testutil.VisitBuilder;
 
-public class AddLocationCommandTest {
+public class AddVisitCommandTest {
     @Test
     public void constructor_nullLocation_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new AddLocationCommand(null));
+        assertThrows(NullPointerException.class, () -> new AddVisitCommand(null));
     }
 
     @Test
-    public void execute_locationAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingLocationAdded modelStub =
-                new AddLocationCommandTest.ModelStubAcceptingLocationAdded();
-        Location validLocation = new LocationBuilder().build();
+    public void execute_visitAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingVisitAdded modelStub =
+                new AddVisitCommandTest.ModelStubAcceptingVisitAdded();
+        Visit validVisit = new VisitBuilder().build();
 
-        CommandResult commandResult = new AddLocationCommand(validLocation).execute(modelStub);
+        CommandResult commandResult = new AddVisitCommand(validVisit).execute(modelStub);
 
-        assertEquals(String.format(AddLocationCommand.MESSAGE_SUCCESS, validLocation),
+        assertEquals(String.format(AddVisitCommand.MESSAGE_SUCCESS, validVisit),
                 commandResult.getFeedbackToUser());
-        assertEquals(Arrays.asList(validLocation), modelStub.locationsAdded);
+        assertEquals(Arrays.asList(validVisit), modelStub.visitsAdded);
     }
 
     @Test
-    public void execute_duplicateLocation_throwsCommandException() {
-        Location validLocation = new LocationBuilder().build();
-        AddLocationCommand addLocationCommand = new AddLocationCommand(validLocation);
-        AddLocationCommandTest.ModelStub modelStub = new AddLocationCommandTest.ModelStubWithLocation(validLocation);
+    public void execute_duplicateVisit_throwsCommandException() {
+        Visit validVisit = new VisitBuilder().build();
+        AddVisitCommand addvisitCommand = new AddVisitCommand(validVisit);
+        AddVisitCommandTest.ModelStub modelStub = new AddVisitCommandTest.ModelStubWithVisit(validVisit);
 
-        assertThrows(CommandException.class, AddLocationCommand.MESSAGE_DUPLICATE_LOCATION, () ->
-                addLocationCommand.execute(modelStub));
+        assertThrows(CommandException.class, AddVisitCommand.MESSAGE_DUPLICATE_VISIT, () ->
+                addvisitCommand.execute(modelStub));
     }
 
     @Test
     public void equals() {
-        Location alice = new LocationBuilder().withName("Alice").build();
-        Location bob = new LocationBuilder().withName("Bob").build();
-        AddLocationCommand addAliceCommand = new AddLocationCommand(alice);
-        AddLocationCommand addBobCommand = new AddLocationCommand(bob);
+        Visit sampleA = new VisitBuilder().withPersonId("1").withLocationId("1").withDate("2020-09-09").build();
+        Visit sampleB = new VisitBuilder().withPersonId("1").withLocationId("2").withDate("2020-09-09").build();
+        AddVisitCommand addSampleACommand = new AddVisitCommand(sampleA);
+        AddVisitCommand addSampleBCommand = new AddVisitCommand(sampleB);
 
         // same object -> returns true
-        assertTrue(addAliceCommand.equals(addAliceCommand));
+        assertTrue(addSampleACommand.equals(addSampleACommand));
 
         // same values -> returns true
-        AddLocationCommand addAliceCommandCopy = new AddLocationCommand(alice);
-        assertTrue(addAliceCommand.equals(addAliceCommandCopy));
+        AddVisitCommand addSampleACommandCopy = new AddVisitCommand(sampleB);
+        assertTrue(addSampleBCommand.equals(addSampleACommandCopy));
 
         // different types -> returns false
-        assertFalse(addAliceCommand.equals(1));
+        assertFalse(addSampleBCommand.equals(1));
 
         // null -> returns false
-        assertFalse(addAliceCommand.equals(null));
+        assertFalse(addSampleACommand.equals(null));
 
         // different location -> returns false
-        assertFalse(addAliceCommand.equals(addBobCommand));
+        assertFalse(addSampleACommand.equals(addSampleBCommand));
     }
 
     /**
@@ -151,37 +151,37 @@ public class AddLocationCommandTest {
 
         @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
-            throw new AssertionError("This method should not be called.");
+
+        }
+
+        @Override
+        public boolean hasLocation(Location location) {
+            return false;
         }
 
         @Override
         public Path getLocationBookFilePath() {
-            throw new AssertionError("This method should not be called.");
+            return null;
         }
 
         @Override
         public void setLocationBookFilePath(Path locationBookFilePath) {
-            throw new AssertionError("This method should not be called.");
+
+        }
+
+        @Override
+        public void setLocationBook(ReadOnlyLocationBook locationBook) {
+
+        }
+
+        @Override
+        public ReadOnlyLocationBook getLocationBook() {
+            return null;
         }
 
         @Override
         public void addLocation(Location location) {
-            throw new AssertionError("This method should not be called.");
-        }
 
-        @Override
-        public boolean hasVisit(Visit visit) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void deleteVisit(Visit visit) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void addVisit(Visit visit) {
-            throw new AssertionError("This method should not be called.");
         }
 
         @Override
@@ -195,7 +195,17 @@ public class AddLocationCommandTest {
         }
 
         @Override
-        public void setVisitBook(ReadOnlyVisitBook visitBook) {
+        public void addVisit(Visit visit) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void deleteVisit(Visit visit) {
+
+        }
+
+        @Override
+        public void setVisitBook(ReadOnlyVisitBook newData) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -206,69 +216,59 @@ public class AddLocationCommandTest {
 
         @Override
         public ObservableList<Visit> getFilteredVisitList() {
-            throw new AssertionError("This method should not be called.");
+            return null;
         }
 
         @Override
         public void updateFilteredVisitList(Predicate<Visit> predicate) {
-            throw new AssertionError("This method should not be called.");
+
         }
 
         @Override
-        public void setLocationBook(ReadOnlyLocationBook newData) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public ReadOnlyLocationBook getLocationBook() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public boolean hasLocation(Location location) {
+        public boolean hasVisit(Visit visit) {
             throw new AssertionError("This method should not be called.");
         }
     }
 
     /**
-     * A Model stub that contains a single location.
+     * A Model stub that contains a single visit.
      */
-    private class ModelStubWithLocation extends AddLocationCommandTest.ModelStub {
-        private final Location location;
+    private class ModelStubWithVisit extends AddVisitCommandTest.ModelStub {
+        private final Visit visit;
 
-        ModelStubWithLocation(Location location) {
-            requireNonNull(location);
-            this.location = location;
+        ModelStubWithVisit(Visit visit) {
+            requireNonNull(visit);
+            this.visit = visit;
         }
 
         @Override
-        public boolean hasLocation(Location location) {
-            requireNonNull(location);
-            return this.location.isSameLocation(location);
+        public boolean hasVisit(Visit visit) {
+            requireNonNull(visit);
+            return this.visit.equals(visit);
         }
     }
 
     /**
-     * A Model stub that always accept the location being added.
+     * A Model stub that always accept the visit being added.
      */
-    private class ModelStubAcceptingLocationAdded extends AddLocationCommandTest.ModelStub {
-        final ArrayList<Location> locationsAdded = new ArrayList<>();
+    private class ModelStubAcceptingVisitAdded extends AddVisitCommandTest.ModelStub {
+        final ArrayList<Visit> visitsAdded = new ArrayList<>();
 
         @Override
-        public boolean hasLocation(Location location) {
-            requireNonNull(location);
-            return locationsAdded.stream().anyMatch(location::isSameLocation);
+        public boolean hasVisit(Visit visit) {
+            requireNonNull(visit);
+            return visitsAdded.stream().anyMatch(visit::equals);
         }
 
         @Override
-        public void addLocation(Location location) {
-            requireNonNull(location);
-            locationsAdded.add(location);
+        public void addVisit(Visit visit) {
+            requireNonNull(visit);
+            visitsAdded.add(visit);
         }
 
         @Override
-        public ReadOnlyLocationBook getLocationBook() {
-            return new LocationBook();
+        public ReadOnlyVisitBook getVisitBook() {
+            return new VisitBook();
         }
     }
 
