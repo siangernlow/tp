@@ -3,13 +3,12 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 
+import java.time.LocalDate;
 import java.util.stream.Stream;
 
-import java.time.LocalDate;
-
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddVisitCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.commons.core.index.Index;
 import seedu.address.model.visit.Visit;
 
 /**
@@ -27,7 +26,7 @@ public class AddVisitCommandParser implements Parser<AddVisitCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_DATE);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_DATE) || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException( String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddVisitCommand.MESSAGE_USAGE) );
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddVisitCommand.MESSAGE_USAGE));
         }
 
         String[] ids = argMultimap.getPreamble().split("\\s+");
@@ -39,7 +38,7 @@ public class AddVisitCommandParser implements Parser<AddVisitCommand> {
             personId = ParserUtil.parseIndex(ids[0]);
             locationId = ParserUtil.parseIndex(ids[1]);
         } catch (ParseException pe) {
-            throw new ParseException( String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddVisitCommand.MESSAGE_USAGE), pe);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddVisitCommand.MESSAGE_USAGE), pe);
         }
 
         LocalDate date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
