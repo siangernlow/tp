@@ -65,18 +65,18 @@ public class ListCommandTest {
 
     @Test
     public void execute_infectedList_showsSameList() {
-        Model expectedModel_infectd = expectedModel;
-        expectedModel_infectd.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_INFECTED);
+        Model expectedModelInfected = expectedModel;
+        expectedModelInfected.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_INFECTED);
         assertCommandSuccess(new ListCommand(INFECTED_LIST),
-                model, ListCommand.MESSAGE_SUCCESS_ALL_INFECTED, expectedModel_infectd);
+                model, ListCommand.MESSAGE_SUCCESS_ALL_INFECTED, expectedModelInfected);
     }
 
     @Test
     public void execute_quarantinedList_showsSameList() {
-        Model expectedModel_quarantined = expectedModel;
-        expectedModel_quarantined.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_QUARANTINED);
+        Model expectedModelQuarantined = expectedModel;
+        expectedModelQuarantined.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_QUARANTINED);
         assertCommandSuccess(new ListCommand(QUARANTINED_LIST),
-                model, ListCommand.MESSAGE_SUCCESS_ALL_QUARANTINED, expectedModel_quarantined);
+                model, ListCommand.MESSAGE_SUCCESS_ALL_QUARANTINED, expectedModelQuarantined);
     }
 
     @Test

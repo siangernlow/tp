@@ -19,7 +19,6 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
-import seedu.address.testutil.TypicalVisits;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
@@ -28,7 +27,7 @@ import seedu.address.testutil.TypicalVisits;
 public class DeleteCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
-            new UserPrefs(), getTypicalVisitBook() );
+            new UserPrefs(), getTypicalVisitBook());
 
     @Test
     public void execute_validIndexUnfilteredList_success() {

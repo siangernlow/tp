@@ -1,10 +1,10 @@
 package seedu.address.testutil;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.model.visit.Visit;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.model.visit.Visit;
 
 /**
  * A utility class to help with building Location objects.
@@ -21,7 +21,7 @@ public class VisitBuilder {
     /**
      * Creates a {@code VisitBuilder} with the default details.
      */
-    public VisitBuilder(){
+    public VisitBuilder() {
         this.personId = Index.fromOneBased(Integer.parseInt(DEFAULT_PERSONID));
         this.locationId = Index.fromOneBased(Integer.parseInt(DEFAULT_LOCATIONID));
         DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -40,7 +40,7 @@ public class VisitBuilder {
     /**
      * Sets the {@code personId} of the {@code Visit} that we are building.
      */
-    public VisitBuilder withPersonId(String personId){
+    public VisitBuilder withPersonId(String personId) {
         this.personId = Index.fromOneBased(Integer.parseInt(personId));
         return this;
     }
@@ -48,7 +48,7 @@ public class VisitBuilder {
     /**
      * Sets the {@code locationId} of the {@code Visit} that we are building.
      */
-    public VisitBuilder withLocationId(String locationId){
+    public VisitBuilder withLocationId(String locationId) {
         this.locationId = Index.fromOneBased(Integer.parseInt(locationId));
         return this;
     }
@@ -56,7 +56,7 @@ public class VisitBuilder {
     /**
      * Sets the {@code date} of the {@code Visit} that we are building.
      */
-    public VisitBuilder withDate(String date){
+    public VisitBuilder withDate(String date) {
         DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         this.dateOfVisit = LocalDate.parse(date, inputFormat);
         return this;

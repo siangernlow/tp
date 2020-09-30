@@ -1,25 +1,17 @@
 package seedu.address.model;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import org.junit.jupiter.api.Test;
-import seedu.address.model.location.Location;
-import seedu.address.model.location.exceptions.DuplicateLocationException;
-import seedu.address.model.visit.Visit;
-import seedu.address.testutil.LocationBuilder;
-import seedu.address.testutil.VisitBuilder;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalLocations.ALICE_LOCATION;
-import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
 import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
+
+import java.util.Collections;
+
+import org.junit.jupiter.api.Test;
+
+import seedu.address.model.visit.Visit;
+import seedu.address.testutil.VisitBuilder;
 
 public class VisitBookTest {
     private final VisitBook visitBook = new VisitBook();

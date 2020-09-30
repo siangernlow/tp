@@ -1,10 +1,9 @@
 package seedu.address.testutil;
 
-import seedu.address.logic.commands.AddVisitCommand;
-import seedu.address.model.visit.Visit;
-
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 
+import seedu.address.logic.commands.AddVisitCommand;
+import seedu.address.model.visit.Visit;
 
 /**
  * A utility class for Visit.
