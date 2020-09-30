@@ -1,5 +1,6 @@
 ---
-User Guide
+layout: page
+title: User Guide
 ---
 
 VirusTracker is a **desktop app for generating statistics for Covid-19, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI).

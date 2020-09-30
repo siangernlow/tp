@@ -49,8 +49,9 @@ public class JsonAdaptedVisit {
         //to be further implemented
 
         if (personId == null) {
-            throw new IllegalValueException((MISSING_FIELD_MESSAGE_FORMAT));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "personId is missing"));
         }
+
 
         final Index modelPersonId = personId;
 
