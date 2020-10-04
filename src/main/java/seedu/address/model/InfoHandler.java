@@ -175,7 +175,7 @@ public class InfoHandler {
             + PERCENTAGE_QUARANTINED + " %s" + "\n",
             getTotalPeople(), getTotalLocations(), getTotalVisits(),
             getTotalInfected(), getTotalQuarantined(), getRatioAsPercentage(getInfectedOverPeople()),
-            getRatioAsPercentage(getInfectedOverPeople())
+            getRatioAsPercentage(getQuarantinedOverPeople())
         );
     }
 
