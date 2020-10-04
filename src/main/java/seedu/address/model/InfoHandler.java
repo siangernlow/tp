@@ -19,9 +19,11 @@ import seedu.address.model.visit.Visit;
  */
 public class InfoHandler {
     private static final double HUNDRED_IN_DOUBLE = 100.0;
+    // Used as a flag to detect invalid ratios, such as dividing by zero.
+    private static final double INVALID_RATIO = -1.0;
     private static final String COUNT_FORMAT = "%d";
     private static final String PERCENTAGE_FORMAT = "%.2f";
-
+    private static final String INVALID_PERCENTAGE_STRING = "-%%";
     // Headers for summary display
     private static final String TOTAL_PEOPLE_HEADER = "Total number of people:";
     private static final String TOTAL_LOCATIONS_HEADER = "Total number of locations:";
@@ -119,7 +121,11 @@ public class InfoHandler {
     public double getInfectedOverPeople() {
         int totalInfected = getTotalInfected();
         int totalPeople = getTotalPeople();
-        return HUNDRED_IN_DOUBLE * totalInfected / totalPeople;
+        // Check if dividing by zero
+        if (totalPeople == 0) {
+            return INVALID_RATIO;
+        }
+        return (double) totalInfected / totalPeople;
     }
 
     /**
@@ -130,7 +136,27 @@ public class InfoHandler {
     public double getQuarantinedOverPeople() {
         int totalQuarantined = getTotalQuarantined();
         int totalPeople = getTotalPeople();
-        return HUNDRED_IN_DOUBLE * totalQuarantined / totalPeople;
+        // Check if dividing by zero
+        if (totalPeople == 0) {
+            return INVALID_RATIO;
+        }
+        return (double) totalQuarantined / totalPeople;
+    }
+
+    //============ Util ===========================================================================
+
+    /**
+     * Converts the given ratio into a percentage String.
+     * Returns {@code INVALID_PERCENTAGE} if given ratio is -1.0
+     * @param ratio
+     * @return
+     */
+    public String getRatioAsPercentage(double ratio) {
+        if (ratio == INVALID_RATIO) {
+            return INVALID_PERCENTAGE_STRING;
+        }
+        double percentage = HUNDRED_IN_DOUBLE * ratio;
+        return String.format(PERCENTAGE_FORMAT + "%%", percentage);
     }
 
     //============ Summary ========================================================================
@@ -145,11 +171,11 @@ public class InfoHandler {
             + TOTAL_VISITS_HEADER + " " + COUNT_FORMAT + "\n"
             + TOTAL_INFECTED_HEADER + " " + COUNT_FORMAT + "\n"
             + TOTAL_QUARANTINED_HEADER + " " + COUNT_FORMAT + "\n"
-            + PERCENTAGE_INFECTED + " " + PERCENTAGE_FORMAT + "\n"
-            + PERCENTAGE_QUARANTINED + " " + PERCENTAGE_FORMAT + "\n",
+            + PERCENTAGE_INFECTED + " %s" + "\n"
+            + PERCENTAGE_QUARANTINED + " %s" + "\n",
             getTotalPeople(), getTotalLocations(), getTotalVisits(),
-            getTotalInfected(), getTotalQuarantined(), getInfectedOverPeople(),
-            getQuarantinedOverPeople()
+            getTotalInfected(), getTotalQuarantined(), getRatioAsPercentage(getInfectedOverPeople()),
+            getRatioAsPercentage(getInfectedOverPeople())
         );
     }
 
