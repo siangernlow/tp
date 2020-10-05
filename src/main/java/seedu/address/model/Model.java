@@ -13,14 +13,6 @@ import seedu.address.model.visit.Visit;
  * The API of the Model component.
  */
 public interface Model {
-    /** {@code Predicate} that always evaluate to true */
-    Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
-    Predicate<Person> PREDICATE_SHOW_ALL_INFECTED = person -> person.getInfectionStatus().getStatusAsBoolean();
-    Predicate<Person> PREDICATE_SHOW_ALL_QUARANTINED = person -> person.getQuarantineStatus().getStatusAsBoolean();
-
-    /** {@code Predicate} that always evaluate to true */
-    Predicate<Visit> PREDICATE_SHOW_ALL_VISITS = unused -> true;
-
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
      */
@@ -94,6 +86,12 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    /**
+     * Updates the filter of the filtered location list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredLocationList(Predicate<Location> predicate);
 
     /**
      * Returns true if a location with the same identity as {@code location} exists in the virus tracker.

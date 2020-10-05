@@ -189,6 +189,9 @@ public class AddVisitCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
+        public void updateFilteredLocationList(Predicate<Location> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
 
         @Override
         public Path getVisitBookFilePath() {
