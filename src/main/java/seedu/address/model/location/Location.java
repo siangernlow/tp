@@ -4,6 +4,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Name;
 
@@ -13,19 +14,40 @@ import seedu.address.model.person.Name;
  */
 public class Location {
 
+    // Used to create unique identifiers for Locations by counting the number created
+    private static int locationCount = 1;
+
     // Identity fields
     private final Name name;
 
     // Data fields
     private final Address address;
+    private final Index id; // Id is not used when checking duplicates
 
     /**
-     * Every field must be present and not null.
+     * Every field must be present and not null. The Id is obtained from the class itself.
      */
     public Location(Name name, Address address) {
         requireAllNonNull(name, address);
         this.name = name;
         this.address = address;
+        this.id = Index.fromOneBased(locationCount);
+        locationCount += 1;
+    }
+
+    /**
+     * This constructor is used when creating copies of Locations due to edits or initialization.
+     */
+    public Location(Name name, Address address, Index id) {
+        requireAllNonNull(name, address, id);
+
+        // This update to location count is needed during initialization.
+        if (id.getOneBased() >= locationCount) {
+            locationCount = id.getOneBased() + 1;
+        }
+        this.name = name;
+        this.address = address;
+        this.id = id;
     }
 
     public Name getName() {
@@ -34,6 +56,10 @@ public class Location {
 
     public Address getAddress() {
         return address;
+    }
+
+    public Index getId() {
+        return id;
     }
 
     /**
@@ -65,13 +91,14 @@ public class Location {
 
         Location otherLocation = (Location) other;
         return otherLocation.getName().equals(getName())
-                && otherLocation.getAddress().equals(getAddress());
+                && otherLocation.getAddress().equals(getAddress())
+                && otherLocation.getId().equals(getId());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, address);
+        return Objects.hash(name, address, id);
     }
 
     @Override
