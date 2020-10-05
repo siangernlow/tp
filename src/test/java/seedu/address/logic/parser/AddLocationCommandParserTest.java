@@ -30,14 +30,17 @@ public class AddLocationCommandParserTest {
     public void parse_allFieldsPresent_success() {
         Location expectedLocation = new LocationBuilder(BOB_LOCATION).build();
 
+        Location.setLocationCount(2);
         // whitespace only preamble
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + NAME_DESC_BOB + ADDRESS_DESC_BOB,
                 new AddLocationCommand(expectedLocation));
 
+        Location.setLocationCount(2);
         // multiple names - last name accepted
         assertParseSuccess(parser, NAME_DESC_AMY + NAME_DESC_BOB + ADDRESS_DESC_BOB,
                 new AddLocationCommand(expectedLocation));
 
+        Location.setLocationCount(2);
         // multiple addresses - last address accepted
         assertParseSuccess(parser, NAME_DESC_BOB + ADDRESS_DESC_AMY + ADDRESS_DESC_BOB,
                 new AddLocationCommand(expectedLocation));

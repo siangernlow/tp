@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Name;
@@ -9,9 +10,11 @@ import seedu.address.model.person.Name;
 public class LocationBuilder {
     public static final String DEFAULT_NAME = "Vivocity";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_ID = "1";
 
     private Name name;
     private Address address;
+    private Index id;
 
     /**
      * Creates a {@code LocationBuilder} with the default details.
@@ -19,6 +22,7 @@ public class LocationBuilder {
     public LocationBuilder() {
         name = new Name(DEFAULT_NAME);
         address = new Address(DEFAULT_ADDRESS);
+        id = Index.fromOneBased(Integer.parseInt(DEFAULT_ID));
     }
 
     /**
@@ -27,6 +31,7 @@ public class LocationBuilder {
     public LocationBuilder(Location locationToCopy) {
         name = locationToCopy.getName();
         address = locationToCopy.getAddress();
+        id = locationToCopy.getId();
     }
 
     /**
@@ -45,7 +50,15 @@ public class LocationBuilder {
         return this;
     }
 
+    /**
+     * Sets the Id of the {@code Location} that we are building.
+     */
+    public LocationBuilder withId(Index id) {
+        this.id = id;
+        return this;
+    }
+
     public Location build() {
-        return new Location(name, address);
+        return new Location(name, address, id);
     }
 }

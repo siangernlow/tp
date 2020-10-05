@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ID_BOB_LOCATION;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalLocations.ALICE_LOCATION;
 import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
@@ -44,7 +45,8 @@ public class LocationBookTest {
     @Test
     public void resetData_withDuplicateLocations_throwsDuplicateLocationException() {
         // Two locations with the same identity fields
-        Location editedAlice = new LocationBuilder(ALICE_LOCATION).withAddress(VALID_ADDRESS_BOB).build();
+        Location editedAlice = new LocationBuilder(ALICE_LOCATION).withAddress(VALID_ADDRESS_BOB)
+                .withId(VALID_ID_BOB_LOCATION).build();
         List<Location> newLocations = Arrays.asList(ALICE_LOCATION, editedAlice);
         LocationBookTest.LocationBookStub newData = new LocationBookTest.LocationBookStub(newLocations);
 
@@ -70,7 +72,8 @@ public class LocationBookTest {
     @Test
     public void hasLocation_locationWithSameIdentityFieldsInLocationBook_returnsTrue() {
         locationBook.addLocation(ALICE_LOCATION);
-        Location editedAlice = new LocationBuilder(ALICE_LOCATION).withAddress(VALID_ADDRESS_BOB).build();
+        Location editedAlice = new LocationBuilder(ALICE_LOCATION).withAddress(VALID_ADDRESS_BOB)
+                .withId(VALID_ID_BOB_LOCATION).build();
         assertTrue(locationBook.hasLocation(editedAlice));
     }
 

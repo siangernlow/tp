@@ -4,8 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ID_BOB_LOCATION;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalLocations.ALICE_LOCATION;
+import static seedu.address.testutil.TypicalLocations.AMY_LOCATION;
 import static seedu.address.testutil.TypicalLocations.BOB_LOCATION;
 
 import java.util.Arrays;
@@ -16,6 +19,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.model.location.exceptions.DuplicateLocationException;
 import seedu.address.model.location.exceptions.LocationNotFoundException;
+import seedu.address.model.location.exceptions.LocationNotIdentifiableException;
 import seedu.address.testutil.LocationBuilder;
 
 public class UniqueLocationListTest {
@@ -40,8 +44,34 @@ public class UniqueLocationListTest {
     @Test
     public void contains_locationWithSameIdentityFieldsInList_returnsTrue() {
         uniqueLocationList.add(ALICE_LOCATION);
-        Location editedAlice = new LocationBuilder(ALICE_LOCATION).withAddress(VALID_ADDRESS_BOB).build();
+        Location editedAlice = new LocationBuilder(ALICE_LOCATION).withAddress(VALID_ADDRESS_BOB)
+                .withId(VALID_ID_BOB_LOCATION).build();
         assertTrue(uniqueLocationList.contains(editedAlice));
+    }
+
+    @Test
+    public void containsSameIdLocation_nullLocation_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> uniqueLocationList.containsSameIdLocation(null));
+    }
+
+    @Test
+    public void containsSameIdLocation_locationNotInList_returnsFalse() {
+        assertFalse(uniqueLocationList.containsSameIdLocation(ALICE_LOCATION));
+    }
+
+    @Test
+    public void containsSameIdLocation_sameIdInList_returnsTrue() {
+        uniqueLocationList.add(ALICE_LOCATION);
+        Location editedAlice = new LocationBuilder(ALICE_LOCATION).withAddress(VALID_ADDRESS_BOB)
+                .withName(VALID_NAME_BOB).build();
+        assertTrue(uniqueLocationList.containsSameIdLocation(editedAlice));
+    }
+
+    @Test
+    public void containsSameIdLocation_sameIdentityDifferentId_returnsFalse() {
+        uniqueLocationList.add(ALICE_LOCATION);
+        Location editedAlice = new LocationBuilder(ALICE_LOCATION).withId(VALID_ID_BOB_LOCATION).build();
+        assertFalse(uniqueLocationList.containsSameIdLocation(editedAlice));
     }
 
     @Test
@@ -53,6 +83,14 @@ public class UniqueLocationListTest {
     public void add_duplicateLocation_throwsDuplicateLocationException() {
         uniqueLocationList.add(ALICE_LOCATION);
         assertThrows(DuplicateLocationException.class, () -> uniqueLocationList.add(ALICE_LOCATION));
+    }
+
+    @Test
+    public void add_unidentifiableLocation_throwsLocationNotIdentifiableException() {
+        uniqueLocationList.add(ALICE_LOCATION);
+        Location editedAlice = new LocationBuilder(ALICE_LOCATION).withAddress(VALID_ADDRESS_BOB)
+                .withName(VALID_NAME_BOB).build();
+        assertThrows(LocationNotIdentifiableException.class, () -> uniqueLocationList.add(editedAlice));
     }
 
     @Test
@@ -82,9 +120,9 @@ public class UniqueLocationListTest {
 
     @Test
     public void setLocation_editedLocationHasSameIdentity_success() {
-        uniqueLocationList.add(ALICE_LOCATION);
-        Location editedAlice = new LocationBuilder(ALICE_LOCATION).withAddress(VALID_ADDRESS_BOB).build();
-        uniqueLocationList.setLocation(ALICE_LOCATION, editedAlice);
+        Location editedAlice = new LocationBuilder(ALICE_LOCATION).withAddress(VALID_ADDRESS_BOB)
+                .withId(VALID_ID_BOB_LOCATION).build();
+        uniqueLocationList.add(editedAlice);
         UniqueLocationList expectedUniqueLocationList = new UniqueLocationList();
         expectedUniqueLocationList.add(editedAlice);
         assertEquals(expectedUniqueLocationList, uniqueLocationList);
@@ -101,10 +139,12 @@ public class UniqueLocationListTest {
 
     @Test
     public void setLocation_editedLocationHasNonUniqueIdentity_throwsDuplicateLocationException() {
-        uniqueLocationList.add(ALICE_LOCATION);
+        uniqueLocationList.add(AMY_LOCATION);
         uniqueLocationList.add(BOB_LOCATION);
+        Location editedAlice = new LocationBuilder(AMY_LOCATION).withAddress(VALID_ADDRESS_BOB)
+                .withName(VALID_NAME_BOB).build();
         assertThrows(DuplicateLocationException.class, () ->
-                uniqueLocationList.setLocation(ALICE_LOCATION, BOB_LOCATION));
+                uniqueLocationList.setLocation(AMY_LOCATION, editedAlice));
     }
 
     @Test
@@ -159,6 +199,15 @@ public class UniqueLocationListTest {
         List<Location> listWithDuplicateLocations = Arrays.asList(ALICE_LOCATION, ALICE_LOCATION);
         assertThrows(DuplicateLocationException.class, () ->
                 uniqueLocationList.setLocations(listWithDuplicateLocations));
+    }
+
+    @Test
+    public void setLocations_listWithUnidentifiableLocations_throwsDuplicateLocationException() {
+        Location editedAlice = new LocationBuilder(ALICE_LOCATION).withAddress(VALID_ADDRESS_BOB)
+                .withName(VALID_NAME_BOB).build();
+        List<Location> listWithUnidentifiableLocations = Arrays.asList(ALICE_LOCATION, editedAlice);
+        assertThrows(LocationNotIdentifiableException.class, () ->
+                uniqueLocationList.setLocations(listWithUnidentifiableLocations));
     }
 
     @Test

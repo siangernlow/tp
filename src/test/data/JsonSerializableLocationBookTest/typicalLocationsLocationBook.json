@@ -2,24 +2,31 @@
   "_comment": "LocationBook save file which contains the same Location values as in TypicalLocations#getTypicalLocationBook()",
   "locations" : [ {
     "name" : "Alice Pauline House",
-    "address" : "123, Jurong West Ave 6, #08-111"
+    "address" : "123, Jurong West Ave 6, #08-111",
+    "id": "2"
   }, {
     "name" : "Benson Meier House",
-    "address" : "311, Clementi Ave 2, #02-25"
+    "address" : "311, Clementi Ave 2, #02-25",
+    "id": "3"
   }, {
     "name" : "Carl Kurz House",
-    "address" : "wall street"
+    "address" : "wall street",
+    "id": "5"
   }, {
     "name" : "Daniel Meier House",
-    "address" : "10th street"
+    "address" : "10th street",
+    "id": "7"
   }, {
     "name" : "Elle Meyer House",
-    "address" : "michegan ave"
+    "address" : "michegan ave",
+    "id": "8"
   }, {
     "name" : "Fiona Kunz House",
-    "address" : "little tokyo"
+    "address" : "little tokyo",
+    "id": "10"
   }, {
     "name" : "George Best House",
-    "address" : "4th street"
+    "address" : "4th street",
+    "id": "6"
   } ]
 }
