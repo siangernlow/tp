@@ -1,9 +1,9 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_INFECTED;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_QUARANTINED;
+import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_INFECTED;
+import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_QUARANTINED;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.ListType;

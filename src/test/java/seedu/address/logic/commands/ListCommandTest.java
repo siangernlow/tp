@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.parser.ListType;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.ModelPredicate;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -66,7 +67,7 @@ public class ListCommandTest {
     @Test
     public void execute_infectedList_showsSameList() {
         Model expectedModelInfected = expectedModel;
-        expectedModelInfected.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_INFECTED);
+        expectedModelInfected.updateFilteredPersonList(ModelPredicate.PREDICATE_SHOW_ALL_INFECTED);
         assertCommandSuccess(new ListCommand(INFECTED_LIST),
                 model, ListCommand.MESSAGE_SUCCESS_ALL_INFECTED, expectedModelInfected);
     }
@@ -74,7 +75,7 @@ public class ListCommandTest {
     @Test
     public void execute_quarantinedList_showsSameList() {
         Model expectedModelQuarantined = expectedModel;
-        expectedModelQuarantined.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_QUARANTINED);
+        expectedModelQuarantined.updateFilteredPersonList(ModelPredicate.PREDICATE_SHOW_ALL_QUARANTINED);
         assertCommandSuccess(new ListCommand(QUARANTINED_LIST),
                 model, ListCommand.MESSAGE_SUCCESS_ALL_QUARANTINED, expectedModelQuarantined);
     }

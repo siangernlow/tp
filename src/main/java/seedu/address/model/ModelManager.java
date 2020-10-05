@@ -2,6 +2,9 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_LOCATIONS;
+import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_VISITS;
 
 import java.nio.file.Path;
 import java.util.function.Predicate;
@@ -25,6 +28,7 @@ public class ModelManager implements Model {
     private final LocationBook locationBook;
     private final UserPrefs userPrefs;
     private final VisitBook visitBook;
+    private final InfoHandler infoHandler;
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Location> filteredLocations;
     private final FilteredList<Visit> filteredVisits;
@@ -43,6 +47,7 @@ public class ModelManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         this.locationBook = new LocationBook(locationBook);
         this.visitBook = new VisitBook(visitBook);
+        this.infoHandler = new InfoHandler(this);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredLocations = new FilteredList<>(this.locationBook.getLocationList());
@@ -162,6 +167,23 @@ public class ModelManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //=========== Filtered Location List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Visit} backed by the internal list of
+     * {@code versionedVisitBook}
+     */
+    @Override
+    public ObservableList<Location> getFilteredLocationList() {
+        return filteredLocations;
+    }
+
+    @Override
+    public void updateFilteredLocationList(Predicate<Location> predicate) {
+        requireNonNull(predicate);
+        filteredLocations.setPredicate(predicate);
+    }
+
     //=========== Filtered Visit List Accessors =============================================================
 
     /**
@@ -178,6 +200,7 @@ public class ModelManager implements Model {
         requireNonNull(predicate);
         filteredVisits.setPredicate(predicate);
     }
+
 
     //=========== LocationBook ================================================================================
 
@@ -200,7 +223,8 @@ public class ModelManager implements Model {
     @Override
     public void addLocation(Location location) {
         locationBook.addLocation(location);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS); // needs to be updated to persons when doing list command
+        // needs to be updated to persons when doing list command
+        updateFilteredLocationList(PREDICATE_SHOW_ALL_LOCATIONS);
     }
 
 
@@ -233,9 +257,10 @@ public class ModelManager implements Model {
         updateFilteredVisitList(PREDICATE_SHOW_ALL_VISITS); // needs to be updated to persons when doing list command
     }
 
-    @Override
-    public ObservableList<Location> getFilteredLocationList() {
-        return filteredLocations;
+    //=========== InfoHandler ================================================================================
+
+    public InfoHandler getInfoHandler() {
+        return infoHandler;
     }
 
     @Override

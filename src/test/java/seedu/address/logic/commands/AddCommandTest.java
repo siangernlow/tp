@@ -158,6 +158,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateFilteredLocationList(Predicate<Location> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public boolean hasLocation(Location location) {
             throw new AssertionError("This method should not be called.");
         }
