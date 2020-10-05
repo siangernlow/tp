@@ -76,6 +76,17 @@ public class Location {
     }
 
     /**
+     * Returns true if both locations have the same id.
+     */
+    public boolean isSameId(Location otherLocation) {
+        if (otherLocation == this) {
+            return true;
+        }
+        return otherLocation != null
+                && otherLocation.getId().equals(getId());
+    }
+
+    /**
      * Returns true if both locations have the same identity and data fields.
      * This defines a stronger notion of equality between two locations.
      */
