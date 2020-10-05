@@ -23,8 +23,6 @@ public class AddLocationCommand extends Command {
             + PREFIX_NAME + "School of Computing "
             + PREFIX_ADDRESS + "NUS School of Computing COM1 13 Computing Dr, 117417 ";
 
-    public static final String MESSAGE_NOT_IMPLEMENTED_YET = "Add location command not implemented yet";
-
     public static final String MESSAGE_SUCCESS = "New location added: %1$s";
     public static final String MESSAGE_DUPLICATE_LOCATION = "This location already exists in the virus tracker.";
 
