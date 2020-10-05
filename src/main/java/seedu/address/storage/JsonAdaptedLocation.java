@@ -3,6 +3,8 @@ package seedu.address.storage;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.core.index.exceptions.InvalidIndexException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Address;
@@ -16,14 +18,17 @@ public class JsonAdaptedLocation {
 
     private final String name;
     private final String address;
+    private final String id;
 
     /**
      * Constructs a {@code JsonAdaptedLocation} with the given location details.
      */
     @JsonCreator
-    public JsonAdaptedLocation(@JsonProperty("name") String name, @JsonProperty("address") String address) {
+    public JsonAdaptedLocation(@JsonProperty("name") String name, @JsonProperty("address") String address,
+                               @JsonProperty("id") String id) {
         this.name = name;
         this.address = address;
+        this.id = id;
     }
 
     /**
@@ -32,6 +37,7 @@ public class JsonAdaptedLocation {
     public JsonAdaptedLocation(Location source) {
         name = source.getName().fullName;
         address = source.getAddress().value;
+        id = source.getId().toString();
     }
 
     /**
@@ -56,6 +62,19 @@ public class JsonAdaptedLocation {
         }
         final Address modelAddress = new Address(address);
 
-        return new Location(modelName, modelAddress);
+        if (id == null) {
+            throw new IllegalValueException(MISSING_FIELD_MESSAGE_FORMAT);
+        }
+        try {
+            int i = Integer.parseInt(id);
+            if (i <= 0) {
+                throw new InvalidIndexException();
+            }
+        } catch (ClassCastException e) {
+            throw new InvalidIndexException();
+        }
+        final Index modelId = Index.fromOneBased(Integer.parseInt(id));
+
+        return new Location(modelName, modelAddress, modelId);
     }
 }
