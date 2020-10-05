@@ -62,6 +62,11 @@ public class Location {
         return id;
     }
 
+    // for use in tests only
+    public static void setLocationCount(int count) {
+        locationCount = count;
+    }
+
     /**
      * Returns true if both locations have the same name.
      * This defines a weaker notion of equality between two locations.

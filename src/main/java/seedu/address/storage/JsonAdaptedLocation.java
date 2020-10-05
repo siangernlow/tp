@@ -65,15 +65,12 @@ public class JsonAdaptedLocation {
         if (id == null) {
             throw new IllegalValueException(MISSING_FIELD_MESSAGE_FORMAT);
         }
+        final Index modelId;
         try {
-            int i = Integer.parseInt(id);
-            if (i <= 0) {
-                throw new InvalidIndexException();
-            }
-        } catch (ClassCastException e) {
+            modelId = Index.fromOneBased(Integer.parseInt(id));
+        } catch (ClassCastException | IndexOutOfBoundsException e) {
             throw new InvalidIndexException();
         }
-        final Index modelId = Index.fromOneBased(Integer.parseInt(id));
 
         return new Location(modelName, modelAddress, modelId);
     }
