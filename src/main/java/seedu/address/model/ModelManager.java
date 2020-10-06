@@ -229,7 +229,13 @@ public class ModelManager implements Model {
 
     @Override
     public void deleteLocation(Location target) {
-        return;
+        locationBook.removeLocation(target);
+    }
+
+    @Override
+    public void setLocation(Location target, Location editedLocation) {
+        requireAllNonNull(target, editedLocation);
+        locationBook.setLocation(target, editedLocation);
     }
 
 

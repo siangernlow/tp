@@ -35,7 +35,7 @@ public class DeleteLocationCommand extends Command {
         List<Location> lastShownList = model.getFilteredLocationList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_LOCATION_DISPLAYED_INDEX);
         }
 
         Location locationToDelete = lastShownList.get(targetIndex.getZeroBased());

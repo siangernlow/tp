@@ -129,6 +129,14 @@ public interface Model {
     void deleteLocation(Location target);
 
     /**
+     * Replaces the given location {@code target} with {@code editedLocation}.
+     * {@code target} must exist in the location book.
+     * The location identity of {@code editedPerson} must not be the same as another existing location in the
+     * location book.
+     */
+    void setLocation(Location target, Location editedLocation);
+
+    /**
      * Returns true if a visit with the same identity as {@code visit} exists in the address book.
      */
     boolean hasVisit(Visit visit);
