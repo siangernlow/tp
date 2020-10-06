@@ -227,6 +227,10 @@ public class ModelManager implements Model {
         updateFilteredLocationList(PREDICATE_SHOW_ALL_LOCATIONS);
     }
 
+    @Override
+    public void deleteLocation(Location target) {
+        return;
+    }
 
 
     //=========== VisitBook ================================================================================

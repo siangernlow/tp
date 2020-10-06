@@ -123,6 +123,12 @@ public interface Model {
     void addLocation(Location location);
 
     /**
+     * Deletes the given location.
+     * The location must exist in the location book.
+     */
+    void deleteLocation(Location target);
+
+    /**
      * Returns true if a visit with the same identity as {@code visit} exists in the address book.
      */
     boolean hasVisit(Visit visit);
