@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -25,7 +26,7 @@ public class AddVisitCommand extends Command {
             + "Parameters: PersonId (must be a positive integer) ,"
             + "LocationId (must be a positive integer),  "
             + "Date (must be in the format of yyyy-MM-dd "
-            + "Example: " + COMMAND_WORD + " 1 " + " 2 " + "2020-09-09";
+            + "Example: " + COMMAND_WORD + " 1 " + " 2 " + PREFIX_DATE + " 2020-09-09 ";
 
     private final Visit toAdd;
 
