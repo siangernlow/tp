@@ -26,7 +26,7 @@ public class DeleteVisitsCommandParserTest {
     @Test
     public void parse_validArgs_returnsDeleteVisitsCommand() {
         DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        assertParseSuccess(parser, "deleteVisits d/2020-09-12",
+        assertParseSuccess(parser, " d/2020-09-12",
                 new DeleteVisitsCommand(LocalDate.parse("2020-09-12", inputFormat)));
     }
     @Test

@@ -21,7 +21,7 @@ public class DeleteVisitsCommand extends Command {
     public static final String COMMAND_WORD = "deleteVisits";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the visits identified by the dates used in the displayed visit list.\n"
+            + ": Deletes the visits before and up to the dates used in the displayed visit list.\n"
             + "Parameters: Date (must be in the format of yyyy-MM-DD)\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_DATE + " 2020-09-09 ";
     public static final String MESSAGE_DELETE_VISIT_SUCCESS = "Deleted Visits: \n";
@@ -41,7 +41,7 @@ public class DeleteVisitsCommand extends Command {
      * @param targetDate is the date to be compared with.
      */
 
-    public String deleteVisit (Model model, List<Visit> lastShownList, LocalDate targetDate) throws CommandException {
+    public String deleteVisit(Model model, List<Visit> lastShownList, LocalDate targetDate) throws CommandException {
         // display the visits deleted
         StringBuilder visitsToDelete = new StringBuilder(MESSAGE_DELETE_VISIT_SUCCESS);
         // count how many visits are deleted and display them in an order
