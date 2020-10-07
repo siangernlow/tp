@@ -14,6 +14,7 @@ import seedu.address.model.location.exceptions.LocationNotIdentifiableException;
 
 /**
  * A list of locations that enforces uniqueness between its elements and does not allow nulls.
+ * This list also enforces that all elements have unique ids.
  * A location is considered unique by comparing using {@code Location#isSameLocation(Location)}. As such, adding and
  * updating of locations uses Location#isSameLocation(Location) for equality so as to ensure that the location being
  * added or updated is unique in terms of identity in the UniqueLocationList. However, the removal of a location uses

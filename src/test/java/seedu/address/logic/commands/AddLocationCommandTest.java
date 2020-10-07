@@ -190,6 +190,16 @@ public class AddLocationCommandTest {
         }
 
         @Override
+        public void deleteLocation(Location target) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setLocation(Location target, Location editedLocation) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public boolean hasVisit(Visit visit) {
             throw new AssertionError("This method should not be called.");
         }
