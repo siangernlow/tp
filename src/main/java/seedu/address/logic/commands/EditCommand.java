@@ -83,7 +83,7 @@ public class EditCommand extends Command {
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
-        if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
+        if (!personToEdit.isSamePerson(editedPerson) && model.hasSameIdentityExceptId(editedPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
@@ -107,7 +107,7 @@ public class EditCommand extends Command {
                 .orElse(personToEdit.getQuarantineStatus());
         InfectionStatus updatedInfectionStatus = editPersonDescriptor.getInfectionStatus()
                                             .orElse(personToEdit.getInfectionStatus());
-        Index updatedId = editPersonDescriptor.getId().orElse(personToEdit.getId());
+        Index updatedId = personToEdit.getId();
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,

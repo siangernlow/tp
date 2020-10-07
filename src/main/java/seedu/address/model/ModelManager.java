@@ -133,6 +133,18 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public boolean hasSameIdPerson(Person person) {
+        requireNonNull(person);
+        return addressBook.hasSameIdPerson(person);
+    }
+
+    @Override
+    public boolean hasSameIdentityExceptId(Person person) {
+        requireNonNull(person);
+        return addressBook.hasSameIdentityExceptId(person);
+    }
+
+    @Override
     public void deletePerson(Person target) {
         addressBook.removePerson(target);
     }

@@ -139,6 +139,16 @@ public class Person {
     }
 
     /**
+     * Returns true if both persons are of the same identity expect id
+     */
+    public boolean isSameIdentityExceptIdPerson(Person otherPerson) {
+        return otherPerson != null
+                && otherPerson.getName().equals(getName())
+                && otherPerson.getPhone().equals(getPhone())
+                && otherPerson.getEmail().equals(getEmail());
+    }
+
+    /**
      * Returns true if both persons have the same identity and data fields.
      * This defines a stronger notion of equality between two persons.
      */

@@ -46,6 +46,14 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
+     * Returns true if the list contains a person with the same identity except id as the given argument.
+     */
+    public boolean containsSameIdentityExpectIdPerson(Person toCheck) {
+        requireNonNull(toCheck);
+        return internalList.stream().anyMatch(toCheck::isSameIdentityExceptIdPerson);
+    }
+
+    /**
      * Adds a person to the list.
      * The person must not already exist in the list.
      */
@@ -77,7 +85,9 @@ public class UniquePersonList implements Iterable<Person> {
             throw new DuplicatePersonException();
         }
 
-        // assert(target.isSameId(editedPerson));
+        if (containsSameIdPerson(editedPerson) && !target.isSameId(editedPerson)) {
+            throw new PersonNotIdentifiableException();
+        }
 
         internalList.set(index, editedPerson);
     }
