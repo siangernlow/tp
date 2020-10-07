@@ -3,6 +3,7 @@ package seedu.address.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.InfectionStatus;
@@ -24,6 +25,7 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_QUARANTINE_STATUS = "false";
     public static final String DEFAULT_INFECTION_STATUS = "false";
+    public static final String DEFAULT_ID = "1";
 
     private Name name;
     private Phone phone;
@@ -31,6 +33,7 @@ public class PersonBuilder {
     private Address address;
     private QuarantineStatus quarantineStatus;
     private InfectionStatus infectionStatus;
+    private Index id;
     private Set<Tag> tags;
 
     /**
@@ -43,6 +46,7 @@ public class PersonBuilder {
         address = new Address(DEFAULT_ADDRESS);
         quarantineStatus = new QuarantineStatus(DEFAULT_QUARANTINE_STATUS);
         infectionStatus = new InfectionStatus(DEFAULT_INFECTION_STATUS);
+        id = Index.fromOneBased(Integer.parseInt(DEFAULT_ID));
         tags = new HashSet<>();
     }
 
@@ -56,6 +60,7 @@ public class PersonBuilder {
         address = personToCopy.getAddress();
         quarantineStatus = personToCopy.getQuarantineStatus();
         infectionStatus = personToCopy.getInfectionStatus();
+        id = personToCopy.getId();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -118,7 +123,15 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code id} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withId(Index id) {
+        this.id = id;
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, address, quarantineStatus, infectionStatus, tags);
+        return new Person(name, phone, email, address, quarantineStatus, infectionStatus, id, tags);
     }
 }

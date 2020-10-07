@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.core.index.exceptions.InvalidIndexException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -32,6 +34,7 @@ class JsonAdaptedPerson {
     private final String address;
     private final String quarantineStatus;
     private final String infectionStatus;
+    private final String id;
     private final List<JsonAdaptedTag> tagged = new ArrayList<>();
 
     /**
@@ -42,6 +45,7 @@ class JsonAdaptedPerson {
             @JsonProperty("email") String email, @JsonProperty("address") String address,
             @JsonProperty("quarantineStatus") String quarantineStatus,
             @JsonProperty("infectionStatus") String infectionStatus,
+            @JsonProperty("id") String id,
             @JsonProperty("tagged") List<JsonAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
@@ -49,6 +53,7 @@ class JsonAdaptedPerson {
         this.address = address;
         this.quarantineStatus = quarantineStatus;
         this.infectionStatus = infectionStatus;
+        this.id = id;
         if (tagged != null) {
             this.tagged.addAll(tagged);
         }
@@ -64,6 +69,7 @@ class JsonAdaptedPerson {
         address = source.getAddress().value;
         quarantineStatus = source.getQuarantineStatus().value;
         infectionStatus = source.getInfectionStatus().getStatusAsString();
+        id = source.getId().toString();
         tagged.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -131,9 +137,21 @@ class JsonAdaptedPerson {
         }
         final InfectionStatus modelInfectionStatus = new InfectionStatus(infectionStatus);
 
+        if (id == null) {
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, "id")
+            );
+        }
+        final Index modelId;
+        try {
+            modelId = Index.fromOneBased(Integer.parseInt(id));
+        } catch (ClassCastException | IndexOutOfBoundsException e) {
+            throw new InvalidIndexException();
+        }
+
         final Set<Tag> modelTags = new HashSet<>(personTags);
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelQuarantineStatus,
-                modelInfectionStatus, modelTags);
+                modelInfectionStatus, modelId, modelTags);
     }
 
 }

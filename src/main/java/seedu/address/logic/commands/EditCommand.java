@@ -107,10 +107,11 @@ public class EditCommand extends Command {
                 .orElse(personToEdit.getQuarantineStatus());
         InfectionStatus updatedInfectionStatus = editPersonDescriptor.getInfectionStatus()
                                             .orElse(personToEdit.getInfectionStatus());
+        Index updatedId = editPersonDescriptor.getId().orElse(personToEdit.getId());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
-                updatedQuarantineStatus, updatedInfectionStatus, updatedTags);
+                updatedQuarantineStatus, updatedInfectionStatus, updatedId, updatedTags);
     }
 
     @Override
@@ -142,6 +143,7 @@ public class EditCommand extends Command {
         private Address address;
         private QuarantineStatus quarantineStatus;
         private InfectionStatus infectionStatus;
+        private Index id;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -157,6 +159,7 @@ public class EditCommand extends Command {
             setAddress(toCopy.address);
             setQuarantineStatus(toCopy.quarantineStatus);
             setInfectionStatus(toCopy.infectionStatus);
+            setId(toCopy.id);
             setTags(toCopy.tags);
         }
 
@@ -206,12 +209,21 @@ public class EditCommand extends Command {
         public Optional<QuarantineStatus> getQuarantineStatus() {
             return Optional.ofNullable(quarantineStatus);
         }
+
         public void setInfectionStatus(InfectionStatus infectionStatus) {
             this.infectionStatus = infectionStatus;
         }
 
         public Optional<InfectionStatus> getInfectionStatus() {
             return Optional.ofNullable(infectionStatus);
+        }
+
+        public void setId(Index id) {
+            this.id = id;
+        }
+
+        public Optional<Index> getId() {
+            return Optional.ofNullable(id);
         }
 
         /**

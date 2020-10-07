@@ -10,6 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.PersonNotIdentifiableException;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
@@ -37,6 +38,14 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
+     * Returns true if the list contains a person with the same id as the given argument.
+     */
+    public boolean containsSameIdPerson(Person toCheck) {
+        requireNonNull(toCheck);
+        return internalList.stream().anyMatch(toCheck::isSameId);
+    }
+
+    /**
      * Adds a person to the list.
      * The person must not already exist in the list.
      */
@@ -44,6 +53,9 @@ public class UniquePersonList implements Iterable<Person> {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
             throw new DuplicatePersonException();
+        }
+        if (containsSameIdPerson(toAdd)) {
+            throw new PersonNotIdentifiableException();
         }
         internalList.add(toAdd);
     }
@@ -64,6 +76,8 @@ public class UniquePersonList implements Iterable<Person> {
         if (!target.isSamePerson(editedPerson) && contains(editedPerson)) {
             throw new DuplicatePersonException();
         }
+
+        // assert(target.isSameId(editedPerson));
 
         internalList.set(index, editedPerson);
     }
@@ -92,6 +106,9 @@ public class UniquePersonList implements Iterable<Person> {
         requireAllNonNull(persons);
         if (!personsAreUnique(persons)) {
             throw new DuplicatePersonException();
+        }
+        if (!personsAreIdentifiable(persons)) {
+            throw new PersonNotIdentifiableException();
         }
 
         internalList.setAll(persons);
@@ -128,6 +145,21 @@ public class UniquePersonList implements Iterable<Person> {
         for (int i = 0; i < persons.size() - 1; i++) {
             for (int j = i + 1; j < persons.size(); j++) {
                 if (persons.get(i).isSamePerson(persons.get(j))) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Returns true if {@code locations} contains identifiable locations.
+     * This is true if all locations have different ids.
+     */
+    private boolean personsAreIdentifiable(List<Person> persons) {
+        for (int i = 0; i < persons.size() - 1; i++) {
+            for (int j = i + 1; j < persons.size(); j++) {
+                if (persons.get(i).isSameId(persons.get(j))) {
                     return false;
                 }
             }

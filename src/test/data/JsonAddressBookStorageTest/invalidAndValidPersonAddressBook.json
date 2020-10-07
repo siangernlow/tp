@@ -5,13 +5,15 @@
     "email": "hans@example.com",
     "address": "4th street",
     "quarantineStatus": "true",
-    "infectionStatus": "false"
+    "infectionStatus": "false",
+    "id" : "1"
   }, {
     "name": "Person With Invalid Phone Field",
     "phone": "948asdf2424",
     "email": "hans@example.com",
     "address": "4th street",
     "quarantineStatus": "true",
-    "infectionStatus": "true"
+    "infectionStatus": "true",
+    "id" : "0"
   } ]
 }
