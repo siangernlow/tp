@@ -206,6 +206,16 @@ public class MainWindow extends UiPart<Stage> {
                 listPanelPlaceholder.getChildren().add(visitListPanel.getRoot());
             }
 
+            if (commandResult.getSwitchState().equals(CommandResult.SWITCH_TO_VIEW_ALL_INFECTED)) {
+                listPanelPlaceholder.getChildren().clear();
+                listPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+            }
+
+            if (commandResult.getSwitchState().equals(CommandResult.SWITCH_TO_VIEW_ALL_QUARANTINED)) {
+                listPanelPlaceholder.getChildren().clear();
+                listPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+            }
+
             return commandResult;
         } catch (CommandException | ParseException e) {
             logger.info("Invalid command: " + commandText);
