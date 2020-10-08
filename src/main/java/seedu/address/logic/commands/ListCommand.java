@@ -2,8 +2,10 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_INFECTED;
+import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_LOCATIONS;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_QUARANTINED;
+import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_VISITS;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.ListType;
@@ -27,6 +29,7 @@ public class ListCommand extends Command {
     public static final String MESSAGE_SUCCESS_ALL_VISITS = "Listed all visits";
     public static final String MESSAGE_SUCCESS_ALL_INFECTED = "Listed all infected people";
     public static final String MESSAGE_SUCCESS_ALL_QUARANTINED = "Listed all quarantined people";
+    public static final String MESSAGE_SUCCESS_STATISTICS = "Listed the statistics for the day";
     public static final String INVALID_LIST_TYPE = "There is no such list type.";
 
     private final ListType listType;
@@ -45,9 +48,11 @@ public class ListCommand extends Command {
             return new CommandResult(MESSAGE_SUCCESS_ALL_PEOPLE, false, false,
                     CommandResult.SWITCH_TO_VIEW_ALL_PEOPLE);
         case ALL_LOCATIONS:
+            model.updateFilteredLocationList(PREDICATE_SHOW_ALL_LOCATIONS);
             return new CommandResult(MESSAGE_SUCCESS_ALL_LOCATIONS, false, false,
                     CommandResult.SWITCH_TO_VIEW_ALL_LOCATIONS);
         case ALL_VISITS:
+            model.updateFilteredVisitList(PREDICATE_SHOW_ALL_VISITS);
             return new CommandResult(MESSAGE_SUCCESS_ALL_VISITS, false, false,
                     CommandResult.SWITCH_TO_VIEW_ALL_VISITS);
         case ALL_INFECTED:
@@ -58,6 +63,12 @@ public class ListCommand extends Command {
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_QUARANTINED);
             return new CommandResult(MESSAGE_SUCCESS_ALL_QUARANTINED, false, false,
                     CommandResult.SWITCH_TO_VIEW_ALL_QUARANTINED);
+        case STATISTICS:
+            // Retrieves the stats, currently displayed as console output
+            String stats = model.getInfoHandler().getStatistics();
+            System.out.println(stats);
+            return new CommandResult(MESSAGE_SUCCESS_STATISTICS, false, false,
+                    CommandResult.SWITCH_TO_VIEW_STATISTICS);
         default:
             throw new CommandException(INVALID_LIST_TYPE);
         }
