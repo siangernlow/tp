@@ -42,7 +42,7 @@ public class ModelManager implements Model {
         requireAllNonNull(addressBook, locationBook, visitBook, userPrefs);
 
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs
-                + " and location book: " + locationBook);
+                + " and location book: " + locationBook + " and visit book: " + visitBook);
 
         this.addressBook = new AddressBook(addressBook);
         this.locationBook = new LocationBook(locationBook);
@@ -227,6 +227,16 @@ public class ModelManager implements Model {
         updateFilteredLocationList(PREDICATE_SHOW_ALL_LOCATIONS);
     }
 
+    @Override
+    public void deleteLocation(Location target) {
+        locationBook.removeLocation(target);
+    }
+
+    @Override
+    public void setLocation(Location target, Location editedLocation) {
+        requireAllNonNull(target, editedLocation);
+        locationBook.setLocation(target, editedLocation);
+    }
 
 
     //=========== VisitBook ================================================================================
@@ -249,6 +259,8 @@ public class ModelManager implements Model {
 
     @Override
     public void deleteVisit(Visit visit) {
+        requireNonNull(visit);
+        visitBook.removeVisit(visit);
     }
 
     @Override

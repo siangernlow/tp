@@ -78,7 +78,7 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
 
-    /** Returns an unmodifiable view of the filtered person list */
+    /** Returns an unmodifiable view of the filtered location list */
     ObservableList<Location> getFilteredLocationList();
 
     /**
@@ -121,6 +121,20 @@ public interface Model {
      * {@code location} must not already exist in the address book.
      */
     void addLocation(Location location);
+
+    /**
+     * Deletes the given location.
+     * The location must exist in the location book.
+     */
+    void deleteLocation(Location target);
+
+    /**
+     * Replaces the given location {@code target} with {@code editedLocation}.
+     * {@code target} must exist in the location book.
+     * The location identity of {@code editedPerson} must not be the same as another existing location in the
+     * location book.
+     */
+    void setLocation(Location target, Location editedLocation);
 
     /**
      * Returns true if a visit with the same identity as {@code visit} exists in the address book.

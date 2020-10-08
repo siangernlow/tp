@@ -8,6 +8,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_LIST;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,8 +18,11 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddLocationCommand;
+import seedu.address.logic.commands.AddVisitCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteLocationCommand;
+import seedu.address.logic.commands.DeleteVisitsCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
@@ -28,11 +33,14 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.visit.Visit;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.LocationBuilder;
 import seedu.address.testutil.LocationUtil;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
+import seedu.address.testutil.VisitBuilder;
+import seedu.address.testutil.VisitUtil;
 
 public class AddressBookParserTest {
 
@@ -55,6 +63,14 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_addVisit() throws Exception {
+        Visit visit = new VisitBuilder().build();
+        AddVisitCommand command =
+                (AddVisitCommand) parser.parseCommand(VisitUtil.getAddVisitCommand(visit));
+        assertEquals(new AddVisitCommand(visit), command);
+    }
+
+    @Test
     public void parseCommand_clear() throws Exception {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD + " 3") instanceof ClearCommand);
@@ -65,6 +81,21 @@ public class AddressBookParserTest {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
                 DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased());
         assertEquals(new DeleteCommand(INDEX_FIRST), command);
+    }
+
+    @Test
+    public void parseCommand_deleteLocation() throws Exception {
+        DeleteLocationCommand command = (DeleteLocationCommand) parser.parseCommand(
+                DeleteLocationCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased());
+        assertEquals(new DeleteLocationCommand(INDEX_FIRST), command);
+    }
+
+    @Test
+    public void parseCommand_deleteVisits() throws Exception {
+        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DeleteVisitsCommand command = (DeleteVisitsCommand) parser.parseCommand(
+                DeleteVisitsCommand.COMMAND_WORD + " " + "d/2020-09-12");
+        assertEquals(new DeleteVisitsCommand(LocalDate.parse("2020-09-12", inputFormat)), command);
     }
 
     @Test
