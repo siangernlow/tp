@@ -66,6 +66,13 @@ public class UniquePersonListTest {
     }
 
     @Test
+    public void containsSameIdPerson_sameIdInList_returnsTrue() {
+        uniquePersonList.add(ALICE);
+        Person editedPerson = new PersonBuilder(ALICE).build();
+        assertTrue(uniquePersonList.containsSameIdPerson(editedPerson));
+    }
+
+    @Test
     public void containsSameIdPerson_differentId_returnsFalse() {
         uniquePersonList.add(ALICE);
         Person editedPerson = new PersonBuilder(ALICE).withId(VALID_ID_BOB).build();
@@ -212,6 +219,16 @@ public class UniquePersonListTest {
     public void setPersons_listWithDuplicatePersons_throwsDuplicatePersonException() {
         List<Person> listWithDuplicatePersons = Arrays.asList(ALICE, ALICE);
         assertThrows(DuplicatePersonException.class, () -> uniquePersonList.setPersons(listWithDuplicatePersons));
+    }
+
+    @Test
+    public void setPersons_listWithUnidentifiablePersons_throwsPersonNotIdentifiableException() {
+        Person editedAlice = new PersonBuilder(ALICE).withName(VALID_NAME_BOB)
+                .withAddress(VALID_ADDRESS_BOB).withEmail(VALID_EMAIL_BOB)
+                .withPhone(VALID_PHONE_BOB).build();
+        List<Person> listWithUnidentifiablePersons = Arrays.asList(ALICE, editedAlice);
+        assertThrows(PersonNotIdentifiableException.class, () ->
+                uniquePersonList.setPersons(listWithUnidentifiablePersons));
     }
 
     @Test
