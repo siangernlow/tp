@@ -180,4 +180,9 @@ public interface Model {
      */
     void updateFilteredVisitList(Predicate<Visit> predicate);
 
+    /**
+     * @return the {@code InfoHandler} associated with the model.
+     */
+    InfoHandler getInfoHandler();
+
 }
