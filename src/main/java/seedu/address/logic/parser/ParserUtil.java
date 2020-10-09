@@ -200,4 +200,27 @@ public class ParserUtil {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
         }
     }
+
+    /**
+     * Parses the given {@code findType} and returns the enum representing it.
+     * @param findType The type of find command.
+     * @return The enum representing the {@code findType}.
+     * @throws ParseException When invalid type is given
+     */
+    public static FindType parseFindType(String findType) throws ParseException {
+        requireNonNull(findType);
+
+        String trimmedListType = findType.trim().toLowerCase();
+
+        switch (trimmedListType) {
+            case "people":
+                return FindType.PEOPLE;
+            case "locations":
+                return FindType.LOCATIONS;
+            case "visits":
+                return FindType.VISITS;
+            default:
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
+        }
+    }
 }

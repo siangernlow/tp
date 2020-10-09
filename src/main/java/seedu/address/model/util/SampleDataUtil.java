@@ -56,7 +56,15 @@ public class SampleDataUtil {
             new Location(new Name("School of Computing"),
                     new Address("NUS School of Computing COM1 13 Computing Dr, 117417"), Index.fromOneBased(1)),
             new Location(new Name("VivoCity"),
-                    new Address("1 HarbourFront Walk, Singapore 098585"), Index.fromOneBased(2))
+                    new Address("1 HarbourFront Walk, Singapore 098585"), Index.fromOneBased(2)),
+            new Location(new Name("ION Orchard"),
+                    new Address("2 Orchard Turn, Singapore 238801"), Index.fromOneBased(3)),
+            new Location(new Name("Stephen Riady Centre"),
+                    new Address("2 College Ave West, Stephen Riady Centre, Singapore 138607"), Index.fromOneBased(4)),
+            new Location(new Name("Plaza Singapura"),
+                    new Address("68 Orchard Rd, Singapore 238839"), Index.fromOneBased(5)),
+            new Location(new Name("Marina Bay Sands Singapore"),
+                    new Address("10 Bayfront Ave, Singapore 018956"), Index.fromOneBased(6)),
         };
     }
 
