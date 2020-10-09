@@ -104,10 +104,7 @@ public class MainApp extends Application {
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
             initialPersonData = new AddressBook();
         }
-        initialLocationData = SampleDataUtil.getSampleLocationBook();
-        initialVisitData = SampleDataUtil.getSampleVisitBook();
 
-        /*
         try {
             locationBookOptional = storage.readLocationBook();
             if (!locationBookOptional.isPresent()) {
@@ -134,8 +131,6 @@ public class MainApp extends Application {
             logger.warning("Problem while reading from the file. Will be starting with an empty VisitBook");
             initialVisitData = new VisitBook();
         }
-
-         */
 
         return new ModelManager(initialPersonData, initialLocationData, userPrefs, initialVisitData);
     }
