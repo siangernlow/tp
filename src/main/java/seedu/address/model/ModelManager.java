@@ -133,6 +133,18 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public boolean hasSameIdPerson(Person person) {
+        requireNonNull(person);
+        return addressBook.hasSameIdPerson(person);
+    }
+
+    @Override
+    public boolean hasSameIdentityExceptId(Person person) {
+        requireNonNull(person);
+        return addressBook.hasSameIdentityExceptId(person);
+    }
+
+    @Override
     public void deletePerson(Person target) {
         addressBook.removePerson(target);
     }
@@ -227,6 +239,16 @@ public class ModelManager implements Model {
         updateFilteredLocationList(PREDICATE_SHOW_ALL_LOCATIONS);
     }
 
+    @Override
+    public void deleteLocation(Location target) {
+        locationBook.removeLocation(target);
+    }
+
+    @Override
+    public void setLocation(Location target, Location editedLocation) {
+        requireAllNonNull(target, editedLocation);
+        locationBook.setLocation(target, editedLocation);
+    }
 
 
     //=========== VisitBook ================================================================================

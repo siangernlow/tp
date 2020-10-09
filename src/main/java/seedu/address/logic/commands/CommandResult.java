@@ -15,6 +15,7 @@ public class CommandResult {
     public static final String SWITCH_TO_VIEW_ALL_VISITS = "Switch to view all visits";
     public static final String SWITCH_TO_VIEW_ALL_INFECTED = "Switch to view all infected";
     public static final String SWITCH_TO_VIEW_ALL_QUARANTINED = "Switch to view all quarantined";
+    public static final String SWITCH_TO_VIEW_STATISTICS = "Switch to view statistics";
 
     private final String feedbackToUser;
 

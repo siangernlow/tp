@@ -15,6 +15,8 @@ public class ListCommandParserTest {
     private static final ListType PEOPLE_LIST = ListType.ALL_PEOPLE;
     private static final ListType VISITS_LIST = ListType.ALL_VISITS;
     private static final ListType INFECTED_LIST = ListType.ALL_INFECTED;
+    private static final ListType QUARANTINED_LIST = ListType.ALL_QUARANTINED;
+    private static final ListType STATISTICS_LIST = ListType.STATISTICS;
 
     private ListCommandParser parser = new ListCommandParser();
 
@@ -44,6 +46,20 @@ public class ListCommandParserTest {
         ListCommand expectedListCommand =
                 new ListCommand(INFECTED_LIST);
         assertParseSuccess(parser, " " + PREFIX_LIST + "infected", expectedListCommand);
+    }
+
+    @Test
+    public void parseListType_quarantined() {
+        ListCommand expectedListCommand =
+                new ListCommand(QUARANTINED_LIST);
+        assertParseSuccess(parser, " " + PREFIX_LIST + "quarantined", expectedListCommand);
+    }
+
+    @Test
+    public void parseListType_stats() {
+        ListCommand expectedListCommand =
+                new ListCommand(STATISTICS_LIST);
+        assertParseSuccess(parser, " " + PREFIX_LIST + "stats", expectedListCommand);
     }
 
     @Test

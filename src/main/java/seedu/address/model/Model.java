@@ -57,6 +57,16 @@ public interface Model {
     boolean hasPerson(Person person);
 
     /**
+     * Returns true if a person with the same id as {@code person} exists in the address book.
+     */
+    boolean hasSameIdPerson(Person person);
+
+    /**
+     * Returns true if a person with the same identity except id as {@code person} exists in the address book.
+     */
+    boolean hasSameIdentityExceptId(Person person);
+
+    /**
      * Deletes the given person.
      * The person must exist in the address book.
      */
@@ -123,6 +133,20 @@ public interface Model {
     void addLocation(Location location);
 
     /**
+     * Deletes the given location.
+     * The location must exist in the location book.
+     */
+    void deleteLocation(Location target);
+
+    /**
+     * Replaces the given location {@code target} with {@code editedLocation}.
+     * {@code target} must exist in the location book.
+     * The location identity of {@code editedPerson} must not be the same as another existing location in the
+     * location book.
+     */
+    void setLocation(Location target, Location editedLocation);
+
+    /**
      * Returns true if a visit with the same identity as {@code visit} exists in the address book.
      */
     boolean hasVisit(Visit visit);
@@ -165,5 +189,10 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredVisitList(Predicate<Visit> predicate);
+
+    /**
+     * @return the {@code InfoHandler} associated with the model.
+     */
+    InfoHandler getInfoHandler();
 
 }

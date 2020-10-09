@@ -130,6 +130,11 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void getFilteredLocationList_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredLocationList().remove(0));
+    }
+
+    @Test
     public void setVisitBookFilePath_nullPath_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> modelManager.setLocationBookFilePath(null));
     }
