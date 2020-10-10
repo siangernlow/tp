@@ -108,8 +108,7 @@ public class AddressBookParserTest {
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
                 + INDEX_FIRST.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
-        EditCommand secondCommand = new EditCommand(INDEX_FIRST, descriptor);
-        assertEquals(secondCommand, command);
+        assertEquals(new EditCommand(INDEX_FIRST, descriptor), command);
     }
 
     @Test
@@ -118,8 +117,7 @@ public class AddressBookParserTest {
         EditLocationDescriptor descriptor = new EditLocationDescriptorBuilder(location).build();
         EditLocationCommand command = (EditLocationCommand) parser.parseCommand(EditLocationCommand.COMMAND_WORD + " "
                 + INDEX_FIRST.getOneBased() + " " + LocationUtil.getEditLocationDescriptorDetails(descriptor));
-        EditLocationCommand secondCommand = new EditLocationCommand(INDEX_FIRST, descriptor);
-        assertEquals(secondCommand, command);
+        assertEquals(new EditLocationCommand(INDEX_FIRST, descriptor), command);
     }
 
     @Test
