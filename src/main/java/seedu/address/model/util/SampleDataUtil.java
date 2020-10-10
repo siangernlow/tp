@@ -56,16 +56,40 @@ public class SampleDataUtil {
             new Location(new Name("School of Computing"),
                     new Address("NUS School of Computing COM1 13 Computing Dr, 117417"), Index.fromOneBased(1)),
             new Location(new Name("VivoCity"),
-                    new Address("1 HarbourFront Walk, Singapore 098585"), Index.fromOneBased(2))
+                    new Address("1 HarbourFront Walk, Singapore 098585"), Index.fromOneBased(2)),
+            new Location(new Name("Stephen Riady Centre"),
+                    new Address("2 College Ave West, Singapore 138607"), Index.fromOneBased(3)),
+            new Location(new Name("ION Orchard"),
+                    new Address("2 Orchard Turn, Singapore 238801"), Index.fromOneBased(4)),
+            new Location(new Name("Plaza Singapura"),
+                    new Address("68 Orchard Rd, Singapore 238839"), Index.fromOneBased(5)),
+            new Location(new Name("Singapore Zoo"),
+                    new Address("80 Mandai Lake Rd, 729826"), Index.fromOneBased(6)),
         };
     }
 
     public static Visit[] getSampleVisits() {
-        Index samplePersonId = Index.fromOneBased(Integer.parseInt("1"));
-        Index sampleLocationId = Index.fromOneBased(Integer.parseInt("2"));
         DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate sampleDate = LocalDate.parse("2020-02-02", inputFormat);
-        return new Visit[] { new Visit(samplePersonId, sampleLocationId, sampleDate) };
+        return new Visit[] {
+        new Visit(Index.fromOneBased(Integer.parseInt("1")),
+                Index.fromOneBased(Integer.parseInt("1")), LocalDate.parse("2020-02-02", inputFormat)),
+        new Visit(Index.fromOneBased(Integer.parseInt("2")),
+                Index.fromOneBased(Integer.parseInt("3")), LocalDate.parse("2020-02-02", inputFormat)),
+        new Visit(Index.fromOneBased(Integer.parseInt("3")),
+                Index.fromOneBased(Integer.parseInt("4")), LocalDate.parse("2020-02-02", inputFormat)),
+        new Visit(Index.fromOneBased(Integer.parseInt("4")),
+                Index.fromOneBased(Integer.parseInt("1")), LocalDate.parse("2020-02-02", inputFormat)),
+        new Visit(Index.fromOneBased(Integer.parseInt("4")),
+                Index.fromOneBased(Integer.parseInt("2")), LocalDate.parse("2020-02-02", inputFormat)),
+        new Visit(Index.fromOneBased(Integer.parseInt("5")),
+                Index.fromOneBased(Integer.parseInt("3")), LocalDate.parse("2020-02-02", inputFormat)),
+        new Visit(Index.fromOneBased(Integer.parseInt("5")),
+                Index.fromOneBased(Integer.parseInt("4")), LocalDate.parse("2020-02-02", inputFormat)),
+        new Visit(Index.fromOneBased(Integer.parseInt("6")),
+                Index.fromOneBased(Integer.parseInt("5")), LocalDate.parse("2020-02-02", inputFormat)),
+        new Visit(Index.fromOneBased(Integer.parseInt("6")),
+                Index.fromOneBased(Integer.parseInt("6")), LocalDate.parse("2020-02-02", inputFormat)),
+        };
     }
 
     public static ReadOnlyAddressBook getSampleAddressBook() {
