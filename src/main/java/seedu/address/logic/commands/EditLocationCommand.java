@@ -65,7 +65,7 @@ public class EditLocationCommand extends Command {
         Location locationToEdit = lastShownList.get(index.getZeroBased());
         Location editedLocation = createEditedLocation(locationToEdit, editLocationDescriptor);
 
-        if (!locationToEdit.isSameLocation(editedLocation)) {
+        if (!locationToEdit.isSameLocation(editedLocation) && model.hasLocation(editedLocation)) {
             throw new CommandException(MESSAGE_DUPLICATE_LOCATION);
         }
 
@@ -98,7 +98,7 @@ public class EditLocationCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof EditCommand)) {
+        if (!(other instanceof EditLocationCommand)) {
             return false;
         }
 
