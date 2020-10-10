@@ -25,6 +25,8 @@ import seedu.address.logic.commands.DeleteLocationCommand;
 import seedu.address.logic.commands.DeleteVisitsCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.EditLocationCommand;
+import seedu.address.logic.commands.EditLocationCommand.EditLocationDescriptor;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -34,6 +36,7 @@ import seedu.address.model.location.Location;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.visit.Visit;
+import seedu.address.testutil.EditLocationDescriptorBuilder;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.LocationBuilder;
 import seedu.address.testutil.LocationUtil;
@@ -106,6 +109,15 @@ public class AddressBookParserTest {
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
                 + INDEX_FIRST.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
         assertEquals(new EditCommand(INDEX_FIRST, descriptor), command);
+    }
+
+    @Test
+    public void parseCommand_editLocation() throws Exception {
+        Location location = new LocationBuilder().build();
+        EditLocationDescriptor descriptor = new EditLocationDescriptorBuilder(location).build();
+        EditLocationCommand command = (EditLocationCommand) parser.parseCommand(EditLocationCommand.COMMAND_WORD + " "
+                + INDEX_FIRST.getOneBased() + " " + LocationUtil.getEditLocationDescriptorDetails(descriptor));
+        assertEquals(new EditLocationCommand(INDEX_FIRST, descriptor), command);
     }
 
     @Test
