@@ -17,6 +17,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ModelPredicate;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.location.Location;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
@@ -28,6 +29,7 @@ public class ListCommandTest {
     private static final ListType INFECTED_LIST = ListType.ALL_INFECTED;
     private static final ListType QUARANTINED_LIST = ListType.ALL_QUARANTINED;
     private static final ListType STATISTICS_LIST = ListType.STATISTICS;
+    private static final ListType HIGH_RISK_LOCATIONS_LIST = ListType.HIGH_RISK_LOCATIONS;
 
     private Model model;
     private Model expectedModel;
@@ -85,6 +87,15 @@ public class ListCommandTest {
     public void execute_statistics_showsSameList() {
         assertCommandSuccess(new ListCommand(STATISTICS_LIST),
                 model, ListCommand.MESSAGE_SUCCESS_STATISTICS, expectedModel);
+    }
+
+    @Test
+    public void execute_highRiskLocations_showsSameList() {
+        Model expectedModelHighRiskLocations = expectedModel;
+        expectedModelHighRiskLocations.updateFilteredLocationList(
+                Location.getPredicateForHighRiskLocations(expectedModelHighRiskLocations));
+        assertCommandSuccess(new ListCommand(HIGH_RISK_LOCATIONS_LIST),
+                model, ListCommand.MESSAGE_SUCCESS_HIGH_RISK_LOCATIONS, expectedModelHighRiskLocations);
     }
 
     @Test

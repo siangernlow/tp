@@ -1,18 +1,42 @@
 package seedu.address.model.location;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ID_BOB_LOCATION;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.testutil.TypicalLocations.ALICE_LOCATION;
+import static seedu.address.testutil.TypicalLocations.BENSON_LOCATION;
 import static seedu.address.testutil.TypicalLocations.BOB_LOCATION;
+import static seedu.address.testutil.TypicalLocations.CARL_LOCATION;
+import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalVisits.getMoreThanSixtyPercentVisitBook;
+import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
+import static seedu.address.testutil.TypicalVisits.getWholeVisitBook;
 
+import java.util.function.Predicate;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
 import seedu.address.testutil.LocationBuilder;
 
 public class LocationTest {
+    private Model model;
+
+    @BeforeEach
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
+                new UserPrefs(), getTypicalVisitBook());
+    }
+
     @Test
     public void isSameLocation() {
         // same object -> returns true
@@ -46,6 +70,35 @@ public class LocationTest {
         editedAlice = new LocationBuilder(ALICE_LOCATION).withAddress(VALID_ADDRESS_BOB)
                 .withName(VALID_NAME_BOB).build();
         assertTrue(ALICE_LOCATION.isSameId(editedAlice));
+    }
+
+    @Test
+    public void getPredicateForHighRiskLocations() {
+        // Infected Locations(3) are less than 60% of total locations(7)
+        model.setVisitBook(getWholeVisitBook());
+        Predicate<Location> actualPredicate = Location.getPredicateForHighRiskLocations(model);
+        model.updateFilteredLocationList(actualPredicate);
+        ObservableList<Location> actualList = model.getFilteredLocationList();
+
+        ObservableList<Location> expectedList = FXCollections.observableArrayList();
+        expectedList.add(ALICE_LOCATION);
+        expectedList.add(BENSON_LOCATION);
+        expectedList.add(CARL_LOCATION);
+
+        assertEquals(expectedList, actualList);
+
+        // Infected Locations(6) are more than 60% of total locations(8)
+        model.setVisitBook(getMoreThanSixtyPercentVisitBook());
+        actualPredicate = Location.getPredicateForHighRiskLocations(model);
+        model.updateFilteredLocationList(actualPredicate);
+        actualList = model.getFilteredLocationList();
+
+        expectedList.clear();
+        expectedList.add(ALICE_LOCATION);
+        expectedList.add(BENSON_LOCATION);
+        expectedList.add(CARL_LOCATION);
+
+        assertEquals(expectedList, actualList);
     }
 
     @Test

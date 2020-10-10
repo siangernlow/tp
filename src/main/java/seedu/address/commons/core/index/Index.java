@@ -46,6 +46,11 @@ public class Index {
     }
 
     @Override
+    public int hashCode() {
+        return getOneBased();
+    }
+
+    @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Index // instanceof handles nulls
