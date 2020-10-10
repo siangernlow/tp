@@ -39,27 +39,7 @@ public class GenerateLocationsCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        ReadOnlyVisitBook tempVisitBook = model.getVisitBook();
-        if (personId.getZeroBased() >= model.getAddressBook().getPersonList().size()) {
-            throw new CommandException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-        if (!model.getAddressBook().getPersonList()
-                .get(personId.getZeroBased()).getInfectionStatus().getStatusAsBoolean()) {
-            throw new CommandException(MESSAGE_PERSON_IS_NOT_INFECTED);
-        }
-        VisitBook visitsByPerson = new VisitBook();
-        for (int i = 0; i < tempVisitBook.getVisitList().size(); i++) {
-            if (tempVisitBook.getVisitList().get(i).getPersonId().equals(personId)) {
-                visitsByPerson.addVisit(tempVisitBook.getVisitList().get(i));
-            }
-        }
-        if (visitsByPerson.getVisitList().isEmpty()) {
-            throw new CommandException(MESSAGE_PERSON_HAS_NO_VISITS);
-        }
-        List<Integer> locationIds = new ArrayList<>();
-        for (int i = 0; i < visitsByPerson.getVisitList().size(); i++) {
-            locationIds.add(visitsByPerson.getVisitList().get(i).getLocationId().getZeroBased());
-        }
+        List<Integer> locationIds = CommandUtil.generateLocationIdsByPerson(model, personId);
         model.updateFilteredLocationList(ModelPredicate.getPredicateShowLocationsByPerson(locationIds));
         return new CommandResult(
                 "Generated locations for: " + model.getAddressBook()
