@@ -5,14 +5,10 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAY
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
-import java.util.Arrays;
-
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.GenerateLocationsCommand;
-import seedu.address.logic.parser.GenerateLocationsCommandParser;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 
 public class GenerateLocationsCommandParserTest {
 

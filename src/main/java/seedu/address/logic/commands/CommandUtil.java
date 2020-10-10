@@ -15,6 +15,13 @@ public class CommandUtil {
     public static final String MESSAGE_PERSON_HAS_NO_VISITS = "This person is not associated with any visits";
     public static final String MESSAGE_PERSON_IS_NOT_INFECTED = "This person is not infected";
 
+    /**
+     * Returns a list of integers representing the ids of locations that a person has visited.
+     * @param model Model of the program.
+     * @param personId Id of the person.
+     * @return List of integers.
+     * @throws CommandException When invalid input is given.
+     */
     public static List<Integer> generateLocationIdsByPerson(Model model, Index personId) throws CommandException {
         ReadOnlyVisitBook tempVisitBook = model.getVisitBook();
         if (personId.getZeroBased() >= model.getAddressBook().getPersonList().size()) {

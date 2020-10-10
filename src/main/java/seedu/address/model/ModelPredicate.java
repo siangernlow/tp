@@ -23,7 +23,15 @@ public class ModelPredicate {
         person -> person.getInfectionStatus().getStatusAsBoolean();
     public static final Predicate<Person> PREDICATE_SHOW_ALL_QUARANTINED =
         person -> person.getQuarantineStatus().getStatusAsBoolean();
-
+    public static Predicate<Person> getPredicateShowPeopleByVisit(List<Integer> personIds) {
+        return person -> {
+            boolean condition = person.getId().getZeroBased() == personIds.get(0);
+            for (int i = 1; i < personIds.size(); i++) {
+                condition = condition || person.getId().getZeroBased() == personIds.get(i);
+            }
+            return condition;
+        };
+    }
     /** {@code Predicate} to handle location list */
     public static Predicate<Location> getPredicateShowLocationsByPerson(List<Integer> locationIds) {
         return location -> {
