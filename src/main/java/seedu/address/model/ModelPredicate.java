@@ -1,7 +1,11 @@
 package seedu.address.model;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.function.Predicate;
 
+import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
 import seedu.address.model.visit.Visit;
@@ -22,4 +26,30 @@ public class ModelPredicate {
         person -> person.getInfectionStatus().getStatusAsBoolean();
     public static final Predicate<Person> PREDICATE_SHOW_ALL_QUARANTINED =
         person -> person.getQuarantineStatus().getStatusAsBoolean();
+
+    /**
+     * Returns a {@code Predicate} for filtering high risk locations
+     */
+    public static Predicate<Location> getPredicateForHighRiskLocations(Model model) {
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
+        ObservableList<Person> allInfectedPersons = model.getFilteredPersonList();
+
+        HashSet<Index> infectedPersonIds = InfoHandler.getIdHashSetFromPersonsList(allInfectedPersons);
+
+        model.updateFilteredVisitList(Visit.getPredicateForInfectedVisits(infectedPersonIds));
+        ObservableList<Visit> allInfectedVisits = model.getFilteredVisitList();
+
+        ArrayList<Index> infectedLocationIds = InfoHandler.getLocationIdsFromInfectedVisitList(allInfectedVisits);
+
+        model.updateFilteredLocationList(PREDICATE_SHOW_ALL_LOCATIONS);
+        int numberOfTotalLocations = model.getFilteredLocationList().size();
+
+        int numberOfHighRiskLocations = InfoHandler.getNumberOfHighRiskLocations(
+                infectedLocationIds.size(), numberOfTotalLocations);
+
+        ArrayList<Index> highRiskLocationIds =
+                new ArrayList<>(infectedLocationIds.subList(0, numberOfHighRiskLocations));
+
+        return location -> highRiskLocationIds.contains(location.getId());
+    }
 }

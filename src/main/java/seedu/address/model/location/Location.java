@@ -1,22 +1,12 @@
 package seedu.address.model.location;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_INFECTED;
-import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_LOCATIONS;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.function.Predicate;
 
-import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
-import seedu.address.model.Model;
-import seedu.address.model.ModelMethods;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.visit.Visit;
 
 /**
  * Represents a Location in the location book.
@@ -99,29 +89,6 @@ public class Location {
         }
         return otherLocation != null
                 && otherLocation.getId().equals(getId());
-    }
-
-    public static Predicate<Location> getPredicateForHighRiskLocations(Model model) {
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
-        ObservableList<Person> allInfectedPersons = model.getFilteredPersonList();
-
-        HashSet<Index> infectedPersonIds = ModelMethods.getIdHashSetFromPersonsList(allInfectedPersons);
-
-        model.updateFilteredVisitList(Visit.getPredicateForInfectedVisits(infectedPersonIds));
-        ObservableList<Visit> allInfectedVisits = model.getFilteredVisitList();
-
-        ArrayList<Index> infectedLocationIds = ModelMethods.getLocationIdsFromInfectedVisitList(allInfectedVisits);
-
-        model.updateFilteredLocationList(PREDICATE_SHOW_ALL_LOCATIONS);
-        int numberOfTotalLocations = model.getFilteredLocationList().size();
-
-        int numberOfHighRiskLocations = ModelMethods.getNumberOfHighRiskLocations(
-                infectedLocationIds.size(), numberOfTotalLocations);
-
-        ArrayList<Index> highRiskLocationIds =
-                new ArrayList<>(infectedLocationIds.subList(0, numberOfHighRiskLocations));
-
-        return location -> highRiskLocationIds.contains(location.getId());
     }
 
     /**

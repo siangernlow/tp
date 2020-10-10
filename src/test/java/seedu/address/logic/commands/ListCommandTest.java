@@ -93,7 +93,7 @@ public class ListCommandTest {
     public void execute_highRiskLocations_showsSameList() {
         Model expectedModelHighRiskLocations = expectedModel;
         expectedModelHighRiskLocations.updateFilteredLocationList(
-                Location.getPredicateForHighRiskLocations(expectedModelHighRiskLocations));
+                ModelPredicate.getPredicateForHighRiskLocations(expectedModelHighRiskLocations));
         assertCommandSuccess(new ListCommand(HIGH_RISK_LOCATIONS_LIST),
                 model, ListCommand.MESSAGE_SUCCESS_HIGH_RISK_LOCATIONS, expectedModelHighRiskLocations);
     }

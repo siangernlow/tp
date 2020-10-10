@@ -101,11 +101,17 @@ public class TypicalVisits {
                 SIXTH_VISIT, SEVENTH_VISIT, EIGHTH_VISIT, NINTH_VISIT, TENTH_VISIT, ELEVENTH_VISIT));
     }
 
-    public static List<Index> getLocationsIdsFormVisitsForTest() {
+    public static List<Index> getLocationsIdsFromVisitsForTest() {
         return new ArrayList<>(Arrays.asList(INDEX_SECOND, INDEX_THIRD, INDEX_FIFTH, INDEX_FOURTH));
     }
 
+    /**
+     * Returns a list of Visits where more than 60% of the Visits in this list consist of Person
+     * that is infected
+     */
     public static List<Visit> getMoreThanSixtyPercentInfectedVisits() {
+        // FIRST_VISIT AND SECOND_VISIT are non-infected Visits.
+        // The remaining Visits are infected Visits.
         return new ArrayList<>(Arrays.asList(FIRST_VISIT, SECOND_VISIT, SEVENTH_VISIT, EIGHTH_VISIT,
                 NINTH_VISIT, TENTH_VISIT, ELEVENTH_VISIT, TWELFTH_VISIT));
     }

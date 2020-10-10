@@ -12,6 +12,7 @@ import java.util.function.Predicate;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.ListType;
 import seedu.address.model.Model;
+import seedu.address.model.ModelPredicate;
 import seedu.address.model.location.Location;
 
 /**
@@ -75,7 +76,7 @@ public class ListCommand extends Command {
                     CommandResult.SWITCH_TO_VIEW_STATISTICS);
         case HIGH_RISK_LOCATIONS:
             Predicate<Location> predicateForHighRiskLocations =
-                    Location.getPredicateForHighRiskLocations(model);
+                    ModelPredicate.getPredicateForHighRiskLocations(model);
             model.updateFilteredLocationList(predicateForHighRiskLocations);
             return new CommandResult(MESSAGE_SUCCESS_HIGH_RISK_LOCATIONS, false, false,
                     CommandResult.SWITCH_TO_VIEW_ALL_LOCATIONS);
