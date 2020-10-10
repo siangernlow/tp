@@ -32,7 +32,7 @@ public class GenerateLocationsCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         List<Integer> locationIds = CommandUtil.generateLocationIdsByPerson(model, personId);
-        model.updateFilteredLocationList(ModelPredicate.getPredicateShowLocationsByPerson(locationIds));
+        model.updateFilteredLocationList(ModelPredicate.getPredicateShowLocationsById(locationIds));
         return new CommandResult(
                 "Generated locations for: " + model.getAddressBook()
                         .getPersonList().get(personId.getZeroBased()).getName(),
