@@ -17,7 +17,6 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ModelPredicate;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.location.Location;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
