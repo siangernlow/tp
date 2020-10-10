@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.logic.commands.CommandUtil.MESSAGE_PERSON_HAS_NO_VISITS;
 import static seedu.address.logic.commands.CommandUtil.MESSAGE_PERSON_IS_NOT_INFECTED;
+import static seedu.address.logic.commands.GeneratePeopleCommand.MESSAGE_NO_PEOPLE_FOUND;
 import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
@@ -21,7 +22,7 @@ import seedu.address.model.UserPrefs;
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
-public class GenerateLocationsCommandTest {
+public class GeneratePeopleCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
             new UserPrefs(), getTypicalVisitBook());
     private Model expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
@@ -32,31 +33,31 @@ public class GenerateLocationsCommandTest {
         Index firstIndex = Index.fromOneBased(1);
         Index secondIndex = Index.fromOneBased(2);
 
-        GenerateLocationsCommand firstGenerateLocationsCommand = new GenerateLocationsCommand(firstIndex);
-        GenerateLocationsCommand secondGenerateLocationsCommand = new GenerateLocationsCommand(secondIndex);
+        GeneratePeopleCommand firstGeneratePeopleCommand = new GeneratePeopleCommand(firstIndex);
+        GeneratePeopleCommand secondGeneratePeopleCommand = new GeneratePeopleCommand(secondIndex);
 
         // same object -> returns true
-        assertTrue(firstGenerateLocationsCommand.equals(firstGenerateLocationsCommand));
+        assertTrue(firstGeneratePeopleCommand.equals(firstGeneratePeopleCommand));
 
         // same values -> returns true
-        GenerateLocationsCommand copyOfGenerateLocationsCommand = new GenerateLocationsCommand(firstIndex);
-        assertTrue(firstGenerateLocationsCommand.equals(copyOfGenerateLocationsCommand));
+        GeneratePeopleCommand copyOfGeneratePeopleCommand = new GeneratePeopleCommand(firstIndex);
+        assertTrue(firstGeneratePeopleCommand.equals(copyOfGeneratePeopleCommand));
 
         // different types -> returns false
-        assertFalse(firstGenerateLocationsCommand.equals(1));
+        assertFalse(firstGeneratePeopleCommand.equals(1));
 
         // null -> returns false
-        assertFalse(firstGenerateLocationsCommand.equals(null));
+        assertFalse(firstGeneratePeopleCommand.equals(null));
 
         // different person -> returns false
-        assertFalse(firstGenerateLocationsCommand.equals(secondGenerateLocationsCommand));
+        assertFalse(firstGeneratePeopleCommand.equals(secondGeneratePeopleCommand));
     }
 
     @Test
     public void execute_indexOutOfBounds_throwCommandException() {
         String expectedMessage = MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
         Index index = Index.fromOneBased(100);
-        GenerateLocationsCommand command = new GenerateLocationsCommand(index);
+        GeneratePeopleCommand command = new GeneratePeopleCommand(index);
         assertThrows(CommandException.class, () -> command.execute(model));
         try {
             command.execute(model);
@@ -69,7 +70,7 @@ public class GenerateLocationsCommandTest {
     public void execute_personAtIndexNotInfected_throwCommandException() {
         String expectedMessage = MESSAGE_PERSON_IS_NOT_INFECTED;
         Index index = Index.fromOneBased(1);
-        GenerateLocationsCommand command = new GenerateLocationsCommand(index);
+        GeneratePeopleCommand command = new GeneratePeopleCommand(index);
         assertThrows(CommandException.class, () -> command.execute(model));
         try {
             command.execute(model);
@@ -81,8 +82,21 @@ public class GenerateLocationsCommandTest {
     @Test
     public void execute_noVisitsFound_throwCommandException() {
         String expectedMessage = MESSAGE_PERSON_HAS_NO_VISITS;
+        Index index = Index.fromOneBased(5);
+        GeneratePeopleCommand command = new GeneratePeopleCommand(index);
+        assertThrows(CommandException.class, () -> command.execute(model));
+        try {
+            command.execute(model);
+        } catch (CommandException e) {
+            assertTrue(e.getMessage().equals(expectedMessage));
+        }
+    }
+
+    @Test
+    public void execute_noPeopleFound_throwCommandException() {
+        String expectedMessage = MESSAGE_NO_PEOPLE_FOUND;
         Index index = Index.fromOneBased(4);
-        GenerateLocationsCommand command = new GenerateLocationsCommand(index);
+        GeneratePeopleCommand command = new GeneratePeopleCommand(index);
         assertThrows(CommandException.class, () -> command.execute(model));
         try {
             command.execute(model);

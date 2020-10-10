@@ -13,8 +13,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class GenerateLocationsCommandParser implements Parser<GenerateLocationsCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the FindCommand
-     * and returns a FindCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the GenerateLocationsCommand
+     * and returns a GenerateLocationsCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public GenerateLocationsCommand parse(String args) throws ParseException {
