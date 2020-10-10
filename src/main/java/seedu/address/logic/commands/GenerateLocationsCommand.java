@@ -19,7 +19,7 @@ public class GenerateLocationsCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all locations which a person of "
             + "the specified id (case-insensitive) visited and displays them as a list of locations.\n"
-            + "Parameters: PERSONID ...\n"
+            + "Parameters: PERSONID\n"
             + "Example: " + COMMAND_WORD + " 1";
 
     private final Index personId;

@@ -23,7 +23,7 @@ public class GeneratePeopleCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all people which a person of the specified"
             + "id (case-insensitive) have been in contact with and displays them as a list of locations.\n"
-            + "Parameters: PERSONID ...\n"
+            + "Parameters: PERSONID\n"
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_NO_PEOPLE_FOUND = "There were no people in contact with the given person";
