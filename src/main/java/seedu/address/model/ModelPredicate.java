@@ -34,8 +34,8 @@ public class ModelPredicate {
             return isIncluded;
         };
     }
-    /** {@code Predicate} to generate a predicate for whether a location contains any one of the ids in locationIds */
-    public static Predicate<Location> getPredicateShowLocationsById(List<Integer> locationIds) {
+    /** {@code Predicate} to generate predicate for whether a location's id is included in the list of location Ids */
+    public static Predicate<Location> getPredicateShowLocationsByPerson(List<Integer> locationIds) {
         return location -> {
             boolean isIncluded = location.getId().getZeroBased() == locationIds.get(0);
             for (int i = 1; i < locationIds.size(); i++) {
