@@ -90,7 +90,6 @@ public class MainApp extends Application {
         ReadOnlyLocationBook initialLocationData;
         Optional<ReadOnlyVisitBook> visitBookOptional;
         ReadOnlyVisitBook initialVisitData;
-
         try {
             addressBookOptional = storage.readAddressBook();
             if (!addressBookOptional.isPresent()) {

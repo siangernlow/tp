@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 import seedu.address.model.location.Location;
@@ -22,4 +23,15 @@ public class ModelPredicate {
         person -> person.getInfectionStatus().getStatusAsBoolean();
     public static final Predicate<Person> PREDICATE_SHOW_ALL_QUARANTINED =
         person -> person.getQuarantineStatus().getStatusAsBoolean();
+
+    /** {@code Predicate} to generate predicate for whether a location's id is included in the list of location Ids */
+    public static Predicate<Location> getPredicateShowLocationsByPerson(List<Integer> locationIds) {
+        return location -> {
+            boolean isIncluded = location.getId().getZeroBased() == locationIds.get(0);
+            for (int i = 1; i < locationIds.size(); i++) {
+                isIncluded = isIncluded || location.getId().getZeroBased() == locationIds.get(i);
+            }
+            return isIncluded;
+        };
+    }
 }
