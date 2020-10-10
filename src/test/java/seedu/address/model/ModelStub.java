@@ -64,6 +64,16 @@ public class ModelStub implements Model {
     }
 
     @Override
+    public boolean hasSameIdPerson(Person person) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public boolean hasSameIdentityExceptId(Person person) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
     public void deletePerson(Person target) {
         throw new AssertionError("This method should not be called.");
     }
