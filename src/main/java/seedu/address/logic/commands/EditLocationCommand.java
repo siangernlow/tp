@@ -174,8 +174,7 @@ public class EditLocationCommand extends Command {
             // state check
             EditLocationDescriptor e = (EditLocationDescriptor) other;
             return getName().equals(e.getName())
-                    && getAddress().equals(e.getAddress())
-                    && getId().equals(e.getId());
+                    && getAddress().equals(e.getAddress());
         }
     }
 }

@@ -34,14 +34,13 @@ public class EditLocationCommandParser implements Parser<EditLocationCommand> {
                     pe);
         }
 
-        EditLocationDescriptor editLocationDescriptor = new EditLocationCommand.EditLocationDescriptor();
+        EditLocationDescriptor editLocationDescriptor = new EditLocationDescriptor();
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
             editLocationDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
         }
         if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
             editLocationDescriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));
         }
-
         if (!editLocationDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditLocationCommand.MESSAGE_NOT_EDITED);
         }
