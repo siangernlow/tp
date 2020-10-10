@@ -49,8 +49,8 @@ public class AddVisitCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        Index personId = model.getFilteredPersonList().get(personIndex.getZeroBased()).getId();
-        Index locationId = model.getFilteredLocationList().get(locationIndex.getZeroBased()).getId();
+        Index personId = model.getPersonIdFromIndex(personIndex);
+        Index locationId = model.getLocationIdFromIndex(locationIndex);
         Visit visit = new Visit(personId, locationId, date);
         if (model.hasVisit(visit)) {
             throw new CommandException(MESSAGE_DUPLICATE_VISIT);

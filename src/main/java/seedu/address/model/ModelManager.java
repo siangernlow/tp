@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
 import seedu.address.model.visit.Visit;
@@ -285,6 +286,16 @@ public class ModelManager implements Model {
 
     public InfoHandler getInfoHandler() {
         return infoHandler;
+    }
+
+    @Override
+    public Index getPersonIdFromIndex(Index index) {
+        return filteredPersons.get(index.getZeroBased()).getId();
+    }
+
+    @Override
+    public Index getLocationIdFromIndex(Index index) {
+        return filteredLocations.get(index.getZeroBased()).getId();
     }
 
     @Override
