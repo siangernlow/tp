@@ -12,6 +12,8 @@ import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
 
+import java.util.function.Predicate;
+
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
@@ -21,7 +23,6 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 
-import java.util.function.Predicate;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
