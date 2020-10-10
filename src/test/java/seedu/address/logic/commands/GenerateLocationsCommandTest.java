@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.GenerateLocationsCommand.MESSAGE_PERSON_HAS_NO_VISITS;
-import static seedu.address.logic.commands.GenerateLocationsCommand.MESSAGE_PERSON_IS_NOT_INFECTED;
+import static seedu.address.logic.commands.CommandUtil.MESSAGE_PERSON_HAS_NO_VISITS;
+import static seedu.address.logic.commands.CommandUtil.MESSAGE_PERSON_IS_NOT_INFECTED;
 import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
@@ -85,7 +85,7 @@ public class GenerateLocationsCommandTest {
     @Test
     public void execute_noVisitsFound_throwCommandException() {
         String expectedMessage = MESSAGE_PERSON_HAS_NO_VISITS;
-        Index index = Index.fromOneBased(5);
+        Index index = Index.fromOneBased(6);
         GenerateLocationsCommand command = new GenerateLocationsCommand(index);
         assertThrows(CommandException.class, () -> command.execute(model));
         try {

@@ -23,8 +23,10 @@ public class TypicalVisits {
             .withLocationId("5").withDate("2020-09-13").build();
     public static final Visit SIXTH_VISIT = new VisitBuilder().withPersonId("1")
             .withLocationId("2").withDate("2020-09-13").build();
-    public static final Visit SEVENTH_VISIT = new VisitBuilder().withPersonId("4")
+    public static final Visit SEVENTH_VISIT = new VisitBuilder().withPersonId("5")
             .withLocationId("6").withDate("2020-09-13").build();
+    public static final Visit EIGHTH_VISIT = new VisitBuilder().withPersonId("4")
+            .withLocationId("1").withDate("2020-09-13").build();
 
     private TypicalVisits() {} // prevents instantiation
 
@@ -41,6 +43,6 @@ public class TypicalVisits {
 
     public static List<Visit> getTypicalVisits() {
         return new ArrayList<>(Arrays.asList(FIRST_VISIT, SECOND_VISIT, THIRD_VISIT,
-                FOURTH_VISIT, FIFTH_VISIT, SIXTH_VISIT, SEVENTH_VISIT));
+                FOURTH_VISIT, FIFTH_VISIT, SIXTH_VISIT, SEVENTH_VISIT, EIGHTH_VISIT));
     }
 }
