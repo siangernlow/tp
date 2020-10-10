@@ -1,8 +1,6 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
-import static seedu.address.logic.commands.GenerateLocationsCommand.MESSAGE_PERSON_IS_NOT_INFECTED;
-import static seedu.address.logic.commands.GenerateLocationsCommand.MESSAGE_PERSON_HAS_NO_VISITS;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +12,8 @@ import seedu.address.model.ReadOnlyVisitBook;
 import seedu.address.model.VisitBook;
 
 public class CommandUtil {
+    public static final String MESSAGE_PERSON_HAS_NO_VISITS = "This person is not associated with any visits";
+    public static final String MESSAGE_PERSON_IS_NOT_INFECTED = "This person is not infected";
 
     public static List<Integer> generateLocationIdsByPerson(Model model, Index personId) throws CommandException {
         ReadOnlyVisitBook tempVisitBook = model.getVisitBook();

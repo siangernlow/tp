@@ -13,7 +13,7 @@ import seedu.address.model.ModelPredicate;
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
  * Keyword matching is case insensitive.
  */
-public class GenerateLocationsCommand extends Command {
+public class GeneratePeopleCommand extends Command {
 
     public static final String COMMAND_WORD = "generateLocations";
 
@@ -24,7 +24,7 @@ public class GenerateLocationsCommand extends Command {
 
     private final Index personId;
 
-    public GenerateLocationsCommand(Index personId) {
+    public GeneratePeopleCommand(Index personId) {
         this.personId = personId;
     }
 
