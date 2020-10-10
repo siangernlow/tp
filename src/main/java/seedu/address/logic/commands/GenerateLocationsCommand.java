@@ -24,7 +24,7 @@ public class GenerateLocationsCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all locations which a person of "
             + "the specified id (case-insensitive) visited and displays them as a list of locations.\n"
-            + "Parameters: PERSONID ...\n"
+            + "Parameters: PERSONID\n"
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_PERSON_HAS_NO_VISITS = "This person is not associated with any visits";
@@ -47,6 +47,15 @@ public class GenerateLocationsCommand extends Command {
                 .get(personId.getZeroBased()).getInfectionStatus().getStatusAsBoolean()) {
             throw new CommandException(MESSAGE_PERSON_IS_NOT_INFECTED);
         }
+        List<Integer> locationIds = getLocationIdsByPerson(tempVisitBook);
+        model.updateFilteredLocationList(ModelPredicate.getPredicateShowLocationsByPerson(locationIds));
+        return new CommandResult(
+                "Generated locations for: " + model.getAddressBook()
+                        .getPersonList().get(personId.getZeroBased()).getName(),
+                false, false, CommandResult.SWITCH_TO_VIEW_ALL_LOCATIONS);
+    }
+
+    private List<Integer> getLocationIdsByPerson(ReadOnlyVisitBook tempVisitBook) throws CommandException {
         VisitBook visitsByPerson = new VisitBook();
         for (int i = 0; i < tempVisitBook.getVisitList().size(); i++) {
             if (tempVisitBook.getVisitList().get(i).getPersonId().equals(personId)) {
@@ -60,11 +69,7 @@ public class GenerateLocationsCommand extends Command {
         for (int i = 0; i < visitsByPerson.getVisitList().size(); i++) {
             locationIds.add(visitsByPerson.getVisitList().get(i).getLocationId().getZeroBased());
         }
-        model.updateFilteredLocationList(ModelPredicate.getPredicateShowLocationsByPerson(locationIds));
-        return new CommandResult(
-                "Generated locations for: " + model.getAddressBook()
-                        .getPersonList().get(personId.getZeroBased()).getName(),
-                false, false, CommandResult.SWITCH_TO_VIEW_ALL_LOCATIONS);
+        return locationIds;
     }
 
     @Override
