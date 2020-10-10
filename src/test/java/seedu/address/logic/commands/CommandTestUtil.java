@@ -10,6 +10,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_QUARANTINE_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_NINTH;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 import static seedu.address.testutil.TypicalIndexes.INDEX_TENTH;
@@ -27,6 +28,7 @@ import seedu.address.model.location.Location;
 import seedu.address.model.location.LocationNameContainsKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.testutil.EditLocationDescriptorBuilder;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -36,12 +38,16 @@ public class CommandTestUtil {
 
     public static final String VALID_NAME_AMY = "Amy Bee";
     public static final String VALID_NAME_BOB = "Bob Choo";
+    public static final String VALID_NAME_NUS = "NUS";
+    public static final String VALID_NAME_VIVOCITY = "Vivocity";
     public static final String VALID_PHONE_AMY = "11111111";
     public static final String VALID_PHONE_BOB = "22222222";
     public static final String VALID_EMAIL_AMY = "amy@example.com";
     public static final String VALID_EMAIL_BOB = "bob@example.com";
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
+    public static final String VALID_ADDRESS_NUS = "21 Lower Kent Ridge Rd, Singapore 119077";
+    public static final String VALID_ADDRESS_VIVOCITY = "1 HarbourFront Walk, Singapore 098585";
     public static final String VALID_QUARANTINE_STATUS_AMY = "true";
     public static final String VALID_QUARANTINE_STATUS_BOB = "false";
     public static final String VALID_INFECTION_STATUS_AMY = "false";
@@ -52,15 +58,21 @@ public class CommandTestUtil {
     public static final Index VALID_ID_BOB_LOCATION = INDEX_THIRD;
     public static final Index VALID_ID_AMY = INDEX_NINTH;
     public static final Index VALID_ID_BOB = INDEX_TENTH;
+    public static final Index VALID_ID_NUS = INDEX_FIRST;
+    public static final Index VALID_ID_VIVOCITY = INDEX_SECOND;
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
+    public static final String NAME_DESC_NUS = " " + PREFIX_NAME + VALID_NAME_NUS;
+    public static final String NAME_DESC_VIVOCITY = " " + PREFIX_NAME + VALID_NAME_VIVOCITY;
     public static final String PHONE_DESC_AMY = " " + PREFIX_PHONE + VALID_PHONE_AMY;
     public static final String PHONE_DESC_BOB = " " + PREFIX_PHONE + VALID_PHONE_BOB;
     public static final String EMAIL_DESC_AMY = " " + PREFIX_EMAIL + VALID_EMAIL_AMY;
     public static final String EMAIL_DESC_BOB = " " + PREFIX_EMAIL + VALID_EMAIL_BOB;
     public static final String ADDRESS_DESC_AMY = " " + PREFIX_ADDRESS + VALID_ADDRESS_AMY;
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
+    public static final String ADDRESS_DESC_NUS = " " + PREFIX_ADDRESS + VALID_ADDRESS_NUS;
+    public static final String ADDRESS_DESC_VIVOCITY = " " + PREFIX_ADDRESS + VALID_ADDRESS_VIVOCITY;
     public static final String QUARANTINE_STATUS_DESC_AMY = " " + PREFIX_QUARANTINE_STATUS
             + VALID_QUARANTINE_STATUS_AMY;
     public static final String QUARANTINE_STATUS_DESC_BOB = " " + PREFIX_QUARANTINE_STATUS
@@ -85,6 +97,8 @@ public class CommandTestUtil {
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
+    public static final EditLocationCommand.EditLocationDescriptor DESC_NUS;
+    public static final EditLocationCommand.EditLocationDescriptor DESC_VIVOCITY;
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -96,6 +110,13 @@ public class CommandTestUtil {
                 .withQuarantineStatus(VALID_QUARANTINE_STATUS_BOB).withInfectionStatus(VALID_INFECTION_STATUS_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
                 .withId(VALID_ID_BOB).build();
+    }
+
+    static {
+        DESC_NUS = new EditLocationDescriptorBuilder().withName(VALID_NAME_NUS)
+                .withAddress(VALID_ADDRESS_NUS).withId(VALID_ID_NUS).build();
+        DESC_VIVOCITY = new EditLocationDescriptorBuilder().withName(VALID_NAME_VIVOCITY)
+                .withAddress(VALID_ADDRESS_VIVOCITY).withId(VALID_ID_VIVOCITY).build();
     }
 
     /**
