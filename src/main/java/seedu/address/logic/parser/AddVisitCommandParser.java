@@ -9,7 +9,6 @@ import java.util.stream.Stream;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddVisitCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.visit.Visit;
 
 /**
  * Parses input arguments and creates a new AddVisitCommand object
@@ -31,21 +30,19 @@ public class AddVisitCommandParser implements Parser<AddVisitCommand> {
 
         String[] ids = argMultimap.getPreamble().split("\\s+");
 
-        Index personId;
-        Index locationId;
+        Index personIndex;
+        Index locationIndex;
 
         try {
-            personId = ParserUtil.parseIndex(ids[0]);
-            locationId = ParserUtil.parseIndex(ids[1]);
+            personIndex = ParserUtil.parseIndex(ids[0]);
+            locationIndex = ParserUtil.parseIndex(ids[1]);
         } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddVisitCommand.MESSAGE_USAGE), pe);
         }
 
         LocalDate date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
 
-        Visit visit = new Visit(personId, locationId, date);
-
-        return new AddVisitCommand(visit);
+        return new AddVisitCommand(personIndex, locationIndex, date);
     }
 
     /**

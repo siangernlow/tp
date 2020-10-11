@@ -4,6 +4,9 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 
+import java.time.LocalDate;
+
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.visit.Visit;
@@ -28,33 +31,51 @@ public class AddVisitCommand extends Command {
             + "Date (must be in the format of yyyy-MM-dd "
             + "Example: " + COMMAND_WORD + " 1 " + " 2 " + PREFIX_DATE + " 2020-09-09 ";
 
-    private final Visit toAdd;
+    private final Index personIndex;
+    private final Index locationIndex;
+    private final LocalDate date;
 
     /**
      * Creates an AddVisitCommand to add the specified {@code Visit}
      */
-
-    public AddVisitCommand(Visit visit) {
-        requireAllNonNull(visit);
-        toAdd = visit;
+    public AddVisitCommand(Index personIndex, Index locationIndex, LocalDate date) {
+        requireAllNonNull(personIndex, locationIndex, date);
+        this.personIndex = personIndex;
+        this.locationIndex = locationIndex;
+        this.date = date;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        if (model.hasVisit(toAdd)) {
+        Index personId = model.getPersonIdFromIndex(personIndex);
+        Index locationId = model.getLocationIdFromIndex(locationIndex);
+        Visit visit = new Visit(personId, locationId, date);
+        if (model.hasVisit(visit)) {
             throw new CommandException(MESSAGE_DUPLICATE_VISIT);
         }
 
-        model.addVisit(toAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        model.addVisit(visit);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, visit));
     }
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof AddVisitCommand // instanceof handles nulls
-                && toAdd.equals(((AddVisitCommand) other).toAdd));
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof AddVisitCommand)) {
+            return false;
+        }
+
+        // state check
+        AddVisitCommand e = (AddVisitCommand) other;
+        return personIndex.equals(e.personIndex)
+                && locationIndex.equals(e.locationIndex)
+                && date.equals(e.date);
     }
 }
