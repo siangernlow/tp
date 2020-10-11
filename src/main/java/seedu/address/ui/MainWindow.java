@@ -194,29 +194,19 @@ public class MainWindow extends UiPart<Stage> {
                 handleExit();
             }
 
-            if (commandResult.getSwitchState().equals(CommandResult.SWITCH_TO_VIEW_ALL_PEOPLE)) {
+            if (commandResult.getSwitchState().equals(CommandResult.SWITCH_TO_VIEW_PEOPLE)) {
                 listPanelPlaceholder.getChildren().clear();
                 listPanelPlaceholder.getChildren().add(personListPanel.getRoot());
             }
 
-            if (commandResult.getSwitchState().equals(CommandResult.SWITCH_TO_VIEW_ALL_LOCATIONS)) {
+            if (commandResult.getSwitchState().equals(CommandResult.SWITCH_TO_VIEW_LOCATIONS)) {
                 listPanelPlaceholder.getChildren().clear();
                 listPanelPlaceholder.getChildren().add(locationListPanel.getRoot());
             }
 
-            if (commandResult.getSwitchState().equals(CommandResult.SWITCH_TO_VIEW_ALL_VISITS)) {
+            if (commandResult.getSwitchState().equals(CommandResult.SWITCH_TO_VIEW_VISITS)) {
                 listPanelPlaceholder.getChildren().clear();
                 listPanelPlaceholder.getChildren().add(visitListPanel.getRoot());
-            }
-
-            if (commandResult.getSwitchState().equals(CommandResult.SWITCH_TO_VIEW_ALL_INFECTED)) {
-                listPanelPlaceholder.getChildren().clear();
-                listPanelPlaceholder.getChildren().add(personListPanel.getRoot());
-            }
-
-            if (commandResult.getSwitchState().equals(CommandResult.SWITCH_TO_VIEW_ALL_QUARANTINED)) {
-                listPanelPlaceholder.getChildren().clear();
-                listPanelPlaceholder.getChildren().add(personListPanel.getRoot());
             }
 
             return commandResult;

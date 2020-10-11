@@ -52,7 +52,7 @@ public class GenerateLocationsCommand extends Command {
         return new CommandResult(
                 "Generated locations for: " + model.getPersonBook()
                         .getPersonList().get(personId.getZeroBased()).getName(),
-                false, false, CommandResult.SWITCH_TO_VIEW_ALL_LOCATIONS);
+                false, false, CommandResult.SWITCH_TO_VIEW_LOCATIONS);
     }
 
     @Override

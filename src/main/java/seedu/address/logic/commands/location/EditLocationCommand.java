@@ -74,7 +74,7 @@ public class EditLocationCommand extends Command {
         model.setLocation(locationToEdit, editedLocation);
         model.updateFilteredLocationList(PREDICATE_SHOW_ALL_LOCATIONS);
         return new CommandResult(String.format(MESSAGE_EDIT_LOCATION_SUCCESS, editedLocation), false, false,
-                CommandResult.SWITCH_TO_VIEW_ALL_LOCATIONS);
+                CommandResult.SWITCH_TO_VIEW_LOCATIONS);
     }
 
     /**

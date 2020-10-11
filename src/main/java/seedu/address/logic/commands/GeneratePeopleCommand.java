@@ -58,7 +58,7 @@ public class GeneratePeopleCommand extends Command {
         return new CommandResult(
                 "Generated people for: " + model.getPersonBook()
                         .getPersonList().get(personId.getZeroBased()).getName(),
-                false, false, CommandResult.SWITCH_TO_VIEW_ALL_PEOPLE);
+                false, false, CommandResult.SWITCH_TO_VIEW_PEOPLE);
     }
 
     @Override
