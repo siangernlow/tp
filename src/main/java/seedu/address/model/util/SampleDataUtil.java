@@ -7,10 +7,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.model.AddressBook;
 import seedu.address.model.LocationBook;
-import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.PersonBook;
 import seedu.address.model.ReadOnlyLocationBook;
+import seedu.address.model.ReadOnlyPersonBook;
 import seedu.address.model.ReadOnlyVisitBook;
 import seedu.address.model.VisitBook;
 import seedu.address.model.location.Location;
@@ -25,7 +25,8 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.visit.Visit;
 
 /**
- * Contains utility methods for populating {@code AddressBook} and {@code LocationBook} with sample data.
+ * Contains utility methods for populating {@code PersonBook}, {@code LocationBook}
+ * and {@code VisitBook} with sample data.
  */
 public class SampleDataUtil {
     public static Person[] getSamplePersons() {
@@ -92,12 +93,12 @@ public class SampleDataUtil {
         };
     }
 
-    public static ReadOnlyAddressBook getSampleAddressBook() {
-        AddressBook sampleAb = new AddressBook();
+    public static ReadOnlyPersonBook getSampleAddressBook() {
+        PersonBook samplePb = new PersonBook();
         for (Person samplePerson : getSamplePersons()) {
-            sampleAb.addPerson(samplePerson);
+            samplePb.addPerson(samplePerson);
         }
-        return sampleAb;
+        return samplePb;
     }
 
     public static ReadOnlyLocationBook getSampleLocationBook() {

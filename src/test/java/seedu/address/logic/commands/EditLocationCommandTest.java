@@ -19,10 +19,10 @@ import org.junit.jupiter.api.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditLocationCommand.EditLocationDescriptor;
-import seedu.address.model.AddressBook;
 import seedu.address.model.LocationBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.PersonBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.VisitBook;
 import seedu.address.model.location.Location;
@@ -44,7 +44,7 @@ class EditLocationCommandTest {
 
         String expectedMessage = String.format(EditLocationCommand.MESSAGE_EDIT_LOCATION_SUCCESS, editedLocation);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+        Model expectedModel = new ModelManager(new PersonBook(model.getAddressBook()),
                 new LocationBook(model.getLocationBook()), new UserPrefs(), new VisitBook(model.getVisitBook()));
         expectedModel.setLocation(model.getFilteredLocationList().get(0), editedLocation);
 
@@ -64,7 +64,7 @@ class EditLocationCommandTest {
 
         String expectedMessage = String.format(EditLocationCommand.MESSAGE_EDIT_LOCATION_SUCCESS, editedLocation);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+        Model expectedModel = new ModelManager(new PersonBook(model.getAddressBook()),
                 new LocationBook(model.getLocationBook()), new UserPrefs(), new VisitBook(model.getVisitBook()));
         expectedModel.setLocation(lastLocation, editedLocation);
 
@@ -79,7 +79,7 @@ class EditLocationCommandTest {
 
         String expectedMessage = String.format(EditLocationCommand.MESSAGE_EDIT_LOCATION_SUCCESS, editedLocation);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+        Model expectedModel = new ModelManager(new PersonBook(model.getAddressBook()),
                 new LocationBook(model.getLocationBook()), new UserPrefs(), new VisitBook(model.getVisitBook()));
 
         assertCommandSuccess(editLocationCommand, model, expectedMessage, expectedModel);
@@ -96,7 +96,7 @@ class EditLocationCommandTest {
 
         String expectedMessage = String.format(EditLocationCommand.MESSAGE_EDIT_LOCATION_SUCCESS, editedLocation);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+        Model expectedModel = new ModelManager(new PersonBook(model.getAddressBook()),
                 new LocationBook(model.getLocationBook()), new UserPrefs(), new VisitBook(model.getVisitBook()));
         expectedModel.setLocation(model.getFilteredLocationList().get(0), editedLocation);
 

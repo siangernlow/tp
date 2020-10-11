@@ -32,7 +32,7 @@ public class ModelManagerTest {
     public void constructor() {
         assertEquals(new UserPrefs(), modelManager.getUserPrefs());
         assertEquals(new GuiSettings(), modelManager.getGuiSettings());
-        assertEquals(new AddressBook(), new AddressBook(modelManager.getAddressBook()));
+        assertEquals(new PersonBook(), new PersonBook(modelManager.getAddressBook()));
         assertEquals(new LocationBook(), new LocationBook(modelManager.getLocationBook()));
         assertEquals(new VisitBook(), new VisitBook(modelManager.getVisitBook()));
     }
@@ -166,8 +166,8 @@ public class ModelManagerTest {
 
     @Test
     public void equals() {
-        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
-        AddressBook differentAddressBook = new AddressBook();
+        PersonBook personBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        PersonBook differentPersonBook = new PersonBook();
         LocationBook locationBook = new LocationBookBuilder().withLocation(CARL_LOCATION).withLocation(DANIEL_LOCATION)
                 .build();
         LocationBook differentLocationBook = new LocationBook();
@@ -178,8 +178,8 @@ public class ModelManagerTest {
         UserPrefs userPrefs = new UserPrefs();
 
         // same values -> returns true
-        modelManager = new ModelManager(addressBook, locationBook, userPrefs, visitBook);
-        ModelManager modelManagerCopy = new ModelManager(addressBook, locationBook, userPrefs, visitBook);
+        modelManager = new ModelManager(personBook, locationBook, userPrefs, visitBook);
+        ModelManager modelManagerCopy = new ModelManager(personBook, locationBook, userPrefs, visitBook);
         assertTrue(modelManager.equals(modelManagerCopy));
 
         // same object -> returns true
@@ -191,16 +191,16 @@ public class ModelManagerTest {
         // different types -> returns false
         assertFalse(modelManager.equals(5));
 
-        // different addressBook -> returns false
-        assertFalse(modelManager.equals(new ModelManager(differentAddressBook, locationBook, userPrefs, visitBook)));
+        // different personBook -> returns false
+        assertFalse(modelManager.equals(new ModelManager(differentPersonBook, locationBook, userPrefs, visitBook)));
 
         // different locationBook -> returns false
-        assertFalse(modelManager.equals(new ModelManager(addressBook, differentLocationBook, userPrefs, visitBook)));
+        assertFalse(modelManager.equals(new ModelManager(personBook, differentLocationBook, userPrefs, visitBook)));
 
         // different filteredList -> returns false
         String[] keywords = ALICE.getName().fullName.split("\\s+");
         modelManager.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
-        assertFalse(modelManager.equals(new ModelManager(addressBook, locationBook, userPrefs, visitBook)));
+        assertFalse(modelManager.equals(new ModelManager(personBook, locationBook, userPrefs, visitBook)));
 
         // resets modelManager to initial state for upcoming tests
         modelManager.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
@@ -208,6 +208,6 @@ public class ModelManagerTest {
         // different userPrefs -> returns false
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setAddressBookFilePath(Paths.get("differentFilePath"));
-        assertFalse(modelManager.equals(new ModelManager(addressBook, locationBook, differentUserPrefs, visitBook)));
+        assertFalse(modelManager.equals(new ModelManager(personBook, locationBook, differentUserPrefs, visitBook)));
     }
 }

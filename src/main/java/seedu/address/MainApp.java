@@ -15,12 +15,12 @@ import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
-import seedu.address.model.AddressBook;
 import seedu.address.model.LocationBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.PersonBook;
 import seedu.address.model.ReadOnlyLocationBook;
+import seedu.address.model.ReadOnlyPersonBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.ReadOnlyVisitBook;
 import seedu.address.model.UserPrefs;
@@ -84,8 +84,8 @@ public class MainApp extends Application {
      * or an empty VirusTracker will be used instead if errors occur when reading {@code storage}'s VirusTracker.
      */
     private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
-        Optional<ReadOnlyAddressBook> personBookOptional;
-        ReadOnlyAddressBook initialPersonData;
+        Optional<ReadOnlyPersonBook> personBookOptional;
+        ReadOnlyPersonBook initialPersonData;
         Optional<ReadOnlyLocationBook> locationBookOptional;
         ReadOnlyLocationBook initialLocationData;
         Optional<ReadOnlyVisitBook> visitBookOptional;
@@ -99,10 +99,10 @@ public class MainApp extends Application {
             initialPersonData = personBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty PersonBook");
-            initialPersonData = new AddressBook();
+            initialPersonData = new PersonBook();
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty PersonBook");
-            initialPersonData = new AddressBook();
+            initialPersonData = new PersonBook();
         }
 
         try {

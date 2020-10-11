@@ -25,7 +25,7 @@ import seedu.address.model.visit.Visit;
 public class ModelManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private final AddressBook addressBook;
+    private final PersonBook personBook;
     private final LocationBook locationBook;
     private final UserPrefs userPrefs;
     private final VisitBook visitBook;
@@ -35,28 +35,28 @@ public class ModelManager implements Model {
     private final FilteredList<Visit> filteredVisits;
 
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a ModelManager with the given personBook, locationBook, visitBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyLocationBook locationBook,
+    public ModelManager(ReadOnlyPersonBook personBook, ReadOnlyLocationBook locationBook,
                         ReadOnlyUserPrefs userPrefs, ReadOnlyVisitBook visitBook) {
         super();
-        requireAllNonNull(addressBook, locationBook, visitBook, userPrefs);
+        requireAllNonNull(personBook, locationBook, visitBook, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs
+        logger.fine("Initializing with address book: " + personBook + " and user prefs " + userPrefs
                 + " and location book: " + locationBook + " and visit book: " + visitBook);
 
-        this.addressBook = new AddressBook(addressBook);
+        this.personBook = new PersonBook(personBook);
         this.locationBook = new LocationBook(locationBook);
         this.visitBook = new VisitBook(visitBook);
         this.infoHandler = new InfoHandler(this);
         this.userPrefs = new UserPrefs(userPrefs);
-        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredPersons = new FilteredList<>(this.personBook.getPersonList());
         filteredLocations = new FilteredList<>(this.locationBook.getLocationList());
         filteredVisits = new FilteredList<>(this.visitBook.getVisitList());
     }
 
     public ModelManager() {
-        this(new AddressBook(), new LocationBook(), new UserPrefs(), new VisitBook());
+        this(new PersonBook(), new LocationBook(), new UserPrefs(), new VisitBook());
     }
 
     //=========== UserPrefs ==================================================================================
@@ -115,44 +115,44 @@ public class ModelManager implements Model {
         requireNonNull(visitBookFilePath);
         userPrefs.setVisitBookFilePath(visitBookFilePath);
     }
-    //=========== AddressBook ================================================================================
+    //=========== PersonBook ================================================================================
 
     @Override
-    public void setAddressBook(ReadOnlyAddressBook addressBook) {
-        this.addressBook.resetData(addressBook);
+    public void setAddressBook(ReadOnlyPersonBook personBook) {
+        this.personBook.resetData(personBook);
     }
 
     @Override
-    public ReadOnlyAddressBook getAddressBook() {
-        return addressBook;
+    public ReadOnlyPersonBook getAddressBook() {
+        return personBook;
     }
 
     @Override
     public boolean hasPerson(Person person) {
         requireNonNull(person);
-        return addressBook.hasPerson(person);
+        return personBook.hasPerson(person);
     }
 
     @Override
     public boolean hasSameIdPerson(Person person) {
         requireNonNull(person);
-        return addressBook.hasSameIdPerson(person);
+        return personBook.hasSameIdPerson(person);
     }
 
     @Override
     public boolean hasSameIdentityExceptId(Person person) {
         requireNonNull(person);
-        return addressBook.hasSameIdentityExceptId(person);
+        return personBook.hasSameIdentityExceptId(person);
     }
 
     @Override
     public void deletePerson(Person target) {
-        addressBook.removePerson(target);
+        personBook.removePerson(target);
     }
 
     @Override
     public void addPerson(Person person) {
-        addressBook.addPerson(person);
+        personBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
@@ -160,7 +160,7 @@ public class ModelManager implements Model {
     public void setPerson(Person target, Person editedPerson) {
         requireAllNonNull(target, editedPerson);
 
-        addressBook.setPerson(target, editedPerson);
+        personBook.setPerson(target, editedPerson);
     }
 
     //=========== Filtered Person List Accessors =============================================================
@@ -312,7 +312,7 @@ public class ModelManager implements Model {
 
         // state check
         ModelManager other = (ModelManager) obj;
-        return addressBook.equals(other.addressBook)
+        return personBook.equals(other.personBook)
                 && locationBook.equals(other.locationBook)
                 && visitBook.equals(other.visitBook)
                 && userPrefs.equals(other.userPrefs)

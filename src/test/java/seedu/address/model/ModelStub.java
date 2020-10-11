@@ -50,12 +50,12 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public void setAddressBook(ReadOnlyAddressBook newData) {
+    public void setAddressBook(ReadOnlyPersonBook newData) {
         throw new AssertionError("This method should not be called.");
     }
 
     @Override
-    public ReadOnlyAddressBook getAddressBook() {
+    public ReadOnlyPersonBook getAddressBook() {
         throw new AssertionError("This method should not be called.");
     }
 
