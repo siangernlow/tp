@@ -3,9 +3,10 @@ package seedu.address.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.address.testutil.TypicalLocations.BENSON_LOCATION;
 import static seedu.address.testutil.TypicalLocations.CARL_LOCATION;
+import static seedu.address.testutil.TypicalLocations.GEORGE_LOCATION;
 import static seedu.address.testutil.TypicalLocations.IDA_LOCATION;
 import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
-import static seedu.address.testutil.TypicalLocations.getTypicalLocationBookForTest;
+import static seedu.address.testutil.TypicalLocations.getUnorderedTypicalLocationBook;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalVisits.getMoreThanSixtyPercentVisitBook;
 import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
@@ -35,7 +36,7 @@ public class ModelPredicateTest {
         // Infected Locations(3) are less than 60% of total locations(7)
         model.setVisitBook(getWholeVisitBook());
         Predicate<Location> actualPredicate = ModelPredicate.getPredicateForHighRiskLocations(model);
-        model.setLocationBook(getTypicalLocationBookForTest());
+        model.setLocationBook(getUnorderedTypicalLocationBook());
         model.updateFilteredLocationList(actualPredicate);
         ObservableList<Location> actualList = model.getFilteredLocationList();
 
@@ -43,6 +44,7 @@ public class ModelPredicateTest {
         expectedList.add(IDA_LOCATION);
         expectedList.add(BENSON_LOCATION);
         expectedList.add(CARL_LOCATION);
+        expectedList.add(GEORGE_LOCATION);
 
         assertEquals(expectedList, actualList);
 

@@ -236,11 +236,12 @@ public class InfoHandler {
      * Determines the number of high risk locations given all infected locations and total locations.
      */
     public static int getNumberOfHighRiskLocations(int numberOfInfectedLocations, int numberOfTotalLocations) {
-        // if number of infected locations is more than 60% of total locations,
-        // number of infected locations considered to be high risk will be 40%
-        // of total locations. Otherwise, all infected locations are considered
-        // to be high risk. This criterion needs further discussion and is
-        // subjected to change.
+        /*
+        if number of infected locations is more than 60% of total locations,number of infected
+        locations considered to be high risk will be 40% of total locations. Otherwise, all
+        infected locations are considered to be high risk. This criterion needs further discussion
+        and is subjected to change.
+        */
         if (numberOfInfectedLocations > numberOfTotalLocations * 0.6) {
             return (int) (numberOfTotalLocations * 0.4);
         } else {

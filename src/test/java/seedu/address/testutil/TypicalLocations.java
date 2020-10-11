@@ -65,9 +65,9 @@ public class TypicalLocations {
         return lb;
     }
 
-    public static LocationBook getTypicalLocationBookForTest() {
+    public static LocationBook getUnorderedTypicalLocationBook() {
         LocationBook lb = new LocationBook();
-        for (Location location : getLocationsForTest()) {
+        for (Location location : getUnorderedTypicalLocations()) {
             lb.addLocation(location);
         }
         return lb;
@@ -78,7 +78,7 @@ public class TypicalLocations {
                 ELLE_LOCATION, FIONA_LOCATION, GEORGE_LOCATION));
     }
 
-    public static List<Location> getLocationsForTest() {
+    public static List<Location> getUnorderedTypicalLocations() {
         return new ArrayList<>(Arrays.asList(IDA_LOCATION, BENSON_LOCATION, CARL_LOCATION, DANIEL_LOCATION,
                 ELLE_LOCATION, FIONA_LOCATION, GEORGE_LOCATION));
     }

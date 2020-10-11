@@ -34,8 +34,6 @@ public class TypicalVisits {
             .withLocationId("6").withDate("2020-09-13").build();
 
     // Manually added
-    public static final Visit SEVENTH_VISIT = new VisitBuilder().withPersonId("4")
-            .withLocationId("2").withDate("2020-09-14").build();
     public static final Visit EIGHTH_VISIT = new VisitBuilder().withPersonId("5")
             .withLocationId("3").withDate("2020-09-14").build();
     public static final Visit NINTH_VISIT = new VisitBuilder().withPersonId("6")
@@ -45,6 +43,8 @@ public class TypicalVisits {
     public static final Visit ELEVENTH_VISIT = new VisitBuilder().withPersonId("6")
             .withLocationId("3").withDate("2020-09-14").build();
     public static final Visit TWELFTH_VISIT = new VisitBuilder().withPersonId("5")
+            .withLocationId("2").withDate("2020-09-14").build();
+    public static final Visit THIRTEENTH_VISIT = new VisitBuilder().withPersonId("4")
             .withLocationId("2").withDate("2020-09-14").build();
 
     private TypicalVisits() {} // prevents instantiation
@@ -98,11 +98,19 @@ public class TypicalVisits {
                 NINTH_VISIT, TENTH_VISIT, ELEVENTH_VISIT, TWELFTH_VISIT));
     }
 
+    /**
+     * Returns a list of {@code Visits} with 4 visits to location with id 2, 3 visits to location with id 3,
+     * 2 visits to location with id 5 and 1 visit to location with id 4.
+     */
     public static List<Visit> getVisitsForTest() {
         return new ArrayList<>(Arrays.asList(FIRST_VISIT, SECOND_VISIT, FOURTH_VISIT, FIFTH_VISIT,
-                SIXTH_VISIT, SEVENTH_VISIT, EIGHTH_VISIT, NINTH_VISIT, TENTH_VISIT, ELEVENTH_VISIT));
+                SIXTH_VISIT, THIRTEENTH_VISIT, EIGHTH_VISIT, NINTH_VISIT, TENTH_VISIT, ELEVENTH_VISIT));
     }
 
+    /**
+     * Returns a list of unique {@code LocationId} in the list of {@code Visit} provided
+     * by {@code getVisitsForTest}
+     */
     public static List<Index> getLocationsIdsFromVisitsForTest() {
         return new ArrayList<>(Arrays.asList(INDEX_SECOND, INDEX_THIRD, INDEX_FIFTH, INDEX_FOURTH));
     }
@@ -112,9 +120,8 @@ public class TypicalVisits {
      * that is infected
      */
     public static List<Visit> getMoreThanSixtyPercentInfectedVisits() {
-        // FIRST_VISIT AND SECOND_VISIT are non-infected Visits.
-        // The remaining Visits are infected Visits.
-        return new ArrayList<>(Arrays.asList(FIRST_VISIT, SECOND_VISIT, SEVENTH_VISIT, EIGHTH_VISIT,
+        // FIRST_VISIT AND SECOND_VISIT are non-infected Visits. The remaining Visits are infected Visits.
+        return new ArrayList<>(Arrays.asList(FIRST_VISIT, SECOND_VISIT, THIRTEENTH_VISIT, EIGHTH_VISIT,
                 NINTH_VISIT, TENTH_VISIT, ELEVENTH_VISIT, TWELFTH_VISIT));
     }
 }
