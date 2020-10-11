@@ -84,8 +84,16 @@ public class ListCommandTest {
 
     @Test
     public void execute_statistics_showsSameList() {
+        String expectedMessage = ListCommand.MESSAGE_SUCCESS_STATISTICS + "\n"
+                + "Total number of people: 7" + "\n"
+                + "Total number of locations: 7" + "\n"
+                + "Total number of visits: 8" + "\n"
+                + "Total number of infected people: 4" + "\n"
+                + "Total number of quarantined people: 2" + "\n"
+                + "Percentage of people infected: 57.14%" + "\n"
+                + "Percentage of people quarantined: 28.57%" + "\n";
         assertCommandSuccess(new ListCommand(STATISTICS_LIST),
-                model, ListCommand.MESSAGE_SUCCESS_STATISTICS, expectedModel);
+                model, expectedMessage, expectedModel);
     }
 
     @Test
