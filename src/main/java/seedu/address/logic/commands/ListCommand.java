@@ -69,10 +69,8 @@ public class ListCommand extends Command {
             return new CommandResult(MESSAGE_SUCCESS_ALL_QUARANTINED, false, false,
                     CommandResult.SWITCH_TO_VIEW_ALL_QUARANTINED);
         case STATISTICS:
-            // Retrieves the stats, currently displayed as console output
             String stats = model.getInfoHandler().getStatistics();
-            System.out.println(stats);
-            return new CommandResult(MESSAGE_SUCCESS_STATISTICS, false, false,
+            return new CommandResult(MESSAGE_SUCCESS_STATISTICS + "\n" + stats, false, false,
                     CommandResult.SWITCH_TO_VIEW_STATISTICS);
         case HIGH_RISK_LOCATIONS:
             Predicate<Location> predicateForHighRiskLocations =
