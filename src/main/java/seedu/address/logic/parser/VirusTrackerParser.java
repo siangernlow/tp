@@ -36,7 +36,7 @@ import seedu.address.logic.parser.visit.DeleteVisitsCommandParser;
 /**
  * Parses user input.
  */
-public class AddressBookParser {
+public class VirusTrackerParser {
 
     /**
      * Used for initial separation of command word and args.

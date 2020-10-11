@@ -47,9 +47,9 @@ import seedu.address.testutil.PersonUtil;
 import seedu.address.testutil.VisitBuilder;
 import seedu.address.testutil.VisitUtil;
 
-public class AddressBookParserTest {
+public class VirusTrackerParserTest {
 
-    private final AddressBookParser parser = new AddressBookParser();
+    private final VirusTrackerParser parser = new VirusTrackerParser();
 
     @Test
     public void parseCommand_add() throws Exception {
