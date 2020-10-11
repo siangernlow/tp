@@ -64,7 +64,7 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
-        PersonBookStorage personBookStorage = new JsonPersonBookStorage(userPrefs.getAddressBookFilePath());
+        PersonBookStorage personBookStorage = new JsonPersonBookStorage(userPrefs.getPersonBookFilePath());
         LocationBookStorage locationBookStorage = new JsonLocationBookStorage(userPrefs.getLocationBookFilePath());
         VisitBookStorage visitBookStorage = new JsonVisitBookStorage(userPrefs.getVisitBookFilePath());
         storage = new StorageManager(personBookStorage, locationBookStorage, userPrefsStorage, visitBookStorage);

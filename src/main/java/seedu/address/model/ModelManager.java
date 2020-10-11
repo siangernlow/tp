@@ -93,13 +93,13 @@ public class ModelManager implements Model {
 
     @Override
     public Path getPersonBookFilePath() {
-        return userPrefs.getAddressBookFilePath();
+        return userPrefs.getPersonBookFilePath();
     }
 
     @Override
     public void setPersonBookFilePath(Path personBookFilePath) {
         requireNonNull(personBookFilePath);
-        userPrefs.setAddressBookFilePath(personBookFilePath);
+        userPrefs.setPersonBookFilePath(personBookFilePath);
     }
 
     @Override
