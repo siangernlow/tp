@@ -59,8 +59,10 @@ public class LogicManager implements Logic {
         return commandResult;
     }
 
+    //=========== Person Book =======================================================================================
+
     @Override
-    public ReadOnlyPersonBook getAddressBook() {
+    public ReadOnlyPersonBook getPersonBook() {
         return model.getAddressBook();
     }
 
@@ -70,19 +72,11 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public ObservableList<Location> getFilteredLocationList() {
-        return model.getFilteredLocationList();
-    }
-
-    @Override
-    public ObservableList<Visit> getFilteredVisitList() {
-        return model.getFilteredVisitList();
-    }
-
-    @Override
-    public Path getAddressBookFilePath() {
+    public Path getPersonBookFilePath() {
         return model.getAddressBookFilePath();
     }
+
+    //=========== Location Book =====================================================================================
 
     @Override
     public ReadOnlyLocationBook getLocationBook() {
@@ -90,9 +84,23 @@ public class LogicManager implements Logic {
     }
 
     @Override
+    public ObservableList<Location> getFilteredLocationList() {
+        return model.getFilteredLocationList();
+    }
+
+    @Override
     public Path getLocationBookFilePath() {
         return model.getLocationBookFilePath();
     }
+
+    //=========== Visit Book ========================================================================================
+
+    @Override
+    public ObservableList<Visit> getFilteredVisitList() {
+        return model.getFilteredVisitList();
+    }
+
+    //=========== GUI Settings ======================================================================================
 
     @Override
     public GuiSettings getGuiSettings() {

@@ -26,27 +26,24 @@ public interface Logic {
      */
     CommandResult execute(String commandText) throws CommandException, ParseException;
 
+    //=========== Person Book =======================================================================================
+
     /**
      * Returns the PersonBook.
      *
      * @see seedu.address.model.Model#getAddressBook()
      */
-    ReadOnlyPersonBook getAddressBook();
+    ReadOnlyPersonBook getPersonBook();
 
     /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<Person> getFilteredPersonList();
 
-    /** Returns an unmodifiable view of the filtered list of locations */
-    ObservableList<Location> getFilteredLocationList();
-
-    /** Returns an unmodifiable view of the filtered list of visits */
-    ObservableList<Visit> getFilteredVisitList();
-
-
     /**
-     * Returns the user prefs' address book file path.
+     * Returns the user prefs' person book file path.
      */
-    Path getAddressBookFilePath();
+    Path getPersonBookFilePath();
+
+    //=========== Location Book =====================================================================================
 
     /**
      * Returns the LocationBook.
@@ -55,10 +52,20 @@ public interface Logic {
      */
     ReadOnlyLocationBook getLocationBook();
 
+    /** Returns an unmodifiable view of the filtered list of locations */
+    ObservableList<Location> getFilteredLocationList();
+
     /**
      * Returns the user prefs' location book file path.
      */
     Path getLocationBookFilePath();
+
+    //=========== Visit Book ========================================================================================
+
+    /** Returns an unmodifiable view of the filtered list of visits */
+    ObservableList<Visit> getFilteredVisitList();
+
+    //=========== GUI Settings ======================================================================================
 
     /**
      * Returns the user prefs' GUI settings.
