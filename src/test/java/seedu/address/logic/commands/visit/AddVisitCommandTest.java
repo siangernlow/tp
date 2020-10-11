@@ -70,7 +70,7 @@ public class AddVisitCommandTest {
     @Test
     public void execute_filteredList_success() {
         Model model = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
-                new UserPrefs(), new VisitBook());
+                new VisitBook(), new UserPrefs());
 
         showLocationAtIndex(model, INDEX_THIRD);
         showPersonAtIndex(model, INDEX_FOURTH);

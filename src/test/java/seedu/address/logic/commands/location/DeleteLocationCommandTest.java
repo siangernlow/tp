@@ -22,7 +22,7 @@ import seedu.address.model.location.Location;
 
 public class DeleteLocationCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
-            new UserPrefs(), getTypicalVisitBook());
+            getTypicalVisitBook(), new UserPrefs());
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
@@ -32,7 +32,7 @@ public class DeleteLocationCommandTest {
         String expectedMessage = String.format(DeleteLocationCommand.MESSAGE_DELETE_LOCATION_SUCCESS, locationToDelete);
 
         ModelManager expectedModel = new ModelManager(model.getPersonBook(), model.getLocationBook(),
-                new UserPrefs(), model.getVisitBook());
+                model.getVisitBook(), new UserPrefs());
         expectedModel.deleteLocation(locationToDelete);
 
         assertCommandSuccess(deleteLocationCommand, model, expectedMessage, expectedModel);
@@ -56,7 +56,7 @@ public class DeleteLocationCommandTest {
         String expectedMessage = String.format(DeleteLocationCommand.MESSAGE_DELETE_LOCATION_SUCCESS, locationToDelete);
 
         Model expectedModel = new ModelManager(model.getPersonBook(), model.getLocationBook(),
-                new UserPrefs(), model.getVisitBook());
+                model.getVisitBook(), new UserPrefs());
         expectedModel.deleteLocation(locationToDelete);
         showNoLocation(expectedModel);
 

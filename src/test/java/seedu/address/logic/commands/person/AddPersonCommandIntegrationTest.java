@@ -25,7 +25,7 @@ public class AddPersonCommandIntegrationTest {
     @BeforeEach
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
-                new UserPrefs(), getTypicalVisitBook());
+                getTypicalVisitBook(), new UserPrefs());
     }
 
     @Test
@@ -33,7 +33,7 @@ public class AddPersonCommandIntegrationTest {
         Person validPerson = TypicalPersons.AMY;
 
         Model expectedModel = new ModelManager(model.getPersonBook(), model.getLocationBook(),
-                new UserPrefs(), model.getVisitBook());
+                model.getVisitBook(), new UserPrefs());
         expectedModel.addPerson(validPerson);
 
         assertCommandSuccess(new AddPersonCommand(validPerson), model,

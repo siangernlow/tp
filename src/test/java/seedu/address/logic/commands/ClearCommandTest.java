@@ -27,27 +27,27 @@ public class ClearCommandTest {
     @Test
     public void execute_nonEmptyAddressBook_success() {
         Model expectedModel = new ModelManager(new PersonBook(), new LocationBook(),
-                new UserPrefs(), new VisitBook());
+                new VisitBook(), new UserPrefs());
         Model model;
 
         // test that all books are cleared
         model = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
-                new UserPrefs(), getTypicalVisitBook());
+                getTypicalVisitBook(), new UserPrefs());
         assertCommandSuccess(new ClearCommand(), model, ClearCommand.MESSAGE_SUCCESS, expectedModel);
 
         // test that person book is cleared
         model = new ModelManager(getTypicalAddressBook(), new LocationBook(),
-                new UserPrefs(), new VisitBook());
+                new VisitBook(), new UserPrefs());
         assertCommandSuccess(new ClearCommand(), model, ClearCommand.MESSAGE_SUCCESS, expectedModel);
 
         // test that location book is cleared
         model = new ModelManager(new PersonBook(), getTypicalLocationBook(),
-                new UserPrefs(), new VisitBook());
+                new VisitBook(), new UserPrefs());
         assertCommandSuccess(new ClearCommand(), model, ClearCommand.MESSAGE_SUCCESS, expectedModel);
 
         // test that visit book is cleared
         model = new ModelManager(new PersonBook(), new LocationBook(),
-                new UserPrefs(), getTypicalVisitBook());
+                getTypicalVisitBook(), new UserPrefs());
         assertCommandSuccess(new ClearCommand(), model, ClearCommand.MESSAGE_SUCCESS, expectedModel);
     }
 

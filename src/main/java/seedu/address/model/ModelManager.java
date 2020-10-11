@@ -33,8 +33,8 @@ public class ModelManager implements Model {
 
     private final PersonBook personBook;
     private final LocationBook locationBook;
-    private final UserPrefs userPrefs;
     private final VisitBook visitBook;
+    private final UserPrefs userPrefs;
     private final InfoHandler infoHandler;
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Location> filteredLocations;
@@ -44,7 +44,7 @@ public class ModelManager implements Model {
      * Initializes a ModelManager with the given personBook, locationBook, visitBook and userPrefs.
      */
     public ModelManager(ReadOnlyPersonBook personBook, ReadOnlyLocationBook locationBook,
-                        ReadOnlyUserPrefs userPrefs, ReadOnlyVisitBook visitBook) {
+                        ReadOnlyVisitBook visitBook, ReadOnlyUserPrefs userPrefs) {
         super();
         requireAllNonNull(personBook, locationBook, visitBook, userPrefs);
 
@@ -62,7 +62,7 @@ public class ModelManager implements Model {
     }
 
     public ModelManager() {
-        this(new PersonBook(), new LocationBook(), new UserPrefs(), new VisitBook());
+        this(new PersonBook(), new LocationBook(), new VisitBook(), new UserPrefs());
     }
 
     //=========== Settings ========================================================================================

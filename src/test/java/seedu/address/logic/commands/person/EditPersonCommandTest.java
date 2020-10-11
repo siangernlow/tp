@@ -38,7 +38,7 @@ import seedu.address.testutil.PersonBuilder;
  */
 public class EditPersonCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
-            new UserPrefs(), getTypicalVisitBook());
+            getTypicalVisitBook(), new UserPrefs());
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
@@ -49,7 +49,7 @@ public class EditPersonCommandTest {
         String expectedMessage = String.format(EditPersonCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
 
         Model expectedModel = new ModelManager(new PersonBook(model.getPersonBook()),
-                new LocationBook(model.getLocationBook()), new UserPrefs(), new VisitBook(model.getVisitBook()));
+                new LocationBook(model.getLocationBook()), new VisitBook(model.getVisitBook()), new UserPrefs());
         expectedModel.setPerson(model.getFilteredPersonList().get(0), editedPerson);
 
         assertCommandSuccess(editPersonCommand, model, expectedMessage, expectedModel);
@@ -71,7 +71,7 @@ public class EditPersonCommandTest {
         String expectedMessage = String.format(EditPersonCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
 
         Model expectedModel = new ModelManager(new PersonBook(model.getPersonBook()),
-                new LocationBook(model.getLocationBook()), new UserPrefs(), new VisitBook(model.getVisitBook()));
+                new LocationBook(model.getLocationBook()), new VisitBook(model.getVisitBook()), new UserPrefs());
         expectedModel.setPerson(lastPerson, editedPerson);
 
         assertCommandSuccess(editPersonCommand, model, expectedMessage, expectedModel);
@@ -85,7 +85,7 @@ public class EditPersonCommandTest {
         String expectedMessage = String.format(EditPersonCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
 
         Model expectedModel = new ModelManager(new PersonBook(model.getPersonBook()),
-                new LocationBook(model.getLocationBook()), new UserPrefs(), new VisitBook(model.getVisitBook()));
+                new LocationBook(model.getLocationBook()), new VisitBook(model.getVisitBook()), new UserPrefs());
 
         assertCommandSuccess(editPersonCommand, model, expectedMessage, expectedModel);
     }
@@ -102,7 +102,7 @@ public class EditPersonCommandTest {
         String expectedMessage = String.format(EditPersonCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
 
         Model expectedModel = new ModelManager(new PersonBook(model.getPersonBook()),
-                new LocationBook(model.getLocationBook()), new UserPrefs(), new VisitBook(model.getVisitBook()));
+                new LocationBook(model.getLocationBook()), new VisitBook(model.getVisitBook()), new UserPrefs());
         expectedModel.setPerson(model.getFilteredPersonList().get(0), editedPerson);
 
         assertCommandSuccess(editPersonCommand, model, expectedMessage, expectedModel);

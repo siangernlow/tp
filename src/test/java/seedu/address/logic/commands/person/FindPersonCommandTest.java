@@ -27,9 +27,9 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
  */
 public class FindPersonCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
-            new UserPrefs(), getTypicalVisitBook());
+            getTypicalVisitBook(), new UserPrefs());
     private Model expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
-            new UserPrefs(), getTypicalVisitBook());
+            getTypicalVisitBook(), new UserPrefs());
 
     @Test
     public void equals() {

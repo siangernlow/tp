@@ -133,7 +133,7 @@ public class MainApp extends Application {
             initialVisitData = new VisitBook();
         }
 
-        return new ModelManager(initialPersonData, initialLocationData, userPrefs, initialVisitData);
+        return new ModelManager(initialPersonData, initialLocationData, initialVisitData, userPrefs);
     }
 
     private void initLogging(Config config) {

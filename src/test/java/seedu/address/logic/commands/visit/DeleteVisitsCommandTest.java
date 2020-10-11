@@ -28,7 +28,7 @@ import seedu.address.model.visit.Visit;
 public class DeleteVisitsCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
-            new UserPrefs(), getTypicalVisitBook());
+            getTypicalVisitBook(), new UserPrefs());
 
     @Test
     public void execute_validDateUnfilteredList_success() {
@@ -46,7 +46,7 @@ public class DeleteVisitsCommandTest {
                 new DeleteVisitsCommand(LocalDate.parse("2020-09-12", inputFormat));
 
         ModelManager expectedModel = new ModelManager(model.getPersonBook(), model.getLocationBook(),
-                new UserPrefs(), model.getVisitBook());
+                model.getVisitBook(), new UserPrefs());
 
         expectedModel.deleteVisit(visits.get(0));
         expectedModel.deleteVisit(visits.get(1));
@@ -82,7 +82,7 @@ public class DeleteVisitsCommandTest {
                 new DeleteVisitsCommand(LocalDate.parse("2020-09-12", inputFormat));
 
         Model expectedModel = new ModelManager(model.getPersonBook(), model.getLocationBook(),
-                new UserPrefs(), model.getVisitBook());
+                model.getVisitBook(), new UserPrefs());
 
         expectedModel.deleteVisit(visits.get(0));
         expectedModel.deleteVisit(visits.get(1));

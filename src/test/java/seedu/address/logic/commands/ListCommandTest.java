@@ -36,9 +36,9 @@ public class ListCommandTest {
     @BeforeEach
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
-                new UserPrefs(), getTypicalVisitBook());
+                getTypicalVisitBook(), new UserPrefs());
         expectedModel = new ModelManager(model.getPersonBook(), model.getLocationBook(),
-                new UserPrefs(), model.getVisitBook());
+                model.getVisitBook(), new UserPrefs());
     }
 
     @Test
