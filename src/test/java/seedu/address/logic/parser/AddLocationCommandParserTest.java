@@ -17,7 +17,7 @@ import static seedu.address.testutil.TypicalLocations.BOB_LOCATION;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.commands.AddLocationCommand;
+import seedu.address.logic.commands.location.AddLocationCommand;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Name;

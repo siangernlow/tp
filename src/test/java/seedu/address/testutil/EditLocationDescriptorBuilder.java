@@ -1,7 +1,7 @@
 package seedu.address.testutil;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.EditLocationCommand.EditLocationDescriptor;
+import seedu.address.logic.commands.location.EditLocationCommand.EditLocationDescriptor;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Name;

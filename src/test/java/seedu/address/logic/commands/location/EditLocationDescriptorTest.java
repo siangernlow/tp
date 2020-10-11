@@ -1,4 +1,4 @@
-package seedu.address.logic.commands;
+package seedu.address.logic.commands.location;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -9,7 +9,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_VIVOCITY;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.commands.EditLocationCommand.EditLocationDescriptor;
+import seedu.address.logic.commands.location.EditLocationCommand.EditLocationDescriptor;
 import seedu.address.testutil.EditLocationDescriptorBuilder;
 
 public class EditLocationDescriptorTest {

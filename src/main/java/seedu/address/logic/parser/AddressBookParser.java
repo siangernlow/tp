@@ -6,15 +6,12 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import seedu.address.logic.commands.AddLocationCommand;
 import seedu.address.logic.commands.AddPersonCommand;
 import seedu.address.logic.commands.AddVisitCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.DeleteLocationCommand;
 import seedu.address.logic.commands.DeletePersonCommand;
 import seedu.address.logic.commands.DeleteVisitsCommand;
-import seedu.address.logic.commands.EditLocationCommand;
 import seedu.address.logic.commands.EditPersonCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindPersonCommand;
@@ -22,6 +19,9 @@ import seedu.address.logic.commands.GenerateLocationsCommand;
 import seedu.address.logic.commands.GeneratePeopleCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.location.AddLocationCommand;
+import seedu.address.logic.commands.location.DeleteLocationCommand;
+import seedu.address.logic.commands.location.EditLocationCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
