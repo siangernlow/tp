@@ -24,8 +24,18 @@ public class ModelPredicate {
     public static final Predicate<Person> PREDICATE_SHOW_ALL_QUARANTINED =
         person -> person.getQuarantineStatus().getStatusAsBoolean();
 
-    /** {@code Predicate} to generate predicate for whether a location's id is included in the list of location Ids */
-    public static Predicate<Location> getPredicateShowLocationsByPerson(List<Integer> locationIds) {
+    /** {@code Predicate} to generate a predicate for whether a person's Id is included in the list of person Ids  */
+    public static Predicate<Person> getPredicateShowPeopleById(List<Integer> personIds) {
+        return person -> {
+            boolean isIncluded = person.getId().getZeroBased() == personIds.get(0);
+            for (int i = 1; i < personIds.size(); i++) {
+                isIncluded = isIncluded || person.getId().getZeroBased() == personIds.get(i);
+            }
+            return isIncluded;
+        };
+    }
+    /** {@code Predicate} to generate predicate for whether a location's Id is included in the list of location Ids */
+    public static Predicate<Location> getPredicateShowLocationsById(List<Integer> locationIds) {
         return location -> {
             boolean isIncluded = location.getId().getZeroBased() == locationIds.get(0);
             for (int i = 1; i < locationIds.size(); i++) {
