@@ -27,7 +27,7 @@ public class LocationCard extends UiPart<Region> {
     private HBox cardPane;
 
     @FXML
-    private Label name;
+    private Label locationName;
 
     @FXML
     private Label address;
@@ -43,7 +43,7 @@ public class LocationCard extends UiPart<Region> {
         super(FXML);
         this.location = location;
         id.setText(displayedIndex + ". ");
-        name.setText(location.getName().fullName);
+        locationName.setText(location.getName().fullName);
         address.setText(location.getAddress().value);
     }
 
