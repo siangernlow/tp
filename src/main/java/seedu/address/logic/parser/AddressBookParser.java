@@ -23,6 +23,9 @@ import seedu.address.logic.commands.person.FindPersonCommand;
 import seedu.address.logic.commands.visit.AddVisitCommand;
 import seedu.address.logic.commands.visit.DeleteVisitsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.location.AddLocationCommandParser;
+import seedu.address.logic.parser.location.DeleteLocationCommandParser;
+import seedu.address.logic.parser.location.EditLocationCommandParser;
 
 /**
  * Parses user input.
