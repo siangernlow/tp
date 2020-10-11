@@ -26,4 +26,6 @@ public class VisitUtil {
         sb.append(PREFIX_DATE + visit.getDate().toString() + " ");
         return sb.toString();
     }
+
+
 }
