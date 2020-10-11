@@ -31,7 +31,7 @@ public interface Logic {
     /**
      * Returns the PersonBook.
      *
-     * @see seedu.address.model.Model#getAddressBook()
+     * @see seedu.address.model.Model#getPersonBook()
      */
     ReadOnlyPersonBook getPersonBook();
 

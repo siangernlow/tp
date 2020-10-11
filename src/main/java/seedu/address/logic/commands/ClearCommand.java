@@ -19,7 +19,7 @@ public class ClearCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        model.setAddressBook(new PersonBook());
+        model.setPersonBook(new PersonBook());
         model.setLocationBook(new LocationBook());
         model.setVisitBook(new VisitBook());
         return new CommandResult(MESSAGE_SUCCESS);

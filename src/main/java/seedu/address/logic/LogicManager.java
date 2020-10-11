@@ -49,7 +49,7 @@ public class LogicManager implements Logic {
         commandResult = command.execute(model);
 
         try {
-            storage.saveAddressBook(model.getAddressBook());
+            storage.saveAddressBook(model.getPersonBook());
             storage.saveLocationBook(model.getLocationBook());
             storage.saveVisitBook(model.getVisitBook());
         } catch (IOException ioe) {
@@ -63,7 +63,7 @@ public class LogicManager implements Logic {
 
     @Override
     public ReadOnlyPersonBook getPersonBook() {
-        return model.getAddressBook();
+        return model.getPersonBook();
     }
 
     @Override
@@ -73,7 +73,7 @@ public class LogicManager implements Logic {
 
     @Override
     public Path getPersonBookFilePath() {
-        return model.getAddressBookFilePath();
+        return model.getPersonBookFilePath();
     }
 
     //=========== Location Book =====================================================================================

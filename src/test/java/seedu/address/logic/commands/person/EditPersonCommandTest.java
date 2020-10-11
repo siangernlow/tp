@@ -48,7 +48,7 @@ public class EditPersonCommandTest {
 
         String expectedMessage = String.format(EditPersonCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new PersonBook(model.getAddressBook()),
+        Model expectedModel = new ModelManager(new PersonBook(model.getPersonBook()),
                 new LocationBook(model.getLocationBook()), new UserPrefs(), new VisitBook(model.getVisitBook()));
         expectedModel.setPerson(model.getFilteredPersonList().get(0), editedPerson);
 
@@ -70,7 +70,7 @@ public class EditPersonCommandTest {
 
         String expectedMessage = String.format(EditPersonCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new PersonBook(model.getAddressBook()),
+        Model expectedModel = new ModelManager(new PersonBook(model.getPersonBook()),
                 new LocationBook(model.getLocationBook()), new UserPrefs(), new VisitBook(model.getVisitBook()));
         expectedModel.setPerson(lastPerson, editedPerson);
 
@@ -84,7 +84,7 @@ public class EditPersonCommandTest {
 
         String expectedMessage = String.format(EditPersonCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new PersonBook(model.getAddressBook()),
+        Model expectedModel = new ModelManager(new PersonBook(model.getPersonBook()),
                 new LocationBook(model.getLocationBook()), new UserPrefs(), new VisitBook(model.getVisitBook()));
 
         assertCommandSuccess(editPersonCommand, model, expectedMessage, expectedModel);
@@ -101,7 +101,7 @@ public class EditPersonCommandTest {
 
         String expectedMessage = String.format(EditPersonCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new PersonBook(model.getAddressBook()),
+        Model expectedModel = new ModelManager(new PersonBook(model.getPersonBook()),
                 new LocationBook(model.getLocationBook()), new UserPrefs(), new VisitBook(model.getVisitBook()));
         expectedModel.setPerson(model.getFilteredPersonList().get(0), editedPerson);
 
@@ -122,7 +122,7 @@ public class EditPersonCommandTest {
         showPersonAtIndex(model, INDEX_FIRST);
 
         // edit person in filtered list into a duplicate in address book
-        Person personInList = model.getAddressBook().getPersonList().get(INDEX_SECOND.getZeroBased());
+        Person personInList = model.getPersonBook().getPersonList().get(INDEX_SECOND.getZeroBased());
         EditPersonCommand editPersonCommand = new EditPersonCommand(INDEX_FIRST,
                 new EditPersonDescriptorBuilder(personInList).build());
 
@@ -147,7 +147,7 @@ public class EditPersonCommandTest {
         showPersonAtIndex(model, INDEX_FIRST);
         Index outOfBoundIndex = INDEX_SECOND;
         // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getPersonBook().getPersonList().size());
 
         EditPersonCommand editPersonCommand = new EditPersonCommand(outOfBoundIndex,
                 new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());

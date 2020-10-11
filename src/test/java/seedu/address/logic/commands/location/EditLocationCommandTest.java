@@ -45,7 +45,7 @@ class EditLocationCommandTest {
 
         String expectedMessage = String.format(EditLocationCommand.MESSAGE_EDIT_LOCATION_SUCCESS, editedLocation);
 
-        Model expectedModel = new ModelManager(new PersonBook(model.getAddressBook()),
+        Model expectedModel = new ModelManager(new PersonBook(model.getPersonBook()),
                 new LocationBook(model.getLocationBook()), new UserPrefs(), new VisitBook(model.getVisitBook()));
         expectedModel.setLocation(model.getFilteredLocationList().get(0), editedLocation);
 
@@ -65,7 +65,7 @@ class EditLocationCommandTest {
 
         String expectedMessage = String.format(EditLocationCommand.MESSAGE_EDIT_LOCATION_SUCCESS, editedLocation);
 
-        Model expectedModel = new ModelManager(new PersonBook(model.getAddressBook()),
+        Model expectedModel = new ModelManager(new PersonBook(model.getPersonBook()),
                 new LocationBook(model.getLocationBook()), new UserPrefs(), new VisitBook(model.getVisitBook()));
         expectedModel.setLocation(lastLocation, editedLocation);
 
@@ -80,7 +80,7 @@ class EditLocationCommandTest {
 
         String expectedMessage = String.format(EditLocationCommand.MESSAGE_EDIT_LOCATION_SUCCESS, editedLocation);
 
-        Model expectedModel = new ModelManager(new PersonBook(model.getAddressBook()),
+        Model expectedModel = new ModelManager(new PersonBook(model.getPersonBook()),
                 new LocationBook(model.getLocationBook()), new UserPrefs(), new VisitBook(model.getVisitBook()));
 
         assertCommandSuccess(editLocationCommand, model, expectedMessage, expectedModel);
@@ -97,7 +97,7 @@ class EditLocationCommandTest {
 
         String expectedMessage = String.format(EditLocationCommand.MESSAGE_EDIT_LOCATION_SUCCESS, editedLocation);
 
-        Model expectedModel = new ModelManager(new PersonBook(model.getAddressBook()),
+        Model expectedModel = new ModelManager(new PersonBook(model.getPersonBook()),
                 new LocationBook(model.getLocationBook()), new UserPrefs(), new VisitBook(model.getVisitBook()));
         expectedModel.setLocation(model.getFilteredLocationList().get(0), editedLocation);
 

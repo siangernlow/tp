@@ -45,7 +45,7 @@ public class DeleteVisitsCommandTest {
         DeleteVisitsCommand deleteVisitsCommand =
                 new DeleteVisitsCommand(LocalDate.parse("2020-09-12", inputFormat));
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), model.getLocationBook(),
+        ModelManager expectedModel = new ModelManager(model.getPersonBook(), model.getLocationBook(),
                 new UserPrefs(), model.getVisitBook());
 
         expectedModel.deleteVisit(visits.get(0));
@@ -81,7 +81,7 @@ public class DeleteVisitsCommandTest {
         DeleteVisitsCommand deleteVisitsCommand =
                 new DeleteVisitsCommand(LocalDate.parse("2020-09-12", inputFormat));
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), model.getLocationBook(),
+        Model expectedModel = new ModelManager(model.getPersonBook(), model.getLocationBook(),
                 new UserPrefs(), model.getVisitBook());
 
         expectedModel.deleteVisit(visits.get(0));

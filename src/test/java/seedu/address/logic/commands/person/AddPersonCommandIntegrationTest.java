@@ -32,7 +32,7 @@ public class AddPersonCommandIntegrationTest {
     public void execute_newPerson_success() {
         Person validPerson = TypicalPersons.AMY;
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), model.getLocationBook(),
+        Model expectedModel = new ModelManager(model.getPersonBook(), model.getLocationBook(),
                 new UserPrefs(), model.getVisitBook());
         expectedModel.addPerson(validPerson);
 
@@ -42,7 +42,7 @@ public class AddPersonCommandIntegrationTest {
 
     @Test
     public void execute_duplicatePerson_throwsCommandException() {
-        Person personInList = model.getAddressBook().getPersonList().get(0);
+        Person personInList = model.getPersonBook().getPersonList().get(0);
         assertCommandFailure(new AddPersonCommand(personInList), model, AddPersonCommand.MESSAGE_DUPLICATE_PERSON);
     }
 

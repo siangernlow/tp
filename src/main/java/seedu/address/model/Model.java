@@ -17,6 +17,9 @@ import seedu.address.model.visit.Visit;
  * The API of the Model component.
  */
 public interface Model {
+
+    //=========== Settings ==========================================================================================
+
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
      */
@@ -37,63 +40,62 @@ public interface Model {
      */
     void setGuiSettings(GuiSettings guiSettings);
 
-    /**
-     * Returns the user prefs' address book file path.
-     */
-    Path getAddressBookFilePath();
+    //=========== Person Book =======================================================================================
 
     /**
-     * Sets the user prefs' address book file path.
+     * Returns the user prefs' person book file path.
      */
-    void setAddressBookFilePath(Path addressBookFilePath);
+    Path getPersonBookFilePath();
+
+    /**
+     * Sets the user prefs' person book file path.
+     */
+    void setPersonBookFilePath(Path personBookFilePath);
+
+    /** Returns the PersonBook */
+    ReadOnlyPersonBook getPersonBook();
 
     /**
      * Replaces person book data with the data in {@code personBook}.
      */
-    void setAddressBook(ReadOnlyPersonBook personBook);
-
-    /** Returns the PersonBook */
-    ReadOnlyPersonBook getAddressBook();
+    void setPersonBook(ReadOnlyPersonBook personBook);
 
     /**
-     * Returns true if a person with the same identity as {@code person} exists in the address book.
+     * Returns true if a person with the same identity as {@code person} exists in the person book.
      */
     boolean hasPerson(Person person);
 
     /**
-     * Returns true if a person with the same id as {@code person} exists in the address book.
+     * Returns true if a person with the same id as {@code person} exists in the person book.
      */
     boolean hasSameIdPerson(Person person);
 
     /**
-     * Returns true if a person with the same identity except id as {@code person} exists in the address book.
+     * Returns true if a person with the same identity except id as {@code person} exists in the person book.
      */
     boolean hasSameIdentityExceptId(Person person);
 
     /**
-     * Deletes the given person.
-     * The person must exist in the address book.
-     */
-    void deletePerson(Person target);
-
-    /**
      * Adds the given person.
-     * {@code person} must not already exist in the address book.
+     * {@code person} must not already exist in the person book.
      */
     void addPerson(Person person);
 
     /**
+     * Deletes the given person.
+     * The person must exist in the person book.
+     */
+    void deletePerson(Person target);
+
+    /**
      * Replaces the given person {@code target} with {@code editedPerson}.
-     * {@code target} must exist in the address book.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
+     * {@code target} must exist in the person book.
+     * The person identity of {@code editedPerson} must not be the same as another existing person in the person book.
      */
     void setPerson(Person target, Person editedPerson);
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
-
-    /** Returns an unmodifiable view of the filtered location list */
-    ObservableList<Location> getFilteredLocationList();
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
@@ -101,11 +103,25 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
+    //=========== Location Book =====================================================================================
+
     /**
-     * Updates the filter of the filtered location list to filter by the given {@code predicate}.
-     * @throws NullPointerException if {@code predicate} is null.
+     * Returns the user prefs' location book file path.
      */
-    void updateFilteredLocationList(Predicate<Location> predicate);
+    Path getLocationBookFilePath();
+
+    /**
+     * Sets the user prefs' location book file path.
+     */
+    void setLocationBookFilePath(Path locationBookFilePath);
+
+    /** Returns the LocationBook */
+    ReadOnlyLocationBook getLocationBook();
+
+    /**
+     * Replaces location book data with the data in {@code locationBook}.
+     */
+    void setLocationBook(ReadOnlyLocationBook locationBook);
 
     /**
      * Returns true if a location with the same identity as {@code location} exists in the virus tracker.
@@ -113,26 +129,8 @@ public interface Model {
     boolean hasLocation(Location location);
 
     /**
-     * Returns the user prefs' address book file path.
-     */
-    Path getLocationBookFilePath();
-
-    /**
-     * Sets the user prefs' address book file path.
-     */
-    void setLocationBookFilePath(Path locationBookFilePath);
-
-    /**
-     * Replaces address book data with the data in {@code addressBook}.
-     */
-    void setLocationBook(ReadOnlyLocationBook locationBook);
-
-    /** Returns the LocationBook */
-    ReadOnlyLocationBook getLocationBook();
-
-    /**
      * Adds the given location.
-     * {@code location} must not already exist in the address book.
+     * {@code location} must not already exist in the location book.
      */
     void addLocation(Location location);
 
@@ -150,22 +148,16 @@ public interface Model {
      */
     void setLocation(Location target, Location editedLocation);
 
-    /**
-     * Returns true if a visit with the same identity as {@code visit} exists in the address book.
-     */
-    boolean hasVisit(Visit visit);
+    /** Returns an unmodifiable view of the filtered location list */
+    ObservableList<Location> getFilteredLocationList();
 
     /**
-     * Deletes the given visit.
-     * The visit must exist in the visit book.
+     * Updates the filter of the filtered location list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
      */
-    void deleteVisit(Visit visit);
+    void updateFilteredLocationList(Predicate<Location> predicate);
 
-    /**
-     * Adds the given visit.
-     * {@code visit} must not already exist in the visit book.
-     */
-    void addVisit(Visit visit);
+    //=========== Visit Book ========================================================================================
 
     /**
      * Returns the user prefs' visit book file path.
@@ -177,13 +169,30 @@ public interface Model {
      */
     void setVisitBookFilePath(Path visitBookFilePath);
 
+    /** Returns the visitBook */
+    ReadOnlyVisitBook getVisitBook();
+
     /**
      * Replaces visit book data with the data in {@code visitBook}.
      */
     void setVisitBook(ReadOnlyVisitBook visitBook);
 
-    /** Returns the visitBook */
-    ReadOnlyVisitBook getVisitBook();
+    /**
+     * Returns true if a visit with the same identity as {@code visit} exists in the visit book.
+     */
+    boolean hasVisit(Visit visit);
+
+    /**
+     * Adds the given visit.
+     * {@code visit} must not already exist in the visit book.
+     */
+    void addVisit(Visit visit);
+
+    /**
+     * Deletes the given visit.
+     * The visit must exist in the visit book.
+     */
+    void deleteVisit(Visit visit);
 
     /** Returns an unmodifiable view of the filtered visit list */
     ObservableList<Visit> getFilteredVisitList();
@@ -193,6 +202,8 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredVisitList(Predicate<Visit> predicate);
+
+    //=========== Info Handler ======================================================================================
 
     /**
      * @return the {@code InfoHandler} associated with the model.

@@ -31,7 +31,7 @@ public class DeleteLocationCommandTest {
 
         String expectedMessage = String.format(DeleteLocationCommand.MESSAGE_DELETE_LOCATION_SUCCESS, locationToDelete);
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), model.getLocationBook(),
+        ModelManager expectedModel = new ModelManager(model.getPersonBook(), model.getLocationBook(),
                 new UserPrefs(), model.getVisitBook());
         expectedModel.deleteLocation(locationToDelete);
 
@@ -55,7 +55,7 @@ public class DeleteLocationCommandTest {
 
         String expectedMessage = String.format(DeleteLocationCommand.MESSAGE_DELETE_LOCATION_SUCCESS, locationToDelete);
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), model.getLocationBook(),
+        Model expectedModel = new ModelManager(model.getPersonBook(), model.getLocationBook(),
                 new UserPrefs(), model.getVisitBook());
         expectedModel.deleteLocation(locationToDelete);
         showNoLocation(expectedModel);

@@ -35,7 +35,7 @@ public class ModelManagerTest {
     public void constructor() {
         assertEquals(new UserPrefs(), modelManager.getUserPrefs());
         assertEquals(new GuiSettings(), modelManager.getGuiSettings());
-        assertEquals(new PersonBook(), new PersonBook(modelManager.getAddressBook()));
+        assertEquals(new PersonBook(), new PersonBook(modelManager.getPersonBook()));
         assertEquals(new LocationBook(), new LocationBook(modelManager.getLocationBook()));
         assertEquals(new VisitBook(), new VisitBook(modelManager.getVisitBook()));
     }
@@ -73,14 +73,14 @@ public class ModelManagerTest {
 
     @Test
     public void setAddressBookFilePath_nullPath_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> modelManager.setAddressBookFilePath(null));
+        assertThrows(NullPointerException.class, () -> modelManager.setPersonBookFilePath(null));
     }
 
     @Test
     public void setAddressBookFilePath_validPath_setsAddressBookFilePath() {
         Path path = Paths.get("address/book/file/path");
-        modelManager.setAddressBookFilePath(path);
-        assertEquals(path, modelManager.getAddressBookFilePath());
+        modelManager.setPersonBookFilePath(path);
+        assertEquals(path, modelManager.getPersonBookFilePath());
     }
 
     @Test

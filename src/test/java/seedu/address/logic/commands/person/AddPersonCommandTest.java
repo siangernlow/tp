@@ -108,7 +108,7 @@ public class AddPersonCommandTest {
         }
 
         @Override
-        public ReadOnlyPersonBook getAddressBook() {
+        public ReadOnlyPersonBook getPersonBook() {
             return new PersonBook();
         }
     }
