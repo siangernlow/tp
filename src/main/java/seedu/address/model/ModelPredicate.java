@@ -53,7 +53,6 @@ public class ModelPredicate {
 
         return location -> highRiskLocationIds.contains(location.getId());
     }
-  
     /** {@code Predicate} to generate predicate for whether a location's id is included in the list of location Ids */
     public static Predicate<Location> getPredicateShowLocationsByPerson(List<Integer> locationIds) {
         return location -> {
