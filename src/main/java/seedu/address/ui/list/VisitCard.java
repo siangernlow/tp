@@ -1,17 +1,18 @@
-package seedu.address.ui;
+package seedu.address.ui.list;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import seedu.address.model.location.Location;
+import seedu.address.model.visit.Visit;
+import seedu.address.ui.UiPart;
 
 /**
  * An UI component that displays information of a {@code Person}.
  */
-public class LocationCard extends UiPart<Region> {
+public class VisitCard extends UiPart<Region> {
 
-    private static final String FXML = "LocationListCard.fxml";
+    private static final String FXML = "VisitListCard.fxml";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -21,30 +22,29 @@ public class LocationCard extends UiPart<Region> {
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
 
-    public final Location location;
+    public final Visit visit;
 
     @FXML
     private HBox cardPane;
-
     @FXML
-    private Label locationName;
-
-    @FXML
-    private Label address;
-
+    private Label date;
     @FXML
     private Label id;
-
+    @FXML
+    private Label personName;
+    @FXML
+    private Label locationName;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
      */
-    public LocationCard(Location location, int displayedIndex) {
+    public VisitCard(Visit visit, int displayedIndex) {
         super(FXML);
-        this.location = location;
+        this.visit = visit;
         id.setText(displayedIndex + ". ");
-        locationName.setText(location.getName().fullName);
-        address.setText(location.getAddress().value);
+        date.setText("Date: " + visit.getDate().toString());
+        personName.setText("Visit by: " + visit.getPersonName(visit.getPersonId()));
+        locationName.setText("Location: " + visit.getLocationName(visit.getLocationId()));
     }
 
     @Override
@@ -55,13 +55,13 @@ public class LocationCard extends UiPart<Region> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof LocationCard)) {
+        if (!(other instanceof PersonCard)) {
             return false;
         }
 
         // state check
-        LocationCard card = (LocationCard) other;
+        VisitCard card = (VisitCard) other;
         return id.getText().equals(card.id.getText())
-                && location.equals(card.location);
+                && visit.equals(card.visit);
     }
 }
