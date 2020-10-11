@@ -7,6 +7,9 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LIST;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
+import static seedu.address.testutil.VisitBuilder.DEFAULT_DATE;
+import static seedu.address.testutil.VisitBuilder.DEFAULT_LOCATION_INDEX;
+import static seedu.address.testutil.VisitBuilder.DEFAULT_PERSON_INDEX;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -71,7 +74,7 @@ public class AddressBookParserTest {
         Visit visit = new VisitBuilder().build();
         AddVisitCommand command =
                 (AddVisitCommand) parser.parseCommand(VisitUtil.getAddVisitCommand(visit));
-        assertEquals(new AddVisitCommand(visit), command);
+        assertEquals(new AddVisitCommand(DEFAULT_PERSON_INDEX, DEFAULT_LOCATION_INDEX, DEFAULT_DATE), command);
     }
 
     @Test

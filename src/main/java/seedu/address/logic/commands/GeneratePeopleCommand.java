@@ -15,21 +15,22 @@ import seedu.address.model.VisitBook;
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
  * Keyword matching is case insensitive.
  */
-public class GenerateLocationsCommand extends Command {
+public class GeneratePeopleCommand extends Command {
 
-    public static final String COMMAND_WORD = "generateLocations";
+    public static final String COMMAND_WORD = "generatePeople";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all locations which a person of "
-            + "the specified id (case-insensitive) visited and displays them as a list of locations.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all people which a person of the specified"
+            + "id (case-insensitive) have been in contact with and displays them as a list of locations.\n"
             + "Parameters: PERSONID\n"
             + "Example: " + COMMAND_WORD + " 1";
 
+    public static final String MESSAGE_NO_PEOPLE_FOUND = "There were no people in contact with the given person";
     public static final String MESSAGE_PERSON_HAS_NO_VISITS = "This person is not associated with any visits";
     public static final String MESSAGE_PERSON_IS_NOT_INFECTED = "This person is not infected";
 
     private final Index personId;
 
-    public GenerateLocationsCommand(Index personId) {
+    public GeneratePeopleCommand(Index personId) {
         this.personId = personId;
     }
 
@@ -48,17 +49,22 @@ public class GenerateLocationsCommand extends Command {
             throw new CommandException(MESSAGE_PERSON_HAS_NO_VISITS);
         }
         List<Integer> locationIds = model.getInfoHandler().generateLocationIdsByVisitBook(visitsByPerson);
-        model.updateFilteredLocationList(ModelPredicate.getPredicateShowLocationsById(locationIds));
+        VisitBook affectedVisits = model.getInfoHandler().generateVisitsByLocationIds(locationIds);
+        List<Integer> personIds = model.getInfoHandler().generatePersonIdsByVisitBook(affectedVisits, personId);
+        if (personIds.isEmpty()) {
+            throw new CommandException(MESSAGE_NO_PEOPLE_FOUND);
+        }
+        model.updateFilteredPersonList(ModelPredicate.getPredicateShowPeopleById(personIds));
         return new CommandResult(
-                "Generated locations for: " + model.getAddressBook()
+                "Generated people for: " + model.getAddressBook()
                         .getPersonList().get(personId.getZeroBased()).getName(),
-                false, false, CommandResult.SWITCH_TO_VIEW_ALL_LOCATIONS);
+                false, false, CommandResult.SWITCH_TO_VIEW_ALL_PEOPLE);
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof GenerateLocationsCommand // instanceof handles nulls
-                && personId.equals(((GenerateLocationsCommand) other).personId)); // state check
+                || (other instanceof GeneratePeopleCommand // instanceof handles nulls
+                && personId.equals(((GeneratePeopleCommand) other).personId)); // state check
     }
 }

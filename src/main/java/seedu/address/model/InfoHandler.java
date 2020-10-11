@@ -167,6 +167,74 @@ public class InfoHandler {
         return String.format(PERCENTAGE_FORMAT + "%%", percentage);
     }
 
+    /**
+     * Generates a list of visits that a person with a specified Id is associated with.
+     * @param personId Id of the person.
+     * @return List of visits that the person is associated with.
+     */
+    public VisitBook generateVisitsByPerson(Index personId) {
+        ReadOnlyVisitBook tempVisitBook = model.getVisitBook();
+        VisitBook visitsByPerson = new VisitBook();
+        for (int i = 0; i < tempVisitBook.getVisitList().size(); i++) {
+            if (tempVisitBook.getVisitList().get(i).getPersonId().equals(personId)) {
+                visitsByPerson.addVisit(tempVisitBook.getVisitList().get(i));
+            }
+        }
+        return visitsByPerson;
+    }
+
+    /**
+     * Generates a list of location Ids that are associated with the visits in the given visit book.
+     * @param visitBook List of visits.
+     * @return List of location ids that are associated with the visits.
+     */
+    public static List<Integer> generateLocationIdsByVisitBook(VisitBook visitBook) {
+        List<Integer> locationIds = new ArrayList<>();
+        for (int i = 0; i < visitBook.getVisitList().size(); i++) {
+            locationIds.add(visitBook.getVisitList().get(i).getLocationId().getZeroBased());
+        }
+        return locationIds;
+    }
+
+    /**
+     * Generates a list of visits that are associated with the given list of location Ids.
+     * @param locationIds List of location Ids.
+     * @return List of visits that are associated with the location Ids.
+     */
+    public VisitBook generateVisitsByLocationIds(List<Integer> locationIds) {
+        ReadOnlyVisitBook tempVisitBook = model.getVisitBook();
+        VisitBook associatedVisits = new VisitBook();
+        for (Integer locationId : locationIds) {
+            Index locationIndex = Index.fromZeroBased(locationId);
+            for (int i = 0; i < tempVisitBook.getVisitList().size(); i++) {
+                Visit visit = tempVisitBook.getVisitList().get(i);
+                if (visit.getLocationId().equals(locationIndex)) {
+                    associatedVisits.addVisit(visit);
+                }
+            }
+        }
+        return associatedVisits;
+    }
+
+    /**
+     * Generates a list of location Ids that are associated with the visits in the given visit book. As this is an
+     * intermediate method, it's purpose is to find other person ids associated visits that are associated with an
+     * infected person. Hence, it does not include the original infected person.
+     * @param visitBook List of visits.
+     * @param personId Original infected person visit book is associated with.
+     * @return List of location ids that are associated with the visits.
+     */
+    public List<Integer> generatePersonIdsByVisitBook(VisitBook visitBook, Index personId) {
+        List<Integer> personIds = new ArrayList<>();
+        for (Visit visit : visitBook.getVisitList()) {
+            if (visit.getPersonId().getZeroBased() == personId.getZeroBased()) {
+                continue;
+            }
+            personIds.add(visit.getPersonId().getZeroBased());
+        }
+        return personIds;
+    }
+
     //============ Summary ========================================================================
 
     /**

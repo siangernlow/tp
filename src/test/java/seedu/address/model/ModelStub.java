@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
 import seedu.address.model.visit.Visit;
@@ -180,6 +181,16 @@ public class ModelStub implements Model {
 
     @Override
     public InfoHandler getInfoHandler() {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public Index getPersonIdFromIndex(Index index) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public Index getLocationIdFromIndex(Index index) {
         throw new AssertionError("This method should not be called.");
     }
 
