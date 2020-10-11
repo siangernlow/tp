@@ -56,7 +56,7 @@ public class MainApp extends Application {
 
     @Override
     public void init() throws Exception {
-        logger.info("=============================[ Initializing AddressBook ]===========================");
+        logger.info("=============================[ Initializing VirusTracker ]===========================");
         super.init();
 
         AppParameters appParameters = AppParameters.parse(getParameters());
@@ -79,34 +79,35 @@ public class MainApp extends Application {
     }
 
     /**
-     * Returns a {@code ModelManager} with the data from {@code storage}'s address book and {@code userPrefs}. <br>
-     * The data from the sample address book will be used instead if {@code storage}'s address book is not found,
-     * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
+     * Returns a {@code ModelManager} with the data from {@code storage}'s VirusTracker and {@code userPrefs}. <br>
+     * The data from the sample VirusTracker will be used instead if {@code storage}'s VirusTracker is not found,
+     * or an empty VirusTracker will be used instead if errors occur when reading {@code storage}'s VirusTracker.
      */
     private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
-        Optional<ReadOnlyAddressBook> addressBookOptional;
+        Optional<ReadOnlyAddressBook> personBookOptional;
         ReadOnlyAddressBook initialPersonData;
         Optional<ReadOnlyLocationBook> locationBookOptional;
         ReadOnlyLocationBook initialLocationData;
         Optional<ReadOnlyVisitBook> visitBookOptional;
         ReadOnlyVisitBook initialVisitData;
+
         try {
-            addressBookOptional = storage.readAddressBook();
-            if (!addressBookOptional.isPresent()) {
-                logger.info("Data file not found. Will be starting with a sample AddressBook");
+            personBookOptional = storage.readAddressBook();
+            if (personBookOptional.isEmpty()) {
+                logger.info("Data file not found. Will be starting with a sample PersonBook");
             }
-            initialPersonData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+            initialPersonData = personBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
         } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
+            logger.warning("Data file not in the correct format. Will be starting with an empty PersonBook");
             initialPersonData = new AddressBook();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
+            logger.warning("Problem while reading from the file. Will be starting with an empty PersonBook");
             initialPersonData = new AddressBook();
         }
 
         try {
             locationBookOptional = storage.readLocationBook();
-            if (!locationBookOptional.isPresent()) {
+            if (locationBookOptional.isEmpty()) {
                 logger.info("Data file not found. Will be starting with a sample LocationBook");
             }
             initialLocationData = locationBookOptional.orElseGet(SampleDataUtil::getSampleLocationBook);
@@ -117,9 +118,10 @@ public class MainApp extends Application {
             logger.warning("Problem while reading from the file. Will be starting with an empty LocationBook");
             initialLocationData = new LocationBook();
         }
+
         try {
             visitBookOptional = storage.readVisitBook();
-            if (!visitBookOptional.isPresent()) {
+            if (visitBookOptional.isEmpty()) {
                 logger.info("Data file not found. Will be starting with a sample VisitBook");
             }
             initialVisitData = visitBookOptional.orElseGet(SampleDataUtil::getSampleVisitBook);
@@ -192,7 +194,7 @@ public class MainApp extends Application {
                     + "Using default user prefs");
             initializedPrefs = new UserPrefs();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
+            logger.warning("Problem while reading from the file. Will be starting with an empty VirusTracker");
             initializedPrefs = new UserPrefs();
         }
 
@@ -208,13 +210,13 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        logger.info("Starting AddressBook " + MainApp.VERSION);
+        logger.info("Starting VirusTracker " + MainApp.VERSION);
         ui.start(primaryStage);
     }
 
     @Override
     public void stop() {
-        logger.info("============================ [ Stopping Address Book ] =============================");
+        logger.info("============================ [ Stopping VirusTracker ] =============================");
         try {
             storage.saveUserPrefs(model.getUserPrefs());
         } catch (IOException e) {
