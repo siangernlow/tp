@@ -14,9 +14,9 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ModelStub;
-import seedu.address.model.PersonBook;
-import seedu.address.model.ReadOnlyPersonBook;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonBook;
+import seedu.address.model.person.ReadOnlyPersonBook;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddPersonCommandTest {

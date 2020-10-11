@@ -1,12 +1,10 @@
-package seedu.address.model;
+package seedu.address.model.visit;
 
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.visit.UniqueVisitList;
-import seedu.address.model.visit.Visit;
 
 /**
  * Wraps all data at the visit-book level

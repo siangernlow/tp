@@ -30,10 +30,10 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ModelStub;
-import seedu.address.model.ReadOnlyVisitBook;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.VisitBook;
+import seedu.address.model.visit.ReadOnlyVisitBook;
 import seedu.address.model.visit.Visit;
+import seedu.address.model.visit.VisitBook;
 import seedu.address.testutil.VisitBuilder;
 
 public class AddVisitCommandTest {

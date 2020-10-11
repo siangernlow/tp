@@ -7,12 +7,12 @@ import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.model.LocationBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.PersonBook;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.VisitBook;
+import seedu.address.model.location.LocationBook;
+import seedu.address.model.person.PersonBook;
+import seedu.address.model.visit.VisitBook;
 
 public class ClearCommandTest {
 

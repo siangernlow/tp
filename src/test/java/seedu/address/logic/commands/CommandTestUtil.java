@@ -25,11 +25,11 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.location.EditLocationCommand;
 import seedu.address.logic.commands.person.EditPersonCommand;
 import seedu.address.model.Model;
-import seedu.address.model.PersonBook;
 import seedu.address.model.location.Location;
 import seedu.address.model.location.LocationNameContainsKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonBook;
 import seedu.address.testutil.EditLocationDescriptorBuilder;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 

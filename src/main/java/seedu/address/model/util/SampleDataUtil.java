@@ -7,22 +7,22 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.model.LocationBook;
-import seedu.address.model.PersonBook;
-import seedu.address.model.ReadOnlyLocationBook;
-import seedu.address.model.ReadOnlyPersonBook;
-import seedu.address.model.ReadOnlyVisitBook;
-import seedu.address.model.VisitBook;
 import seedu.address.model.location.Location;
+import seedu.address.model.location.LocationBook;
+import seedu.address.model.location.ReadOnlyLocationBook;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.InfectionStatus;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonBook;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.QuarantineStatus;
+import seedu.address.model.person.ReadOnlyPersonBook;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.visit.ReadOnlyVisitBook;
 import seedu.address.model.visit.Visit;
+import seedu.address.model.visit.VisitBook;
 
 /**
  * Contains utility methods for populating {@code PersonBook}, {@code LocationBook}

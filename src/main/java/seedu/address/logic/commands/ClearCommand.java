@@ -2,10 +2,10 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import seedu.address.model.LocationBook;
 import seedu.address.model.Model;
-import seedu.address.model.PersonBook;
-import seedu.address.model.VisitBook;
+import seedu.address.model.location.LocationBook;
+import seedu.address.model.person.PersonBook;
+import seedu.address.model.visit.VisitBook;
 
 /**
  * Clears the VirusTracker.

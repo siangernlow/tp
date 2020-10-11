@@ -13,10 +13,10 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.LocationBook;
 import seedu.address.model.ModelStub;
-import seedu.address.model.ReadOnlyLocationBook;
 import seedu.address.model.location.Location;
+import seedu.address.model.location.LocationBook;
+import seedu.address.model.location.ReadOnlyLocationBook;
 import seedu.address.testutil.LocationBuilder;
 
 public class AddLocationCommandTest {

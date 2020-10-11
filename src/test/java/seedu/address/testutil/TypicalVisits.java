@@ -12,8 +12,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.model.VisitBook;
 import seedu.address.model.visit.Visit;
+import seedu.address.model.visit.VisitBook;
 
 /**
  * A utility class containing a list of {@code Visit} objects to be used in tests.

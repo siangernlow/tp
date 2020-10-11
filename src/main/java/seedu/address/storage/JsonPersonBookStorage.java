@@ -12,7 +12,7 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.JsonUtil;
-import seedu.address.model.ReadOnlyPersonBook;
+import seedu.address.model.person.ReadOnlyPersonBook;
 
 /**
  * A class to access PersonBook data stored as a json file on the hard disk.

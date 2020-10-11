@@ -1,12 +1,10 @@
-package seedu.address.model;
+package seedu.address.model.location;
 
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.location.Location;
-import seedu.address.model.location.UniqueLocationList;
 
 /**
  * Wraps all data at the location-book level

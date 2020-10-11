@@ -22,13 +22,13 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.person.EditPersonCommand.EditPersonDescriptor;
-import seedu.address.model.LocationBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.PersonBook;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.VisitBook;
+import seedu.address.model.location.LocationBook;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonBook;
+import seedu.address.model.visit.VisitBook;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 

@@ -19,7 +19,9 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
+import seedu.address.model.visit.ReadOnlyVisitBook;
 import seedu.address.model.visit.Visit;
+import seedu.address.model.visit.VisitBook;
 
 /**
  * Collectively uses data from the {@code Model} to produce statistics

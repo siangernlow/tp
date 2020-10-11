@@ -1,4 +1,4 @@
-package seedu.address.model;
+package seedu.address.model.location;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -18,7 +18,6 @@ import org.junit.jupiter.api.Test;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.location.Location;
 import seedu.address.model.location.exceptions.DuplicateLocationException;
 import seedu.address.testutil.LocationBuilder;
 

@@ -1,7 +1,7 @@
 package seedu.address.testutil;
 
-import seedu.address.model.VisitBook;
 import seedu.address.model.visit.Visit;
+import seedu.address.model.visit.VisitBook;
 
 /**
  * A utility class to help with building Visitbook objects.

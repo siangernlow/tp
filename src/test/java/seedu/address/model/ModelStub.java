@@ -7,7 +7,10 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.index.Index;
 import seedu.address.model.location.Location;
+import seedu.address.model.location.ReadOnlyLocationBook;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPersonBook;
+import seedu.address.model.visit.ReadOnlyVisitBook;
 import seedu.address.model.visit.Visit;
 
 /**

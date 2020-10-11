@@ -1,7 +1,6 @@
-package seedu.address.model;
+package seedu.address.model.location;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.location.Location;
 
 /**
  * Unmodifiable view of a location book
