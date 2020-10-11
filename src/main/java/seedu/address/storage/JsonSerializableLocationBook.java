@@ -24,7 +24,7 @@ class JsonSerializableLocationBook {
     private final List<JsonAdaptedLocation> locations = new ArrayList<>();
 
     /**
-     * Constructs a {@code JsonSerializableAddressBook} with the given locations.
+     * Constructs a {@code JsonSerializableLocationBook} with the given locations.
      */
     @JsonCreator
     public JsonSerializableLocationBook(@JsonProperty("locations") List<JsonAdaptedLocation> locations) {
