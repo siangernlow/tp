@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.testutil.LocationBuilder;
 
 public class LocationTest {
+
     @Test
     public void isSameLocation() {
         // same object -> returns true

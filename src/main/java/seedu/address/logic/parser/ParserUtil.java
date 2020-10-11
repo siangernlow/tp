@@ -198,6 +198,8 @@ public class ParserUtil {
             return ListType.ALL_QUARANTINED;
         case "stats":
             return ListType.STATISTICS;
+        case "high-risk-locations":
+            return ListType.HIGH_RISK_LOCATIONS;
         default:
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
         }
