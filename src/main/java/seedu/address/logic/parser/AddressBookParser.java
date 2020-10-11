@@ -30,6 +30,8 @@ import seedu.address.logic.parser.person.AddPersonCommandParser;
 import seedu.address.logic.parser.person.DeletePersonCommandParser;
 import seedu.address.logic.parser.person.EditPersonCommandParser;
 import seedu.address.logic.parser.person.FindPersonCommandParser;
+import seedu.address.logic.parser.visit.AddVisitCommandParser;
+import seedu.address.logic.parser.visit.DeleteVisitsCommandParser;
 
 /**
  * Parses user input.
