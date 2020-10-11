@@ -4,9 +4,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.function.Predicate;
 
 import seedu.address.commons.core.index.Index;
 
@@ -66,13 +64,6 @@ public class Visit {
      */
     public boolean isSameLocationId(Index personId) {
         return personId == this.personId;
-    }
-
-    /**
-     * Returns Predicate for filtering out the infected visits from all visits
-     */
-    public static Predicate<Visit> getPredicateForInfectedVisits(HashSet<Index> infectedIds) {
-        return visit -> infectedIds.contains(visit.getPersonId());
     }
 
     /**

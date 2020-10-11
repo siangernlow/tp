@@ -27,16 +27,20 @@ public class ModelPredicate {
         person -> person.getInfectionStatus().getStatusAsBoolean();
     public static final Predicate<Person> PREDICATE_SHOW_ALL_QUARANTINED =
         person -> person.getQuarantineStatus().getStatusAsBoolean();
-    /**
-     * Returns a {@code Predicate} for filtering high risk locations
-     */
+
+    /** {@code Predicate} for filtering out the infected visits from all visits */
+    public static Predicate<Visit> getPredicateForInfectedVisits(HashSet<Index> infectedIds) {
+        return visit -> infectedIds.contains(visit.getPersonId());
+    }
+
+    /** {@code Predicate} for filtering high risk locations */
     public static Predicate<Location> getPredicateForHighRiskLocations(Model model) {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
         ObservableList<Person> allInfectedPersons = model.getFilteredPersonList();
 
         HashSet<Index> infectedPersonIds = InfoHandler.getIdHashSetFromPersonsList(allInfectedPersons);
 
-        model.updateFilteredVisitList(Visit.getPredicateForInfectedVisits(infectedPersonIds));
+        model.updateFilteredVisitList(getPredicateForInfectedVisits(infectedPersonIds));
         ObservableList<Visit> allInfectedVisits = model.getFilteredVisitList();
 
         ArrayList<Index> infectedLocationIds = InfoHandler.getLocationIdsFromInfectedVisitList(allInfectedVisits);
@@ -52,6 +56,7 @@ public class ModelPredicate {
 
         return location -> highRiskLocationIds.contains(location.getId());
     }
+
     /** {@code Predicate} to generate a predicate for whether a person's Id is included in the list of person Ids  */
     public static Predicate<Person> getPredicateShowPeopleById(List<Integer> personIds) {
         return person -> {
@@ -62,6 +67,7 @@ public class ModelPredicate {
             return isIncluded;
         };
     }
+
     /** {@code Predicate} to generate predicate for whether a location's Id is included in the list of location Ids */
     public static Predicate<Location> getPredicateShowLocationsById(List<Integer> locationIds) {
         return location -> {
