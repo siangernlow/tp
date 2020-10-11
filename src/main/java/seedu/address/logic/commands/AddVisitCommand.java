@@ -39,7 +39,7 @@ public class AddVisitCommand extends Command {
      * Creates an AddVisitCommand to add the specified {@code Visit}
      */
     public AddVisitCommand(Index personIndex, Index locationIndex, LocalDate date) {
-        requireAllNonNull(personIndex, locationIndex);
+        requireAllNonNull(personIndex, locationIndex, date);
         this.personIndex = personIndex;
         this.locationIndex = locationIndex;
         this.date = date;

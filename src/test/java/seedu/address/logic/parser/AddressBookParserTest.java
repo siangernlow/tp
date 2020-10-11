@@ -8,8 +8,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_LIST;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_DATE;
-import static seedu.address.testutil.VisitBuilder.DEFAULT_LOCATIONID;
-import static seedu.address.testutil.VisitBuilder.DEFAULT_PERSONID;
+import static seedu.address.testutil.VisitBuilder.DEFAULT_LOCATION_INDEX;
+import static seedu.address.testutil.VisitBuilder.DEFAULT_PERSON_INDEX;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddLocationCommand;
 import seedu.address.logic.commands.AddVisitCommand;
@@ -72,14 +71,10 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_addVisit() throws Exception {
-        Index personIndex = Index.fromOneBased(Integer.parseInt(DEFAULT_PERSONID));
-        Index locationIndex = Index.fromOneBased(Integer.parseInt(DEFAULT_LOCATIONID));
-        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate dateOfVisit = LocalDate.parse(DEFAULT_DATE, inputFormat);
         Visit visit = new VisitBuilder().build();
         AddVisitCommand command =
                 (AddVisitCommand) parser.parseCommand(VisitUtil.getAddVisitCommand(visit));
-        assertEquals(new AddVisitCommand(personIndex, locationIndex, dateOfVisit), command);
+        assertEquals(new AddVisitCommand(DEFAULT_PERSON_INDEX, DEFAULT_LOCATION_INDEX, DEFAULT_DATE), command);
     }
 
     @Test

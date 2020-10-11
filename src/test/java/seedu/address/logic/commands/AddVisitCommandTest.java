@@ -4,10 +4,18 @@ import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.showLocationAtIndex;
+import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FOURTH;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD;
+import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_DATE;
-import static seedu.address.testutil.VisitBuilder.DEFAULT_LOCATIONID;
-import static seedu.address.testutil.VisitBuilder.DEFAULT_PERSONID;
+import static seedu.address.testutil.VisitBuilder.DEFAULT_DATE_STRING;
+import static seedu.address.testutil.VisitBuilder.DEFAULT_LOCATION_INDEX;
+import static seedu.address.testutil.VisitBuilder.DEFAULT_PERSON_INDEX;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -18,43 +26,74 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
 import seedu.address.model.ModelStub;
 import seedu.address.model.ReadOnlyVisitBook;
+import seedu.address.model.UserPrefs;
 import seedu.address.model.VisitBook;
 import seedu.address.model.visit.Visit;
 import seedu.address.testutil.VisitBuilder;
 
 public class AddVisitCommandTest {
+
     @Test
-    public void constructor_nullLocation_throwsNullPointerException() {
+    public void constructor_nullInput_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> new AddVisitCommand(null, null, null));
+        assertThrows(NullPointerException.class, () -> new AddVisitCommand(DEFAULT_PERSON_INDEX,
+                DEFAULT_LOCATION_INDEX, null));
+        assertThrows(NullPointerException.class, () -> new AddVisitCommand(DEFAULT_PERSON_INDEX,
+                null, DEFAULT_DATE));
+        assertThrows(NullPointerException.class, () -> new AddVisitCommand(null,
+                DEFAULT_LOCATION_INDEX, DEFAULT_DATE));
     }
 
     @Test
-    public void execute_visitAcceptedByModel_addSuccessful() throws Exception {
+    public void execute_unfilteredList_addSuccessful() {
         ModelStubAcceptingVisitAdded modelStub =
                 new AddVisitCommandTest.ModelStubAcceptingVisitAdded();
         Visit validVisit = new VisitBuilder().build();
 
-        Index personIndex = Index.fromOneBased(Integer.parseInt(DEFAULT_PERSONID));
-        Index locationIndex = Index.fromOneBased(Integer.parseInt(DEFAULT_LOCATIONID));
-        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate date = LocalDate.parse(DEFAULT_DATE, inputFormat);
-        CommandResult commandResult = new AddVisitCommand(personIndex, locationIndex, date).execute(modelStub);
+        try {
+            CommandResult commandResult = new AddVisitCommand(DEFAULT_PERSON_INDEX, DEFAULT_LOCATION_INDEX,
+                    DEFAULT_DATE).execute(modelStub);
 
-        assertEquals(String.format(AddVisitCommand.MESSAGE_SUCCESS, validVisit),
-                commandResult.getFeedbackToUser());
-        assertEquals(Arrays.asList(validVisit), modelStub.visitsAdded);
+            assertEquals(String.format(AddVisitCommand.MESSAGE_SUCCESS, validVisit),
+                    commandResult.getFeedbackToUser());
+            assertEquals(Arrays.asList(validVisit), modelStub.visitsAdded);
+        } catch (CommandException e) {
+            assert false : "Command Exception not expected.";
+        }
+    }
+
+    @Test
+    public void execute_filteredList_success() {
+        Model model = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
+                new UserPrefs(), new VisitBook());
+
+        showLocationAtIndex(model, INDEX_THIRD);
+        showPersonAtIndex(model, INDEX_FOURTH);
+
+        Index personId = model.getFilteredPersonList().get(0).getId();
+        Index locationId = model.getFilteredLocationList().get(0).getId();
+        Visit validVisit = new VisitBuilder().withDate(DEFAULT_DATE_STRING)
+                .withLocationId(Integer.toString(locationId.getOneBased()))
+                .withPersonId(Integer.toString(personId.getOneBased()))
+                .build();
+
+        try {
+            new AddVisitCommand(INDEX_FIRST, INDEX_FIRST, DEFAULT_DATE).execute(model);
+            assertEquals(model.getFilteredVisitList().get(0), validVisit);
+        } catch (CommandException e) {
+            assert false : "Command Exception not expected.";
+        }
     }
 
     @Test
     public void execute_duplicateVisit_throwsCommandException() {
         Visit validVisit = new VisitBuilder().build();
-        Index personIndex = Index.fromOneBased(Integer.parseInt(DEFAULT_PERSONID));
-        Index locationIndex = Index.fromOneBased(Integer.parseInt(DEFAULT_LOCATIONID));
-        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate date = LocalDate.parse(DEFAULT_DATE, inputFormat);
-        AddVisitCommand addvisitCommand = new AddVisitCommand(personIndex, locationIndex, date);
+        AddVisitCommand addvisitCommand = new AddVisitCommand(DEFAULT_PERSON_INDEX, DEFAULT_LOCATION_INDEX,
+                DEFAULT_DATE);
         ModelStub modelStub = new AddVisitCommandTest.ModelStubWithVisit(validVisit);
 
         assertThrows(CommandException.class, AddVisitCommand.MESSAGE_DUPLICATE_VISIT, () ->
