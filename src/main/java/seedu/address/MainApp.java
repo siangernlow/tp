@@ -26,12 +26,12 @@ import seedu.address.model.ReadOnlyVisitBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.VisitBook;
 import seedu.address.model.util.SampleDataUtil;
-import seedu.address.storage.AddressBookStorage;
-import seedu.address.storage.JsonAddressBookStorage;
 import seedu.address.storage.JsonLocationBookStorage;
+import seedu.address.storage.JsonPersonBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.JsonVisitBookStorage;
 import seedu.address.storage.LocationBookStorage;
+import seedu.address.storage.PersonBookStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
@@ -64,10 +64,10 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
-        AddressBookStorage addressBookStorage = new JsonAddressBookStorage(userPrefs.getAddressBookFilePath());
+        PersonBookStorage personBookStorage = new JsonPersonBookStorage(userPrefs.getAddressBookFilePath());
         LocationBookStorage locationBookStorage = new JsonLocationBookStorage(userPrefs.getLocationBookFilePath());
         VisitBookStorage visitBookStorage = new JsonVisitBookStorage(userPrefs.getVisitBookFilePath());
-        storage = new StorageManager(addressBookStorage, locationBookStorage, userPrefsStorage, visitBookStorage);
+        storage = new StorageManager(personBookStorage, locationBookStorage, userPrefsStorage, visitBookStorage);
 
         initLogging(config);
 

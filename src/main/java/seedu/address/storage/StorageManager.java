@@ -19,19 +19,19 @@ import seedu.address.model.UserPrefs;
 public class StorageManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
-    private AddressBookStorage addressBookStorage;
+    private PersonBookStorage personBookStorage;
     private LocationBookStorage locationBookStorage;
     private VisitBookStorage visitBookStorage;
     private UserPrefsStorage userPrefsStorage;
 
     /**
-     * Creates a {@code StorageManager} with the given {@code AddressBookStorage}, {@code LocationBookStorage},
+     * Creates a {@code StorageManager} with the given {@code PersonBookStorage}, {@code LocationBookStorage},
      * {@code VisitBookStorage} and {@code UserPrefStorage}.
      */
-    public StorageManager(AddressBookStorage addressBookStorage, LocationBookStorage locationBookStorage,
+    public StorageManager(PersonBookStorage personBookStorage, LocationBookStorage locationBookStorage,
                           UserPrefsStorage userPrefsStorage, VisitBookStorage visitBookStorage) {
         super();
-        this.addressBookStorage = addressBookStorage;
+        this.personBookStorage = personBookStorage;
         this.locationBookStorage = locationBookStorage;
         this.userPrefsStorage = userPrefsStorage;
         this.visitBookStorage = visitBookStorage;
@@ -59,29 +59,29 @@ public class StorageManager implements Storage {
 
     @Override
     public Path getAddressBookFilePath() {
-        return addressBookStorage.getAddressBookFilePath();
+        return personBookStorage.getAddressBookFilePath();
     }
 
     @Override
     public Optional<ReadOnlyPersonBook> readAddressBook() throws DataConversionException, IOException {
-        return readAddressBook(addressBookStorage.getAddressBookFilePath());
+        return readAddressBook(personBookStorage.getAddressBookFilePath());
     }
 
     @Override
     public Optional<ReadOnlyPersonBook> readAddressBook(Path filePath) throws DataConversionException, IOException {
         logger.fine("Attempting to read data from file: " + filePath);
-        return addressBookStorage.readAddressBook(filePath);
+        return personBookStorage.readAddressBook(filePath);
     }
 
     @Override
     public void saveAddressBook(ReadOnlyPersonBook personBook) throws IOException {
-        saveAddressBook(personBook, addressBookStorage.getAddressBookFilePath());
+        saveAddressBook(personBook, personBookStorage.getAddressBookFilePath());
     }
 
     @Override
     public void saveAddressBook(ReadOnlyPersonBook personBook, Path filePath) throws IOException {
         logger.fine("Attempting to write to data file: " + filePath);
-        addressBookStorage.saveAddressBook(personBook, filePath);
+        personBookStorage.saveAddressBook(personBook, filePath);
     }
 
     // ================ LocationBook methods ==============================

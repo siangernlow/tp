@@ -11,7 +11,7 @@ import seedu.address.model.ReadOnlyPersonBook;
 /**
  * Represents a storage for {@link PersonBook}.
  */
-public interface AddressBookStorage {
+public interface PersonBookStorage {
 
     /**
      * Returns the file path of the data file.

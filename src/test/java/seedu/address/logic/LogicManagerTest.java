@@ -31,8 +31,8 @@ import seedu.address.model.ReadOnlyPersonBook;
 import seedu.address.model.ReadOnlyVisitBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
-import seedu.address.storage.JsonAddressBookStorage;
 import seedu.address.storage.JsonLocationBookStorage;
+import seedu.address.storage.JsonPersonBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.JsonVisitBookStorage;
 import seedu.address.storage.StorageManager;
@@ -49,8 +49,8 @@ public class LogicManagerTest {
 
     @BeforeEach
     public void setUp() {
-        JsonAddressBookStorage addressBookStorage =
-                new JsonAddressBookStorage(temporaryFolder.resolve("addressBook.json"));
+        JsonPersonBookStorage addressBookStorage =
+                new JsonPersonBookStorage(temporaryFolder.resolve("addressBook.json"));
         JsonLocationBookStorage locationBookStorage =
                 new JsonLocationBookStorage(temporaryFolder.resolve("locationBook.json"));
         JsonVisitBookStorage visitBookStorage =
@@ -82,8 +82,8 @@ public class LogicManagerTest {
     @Test
     public void execute_storageThrowsIoException_throwsCommandException() {
         // Setup LogicManager with JsonAddressBookIoExceptionThrowingStub
-        JsonAddressBookStorage addressBookStorage =
-                new JsonAddressBookIoExceptionThrowingStub(temporaryFolder.resolve("ioExceptionAddressBook.json"));
+        JsonPersonBookStorage addressBookStorage =
+                new JsonPersonBookIoExceptionThrowingStub(temporaryFolder.resolve("ioExceptionAddressBook.json"));
         JsonLocationBookStorage locationBookStorage =
                 new JsonLocationBookIoExceptionThrowingStub(temporaryFolder.resolve("ioExceptionLocationBook.json"));
         JsonVisitBookStorage visitBookStorage =
@@ -177,8 +177,8 @@ public class LogicManagerTest {
     /**
      * A stub class to throw an {@code IOException} when the save method is called.
      */
-    private static class JsonAddressBookIoExceptionThrowingStub extends JsonAddressBookStorage {
-        private JsonAddressBookIoExceptionThrowingStub(Path filePath) {
+    private static class JsonPersonBookIoExceptionThrowingStub extends JsonPersonBookStorage {
+        private JsonPersonBookIoExceptionThrowingStub(Path filePath) {
             super(filePath);
         }
 
