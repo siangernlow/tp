@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -51,5 +52,16 @@ public class ModelPredicate {
                 new ArrayList<>(infectedLocationIds.subList(0, numberOfHighRiskLocations));
 
         return location -> highRiskLocationIds.contains(location.getId());
+    }
+  
+    /** {@code Predicate} to generate predicate for whether a location's id is included in the list of location Ids */
+    public static Predicate<Location> getPredicateShowLocationsByPerson(List<Integer> locationIds) {
+        return location -> {
+            boolean isIncluded = location.getId().getZeroBased() == locationIds.get(0);
+            for (int i = 1; i < locationIds.size(); i++) {
+                isIncluded = isIncluded || location.getId().getZeroBased() == locationIds.get(i);
+            }
+            return isIncluded;
+        };
     }
 }

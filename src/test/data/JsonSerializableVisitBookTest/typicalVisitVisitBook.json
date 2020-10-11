@@ -24,6 +24,10 @@
     "personId" : "1",
     "locationId" : "2",
     "dateOfVisit": "2020-09-13"
+  },{
+    "personId" : "4",
+    "locationId" : "6",
+    "dateOfVisit": "2020-09-13"
   }]
 
 }
