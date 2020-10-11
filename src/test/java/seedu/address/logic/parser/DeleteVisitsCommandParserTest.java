@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.commands.DeleteVisitsCommand;
+import seedu.address.logic.commands.visit.DeleteVisitsCommand;
 
 
 /**

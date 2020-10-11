@@ -6,7 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import java.time.LocalDate;
 import java.util.stream.Stream;
 
-import seedu.address.logic.commands.DeleteVisitsCommand;
+import seedu.address.logic.commands.visit.DeleteVisitsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**

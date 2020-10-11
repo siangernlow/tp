@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.AddVisitCommand;
+import seedu.address.logic.commands.visit.AddVisitCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
