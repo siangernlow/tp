@@ -47,7 +47,8 @@ public class AddLocationCommand extends Command {
         }
 
         model.addLocation(toAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd), false, false,
+                CommandResult.SWITCH_TO_VIEW_LOCATIONS);
     }
 
     @Override

@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.person.EditPersonCommand.EditPersonDescriptor;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -51,8 +52,9 @@ public class EditPersonCommandTest {
         Model expectedModel = new ModelManager(new PersonBook(model.getPersonBook()),
                 new LocationBook(model.getLocationBook()), new VisitBook(model.getVisitBook()), new UserPrefs());
         expectedModel.setPerson(model.getFilteredPersonList().get(0), editedPerson);
-
-        assertCommandSuccess(editPersonCommand, model, expectedMessage, expectedModel);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
+                CommandResult.SWITCH_TO_VIEW_PEOPLE);
+        assertCommandSuccess(editPersonCommand, model, expectedCommandResult, expectedModel);
     }
 
     @Test
@@ -73,8 +75,10 @@ public class EditPersonCommandTest {
         Model expectedModel = new ModelManager(new PersonBook(model.getPersonBook()),
                 new LocationBook(model.getLocationBook()), new VisitBook(model.getVisitBook()), new UserPrefs());
         expectedModel.setPerson(lastPerson, editedPerson);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
+                CommandResult.SWITCH_TO_VIEW_PEOPLE);
 
-        assertCommandSuccess(editPersonCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(editPersonCommand, model, expectedCommandResult, expectedModel);
     }
 
     @Test
@@ -86,8 +90,10 @@ public class EditPersonCommandTest {
 
         Model expectedModel = new ModelManager(new PersonBook(model.getPersonBook()),
                 new LocationBook(model.getLocationBook()), new VisitBook(model.getVisitBook()), new UserPrefs());
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
+                CommandResult.SWITCH_TO_VIEW_PEOPLE);
 
-        assertCommandSuccess(editPersonCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(editPersonCommand, model, expectedCommandResult, expectedModel);
     }
 
     @Test
@@ -104,8 +110,10 @@ public class EditPersonCommandTest {
         Model expectedModel = new ModelManager(new PersonBook(model.getPersonBook()),
                 new LocationBook(model.getLocationBook()), new VisitBook(model.getVisitBook()), new UserPrefs());
         expectedModel.setPerson(model.getFilteredPersonList().get(0), editedPerson);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
+                CommandResult.SWITCH_TO_VIEW_PEOPLE);
 
-        assertCommandSuccess(editPersonCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(editPersonCommand, model, expectedCommandResult, expectedModel);
     }
 
     @Test
