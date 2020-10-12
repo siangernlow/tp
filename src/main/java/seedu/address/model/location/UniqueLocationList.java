@@ -10,9 +10,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.location.exceptions.DuplicateLocationException;
 import seedu.address.model.location.exceptions.LocationNotFoundException;
+import seedu.address.model.location.exceptions.LocationNotIdentifiableException;
 
 /**
  * A list of locations that enforces uniqueness between its elements and does not allow nulls.
+ * This list also enforces that all elements have unique ids.
  * A location is considered unique by comparing using {@code Location#isSameLocation(Location)}. As such, adding and
  * updating of locations uses Location#isSameLocation(Location) for equality so as to ensure that the location being
  * added or updated is unique in terms of identity in the UniqueLocationList. However, the removal of a location uses
@@ -30,6 +32,7 @@ public class UniqueLocationList implements Iterable<Location> {
 
     /**
      * Returns true if the list contains an equivalent location as the given argument.
+     * or if the location shares the same id as a location in the list.
      */
     public boolean contains(Location toCheck) {
         requireNonNull(toCheck);
@@ -37,13 +40,25 @@ public class UniqueLocationList implements Iterable<Location> {
     }
 
     /**
+     * Returns true if the list contains a location with the same id as the given argument.
+     */
+    public boolean containsSameIdLocation(Location toCheck) {
+        requireNonNull(toCheck);
+        return internalList.stream().anyMatch(toCheck::isSameId);
+    }
+
+    /**
      * Adds a location to the list.
      * The location must not already exist in the list.
+     * The location must not have same id as another location in the list.
      */
     public void add(Location toAdd) {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
             throw new DuplicateLocationException();
+        }
+        if (containsSameIdLocation(toAdd)) {
+            throw new LocationNotIdentifiableException();
         }
         internalList.add(toAdd);
     }
@@ -64,6 +79,7 @@ public class UniqueLocationList implements Iterable<Location> {
         if (!target.isSameLocation(editedLocation) && contains(editedLocation)) {
             throw new DuplicateLocationException();
         }
+        assert(target.isSameId(editedLocation));
 
         internalList.set(index, editedLocation);
     }
@@ -92,6 +108,9 @@ public class UniqueLocationList implements Iterable<Location> {
         requireAllNonNull(locations);
         if (!locationsAreUnique(locations)) {
             throw new DuplicateLocationException();
+        }
+        if (!locationsAreIdentifiable(locations)) {
+            throw new LocationNotIdentifiableException();
         }
 
         internalList.setAll(locations);
@@ -128,6 +147,21 @@ public class UniqueLocationList implements Iterable<Location> {
         for (int i = 0; i < locations.size() - 1; i++) {
             for (int j = i + 1; j < locations.size(); j++) {
                 if (locations.get(i).isSameLocation(locations.get(j))) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Returns true if {@code locations} contains identifiable locations.
+     * This is true if all locations have different ids.
+     */
+    private boolean locationsAreIdentifiable(List<Location> locations) {
+        for (int i = 0; i < locations.size() - 1; i++) {
+            for (int j = i + 1; j < locations.size(); j++) {
+                if (locations.get(i).isSameId(locations.get(j))) {
                     return false;
                 }
             }

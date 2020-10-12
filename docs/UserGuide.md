@@ -91,11 +91,18 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 q/true`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 q/false t/criminal`
 
-### Listing all people :
+### Listing: `list`
 
-Shows a list of all persons in VirusTracker.
+Shows a list of one of the following types in VirusTracker.
+* People
+* Locations
+* Visits
 
-Format: `list l/people`
+Format: `list l/KEYWORD`
+
+Examples:
+* `list l/people`
+* `list l/locations`
 
 ### Editing a person : `edit`
 

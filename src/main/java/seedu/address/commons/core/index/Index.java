@@ -46,9 +46,19 @@ public class Index {
     }
 
     @Override
+    public int hashCode() {
+        return getOneBased();
+    }
+
+    @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Index // instanceof handles nulls
                 && zeroBasedIndex == ((Index) other).zeroBasedIndex); // state check
+    }
+
+    @Override
+    public String toString() {
+        return Integer.toString(zeroBasedIndex + 1);
     }
 }

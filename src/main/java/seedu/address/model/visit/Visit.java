@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-
 import seedu.address.commons.core.index.Index;
 
 public class Visit {
@@ -66,7 +65,6 @@ public class Visit {
     public boolean isSameLocationId(Index personId) {
         return personId == this.personId;
     }
-
 
     /**
      * Returns true if both visits have the same identity and data fields.

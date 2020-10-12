@@ -4,7 +4,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.person.EditPersonCommand.EditPersonDescriptor;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.InfectionStatus;
@@ -40,6 +41,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setAddress(person.getAddress());
         descriptor.setQuarantineStatus(person.getQuarantineStatus());
         descriptor.setInfectionStatus(person.getInfectionStatus());
+        descriptor.setId(person.getId());
         descriptor.setTags(person.getTags());
     }
 
@@ -87,6 +89,14 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withInfectionStatus(String infectionStatus) {
         descriptor.setInfectionStatus(new InfectionStatus(infectionStatus));
+        return this;
+    }
+
+    /**
+     * Sets the {@code id} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withId(Index id) {
+        descriptor.setId(id);
         return this;
     }
 

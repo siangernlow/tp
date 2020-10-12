@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.parser.ListType;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.ModelPredicate;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -26,6 +27,8 @@ public class ListCommandTest {
     private static final ListType VISITS_LIST = ListType.ALL_VISITS;
     private static final ListType INFECTED_LIST = ListType.ALL_INFECTED;
     private static final ListType QUARANTINED_LIST = ListType.ALL_QUARANTINED;
+    private static final ListType STATISTICS_LIST = ListType.STATISTICS;
+    private static final ListType HIGH_RISK_LOCATIONS_LIST = ListType.HIGH_RISK_LOCATIONS;
 
     private Model model;
     private Model expectedModel;
@@ -33,9 +36,9 @@ public class ListCommandTest {
     @BeforeEach
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
-                new UserPrefs(), getTypicalVisitBook());
-        expectedModel = new ModelManager(model.getAddressBook(), model.getLocationBook(),
-                new UserPrefs(), model.getVisitBook());
+                getTypicalVisitBook(), new UserPrefs());
+        expectedModel = new ModelManager(model.getPersonBook(), model.getLocationBook(),
+                model.getVisitBook(), new UserPrefs());
     }
 
     @Test
@@ -46,7 +49,7 @@ public class ListCommandTest {
 
     @Test
     public void execute_personsListIsFiltered_showsEverything() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        showPersonAtIndex(model, INDEX_FIRST);
         assertCommandSuccess(new ListCommand(PEOPLE_LIST),
                 model, ListCommand.MESSAGE_SUCCESS_ALL_PEOPLE, expectedModel);
     }
@@ -65,18 +68,41 @@ public class ListCommandTest {
 
     @Test
     public void execute_infectedList_showsSameList() {
-        Model expectedModel_infectd = expectedModel;
-        expectedModel_infectd.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_INFECTED);
+        Model expectedModelInfected = expectedModel;
+        expectedModelInfected.updateFilteredPersonList(ModelPredicate.PREDICATE_SHOW_ALL_INFECTED);
         assertCommandSuccess(new ListCommand(INFECTED_LIST),
-                model, ListCommand.MESSAGE_SUCCESS_ALL_INFECTED, expectedModel_infectd);
+                model, ListCommand.MESSAGE_SUCCESS_ALL_INFECTED, expectedModelInfected);
     }
 
     @Test
     public void execute_quarantinedList_showsSameList() {
-        Model expectedModel_quarantined = expectedModel;
-        expectedModel_quarantined.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_QUARANTINED);
+        Model expectedModelQuarantined = expectedModel;
+        expectedModelQuarantined.updateFilteredPersonList(ModelPredicate.PREDICATE_SHOW_ALL_QUARANTINED);
         assertCommandSuccess(new ListCommand(QUARANTINED_LIST),
-                model, ListCommand.MESSAGE_SUCCESS_ALL_QUARANTINED, expectedModel_quarantined);
+                model, ListCommand.MESSAGE_SUCCESS_ALL_QUARANTINED, expectedModelQuarantined);
+    }
+
+    @Test
+    public void execute_statistics_showsSameList() {
+        String expectedMessage = ListCommand.MESSAGE_SUCCESS_STATISTICS + "\n"
+                + "Total number of people: 7" + "\n"
+                + "Total number of locations: 7" + "\n"
+                + "Total number of visits: 8" + "\n"
+                + "Total number of infected people: 4" + "\n"
+                + "Total number of quarantined people: 2" + "\n"
+                + "Percentage of people infected: 57.14%" + "\n"
+                + "Percentage of people quarantined: 28.57%" + "\n";
+        assertCommandSuccess(new ListCommand(STATISTICS_LIST),
+                model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_highRiskLocations_showsSameList() {
+        Model expectedModelHighRiskLocations = expectedModel;
+        expectedModelHighRiskLocations.updateFilteredLocationList(
+                ModelPredicate.getPredicateForHighRiskLocations(expectedModelHighRiskLocations));
+        assertCommandSuccess(new ListCommand(HIGH_RISK_LOCATIONS_LIST),
+                model, ListCommand.MESSAGE_SUCCESS_HIGH_RISK_LOCATIONS, expectedModelHighRiskLocations);
     }
 
     @Test

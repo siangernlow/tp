@@ -1,0 +1,11 @@
+{
+  "visits" : [ {
+    "personId" : " ",
+    "locationId" : "2",
+    "dateOfVisit": "2020-09-12"
+  }, {
+    "personId" : "1",
+    "locationId" : "2",
+    "dateOfVisit": "2020-09-12"
+  } ]
+}

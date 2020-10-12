@@ -1,7 +1,7 @@
 package seedu.address.testutil;
 
-import seedu.address.model.LocationBook;
 import seedu.address.model.location.Location;
+import seedu.address.model.location.LocationBook;
 
 /**
  * A utility class to help with building Locationbook objects.

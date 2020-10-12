@@ -38,6 +38,14 @@ public class IndexTest {
     }
 
     @Test
+    public void hashCode_success() {
+        assertEquals(1, Index.fromOneBased(1).hashCode());
+        assertEquals(100, Index.fromOneBased(100).hashCode());
+        assertEquals(29, Index.fromZeroBased(28).hashCode());
+        assertEquals(555, Index.fromZeroBased(554).hashCode());
+    }
+
+    @Test
     public void equals() {
         final Index fifthPersonIndex = Index.fromOneBased(5);
 

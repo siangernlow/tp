@@ -19,14 +19,23 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.person.AddPersonCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.*;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.location.ReadOnlyLocationBook;
 import seedu.address.model.person.Person;
-import seedu.address.storage.*;
+import seedu.address.model.person.ReadOnlyPersonBook;
+import seedu.address.model.visit.ReadOnlyVisitBook;
+import seedu.address.storage.JsonLocationBookStorage;
+import seedu.address.storage.JsonPersonBookStorage;
+import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.JsonVisitBookStorage;
+import seedu.address.storage.StorageManager;
 import seedu.address.testutil.PersonBuilder;
 
 public class LogicManagerTest {
@@ -40,8 +49,8 @@ public class LogicManagerTest {
 
     @BeforeEach
     public void setUp() {
-        JsonAddressBookStorage addressBookStorage =
-                new JsonAddressBookStorage(temporaryFolder.resolve("addressBook.json"));
+        JsonPersonBookStorage addressBookStorage =
+                new JsonPersonBookStorage(temporaryFolder.resolve("addressBook.json"));
         JsonLocationBookStorage locationBookStorage =
                 new JsonLocationBookStorage(temporaryFolder.resolve("locationBook.json"));
         JsonVisitBookStorage visitBookStorage =
@@ -73,8 +82,8 @@ public class LogicManagerTest {
     @Test
     public void execute_storageThrowsIoException_throwsCommandException() {
         // Setup LogicManager with JsonAddressBookIoExceptionThrowingStub
-        JsonAddressBookStorage addressBookStorage =
-                new JsonAddressBookIoExceptionThrowingStub(temporaryFolder.resolve("ioExceptionAddressBook.json"));
+        JsonPersonBookStorage addressBookStorage =
+                new JsonPersonBookIoExceptionThrowingStub(temporaryFolder.resolve("ioExceptionAddressBook.json"));
         JsonLocationBookStorage locationBookStorage =
                 new JsonLocationBookIoExceptionThrowingStub(temporaryFolder.resolve("ioExceptionLocationBook.json"));
         JsonVisitBookStorage visitBookStorage =
@@ -86,11 +95,12 @@ public class LogicManagerTest {
         logic = new LogicManager(model, storage);
 
         // Execute add command
-        String addCommand = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+        String addCommand = AddPersonCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + QUARANTINE_STATUS_DESC_AMY + INFECTION_DESC_AMY;
         Person expectedPerson = new PersonBuilder(AMY).withTags().build();
         ModelManager expectedModel = new ModelManager();
         expectedModel.addPerson(expectedPerson);
+        Person.setPersonCount(expectedPerson.getId().getOneBased());
         String expectedMessage = LogicManager.FILE_OPS_ERROR_MESSAGE + DUMMY_IO_EXCEPTION;
         assertCommandFailure(addCommand, CommandException.class, expectedMessage, expectedModel);
     }
@@ -98,6 +108,16 @@ public class LogicManagerTest {
     @Test
     public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> logic.getFilteredPersonList().remove(0));
+    }
+
+    @Test
+    public void getFilteredLocationList_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> logic.getFilteredLocationList().remove(0));
+    }
+
+    @Test
+    public void getFilteredVisitList_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> logic.getFilteredVisitList().remove(0));
     }
 
     /**
@@ -136,8 +156,8 @@ public class LogicManagerTest {
      */
     private void assertCommandFailure(String inputCommand, Class<? extends Throwable> expectedException,
             String expectedMessage) {
-        Model expectedModel = new ModelManager(model.getAddressBook(), model.getLocationBook(),
-                new UserPrefs(), model.getVisitBook());
+        Model expectedModel = new ModelManager(model.getPersonBook(), model.getLocationBook(),
+                model.getVisitBook(), new UserPrefs());
         assertCommandFailure(inputCommand, expectedException, expectedMessage, expectedModel);
     }
 
@@ -157,13 +177,13 @@ public class LogicManagerTest {
     /**
      * A stub class to throw an {@code IOException} when the save method is called.
      */
-    private static class JsonAddressBookIoExceptionThrowingStub extends JsonAddressBookStorage {
-        private JsonAddressBookIoExceptionThrowingStub(Path filePath) {
+    private static class JsonPersonBookIoExceptionThrowingStub extends JsonPersonBookStorage {
+        private JsonPersonBookIoExceptionThrowingStub(Path filePath) {
             super(filePath);
         }
 
         @Override
-        public void saveAddressBook(ReadOnlyAddressBook addressBook, Path filePath) throws IOException {
+        public void saveAddressBook(ReadOnlyPersonBook personBook, Path filePath) throws IOException {
             throw DUMMY_IO_EXCEPTION;
         }
     }

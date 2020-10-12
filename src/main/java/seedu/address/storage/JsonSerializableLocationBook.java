@@ -9,9 +9,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.LocationBook;
-import seedu.address.model.ReadOnlyLocationBook;
 import seedu.address.model.location.Location;
+import seedu.address.model.location.LocationBook;
+import seedu.address.model.location.ReadOnlyLocationBook;
 
 /**
  * An Immutable LocationBook that is serializable to JSON format.
@@ -24,7 +24,7 @@ class JsonSerializableLocationBook {
     private final List<JsonAdaptedLocation> locations = new ArrayList<>();
 
     /**
-     * Constructs a {@code JsonSerializableAddressBook} with the given locations.
+     * Constructs a {@code JsonSerializableLocationBook} with the given locations.
      */
     @JsonCreator
     public JsonSerializableLocationBook(@JsonProperty("locations") List<JsonAdaptedLocation> locations) {

@@ -9,6 +9,11 @@ import java.util.Objects;
  */
 public class CommandResult {
 
+    public static final String SWITCH_NONE = "No switch";
+    public static final String SWITCH_TO_VIEW_PEOPLE = "Switch to view people";
+    public static final String SWITCH_TO_VIEW_LOCATIONS = "Switch to view locations";
+    public static final String SWITCH_TO_VIEW_VISITS = "Switch to view visits";
+
     private final String feedbackToUser;
 
     /** Help information should be shown to the user. */
@@ -17,13 +22,16 @@ public class CommandResult {
     /** The application should exit. */
     private final boolean exit;
 
+    private final String switchState;
+
     /**
      * Constructs a {@code CommandResult} with the specified fields.
      */
-    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit) {
+    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit, String switchState) {
         this.feedbackToUser = requireNonNull(feedbackToUser);
         this.showHelp = showHelp;
         this.exit = exit;
+        this.switchState = switchState;
     }
 
     /**
@@ -31,7 +39,7 @@ public class CommandResult {
      * and other fields set to their default value.
      */
     public CommandResult(String feedbackToUser) {
-        this(feedbackToUser, false, false);
+        this(feedbackToUser, false, false, SWITCH_NONE);
     }
 
     public String getFeedbackToUser() {
@@ -68,4 +76,7 @@ public class CommandResult {
         return Objects.hash(feedbackToUser, showHelp, exit);
     }
 
+    public String getSwitchState() {
+        return switchState;
+    }
 }

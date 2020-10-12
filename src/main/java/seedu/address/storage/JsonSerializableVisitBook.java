@@ -9,9 +9,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.ReadOnlyVisitBook;
-import seedu.address.model.VisitBook;
+import seedu.address.model.visit.ReadOnlyVisitBook;
 import seedu.address.model.visit.Visit;
+import seedu.address.model.visit.VisitBook;
 
 /**
  * An Immutable VisitBook that is serializable to JSON format.
@@ -37,6 +37,7 @@ class JsonSerializableVisitBook {
      * @param source future changes to this will not affect the created {@code JsonSerializableVisitBook}.
      */
     public JsonSerializableVisitBook(ReadOnlyVisitBook source) {
+
         visits.addAll(source.getVisitList().stream().map(JsonAdaptedVisit::new).collect(Collectors.toList()));
     }
 

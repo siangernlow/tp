@@ -1,9 +1,11 @@
 {
   "locations": [ {
     "name": "Esplanade",
-    "address": "123, Jurong West Ave 6, #08-111"
+    "address": "123, Jurong West Ave 6, #08-111",
+    "id": "1"
   }, {
     "name": "Esplanade",
-    "address": "4th street"
+    "address": "4th street",
+    "id": "1"
   } ]
 }
