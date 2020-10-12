@@ -5,10 +5,11 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.model.ReadOnlyVisitBook;
+import seedu.address.model.visit.ReadOnlyVisitBook;
+import seedu.address.model.visit.VisitBook;
 
 /**
- * Represents a storage for {@link seedu.address.model.VisitBook}.
+ * Represents a storage for {@link VisitBook}.
  */
 
 public interface VisitBookStorage {

@@ -7,10 +7,12 @@ import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.location.LocationBook;
+import seedu.address.model.person.PersonBook;
+import seedu.address.model.visit.VisitBook;
 
 public class ClearCommandTest {
 
@@ -24,12 +26,28 @@ public class ClearCommandTest {
 
     @Test
     public void execute_nonEmptyAddressBook_success() {
-        Model model = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
-                new UserPrefs(), getTypicalVisitBook());
-        Model expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
-                new UserPrefs(), getTypicalVisitBook());
-        expectedModel.setAddressBook(new AddressBook());
+        Model expectedModel = new ModelManager(new PersonBook(), new LocationBook(),
+                new VisitBook(), new UserPrefs());
+        Model model;
 
+        // test that all books are cleared
+        model = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
+                getTypicalVisitBook(), new UserPrefs());
+        assertCommandSuccess(new ClearCommand(), model, ClearCommand.MESSAGE_SUCCESS, expectedModel);
+
+        // test that person book is cleared
+        model = new ModelManager(getTypicalAddressBook(), new LocationBook(),
+                new VisitBook(), new UserPrefs());
+        assertCommandSuccess(new ClearCommand(), model, ClearCommand.MESSAGE_SUCCESS, expectedModel);
+
+        // test that location book is cleared
+        model = new ModelManager(new PersonBook(), getTypicalLocationBook(),
+                new VisitBook(), new UserPrefs());
+        assertCommandSuccess(new ClearCommand(), model, ClearCommand.MESSAGE_SUCCESS, expectedModel);
+
+        // test that visit book is cleared
+        model = new ModelManager(new PersonBook(), new LocationBook(),
+                getTypicalVisitBook(), new UserPrefs());
         assertCommandSuccess(new ClearCommand(), model, ClearCommand.MESSAGE_SUCCESS, expectedModel);
     }
 

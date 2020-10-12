@@ -28,6 +28,7 @@ public class ListCommandTest {
     private static final ListType INFECTED_LIST = ListType.ALL_INFECTED;
     private static final ListType QUARANTINED_LIST = ListType.ALL_QUARANTINED;
     private static final ListType STATISTICS_LIST = ListType.STATISTICS;
+    private static final ListType HIGH_RISK_LOCATIONS_LIST = ListType.HIGH_RISK_LOCATIONS;
 
     private Model model;
     private Model expectedModel;
@@ -35,9 +36,9 @@ public class ListCommandTest {
     @BeforeEach
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
-                new UserPrefs(), getTypicalVisitBook());
-        expectedModel = new ModelManager(model.getAddressBook(), model.getLocationBook(),
-                new UserPrefs(), model.getVisitBook());
+                getTypicalVisitBook(), new UserPrefs());
+        expectedModel = new ModelManager(model.getPersonBook(), model.getLocationBook(),
+                model.getVisitBook(), new UserPrefs());
     }
 
     @Test
@@ -83,8 +84,25 @@ public class ListCommandTest {
 
     @Test
     public void execute_statistics_showsSameList() {
+        String expectedMessage = ListCommand.MESSAGE_SUCCESS_STATISTICS + "\n"
+                + "Total number of people: 7" + "\n"
+                + "Total number of locations: 7" + "\n"
+                + "Total number of visits: 8" + "\n"
+                + "Total number of infected people: 4" + "\n"
+                + "Total number of quarantined people: 2" + "\n"
+                + "Percentage of people infected: 57.14%" + "\n"
+                + "Percentage of people quarantined: 28.57%" + "\n";
         assertCommandSuccess(new ListCommand(STATISTICS_LIST),
-                model, ListCommand.MESSAGE_SUCCESS_STATISTICS, expectedModel);
+                model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_highRiskLocations_showsSameList() {
+        Model expectedModelHighRiskLocations = expectedModel;
+        expectedModelHighRiskLocations.updateFilteredLocationList(
+                ModelPredicate.getPredicateForHighRiskLocations(expectedModelHighRiskLocations));
+        assertCommandSuccess(new ListCommand(HIGH_RISK_LOCATIONS_LIST),
+                model, ListCommand.MESSAGE_SUCCESS_HIGH_RISK_LOCATIONS, expectedModelHighRiskLocations);
     }
 
     @Test

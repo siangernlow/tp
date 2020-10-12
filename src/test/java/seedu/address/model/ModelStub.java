@@ -5,21 +5,26 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.location.Location;
+import seedu.address.model.location.ReadOnlyLocationBook;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPersonBook;
+import seedu.address.model.visit.ReadOnlyVisitBook;
 import seedu.address.model.visit.Visit;
 
 /**
  * A default model stub that have all of the methods failing.
  */
 public class ModelStub implements Model {
+
     @Override
-    public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
+    public ReadOnlyUserPrefs getUserPrefs() {
         throw new AssertionError("This method should not be called.");
     }
 
     @Override
-    public ReadOnlyUserPrefs getUserPrefs() {
+    public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
         throw new AssertionError("This method should not be called.");
     }
 
@@ -33,28 +38,25 @@ public class ModelStub implements Model {
         throw new AssertionError("This method should not be called.");
     }
 
+    //=========== Person Book ========================================================================================
+
     @Override
-    public Path getAddressBookFilePath() {
+    public Path getPersonBookFilePath() {
         throw new AssertionError("This method should not be called.");
     }
 
     @Override
-    public void setAddressBookFilePath(Path addressBookFilePath) {
+    public void setPersonBookFilePath(Path addressBookFilePath) {
         throw new AssertionError("This method should not be called.");
     }
 
     @Override
-    public void addPerson(Person person) {
+    public ReadOnlyPersonBook getPersonBook() {
         throw new AssertionError("This method should not be called.");
     }
 
     @Override
-    public void setAddressBook(ReadOnlyAddressBook newData) {
-        throw new AssertionError("This method should not be called.");
-    }
-
-    @Override
-    public ReadOnlyAddressBook getAddressBook() {
+    public void setPersonBook(ReadOnlyPersonBook newData) {
         throw new AssertionError("This method should not be called.");
     }
 
@@ -74,6 +76,11 @@ public class ModelStub implements Model {
     }
 
     @Override
+    public void addPerson(Person person) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
     public void deletePerson(Person target) {
         throw new AssertionError("This method should not be called.");
     }
@@ -89,24 +96,11 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public ObservableList<Location> getFilteredLocationList() {
-        throw new AssertionError("This method should not be called.");
-    }
-
-    @Override
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         throw new AssertionError("This method should not be called.");
     }
 
-    @Override
-    public void updateFilteredLocationList(Predicate<Location> predicate) {
-        throw new AssertionError("This method should not be called.");
-    }
-
-    @Override
-    public boolean hasLocation(Location location) {
-        throw new AssertionError("This method should not be called.");
-    }
+    //=========== Location Book ========================================================================================
 
     @Override
     public Path getLocationBookFilePath() {
@@ -119,12 +113,17 @@ public class ModelStub implements Model {
     }
 
     @Override
+    public ReadOnlyLocationBook getLocationBook() {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
     public void setLocationBook(ReadOnlyLocationBook locationBook) {
         throw new AssertionError("This method should not be called.");
     }
 
     @Override
-    public ReadOnlyLocationBook getLocationBook() {
+    public boolean hasLocation(Location location) {
         throw new AssertionError("This method should not be called.");
     }
 
@@ -134,19 +133,26 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public boolean hasVisit(Visit visit) {
+    public void deleteLocation(Location target) {
         throw new AssertionError("This method should not be called.");
     }
 
     @Override
-    public void deleteVisit(Visit visit) {
+    public void setLocation(Location target, Location editedLocation) {
         throw new AssertionError("This method should not be called.");
     }
 
     @Override
-    public void addVisit(Visit visit) {
+    public ObservableList<Location> getFilteredLocationList() {
         throw new AssertionError("This method should not be called.");
     }
+
+    @Override
+    public void updateFilteredLocationList(Predicate<Location> predicate) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    //=========== Visit Book ========================================================================================
 
     @Override
     public Path getVisitBookFilePath() {
@@ -159,12 +165,27 @@ public class ModelStub implements Model {
     }
 
     @Override
+    public ReadOnlyVisitBook getVisitBook() {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
     public void setVisitBook(ReadOnlyVisitBook visitBook) {
         throw new AssertionError("This method should not be called.");
     }
 
     @Override
-    public ReadOnlyVisitBook getVisitBook() {
+    public boolean hasVisit(Visit visit) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public void addVisit(Visit visit) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public void deleteVisit(Visit visit) {
         throw new AssertionError("This method should not be called.");
     }
 
@@ -178,18 +199,20 @@ public class ModelStub implements Model {
         throw new AssertionError("This method should not be called.");
     }
 
+    //=========== Info Handler ========================================================================================
+
     @Override
     public InfoHandler getInfoHandler() {
         throw new AssertionError("This method should not be called.");
     }
 
     @Override
-    public void deleteLocation(Location target) {
+    public Index getPersonIdFromIndex(Index index) {
         throw new AssertionError("This method should not be called.");
     }
 
     @Override
-    public void setLocation(Location target, Location editedLocation) {
+    public Index getLocationIdFromIndex(Index index) {
         throw new AssertionError("This method should not be called.");
     }
 }

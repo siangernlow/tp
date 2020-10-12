@@ -2,7 +2,7 @@ package seedu.address.testutil;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 
-import seedu.address.logic.commands.AddVisitCommand;
+import seedu.address.logic.commands.visit.AddVisitCommand;
 import seedu.address.model.visit.Visit;
 
 /**
@@ -26,4 +26,6 @@ public class VisitUtil {
         sb.append(PREFIX_DATE + visit.getDate().toString() + " ");
         return sb.toString();
     }
+
+
 }

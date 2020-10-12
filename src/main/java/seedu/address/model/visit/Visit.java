@@ -66,7 +66,6 @@ public class Visit {
         return personId == this.personId;
     }
 
-
     /**
      * Returns true if both visits have the same identity and data fields.
      */

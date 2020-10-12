@@ -10,9 +10,19 @@ import seedu.address.model.visit.Visit;
  * A utility class to help with building Location objects.
  */
 public class VisitBuilder {
-    public static final String DEFAULT_PERSONID = "1";
-    public static final String DEFAULT_LOCATIONID = "1";
-    public static final String DEFAULT_DATE = "2020-02-01";
+    public static final String DEFAULT_PERSON_ID = "1";
+    public static final String DEFAULT_LOCATION_ID = "1";
+    public static final String DEFAULT_DATE_STRING = "2020-02-01";
+
+    public static final Index DEFAULT_PERSON_INDEX;
+    public static final Index DEFAULT_LOCATION_INDEX;
+    public static final LocalDate DEFAULT_DATE;
+    static {
+        DEFAULT_PERSON_INDEX = Index.fromOneBased(Integer.parseInt(DEFAULT_PERSON_ID));
+        DEFAULT_LOCATION_INDEX = Index.fromOneBased(Integer.parseInt(DEFAULT_LOCATION_ID));
+        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DEFAULT_DATE = LocalDate.parse(DEFAULT_DATE_STRING, inputFormat);
+    }
 
     private Index personId;
     private Index locationId;
@@ -22,10 +32,9 @@ public class VisitBuilder {
      * Creates a {@code VisitBuilder} with the default details.
      */
     public VisitBuilder() {
-        this.personId = Index.fromOneBased(Integer.parseInt(DEFAULT_PERSONID));
-        this.locationId = Index.fromOneBased(Integer.parseInt(DEFAULT_LOCATIONID));
-        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        dateOfVisit = LocalDate.parse(DEFAULT_DATE, inputFormat);
+        personId = DEFAULT_PERSON_INDEX;
+        locationId = DEFAULT_LOCATION_INDEX;
+        dateOfVisit = DEFAULT_DATE;
     }
 
     /**

@@ -7,6 +7,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.testutil.TypicalIndexes.INDEX_EIGHTH;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIFTH;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
+import static seedu.address.testutil.TypicalIndexes.INDEX_NINTH;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SEVENTH;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SIXTH;
@@ -17,15 +18,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import seedu.address.model.LocationBook;
 import seedu.address.model.location.Location;
+import seedu.address.model.location.LocationBook;
 
 /**
  * A utility class containing a list of {@code Location} objects to be used in tests.
  */
 public class TypicalLocations {
     public static final Location ALICE_LOCATION = new LocationBuilder().withName("Alice Pauline House")
-            .withAddress("123, Jurong West Ave 6, #08-111").withId(INDEX_SECOND).build();
+            .withAddress("123, Jurong West Ave 6, #08-111").withId(INDEX_FIRST).build();
     public static final Location BENSON_LOCATION = new LocationBuilder().withName("Benson Meier House")
             .withAddress("311, Clementi Ave 2, #02-25").withId(INDEX_THIRD).build();
     public static final Location CARL_LOCATION = new LocationBuilder().withName("Carl Kurz House")
@@ -41,7 +42,7 @@ public class TypicalLocations {
 
     // Manually added
     public static final Location HOON_LOCATION = new LocationBuilder().withName("Hoon Meier House")
-            .withAddress("little india").withId(INDEX_FIRST).build();
+            .withAddress("little india").withId(INDEX_NINTH).build();
     public static final Location IDA_LOCATION = new LocationBuilder().withName("Ida Mueller House")
             .withAddress("chicago ave").withId(INDEX_SECOND).build();
 
@@ -64,8 +65,21 @@ public class TypicalLocations {
         return lb;
     }
 
+    public static LocationBook getUnorderedTypicalLocationBook() {
+        LocationBook lb = new LocationBook();
+        for (Location location : getUnorderedTypicalLocations()) {
+            lb.addLocation(location);
+        }
+        return lb;
+    }
+
     public static List<Location> getTypicalLocations() {
         return new ArrayList<>(Arrays.asList(ALICE_LOCATION, BENSON_LOCATION, CARL_LOCATION, DANIEL_LOCATION,
+                ELLE_LOCATION, FIONA_LOCATION, GEORGE_LOCATION));
+    }
+
+    public static List<Location> getUnorderedTypicalLocations() {
+        return new ArrayList<>(Arrays.asList(IDA_LOCATION, BENSON_LOCATION, CARL_LOCATION, DANIEL_LOCATION,
                 ELLE_LOCATION, FIONA_LOCATION, GEORGE_LOCATION));
     }
 }

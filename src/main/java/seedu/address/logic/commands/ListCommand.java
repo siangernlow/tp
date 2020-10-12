@@ -7,9 +7,13 @@ import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_QUARANTINED;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_VISITS;
 
+import java.util.function.Predicate;
+
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.ListType;
 import seedu.address.model.Model;
+import seedu.address.model.ModelPredicate;
+import seedu.address.model.location.Location;
 
 /**
  * Displays a list which items are the given list type.
@@ -20,7 +24,7 @@ public class ListCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Lists information based on a given type.\n"
-            + "Parameters: l/LIST_TYPE (must be either people, locations, visits,"
+            + "Parameters: l/LIST_TYPE (must be either people, locations, high-risk-locations, visits,"
             + " infected or quarantined)\n"
             + "Example: " + COMMAND_WORD + " people";
 
@@ -30,6 +34,7 @@ public class ListCommand extends Command {
     public static final String MESSAGE_SUCCESS_ALL_INFECTED = "Listed all infected people";
     public static final String MESSAGE_SUCCESS_ALL_QUARANTINED = "Listed all quarantined people";
     public static final String MESSAGE_SUCCESS_STATISTICS = "Listed the statistics for the day";
+    public static final String MESSAGE_SUCCESS_HIGH_RISK_LOCATIONS = "Listed high risk locations";
     public static final String INVALID_LIST_TYPE = "There is no such list type.";
 
     private final ListType listType;
@@ -46,29 +51,32 @@ public class ListCommand extends Command {
         case ALL_PEOPLE:
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
             return new CommandResult(MESSAGE_SUCCESS_ALL_PEOPLE, false, false,
-                    CommandResult.SWITCH_TO_VIEW_ALL_PEOPLE);
+                    CommandResult.SWITCH_TO_VIEW_PEOPLE);
         case ALL_LOCATIONS:
             model.updateFilteredLocationList(PREDICATE_SHOW_ALL_LOCATIONS);
             return new CommandResult(MESSAGE_SUCCESS_ALL_LOCATIONS, false, false,
-                    CommandResult.SWITCH_TO_VIEW_ALL_LOCATIONS);
+                    CommandResult.SWITCH_TO_VIEW_LOCATIONS);
         case ALL_VISITS:
             model.updateFilteredVisitList(PREDICATE_SHOW_ALL_VISITS);
             return new CommandResult(MESSAGE_SUCCESS_ALL_VISITS, false, false,
-                    CommandResult.SWITCH_TO_VIEW_ALL_VISITS);
+                    CommandResult.SWITCH_TO_VIEW_VISITS);
         case ALL_INFECTED:
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
             return new CommandResult(MESSAGE_SUCCESS_ALL_INFECTED, false, false,
-                    CommandResult.SWITCH_TO_VIEW_ALL_INFECTED);
+                    CommandResult.SWITCH_TO_VIEW_PEOPLE);
         case ALL_QUARANTINED:
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_QUARANTINED);
             return new CommandResult(MESSAGE_SUCCESS_ALL_QUARANTINED, false, false,
-                    CommandResult.SWITCH_TO_VIEW_ALL_QUARANTINED);
+                    CommandResult.SWITCH_TO_VIEW_PEOPLE);
         case STATISTICS:
-            // Retrieves the stats, currently displayed as console output
             String stats = model.getInfoHandler().getStatistics();
-            System.out.println(stats);
-            return new CommandResult(MESSAGE_SUCCESS_STATISTICS, false, false,
-                    CommandResult.SWITCH_TO_VIEW_STATISTICS);
+            return new CommandResult(MESSAGE_SUCCESS_STATISTICS + "\n" + stats);
+        case HIGH_RISK_LOCATIONS:
+            Predicate<Location> predicateForHighRiskLocations =
+                    ModelPredicate.getPredicateForHighRiskLocations(model);
+            model.updateFilteredLocationList(predicateForHighRiskLocations);
+            return new CommandResult(MESSAGE_SUCCESS_HIGH_RISK_LOCATIONS, false, false,
+                    CommandResult.SWITCH_TO_VIEW_LOCATIONS);
         default:
             throw new CommandException(INVALID_LIST_TYPE);
         }
