@@ -3,8 +3,8 @@ package seedu.address.testutil;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
-import seedu.address.logic.commands.AddLocationCommand;
-import seedu.address.logic.commands.EditLocationCommand.EditLocationDescriptor;
+import seedu.address.logic.commands.location.AddLocationCommand;
+import seedu.address.logic.commands.location.EditLocationCommand.EditLocationDescriptor;
 import seedu.address.model.location.Location;
 
 /**

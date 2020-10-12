@@ -9,7 +9,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelPredicate;
-import seedu.address.model.VisitBook;
+import seedu.address.model.visit.VisitBook;
 
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
@@ -37,10 +37,10 @@ public class GeneratePeopleCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        if (personId.getZeroBased() >= model.getAddressBook().getPersonList().size()) {
+        if (personId.getZeroBased() >= model.getPersonBook().getPersonList().size()) {
             throw new CommandException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-        if (!model.getAddressBook().getPersonList()
+        if (!model.getPersonBook().getPersonList()
                 .get(personId.getZeroBased()).getInfectionStatus().getStatusAsBoolean()) {
             throw new CommandException(MESSAGE_PERSON_IS_NOT_INFECTED);
         }
@@ -56,9 +56,9 @@ public class GeneratePeopleCommand extends Command {
         }
         model.updateFilteredPersonList(ModelPredicate.getPredicateShowPeopleById(personIds));
         return new CommandResult(
-                "Generated people for: " + model.getAddressBook()
+                "Generated people for: " + model.getPersonBook()
                         .getPersonList().get(personId.getZeroBased()).getName(),
-                false, false, CommandResult.SWITCH_TO_VIEW_ALL_PEOPLE);
+                false, false, CommandResult.SWITCH_TO_VIEW_PEOPLE);
     }
 
     @Override

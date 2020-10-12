@@ -27,7 +27,7 @@ public class ModelPredicateTest {
     @BeforeEach
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
-                new UserPrefs(), getTypicalVisitBook());
+                getTypicalVisitBook(), new UserPrefs());
     }
 
     @Test

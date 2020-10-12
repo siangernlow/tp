@@ -10,12 +10,9 @@ import java.util.Objects;
 public class CommandResult {
 
     public static final String SWITCH_NONE = "No switch";
-    public static final String SWITCH_TO_VIEW_ALL_PEOPLE = "Switch to view all people";
-    public static final String SWITCH_TO_VIEW_ALL_LOCATIONS = "Switch to view all locations";
-    public static final String SWITCH_TO_VIEW_ALL_VISITS = "Switch to view all visits";
-    public static final String SWITCH_TO_VIEW_ALL_INFECTED = "Switch to view all infected";
-    public static final String SWITCH_TO_VIEW_ALL_QUARANTINED = "Switch to view all quarantined";
-    public static final String SWITCH_TO_VIEW_STATISTICS = "Switch to view statistics";
+    public static final String SWITCH_TO_VIEW_PEOPLE = "Switch to view people";
+    public static final String SWITCH_TO_VIEW_LOCATIONS = "Switch to view locations";
+    public static final String SWITCH_TO_VIEW_VISITS = "Switch to view visits";
 
     private final String feedbackToUser;
 

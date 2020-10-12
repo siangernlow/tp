@@ -14,7 +14,7 @@ import seedu.address.commons.core.GuiSettings;
 public class UserPrefs implements ReadOnlyUserPrefs {
 
     private GuiSettings guiSettings = new GuiSettings();
-    private Path addressBookFilePath = Paths.get("data" , "addressbook.json");
+    private Path personBookFilePath = Paths.get("data" , "personbook.json");
     private Path locationBookFilePath = Paths.get("data", "locationbook.json");
     private Path visitBookFilePath = Paths.get("data", "visitbook.json");
 
@@ -37,7 +37,7 @@ public class UserPrefs implements ReadOnlyUserPrefs {
     public void resetData(ReadOnlyUserPrefs newUserPrefs) {
         requireNonNull(newUserPrefs);
         setGuiSettings(newUserPrefs.getGuiSettings());
-        setAddressBookFilePath(newUserPrefs.getAddressBookFilePath());
+        setPersonBookFilePath(newUserPrefs.getPersonBookFilePath());
         setLocationBookFilePath(newUserPrefs.getLocationBookFilePath());
         setVisitBookFilePath(newUserPrefs.getVisitBookFilePath());
     }
@@ -51,13 +51,13 @@ public class UserPrefs implements ReadOnlyUserPrefs {
         this.guiSettings = guiSettings;
     }
 
-    public Path getAddressBookFilePath() {
-        return addressBookFilePath;
+    public Path getPersonBookFilePath() {
+        return personBookFilePath;
     }
 
-    public void setAddressBookFilePath(Path addressBookFilePath) {
-        requireNonNull(addressBookFilePath);
-        this.addressBookFilePath = addressBookFilePath;
+    public void setPersonBookFilePath(Path personBookFilePath) {
+        requireNonNull(personBookFilePath);
+        this.personBookFilePath = personBookFilePath;
     }
 
     public Path getLocationBookFilePath() {
@@ -90,21 +90,21 @@ public class UserPrefs implements ReadOnlyUserPrefs {
         UserPrefs o = (UserPrefs) other;
 
         return guiSettings.equals(o.guiSettings)
-                && addressBookFilePath.equals(o.addressBookFilePath)
+                && personBookFilePath.equals(o.personBookFilePath)
                 && locationBookFilePath.equals(o.locationBookFilePath)
                 && visitBookFilePath.equals(o.visitBookFilePath);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(guiSettings, addressBookFilePath, locationBookFilePath, visitBookFilePath);
+        return Objects.hash(guiSettings, personBookFilePath, locationBookFilePath, visitBookFilePath);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Gui Settings : " + guiSettings);
-        sb.append("\nLocal person data file location : " + addressBookFilePath);
+        sb.append("\nLocal person data file location : " + personBookFilePath);
         sb.append("\nLocal location data file location : " + locationBookFilePath);
         sb.append("\nLocal visit data file location : " + visitBookFilePath);
         return sb.toString();

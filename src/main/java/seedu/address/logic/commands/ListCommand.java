@@ -51,35 +51,32 @@ public class ListCommand extends Command {
         case ALL_PEOPLE:
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
             return new CommandResult(MESSAGE_SUCCESS_ALL_PEOPLE, false, false,
-                    CommandResult.SWITCH_TO_VIEW_ALL_PEOPLE);
+                    CommandResult.SWITCH_TO_VIEW_PEOPLE);
         case ALL_LOCATIONS:
             model.updateFilteredLocationList(PREDICATE_SHOW_ALL_LOCATIONS);
             return new CommandResult(MESSAGE_SUCCESS_ALL_LOCATIONS, false, false,
-                    CommandResult.SWITCH_TO_VIEW_ALL_LOCATIONS);
+                    CommandResult.SWITCH_TO_VIEW_LOCATIONS);
         case ALL_VISITS:
             model.updateFilteredVisitList(PREDICATE_SHOW_ALL_VISITS);
             return new CommandResult(MESSAGE_SUCCESS_ALL_VISITS, false, false,
-                    CommandResult.SWITCH_TO_VIEW_ALL_VISITS);
+                    CommandResult.SWITCH_TO_VIEW_VISITS);
         case ALL_INFECTED:
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
             return new CommandResult(MESSAGE_SUCCESS_ALL_INFECTED, false, false,
-                    CommandResult.SWITCH_TO_VIEW_ALL_INFECTED);
+                    CommandResult.SWITCH_TO_VIEW_PEOPLE);
         case ALL_QUARANTINED:
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_QUARANTINED);
             return new CommandResult(MESSAGE_SUCCESS_ALL_QUARANTINED, false, false,
-                    CommandResult.SWITCH_TO_VIEW_ALL_QUARANTINED);
+                    CommandResult.SWITCH_TO_VIEW_PEOPLE);
         case STATISTICS:
-            // Retrieves the stats, currently displayed as console output
             String stats = model.getInfoHandler().getStatistics();
-            System.out.println(stats);
-            return new CommandResult(MESSAGE_SUCCESS_STATISTICS, false, false,
-                    CommandResult.SWITCH_TO_VIEW_STATISTICS);
+            return new CommandResult(MESSAGE_SUCCESS_STATISTICS + "\n" + stats);
         case HIGH_RISK_LOCATIONS:
             Predicate<Location> predicateForHighRiskLocations =
                     ModelPredicate.getPredicateForHighRiskLocations(model);
             model.updateFilteredLocationList(predicateForHighRiskLocations);
             return new CommandResult(MESSAGE_SUCCESS_HIGH_RISK_LOCATIONS, false, false,
-                    CommandResult.SWITCH_TO_VIEW_ALL_LOCATIONS);
+                    CommandResult.SWITCH_TO_VIEW_LOCATIONS);
         default:
             throw new CommandException(INVALID_LIST_TYPE);
         }

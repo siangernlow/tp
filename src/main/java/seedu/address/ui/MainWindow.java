@@ -16,6 +16,9 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.ui.list.LocationListPanel;
+import seedu.address.ui.list.PersonListPanel;
+import seedu.address.ui.list.VisitListPanel;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -121,7 +124,7 @@ public class MainWindow extends UiPart<Stage> {
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getPersonBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(this::executeCommand);
@@ -191,29 +194,19 @@ public class MainWindow extends UiPart<Stage> {
                 handleExit();
             }
 
-            if (commandResult.getSwitchState().equals(CommandResult.SWITCH_TO_VIEW_ALL_PEOPLE)) {
+            if (commandResult.getSwitchState().equals(CommandResult.SWITCH_TO_VIEW_PEOPLE)) {
                 listPanelPlaceholder.getChildren().clear();
                 listPanelPlaceholder.getChildren().add(personListPanel.getRoot());
             }
 
-            if (commandResult.getSwitchState().equals(CommandResult.SWITCH_TO_VIEW_ALL_LOCATIONS)) {
+            if (commandResult.getSwitchState().equals(CommandResult.SWITCH_TO_VIEW_LOCATIONS)) {
                 listPanelPlaceholder.getChildren().clear();
                 listPanelPlaceholder.getChildren().add(locationListPanel.getRoot());
             }
 
-            if (commandResult.getSwitchState().equals(CommandResult.SWITCH_TO_VIEW_ALL_VISITS)) {
+            if (commandResult.getSwitchState().equals(CommandResult.SWITCH_TO_VIEW_VISITS)) {
                 listPanelPlaceholder.getChildren().clear();
                 listPanelPlaceholder.getChildren().add(visitListPanel.getRoot());
-            }
-
-            if (commandResult.getSwitchState().equals(CommandResult.SWITCH_TO_VIEW_ALL_INFECTED)) {
-                listPanelPlaceholder.getChildren().clear();
-                listPanelPlaceholder.getChildren().add(personListPanel.getRoot());
-            }
-
-            if (commandResult.getSwitchState().equals(CommandResult.SWITCH_TO_VIEW_ALL_QUARANTINED)) {
-                listPanelPlaceholder.getChildren().clear();
-                listPanelPlaceholder.getChildren().add(personListPanel.getRoot());
             }
 
             return commandResult;

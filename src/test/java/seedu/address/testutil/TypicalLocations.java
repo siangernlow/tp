@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import seedu.address.model.LocationBook;
 import seedu.address.model.location.Location;
+import seedu.address.model.location.LocationBook;
 
 /**
  * A utility class containing a list of {@code Location} objects to be used in tests.

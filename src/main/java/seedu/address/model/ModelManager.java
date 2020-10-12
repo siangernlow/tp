@@ -16,50 +16,56 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.model.location.Location;
+import seedu.address.model.location.LocationBook;
+import seedu.address.model.location.ReadOnlyLocationBook;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonBook;
+import seedu.address.model.person.ReadOnlyPersonBook;
+import seedu.address.model.visit.ReadOnlyVisitBook;
 import seedu.address.model.visit.Visit;
+import seedu.address.model.visit.VisitBook;
 
 /**
- * Represents the in-memory model of the address book data.
+ * Represents the in-memory model of the VirusTracker data.
  */
 public class ModelManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private final AddressBook addressBook;
+    private final PersonBook personBook;
     private final LocationBook locationBook;
-    private final UserPrefs userPrefs;
     private final VisitBook visitBook;
+    private final UserPrefs userPrefs;
     private final InfoHandler infoHandler;
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Location> filteredLocations;
     private final FilteredList<Visit> filteredVisits;
 
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a ModelManager with the given personBook, locationBook, visitBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyLocationBook locationBook,
-                        ReadOnlyUserPrefs userPrefs, ReadOnlyVisitBook visitBook) {
+    public ModelManager(ReadOnlyPersonBook personBook, ReadOnlyLocationBook locationBook,
+                        ReadOnlyVisitBook visitBook, ReadOnlyUserPrefs userPrefs) {
         super();
-        requireAllNonNull(addressBook, locationBook, visitBook, userPrefs);
+        requireAllNonNull(personBook, locationBook, visitBook, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs
+        logger.fine("Initializing with person book: " + personBook + " and user prefs " + userPrefs
                 + " and location book: " + locationBook + " and visit book: " + visitBook);
 
-        this.addressBook = new AddressBook(addressBook);
+        this.personBook = new PersonBook(personBook);
         this.locationBook = new LocationBook(locationBook);
         this.visitBook = new VisitBook(visitBook);
         this.infoHandler = new InfoHandler(this);
         this.userPrefs = new UserPrefs(userPrefs);
-        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredPersons = new FilteredList<>(this.personBook.getPersonList());
         filteredLocations = new FilteredList<>(this.locationBook.getLocationList());
         filteredVisits = new FilteredList<>(this.visitBook.getVisitList());
     }
 
     public ModelManager() {
-        this(new AddressBook(), new LocationBook(), new UserPrefs(), new VisitBook());
+        this(new PersonBook(), new LocationBook(), new VisitBook(), new UserPrefs());
     }
 
-    //=========== UserPrefs ==================================================================================
+    //=========== Settings ========================================================================================
 
     @Override
     public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
@@ -83,87 +89,64 @@ public class ModelManager implements Model {
         userPrefs.setGuiSettings(guiSettings);
     }
 
+    //=========== Person Book =====================================================================================
+
     @Override
-    public Path getAddressBookFilePath() {
-        return userPrefs.getAddressBookFilePath();
+    public Path getPersonBookFilePath() {
+        return userPrefs.getPersonBookFilePath();
     }
 
     @Override
-    public void setAddressBookFilePath(Path addressBookFilePath) {
-        requireNonNull(addressBookFilePath);
-        userPrefs.setAddressBookFilePath(addressBookFilePath);
+    public void setPersonBookFilePath(Path personBookFilePath) {
+        requireNonNull(personBookFilePath);
+        userPrefs.setPersonBookFilePath(personBookFilePath);
     }
 
     @Override
-    public Path getLocationBookFilePath() {
-        return userPrefs.getLocationBookFilePath();
+    public ReadOnlyPersonBook getPersonBook() {
+        return personBook;
     }
 
     @Override
-    public void setLocationBookFilePath(Path locationBookFilePath) {
-        requireNonNull(locationBookFilePath);
-        userPrefs.setLocationBookFilePath(locationBookFilePath);
-    }
-
-    @Override
-    public Path getVisitBookFilePath() {
-        return userPrefs.getVisitBookFilePath();
-    }
-
-    @Override
-    public void setVisitBookFilePath(Path visitBookFilePath) {
-        requireNonNull(visitBookFilePath);
-        userPrefs.setVisitBookFilePath(visitBookFilePath);
-    }
-    //=========== AddressBook ================================================================================
-
-    @Override
-    public void setAddressBook(ReadOnlyAddressBook addressBook) {
-        this.addressBook.resetData(addressBook);
-    }
-
-    @Override
-    public ReadOnlyAddressBook getAddressBook() {
-        return addressBook;
+    public void setPersonBook(ReadOnlyPersonBook personBook) {
+        this.personBook.resetData(personBook);
     }
 
     @Override
     public boolean hasPerson(Person person) {
         requireNonNull(person);
-        return addressBook.hasPerson(person);
+        return personBook.hasPerson(person);
     }
 
     @Override
     public boolean hasSameIdPerson(Person person) {
         requireNonNull(person);
-        return addressBook.hasSameIdPerson(person);
+        return personBook.hasSameIdPerson(person);
     }
 
     @Override
     public boolean hasSameIdentityExceptId(Person person) {
         requireNonNull(person);
-        return addressBook.hasSameIdentityExceptId(person);
-    }
-
-    @Override
-    public void deletePerson(Person target) {
-        addressBook.removePerson(target);
+        return personBook.hasSameIdentityExceptId(person);
     }
 
     @Override
     public void addPerson(Person person) {
-        addressBook.addPerson(person);
+        personBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    }
+
+    @Override
+    public void deletePerson(Person target) {
+        personBook.removePerson(target);
     }
 
     @Override
     public void setPerson(Person target, Person editedPerson) {
         requireAllNonNull(target, editedPerson);
 
-        addressBook.setPerson(target, editedPerson);
+        personBook.setPerson(target, editedPerson);
     }
-
-    //=========== Filtered Person List Accessors =============================================================
 
     /**
      * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
@@ -180,51 +163,27 @@ public class ModelManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
-    //=========== Filtered Location List Accessors =============================================================
+    //=========== LocationBook ====================================================================================
 
-    /**
-     * Returns an unmodifiable view of the list of {@code Visit} backed by the internal list of
-     * {@code versionedVisitBook}
-     */
     @Override
-    public ObservableList<Location> getFilteredLocationList() {
-        return filteredLocations;
+    public Path getLocationBookFilePath() {
+        return userPrefs.getLocationBookFilePath();
     }
 
     @Override
-    public void updateFilteredLocationList(Predicate<Location> predicate) {
-        requireNonNull(predicate);
-        filteredLocations.setPredicate(predicate);
-    }
-
-    //=========== Filtered Visit List Accessors =============================================================
-
-    /**
-     * Returns an unmodifiable view of the list of {@code Visit} backed by the internal list of
-     * {@code versionedVisitBook}
-     */
-    @Override
-    public ObservableList<Visit> getFilteredVisitList() {
-        return filteredVisits;
-    }
-
-    @Override
-    public void updateFilteredVisitList(Predicate<Visit> predicate) {
-        requireNonNull(predicate);
-        filteredVisits.setPredicate(predicate);
-    }
-
-
-    //=========== LocationBook ================================================================================
-
-    @Override
-    public void setLocationBook(ReadOnlyLocationBook locationBook) {
-        this.locationBook.resetData(locationBook);
+    public void setLocationBookFilePath(Path locationBookFilePath) {
+        requireNonNull(locationBookFilePath);
+        userPrefs.setLocationBookFilePath(locationBookFilePath);
     }
 
     @Override
     public ReadOnlyLocationBook getLocationBook() {
         return locationBook;
+    }
+
+    @Override
+    public void setLocationBook(ReadOnlyLocationBook locationBook) {
+        this.locationBook.resetData(locationBook);
     }
 
     @Override
@@ -251,17 +210,42 @@ public class ModelManager implements Model {
         locationBook.setLocation(target, editedLocation);
     }
 
-
-    //=========== VisitBook ================================================================================
+    /**
+     * Returns an unmodifiable view of the list of {@code Visit} backed by the internal list of
+     * {@code versionedVisitBook}
+     */
+    @Override
+    public ObservableList<Location> getFilteredLocationList() {
+        return filteredLocations;
+    }
 
     @Override
-    public void setVisitBook(ReadOnlyVisitBook visitBook) {
-        this.visitBook.resetData(visitBook);
+    public void updateFilteredLocationList(Predicate<Location> predicate) {
+        requireNonNull(predicate);
+        filteredLocations.setPredicate(predicate);
+    }
+
+    //=========== VisitBook =======================================================================================
+
+    @Override
+    public Path getVisitBookFilePath() {
+        return userPrefs.getVisitBookFilePath();
+    }
+
+    @Override
+    public void setVisitBookFilePath(Path visitBookFilePath) {
+        requireNonNull(visitBookFilePath);
+        userPrefs.setVisitBookFilePath(visitBookFilePath);
     }
 
     @Override
     public ReadOnlyVisitBook getVisitBook() {
         return visitBook;
+    }
+
+    @Override
+    public void setVisitBook(ReadOnlyVisitBook visitBook) {
+        this.visitBook.resetData(visitBook);
     }
 
     @Override
@@ -271,18 +255,33 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void deleteVisit(Visit visit) {
-        requireNonNull(visit);
-        visitBook.removeVisit(visit);
-    }
-
-    @Override
     public void addVisit(Visit visit) {
         visitBook.addVisit(visit);
         updateFilteredVisitList(PREDICATE_SHOW_ALL_VISITS); // needs to be updated to persons when doing list command
     }
 
-    //=========== InfoHandler ================================================================================
+    @Override
+    public void deleteVisit(Visit visit) {
+        requireNonNull(visit);
+        visitBook.removeVisit(visit);
+    }
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Visit} backed by the internal list of
+     * {@code versionedVisitBook}
+     */
+    @Override
+    public ObservableList<Visit> getFilteredVisitList() {
+        return filteredVisits;
+    }
+
+    @Override
+    public void updateFilteredVisitList(Predicate<Visit> predicate) {
+        requireNonNull(predicate);
+        filteredVisits.setPredicate(predicate);
+    }
+
+    //=========== InfoHandler ====================================================================================
 
     public InfoHandler getInfoHandler() {
         return infoHandler;
@@ -312,11 +311,10 @@ public class ModelManager implements Model {
 
         // state check
         ModelManager other = (ModelManager) obj;
-        return addressBook.equals(other.addressBook)
+        return personBook.equals(other.personBook)
                 && locationBook.equals(other.locationBook)
                 && visitBook.equals(other.visitBook)
                 && userPrefs.equals(other.userPrefs)
                 && filteredPersons.equals(other.filteredPersons);
     }
-
 }
