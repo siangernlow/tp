@@ -5,6 +5,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -113,7 +114,13 @@ public class ParserUtil {
         requireNonNull(date);
         String trimmedDate = date.trim();
         DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        return LocalDate.parse(trimmedDate, inputFormat);
+        LocalDate parsedDate;
+        try {
+            parsedDate = LocalDate.parse(trimmedDate, inputFormat);
+        } catch (DateTimeParseException e) {
+            throw new ParseException("Wrong input date format");
+        }
+        return parsedDate;
     }
 
 

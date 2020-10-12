@@ -12,6 +12,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.VirusTrackerParser;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.exceptions.WrongDateFormatException;
 import seedu.address.model.Model;
 import seedu.address.model.location.Location;
 import seedu.address.model.location.ReadOnlyLocationBook;
@@ -41,7 +42,7 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public CommandResult execute(String commandText) throws CommandException, ParseException {
+    public CommandResult execute(String commandText) throws CommandException, ParseException, WrongDateFormatException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
 
         CommandResult commandResult;

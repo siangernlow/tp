@@ -23,6 +23,7 @@ import seedu.address.logic.commands.person.FindPersonCommand;
 import seedu.address.logic.commands.visit.AddVisitCommand;
 import seedu.address.logic.commands.visit.DeleteVisitsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.exceptions.WrongDateFormatException;
 import seedu.address.logic.parser.location.AddLocationCommandParser;
 import seedu.address.logic.parser.location.DeleteLocationCommandParser;
 import seedu.address.logic.parser.location.EditLocationCommandParser;
@@ -51,7 +52,7 @@ public class VirusTrackerParser {
      * @throws ParseException if the user input does not conform the expected format
      */
 
-    public Command parseCommand(String userInput) throws ParseException {
+    public Command parseCommand(String userInput) throws ParseException, WrongDateFormatException {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         if (!matcher.matches()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
