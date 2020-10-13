@@ -205,7 +205,7 @@ Examples:
 * `addLocation n/Vivocity a/John street, block 123, #01-01`
 * `addLocation n/Betsy Crowe's House a/Newgate Prison`
 
-### Listing all locations visited by a person: `generateLocations`
+### Generating all locations visited by a person: `generateLocations`
 
 Shows a list of locations visited by an infected person in the past 2 weeks. 
 
@@ -217,7 +217,7 @@ Format: `listAllLcationsVisited INDEX`
 
 ### Generating all people in contact with an infected person: `generatePeople`
 
-Shows a list of people who where in contact with an infected person in the past 2 weeks. 
+Shows a list of people who were in contact with an infected person in the past 2 weeks. 
 
 Format `listAllPersonsInContact PERSONID`
 
