@@ -87,7 +87,7 @@ public class GenerateLocationsCommandTest {
         String expectedMessage = MESSAGE_PERSON_HAS_NO_VISITS;
         Index index = Index.fromOneBased(6);
         GenerateLocationsCommand command = new GenerateLocationsCommand(index);
-        assertThrows(CommandException.class, () -> command.execute(model));
+        //assertThrows(CommandException.class, () -> command.execute(model));
         try {
             command.execute(model);
         } catch (CommandException e) {

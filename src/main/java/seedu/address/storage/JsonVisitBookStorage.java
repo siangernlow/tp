@@ -15,9 +15,6 @@ import seedu.address.commons.util.JsonUtil;
 import seedu.address.model.visit.ReadOnlyVisitBook;
 
 
-
-
-
 /**
  * A class to access VisitBook data stored as a json file on the hard disk.
  */

@@ -43,8 +43,8 @@ public class VisitCard extends UiPart<Region> {
         this.visit = visit;
         id.setText(displayedIndex + ". ");
         date.setText("Date: " + visit.getDate().toString());
-        personName.setText("Visit by: " + visit.getPersonName(visit.getPersonId()));
-        locationName.setText("Location: " + visit.getLocationName(visit.getLocationId()));
+        personName.setText("Visit by: " + visit.getPerson().getName());
+        locationName.setText("Location: " + visit.getLocation().getName());
     }
 
     @Override

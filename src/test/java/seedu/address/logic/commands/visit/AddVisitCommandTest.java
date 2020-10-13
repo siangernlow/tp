@@ -14,7 +14,9 @@ import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_DATE;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_DATE_STRING;
+import static seedu.address.testutil.VisitBuilder.DEFAULT_LOCATION;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_LOCATION_INDEX;
+import static seedu.address.testutil.VisitBuilder.DEFAULT_PERSON;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_PERSON_INDEX;
 
 import java.time.LocalDate;
@@ -31,6 +33,8 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ModelStub;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.location.Location;
+import seedu.address.model.person.Person;
 import seedu.address.model.visit.ReadOnlyVisitBook;
 import seedu.address.model.visit.Visit;
 import seedu.address.model.visit.VisitBook;
@@ -76,11 +80,11 @@ public class AddVisitCommandTest {
         showLocationAtIndex(model, INDEX_THIRD);
         showPersonAtIndex(model, INDEX_FOURTH);
 
-        Index personId = model.getFilteredPersonList().get(0).getId();
-        Index locationId = model.getFilteredLocationList().get(0).getId();
+        Person person = model.getFilteredPersonList().get(0);
+        Location location = model.getFilteredLocationList().get(0);
         Visit validVisit = new VisitBuilder().withDate(DEFAULT_DATE_STRING)
-                .withLocationId(Integer.toString(locationId.getOneBased()))
-                .withPersonId(Integer.toString(personId.getOneBased()))
+                .withLocation(location)
+                .withPerson(person)
                 .build();
 
         try {
@@ -150,13 +154,13 @@ public class AddVisitCommandTest {
         }
 
         @Override
-        public Index getPersonIdFromIndex(Index index) {
-            return Index.fromOneBased(1);
+        public Person getPersonFromIndex(Index index) {
+            return visit.getPerson();
         }
 
         @Override
-        public Index getLocationIdFromIndex(Index index) {
-            return Index.fromOneBased(1);
+        public Location getLocationFromIndex(Index index) {
+            return visit.getLocation();
         }
     }
 
@@ -179,13 +183,13 @@ public class AddVisitCommandTest {
         }
 
         @Override
-        public Index getPersonIdFromIndex(Index index) {
-            return Index.fromOneBased(1);
+        public Person getPersonFromIndex(Index index) {
+            return DEFAULT_PERSON;
         }
 
         @Override
-        public Index getLocationIdFromIndex(Index index) {
-            return Index.fromOneBased(1);
+        public Location getLocationFromIndex(Index index) {
+            return DEFAULT_LOCATION;
         }
 
         @Override

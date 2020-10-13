@@ -7,7 +7,7 @@ import java.util.List;
 import javafx.collections.ObservableList;
 
 /**
- * Wraps all data at the address-book level
+ * Wraps all data at the person-book level
  * Duplicates are not allowed (by .isSamePerson comparison)
  */
 public class PersonBook implements ReadOnlyPersonBook {

@@ -6,39 +6,37 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-import seedu.address.commons.core.index.Index;
+import seedu.address.model.location.Location;
+import seedu.address.model.person.Person;
+
+
+/**
+ * Represents a Visit in the visit book.
+ * Guarantees: details are present and not null, field values are validated, immutable.
+ */
 
 public class Visit {
 
-    private final Index personId;
-    private final Index locationId;
+    private final Person person;
+    private final Location location;
     private final LocalDate date;
+
     /**
      * Every field must be present and not null.
      */
-    public Visit(Index personId, Index locationId, LocalDate date) {
-        requireAllNonNull(personId, locationId, date);
-        this.personId = personId;
-        this.locationId = locationId;
+    public Visit(Person person, Location location, LocalDate date) {
+        requireAllNonNull(person, location, date);
+        this.person = person;
+        this.location = location;
         this.date = date;
     }
 
-    public Index getPersonId() {
-        return personId;
+    public Person getPerson() {
+        return person;
     }
 
-    //to be implemented
-    public String getPersonName(Index personId) {
-        return "personName";
-    }
-
-    public Index getLocationId() {
-        return locationId;
-    }
-
-    //to be implemented
-    public String getLocationName(Index locationId) {
-        return "locationName";
+    public Location getLocation() {
+        return location;
     }
 
     public LocalDate getDate() {
@@ -53,17 +51,17 @@ public class Visit {
     }
 
     /**
-     * Returns true if the personId of the visit corresponds to the entered personId
+     * Returns true if the person of the visit corresponds to the entered person
      */
-    public boolean isSamePersonId(Index personId) {
-        return personId == this.personId;
+    public boolean isSamePerson(Person person) {
+        return person == this.person;
     }
 
     /**
-     * Returns true if the personId of the visit corresponds to the entered personId
+     * Returns true if the location of the visit corresponds to the entered location
      */
-    public boolean isSameLocationId(Index personId) {
-        return personId == this.personId;
+    public boolean isSameLocation(Location location) {
+        return location == this.location;
     }
 
     /**
@@ -80,28 +78,24 @@ public class Visit {
         }
 
         Visit otherVisit = (Visit) other;
-        return otherVisit.getPersonId().equals(getPersonId())
-                && otherVisit.getLocationId().equals(getLocationId())
+        return otherVisit.getPerson().equals(getPerson())
+                && otherVisit.getLocation().equals(getLocation())
                 && otherVisit.getDate().equals(getDate());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(personId, locationId, date);
+        return Objects.hash(person, location, date);
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("PersonId: ")
-                .append(getPersonId())
-                .append("PersonName: ")
-                .append(getPersonName(personId))
-                .append("LocationId: ")
-                .append(getLocationId())
-                .append("PersonName: ")
-                .append(getLocationName(locationId))
+        builder.append(" Person: ")
+                .append(getPerson().getName())
+                .append(" Location: ")
+                .append(getLocation().getName())
                 .append(" Date: ")
                 .append(getDate().format(DateTimeFormatter.ofPattern("MMM dd yyyy")));
 
