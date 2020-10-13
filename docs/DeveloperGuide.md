@@ -260,6 +260,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | user | add location data to a list | generate information about which location needs to be disinfected |
 | `* * *`  | user | delete location data | to keep the locations list up to date|
 | `* * *`  | user | edit location data | to keep the location information up to date with the latest address or name |
+| `* * *`  | user | generate a list of infected people currently stored in VirusTracker|    
+| `* * *`  | user | generate a list of quarantined people currently stored in VirusTracker|    
 | `* * *`  | user with access to visits data from SafeEntry app   | add visit data to a list | generate desired lists and track contacts with the infected cases|
 | `* * *`  | user with access to the visit list| delete all visits by date | remove all the outdated visits inside the list |
 | `* * *`  | user setting up SafeEntry checkpoints | identify locations with high risk of infection | know which places need these checkpoints the most |
@@ -579,7 +581,7 @@ Use case ends.
 
     Use case ends.
 
-**UC12 - View daily statistics**
+**UC12 - View summary of data**
 
 **MSS**
 
@@ -590,9 +592,9 @@ Use case ends.
 
 **Extensions**
 
-* 2a. There is not enough information to produce statistics for that day.  
-
-    Use case ends.
+* 2a. There is not enough information to produce a certain statistics.
+    * 2a1. System flags that statistic as unavailable.
+    * 2a2. For remaining valid statistics, go to 2. 
 
 ### Non-Functional Requirements
 
@@ -600,7 +602,7 @@ Use case ends.
 2.  Should be able to hold up to 1000 items for each type of list without a noticeable sluggishness in performance for typical usage.
 3.  Should be able to switch between different types of data and manipulate them efficiently and quickly.
 4.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
+5.  Summary of statistics presented should be relevant and useful to the reader.
 *{More to be added}*
 
 ### Glossary
