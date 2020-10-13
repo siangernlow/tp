@@ -40,6 +40,7 @@ public class ModelPredicateTest {
         ObservableList<Location> actualList = model.getFilteredLocationList();
 
         ObservableList<Location> expectedList = FXCollections.observableArrayList();
+        expectedList.add(FIONA_LOCATION);
         expectedList.add(GEORGE_LOCATION);
         assertEquals(expectedList, actualList);
 

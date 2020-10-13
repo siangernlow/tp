@@ -1,38 +1,124 @@
 {
   "_comment": "VisitBook save file which contains the same Visit values as in TypicalVisits#getTypicalVisitBook()",
   "visits" : [ {
-    "personId" : "1",
-    "locationId" : "2",
-    "dateOfVisit": "2020-09-12"
+    "namePerson" : "Benson Meier",
+    "phone" : "98765432",
+    "email" : "johnd@example.com",
+    "addressPerson" : "311, Clementi Ave 2, #02-25",
+    "quarantineStatus" : "true",
+    "infectionStatus" : "false",
+    "idPerson" : "2",
+    "tagged" : ["owesMoney", "friends"],
+    "nameLocation" : "Benson Meier House",
+    "addressLocation" : "311, Clementi Ave 2, #02-25",
+    "idLocation" : "3",
+    "dateOfVisit" : "2020-09-12"
   },{
-    "personId" : "2",
-    "locationId" : "3",
-    "dateOfVisit": "2020-09-12"
+    "namePerson" : "Amy Bee",
+    "phone" : "11111111",
+    "email" : "amy@example.com",
+    "addressPerson" : "Block 312, Amy Street 1",
+    "quarantineStatus" : "true",
+    "infectionStatus" : "false",
+    "idPerson" : "9",
+    "tagged" : ["friend"],
+    "nameLocation" : "Amy Bee",
+    "addressLocation" : "Block 312, Amy Street 1",
+    "idLocation" : "1",
+    "dateOfVisit" : "2020-09-12"
   },{
-    "personId" : "3",
-    "locationId" : "1",
-    "dateOfVisit": "2020-09-12"
+    "namePerson" : "Alice Pauline",
+    "phone" : "94351253",
+    "email" : "alice@example.com",
+    "addressPerson" : "123, Jurong West Ave 6, #08-111",
+    "quarantineStatus" : "true",
+    "infectionStatus" : "false",
+    "idPerson" : "1",
+    "tagged" : [ "friends" ],
+    "nameLocation" : "Alice Pauline House",
+    "addressLocation" : "123, Jurong West Ave 6, #08-111",
+    "idLocation" : "1",
+    "dateOfVisit" : "2020-09-12"
   },{
-    "personId" : "1",
-    "locationId" : "4",
-    "dateOfVisit": "2020-09-12"
+    "namePerson" : "Bob Choo",
+    "phone" : "22222222",
+    "email" : "bob@example.com",
+    "addressPerson" : "Block 123, Bobby Street 3",
+    "quarantineStatus" : "false",
+    "infectionStatus" : "true",
+    "idPerson" : "10",
+    "tagged" : ["husband", "friend"],
+    "nameLocation" : "Bob Choo",
+    "addressLocation" : "Block 123, Bobby Street 3",
+    "idLocation" : "2",
+    "dateOfVisit" : "2020-09-12"
   },{
-    "personId" : "1",
-    "locationId" : "5",
-    "dateOfVisit": "2020-09-13"
+    "namePerson" : "Carl Kurz",
+    "phone" : "95352563",
+    "email" : "heinz@example.com",
+    "addressPerson" : "wall street",
+    "quarantineStatus": "false",
+    "infectionStatus" : "false",
+    "idPerson" : "3",
+    "tagged" : [ ],
+    "nameLocation" : "Carl Kurz House",
+    "addressLocation" : "wall street",
+    "idLocation": "5",
+    "dateOfVisit" : "2020-09-13"
   },{
-    "personId" : "1",
-    "locationId" : "2",
-    "dateOfVisit": "2020-09-13"
+    "namePerson" : "Daniel Meier",
+    "phone" : "87652533",
+    "email" : "cornelia@example.com",
+    "addressPerson" : "10th street",
+    "quarantineStatus": "false",
+    "infectionStatus" : "true",
+    "idPerson" : "4",
+    "tagged" : [ "friends" ],
+    "nameLocation" : "Daniel Meier House",
+    "addressLocation" : "10th street",
+    "idLocation": "7",
+    "dateOfVisit" : "2020-09-13"
   },{
-    "personId" : "5",
-    "locationId" : "6",
-    "dateOfVisit": "2020-09-13"
+    "namePerson" : "Elle Meyer",
+    "phone" : "9482224",
+    "email" : "werner@example.com",
+    "addressPerson" : "michegan ave",
+    "quarantineStatus": "false",
+    "infectionStatus" : "true",
+    "idPerson" : "5",
+    "tagged" : [ ],
+    "nameLocation" : "Elle Meyer House",
+    "addressLocation" : "michegan ave",
+    "idLocation": "8",
+    "dateOfVisit" : "2020-09-13"
   },{
-    "personId" : "4",
-    "locationId" : "1",
-    "dateOfVisit": "2020-09-13"
-  }]
+    "namePerson" : "Fiona Kunz",
+    "phone" : "9482427",
+    "email" : "lydia@example.com",
+    "addressPerson" : "little tokyo",
+    "quarantineStatus": "false",
+    "infectionStatus" : "true",
+    "idPerson" : "6",
+    "tagged" : [ ],
+    "nameLocation" : "Fiona Kunz House",
+    "addressLocation" : "little tokyo",
+    "idLocation": "10",
+    "dateOfVisit" : "2020-09-13"
+  },{
+    "namePerson" : "George Best",
+    "phone" : "9482442",
+    "email" : "anna@example.com",
+    "addressPerson" : "4th street",
+    "quarantineStatus": "false",
+    "infectionStatus" : "true",
+    "idPerson" : "7",
+    "tagged" : [ ],
+    "nameLocation" : "George Best House",
+    "addressLocation" : "4th street",
+    "idLocation": "6",
+    "dateOfVisit" : "2020-09-14"
+  }
+  ]
 
 }
 

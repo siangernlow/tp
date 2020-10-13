@@ -12,8 +12,6 @@ import static seedu.address.testutil.TypicalLocations.DANIEL_LOCATION;
 import static seedu.address.testutil.TypicalLocations.ELLE_LOCATION;
 import static seedu.address.testutil.TypicalLocations.FIONA_LOCATION;
 import static seedu.address.testutil.TypicalLocations.GEORGE_LOCATION;
-import static seedu.address.testutil.TypicalLocations.HOON_LOCATION;
-import static seedu.address.testutil.TypicalLocations.IDA_LOCATION;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BENSON;
@@ -23,8 +21,6 @@ import static seedu.address.testutil.TypicalPersons.DANIEL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.FIONA;
 import static seedu.address.testutil.TypicalPersons.GEORGE;
-import static seedu.address.testutil.TypicalPersons.HOON;
-import static seedu.address.testutil.TypicalPersons.IDA;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,10 +52,6 @@ public class TypicalVisits {
             .withLocation(FIONA_LOCATION).withDate("2020-09-13").build();
     public static final Visit NINTH_VISIT = new VisitBuilder().withPerson(GEORGE)
             .withLocation(GEORGE_LOCATION).withDate("2020-09-14").build();
-    public static final Visit TENTH_VISIT = new VisitBuilder().withPerson(HOON)
-            .withLocation(HOON_LOCATION).withDate("2020-09-14").build();
-    public static final Visit ELEVENTH_VISIT = new VisitBuilder().withPerson(IDA)
-            .withLocation(IDA_LOCATION).withDate("2020-09-14").build();
 
     private TypicalVisits() {} // prevents instantiation
 
@@ -109,13 +101,12 @@ public class TypicalVisits {
 
     public static List<Visit> getTypicalVisits() {
         return new ArrayList<>(Arrays.asList(FIRST_VISIT, SECOND_VISIT, THIRD_VISIT, FOURTH_VISIT,
-                FIFTH_VISIT, SIXTH_VISIT, SEVENTH_VISIT, EIGHTH_VISIT));
+                FIFTH_VISIT, SIXTH_VISIT, SEVENTH_VISIT, EIGHTH_VISIT, NINTH_VISIT));
     }
 
     public static List<Visit> getAllVisits() {
         return new ArrayList<>(Arrays.asList(FIRST_VISIT, SECOND_VISIT, THIRD_VISIT, FOURTH_VISIT,
-                FIFTH_VISIT, SIXTH_VISIT, SEVENTH_VISIT, EIGHTH_VISIT, NINTH_VISIT, TENTH_VISIT,
-                ELEVENTH_VISIT));
+                FIFTH_VISIT, SIXTH_VISIT, SEVENTH_VISIT, EIGHTH_VISIT, NINTH_VISIT));
     }
 
     /**
@@ -141,8 +132,8 @@ public class TypicalVisits {
     public static List<Visit> getLessThanSixtyPercentInfectedVisits() {
         // FIRST_VISIT ,SECOND_VISIT and THIRD_VISIT are non-infected Visits. The remaining Visits are
         // infected Visits.
-        return new ArrayList<>(Arrays.asList(FIRST_VISIT, SECOND_VISIT, THIRD_VISIT, NINTH_VISIT,
-                TENTH_VISIT, FIFTH_VISIT, FOURTH_VISIT));
+        return new ArrayList<>(Arrays.asList(FIRST_VISIT, SECOND_VISIT, THIRD_VISIT, NINTH_VISIT, EIGHTH_VISIT,
+                  FIFTH_VISIT, FOURTH_VISIT));
     }
 
     /**
@@ -152,6 +143,6 @@ public class TypicalVisits {
     public static List<Visit> getMoreThanSixtyPercentInfectedVisits() {
         // FIRST_VISIT and SECOND_VISIT are non-infected Visits. The remaining Visits are infected Visits.
         return new ArrayList<>(Arrays.asList(FIRST_VISIT, SECOND_VISIT, THIRD_VISIT, NINTH_VISIT,
-                FOURTH_VISIT, ELEVENTH_VISIT, SEVENTH_VISIT, EIGHTH_VISIT));
+                FOURTH_VISIT, SEVENTH_VISIT, EIGHTH_VISIT));
     }
 }
