@@ -15,6 +15,8 @@ VirusTracker can help you generate various statistics on the pandemic quickly an
     * Editing data: `edit`
     * Finding data: `find`
     * Listing data: `list`
+    * Generating people in contact with an infected person: `generatePeople`
+    * Generating locations an infected person has been to: `generateLocations`
     * Viewing help: `help`
 * Command Summary
 --------------------------------------------------------------------------------------------------------------------
@@ -203,26 +205,25 @@ Examples:
 * `addLocation n/Vivocity a/John street, block 123, #01-01`
 * `addLocation n/Betsy Crowe's House a/Newgate Prison`
 
-### Listing all locations visited by a person: `listAllLocationsVisited` `[coming in v1.2]`
+### Listing all locations visited by a person: `generateLocations`
 
-Shows a list of locations visited by a specified person in the past 2 weeks. 
+Shows a list of locations visited by an infected person in the past 2 weeks. 
 
 Format: `listAllLcationsVisited INDEX`
 
-* Locations listed were visited by the person of the index given.
+* Locations listed were visited by the infected person of the index given.
 * The result given is a filtered list of locations that the person visited in the past 2 weeks.
 * This function can be used to identify locations needing to be disinfected after being visited by an infected person.
 
-### Listing all people in contact with a person: `listAllPersonsInContact` `[coming in v1.2]`
+### Generating all people in contact with an infected person: `generatePeople`
 
-Shows a list of people who have been in the same location as a person in the past 2 weeks. The purpose is to identify people who need to be quarantined for contact with an infectious person.
+Shows a list of people who where in contact with an infected person in the past 2 weeks. 
 
 Format `listAllPersonsInContact PERSONID`
 
-* Persons listed were in contact with the person of the index given.
-* Two people are in contact when they visit the same location on the same day.
-* The result given is a filtered list of persons that the person was in contact with in the past 2 weeks.
-* This function can be used to identify people needing to be quarantined after being in contact with an infected person.
+* People listed were in contact with the infected person of the index given.
+* The result given is a filtered list of people who visited the same locations as that the infected person in the past 2 weeks.
+* This function can be used to identify people who need to be quarantined or issued Stay Home Notices.
 
 ### Archiving data files `[coming in v2.0]`
 
