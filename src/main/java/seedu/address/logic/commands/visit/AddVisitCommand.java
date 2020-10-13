@@ -10,7 +10,11 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.person.EditPersonCommand;
 import seedu.address.model.Model;
+import seedu.address.model.location.Location;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Person;
 import seedu.address.model.visit.Visit;
 
 /**
@@ -21,10 +25,16 @@ public class AddVisitCommand extends Command {
 
     public static final String COMMAND_WORD = "addVisit";
 
-
     public static final String MESSAGE_SUCCESS = "New visit added: %1$s";
     public static final String MESSAGE_DUPLICATE_VISIT = "This visit already exists in the address book";
-
+    public static final String MESSAGE_NO_WARNING = MESSAGE_SUCCESS;
+    public static final String MESSAGE_INFECTED_MADE_VISIT = MESSAGE_SUCCESS + "The following person is infected and "
+            + " may have violated the Stay-Home Notice.";
+    public static final String MESSAGE_QUARANTINED_MADE_VISIT = MESSAGE_SUCCESS + "The following person is in quarantine and "
+            + " may have violated the Stay-Home Notice.";
+    public static final String MESSAGE_INFECTED_AND_QUARANTINED_MADE_VISIT = MESSAGE_SUCCESS
+            + "The following person is infected and "
+            + "is in quarantine. The Stay-Home Notice may have been violated.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add a new visit to the visits list "
             + "by the personId of visit, locationId of visit and date of visit "
             + "Existing visits list will be updated.\n"
@@ -36,6 +46,8 @@ public class AddVisitCommand extends Command {
     private final Index personIndex;
     private final Index locationIndex;
     private final LocalDate date;
+    private final Person person;
+    private final Location location;
 
     /**
      * Creates an AddVisitCommand to add the specified {@code Visit}
@@ -45,6 +57,8 @@ public class AddVisitCommand extends Command {
         this.personIndex = personIndex;
         this.locationIndex = locationIndex;
         this.date = date;
+        this.person = null;
+        this.location = null;
     }
 
     @Override
@@ -59,7 +73,37 @@ public class AddVisitCommand extends Command {
         }
 
         model.addVisit(visit);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, visit));
+        String message = MESSAGE_SUCCESS;
+//        GetIllegalVisitWarning(person, location); // Wait till this is implemented :)))
+        return new CommandResult(String.format(message, visit));
+    }
+
+    /**
+     * Checks if the person made an illegal visit and returns the appropriate warning.
+     * An illegal visit occurs when a {@code Person} visits an {@code Address} that is
+     * not his own, and he is either infected, in quarantine or both.
+     *
+     * @param person The person to check.
+     * @param location The location the person visited.
+     * @return A warning string based on whether the visit is illegal or not.
+     */
+    private static String GetIllegalVisitWarning(Person person, Location location) {
+        boolean isPersonInfected = person.getInfectionStatus().getStatusAsBoolean();
+        boolean isPersonQuarantined = person.getQuarantineStatus().getStatusAsBoolean();
+
+        if (person.getAddress().equals(location.getAddress())) {    // Person stayed home
+            return MESSAGE_NO_WARNING;
+        }
+
+        if (isPersonInfected && isPersonQuarantined) {  // Person is infected and in quarantine
+            return MESSAGE_INFECTED_AND_QUARANTINED_MADE_VISIT;
+        } else if (isPersonInfected) {  // Person is infected only
+            return MESSAGE_INFECTED_MADE_VISIT;
+        } else if (isPersonQuarantined) {   // Person is in quarantine only
+            return MESSAGE_QUARANTINED_MADE_VISIT;
+        } else {    // Person is not infected or in quarantine
+            return MESSAGE_NO_WARNING;
+        }
     }
 
     @Override
