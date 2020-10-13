@@ -11,6 +11,7 @@ import seedu.address.model.location.Location;
 import seedu.address.model.location.ReadOnlyLocationBook;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPersonBook;
+import seedu.address.model.visit.ReadOnlyVisitBook;
 import seedu.address.model.visit.Visit;
 
 /**
@@ -62,8 +63,20 @@ public interface Logic {
 
     //=========== Visit Book ========================================================================================
 
+    /**
+     * Returns the VisitBook.
+     *
+     * @see seedu.address.model.Model#getVisitBook()
+     */
+    ReadOnlyVisitBook getVisitBook();
+
     /** Returns an unmodifiable view of the filtered list of visits */
     ObservableList<Visit> getFilteredVisitList();
+
+    /**
+     * Returns the user prefs' visit book file path.
+     */
+    Path getVisitBookFilePath();
 
     //=========== GUI Settings ======================================================================================
 

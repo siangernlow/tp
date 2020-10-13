@@ -282,19 +282,19 @@ public class ModelManager implements Model {
     }
 
     //=========== InfoHandler ====================================================================================
-
+    @Override
     public InfoHandler getInfoHandler() {
         return infoHandler;
     }
 
     @Override
-    public Index getPersonIdFromIndex(Index index) {
-        return filteredPersons.get(index.getZeroBased()).getId();
+    public Person getPersonFromIndex(Index index) {
+        return filteredPersons.get(index.getZeroBased());
     }
 
     @Override
-    public Index getLocationIdFromIndex(Index index) {
-        return filteredLocations.get(index.getZeroBased()).getId();
+    public Location getLocationFromIndex(Index index) {
+        return filteredLocations.get(index.getZeroBased());
     }
 
     @Override
