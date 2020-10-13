@@ -43,43 +43,55 @@ public class ListCommandTest {
 
     @Test
     public void execute_personsListIsNotFiltered_showsSameList() {
+        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_PEOPLE, false, false,
+                CommandResult.SWITCH_TO_VIEW_PEOPLE);
         assertCommandSuccess(new ListCommand(PEOPLE_LIST),
-                model, ListCommand.MESSAGE_SUCCESS_ALL_PEOPLE, expectedModel);
+                model, expectedCommandResult, expectedModel);
     }
 
     @Test
     public void execute_personsListIsFiltered_showsEverything() {
         showPersonAtIndex(model, INDEX_FIRST);
+        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_PEOPLE, false, false,
+                CommandResult.SWITCH_TO_VIEW_PEOPLE);
         assertCommandSuccess(new ListCommand(PEOPLE_LIST),
-                model, ListCommand.MESSAGE_SUCCESS_ALL_PEOPLE, expectedModel);
+                model, expectedCommandResult, expectedModel);
     }
 
     @Test
     public void execute_locationsList_showsSameList() {
+        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_LOCATIONS, false, false,
+                CommandResult.SWITCH_TO_VIEW_LOCATIONS);
         assertCommandSuccess(new ListCommand(LOCATIONS_LIST),
-                model, ListCommand.MESSAGE_SUCCESS_ALL_LOCATIONS, expectedModel);
+                model, expectedCommandResult, expectedModel);
     }
 
     @Test
     public void execute_visitsList_showsSameList() {
+        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_VISITS, false, false,
+                CommandResult.SWITCH_TO_VIEW_VISITS);
         assertCommandSuccess(new ListCommand(VISITS_LIST),
-                model, ListCommand.MESSAGE_SUCCESS_ALL_VISITS, expectedModel);
+                model, expectedCommandResult, expectedModel);
     }
 
     @Test
     public void execute_infectedList_showsSameList() {
         Model expectedModelInfected = expectedModel;
         expectedModelInfected.updateFilteredPersonList(ModelPredicate.PREDICATE_SHOW_ALL_INFECTED);
+        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_INFECTED, false, false,
+                CommandResult.SWITCH_TO_VIEW_PEOPLE);
         assertCommandSuccess(new ListCommand(INFECTED_LIST),
-                model, ListCommand.MESSAGE_SUCCESS_ALL_INFECTED, expectedModelInfected);
+                model, expectedCommandResult, expectedModelInfected);
     }
 
     @Test
     public void execute_quarantinedList_showsSameList() {
         Model expectedModelQuarantined = expectedModel;
         expectedModelQuarantined.updateFilteredPersonList(ModelPredicate.PREDICATE_SHOW_ALL_QUARANTINED);
+        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_QUARANTINED,
+                false, false, CommandResult.SWITCH_TO_VIEW_PEOPLE);
         assertCommandSuccess(new ListCommand(QUARANTINED_LIST),
-                model, ListCommand.MESSAGE_SUCCESS_ALL_QUARANTINED, expectedModelQuarantined);
+                model, expectedCommandResult, expectedModelQuarantined);
     }
 
     @Test
@@ -101,8 +113,10 @@ public class ListCommandTest {
         Model expectedModelHighRiskLocations = expectedModel;
         expectedModelHighRiskLocations.updateFilteredLocationList(
                 ModelPredicate.getPredicateForHighRiskLocations(expectedModelHighRiskLocations));
+        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_HIGH_RISK_LOCATIONS,
+                false, false, CommandResult.SWITCH_TO_VIEW_LOCATIONS);
         assertCommandSuccess(new ListCommand(HIGH_RISK_LOCATIONS_LIST),
-                model, ListCommand.MESSAGE_SUCCESS_HIGH_RISK_LOCATIONS, expectedModelHighRiskLocations);
+                model, expectedCommandResult, expectedModelHighRiskLocations);
     }
 
     @Test

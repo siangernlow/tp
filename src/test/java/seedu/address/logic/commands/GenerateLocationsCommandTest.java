@@ -105,7 +105,9 @@ public class GenerateLocationsCommandTest {
         expectedModelForGenerate.updateFilteredLocationList(locationPredicate);
         Index index = Index.fromOneBased(4);
         GenerateLocationsCommand command = new GenerateLocationsCommand(index);
-        assertCommandSuccess(command, model, expectedMessage, expectedModelForGenerate);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
+                CommandResult.SWITCH_TO_VIEW_LOCATIONS);
+        assertCommandSuccess(command, model, expectedCommandResult, expectedModelForGenerate);
     }
 
     @Test

@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.CommandResult;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -34,8 +35,10 @@ public class DeleteLocationCommandTest {
         ModelManager expectedModel = new ModelManager(model.getPersonBook(), model.getLocationBook(),
                 model.getVisitBook(), new UserPrefs());
         expectedModel.deleteLocation(locationToDelete);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
+                CommandResult.SWITCH_TO_VIEW_LOCATIONS);
 
-        assertCommandSuccess(deleteLocationCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(deleteLocationCommand, model, expectedCommandResult, expectedModel);
     }
 
     @Test
@@ -59,8 +62,10 @@ public class DeleteLocationCommandTest {
                 model.getVisitBook(), new UserPrefs());
         expectedModel.deleteLocation(locationToDelete);
         showNoLocation(expectedModel);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
+                CommandResult.SWITCH_TO_VIEW_LOCATIONS);
 
-        assertCommandSuccess(deleteLocationCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(deleteLocationCommand, model, expectedCommandResult, expectedModel);
     }
 
     @Test
