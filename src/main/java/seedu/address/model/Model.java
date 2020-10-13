@@ -209,7 +209,7 @@ public interface Model {
      */
     InfoHandler getInfoHandler();
 
-     /**
+    /**
      * Gets the given person using the index.
      * {@code index} must already exist in the person book.
      */

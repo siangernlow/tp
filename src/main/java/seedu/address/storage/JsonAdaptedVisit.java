@@ -11,19 +11,19 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.location.Location;
-import seedu.address.model.person.Person;
-import seedu.address.model.visit.Visit;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.core.index.exceptions.InvalidIndexException;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.location.Location;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.InfectionStatus;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.QuarantineStatus;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.visit.Visit;
 
 /**
  * Jackson-friendly version of {@link Visit}.
