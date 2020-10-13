@@ -201,12 +201,12 @@ Format: `list l/quarantined`
 
 * Displays the list of all people currently in quarantine.
 
-#### Listing all people 
+#### Listing all locations
 Format: `list l/locations`
 
 * Displays the list of all locations currently stored in VirusTracker.
 
-#### Listing all people 
+#### Listing all visits
 Format: `list l/visits`
 
 * Displays the list of all visits currently stored in VirusTracker.
