@@ -201,6 +201,16 @@ Format: `list l/quarantined`
 
 * Displays the list of all people currently in quarantine.
 
+#### Listing all people 
+Format: `list l/locations`
+
+* Displays the list of all locations currently stored in VirusTracker.
+
+#### Listing all people 
+Format: `list l/visits`
+
+* Displays the list of all visits currently stored in VirusTracker.
+
 #### Listing all locations visited by a person: `listAllLocationsVisited` `[coming in v1.2]`
 
 Shows a list of locations visited by a specified person in the past 2 weeks. 
