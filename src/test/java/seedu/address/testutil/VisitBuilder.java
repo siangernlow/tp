@@ -15,7 +15,7 @@ import seedu.address.model.visit.Visit;
  * A utility class to help with building Location objects.
  */
 public class VisitBuilder {
-    public static final String DEFAULT_DATE_STRING = "2020-02-01";
+    public static final String DEFAULT_DATE_STRING = "2020-09-12";
 
     public static final Person DEFAULT_PERSON = BENSON;
     public static final Location DEFAULT_LOCATION = BENSON_LOCATION;
