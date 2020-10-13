@@ -1,7 +1,16 @@
 {
   "visits": [ {
-    "personId": 1,
-    "locationId": 0 ,
-    "date": "2020-09-09"
+    "namePerson" : "",
+    "phone" : "9482427",
+    "email" : "lydia@example.com",
+    "addressPerson" : "little tokyo",
+    "quarantineStatus": "false",
+    "infectionStatus" : "true",
+    "idPerson" : "6",
+    "tagged" : [ ],
+    "nameLocation" : "Fiona Kunz House",
+    "addressLocation" : "little tokyo",
+    "idLocation": "10",
+    "dateOfVisit" : "2020-09-13"
   } ]
 }

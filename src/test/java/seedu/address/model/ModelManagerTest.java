@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.TypicalLocations.ALICE_LOCATION;
+import static seedu.address.testutil.TypicalLocations.BENSON_LOCATION;
 import static seedu.address.testutil.TypicalLocations.CARL_LOCATION;
 import static seedu.address.testutil.TypicalLocations.DANIEL_LOCATION;
 import static seedu.address.testutil.TypicalPersons.ALICE;
@@ -156,13 +158,15 @@ public class ModelManagerTest {
 
     @Test
     public void hasVisit_visitNotInVisitBook_returnsFalse() {
-        Visit sampleA = new VisitBuilder().withPersonId("1").withLocationId("2").withDate("2020-09-09").build();
+        Visit sampleA = new VisitBuilder().withPerson(ALICE)
+                .withLocation(ALICE_LOCATION).withDate("2020-09-09").build();
         assertFalse(modelManager.hasVisit(sampleA));
     }
 
     @Test
     public void hasVisit_visitInAddressBook_returnsTrue() {
-        Visit sampleA = new VisitBuilder().withPersonId("1").withLocationId("2").withDate("2020-02-09").build();
+        Visit sampleA = new VisitBuilder().withPerson(ALICE)
+                .withLocation(ALICE_LOCATION).withDate("2020-02-09").build();
         modelManager.addVisit(sampleA);
         assertTrue(modelManager.hasVisit(sampleA));
     }
@@ -175,7 +179,8 @@ public class ModelManagerTest {
                 .build();
         LocationBook differentLocationBook = new LocationBook();
 
-        Visit sampleB = new VisitBuilder().withPersonId("1").withLocationId("2").withDate("2020-02-09").build();
+        Visit sampleB = new VisitBuilder().withPerson(ALICE)
+                .withLocation(BENSON_LOCATION).withDate("2020-02-09").build();
         VisitBook visitBook = new VisitBookBuilder().withVisit(sampleB).build();
         VisitBook differentVisitBook = new VisitBook();
         UserPrefs userPrefs = new UserPrefs();

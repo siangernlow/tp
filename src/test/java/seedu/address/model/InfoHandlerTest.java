@@ -6,9 +6,8 @@ import static seedu.address.model.InfoHandler.getLocationIdsFromInfectedVisitLis
 import static seedu.address.model.InfoHandler.getNumberOfHighRiskLocations;
 import static seedu.address.model.InfoHandler.sortByValues;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIFTH;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FOURTH;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD;
 import static seedu.address.testutil.TypicalLocations.getTypicalLocations;
 import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 
@@ -146,7 +145,7 @@ public class InfoHandlerTest {
         List<Visit> visits = TypicalVisits.getVisitsForTest();
         HashMap<Index, Integer> locations = new HashMap<>();
         for (Visit visit : visits) {
-            Index id = visit.getLocationId();
+            Index id = visit.getLocation().getId();
             if (locations.containsKey(id)) {
                 locations.put(id, locations.get(id) + 1);
             } else {
@@ -155,10 +154,9 @@ public class InfoHandlerTest {
         }
         HashMap<Index, Integer> actualHashMap = sortByValues(locations);
         HashMap<Index, Integer> expectedHashMap = new LinkedHashMap<>();
-        expectedHashMap.put(INDEX_SECOND, 4);
-        expectedHashMap.put(INDEX_THIRD, 3);
-        expectedHashMap.put(INDEX_FIFTH, 2);
-        expectedHashMap.put(INDEX_FOURTH, 1);
+        expectedHashMap.put(INDEX_FIRST, 3);
+        expectedHashMap.put(INDEX_SECOND, 1);
+        expectedHashMap.put(INDEX_FIFTH, 1);
         assertEquals(expectedHashMap, actualHashMap);
     }
 

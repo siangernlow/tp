@@ -518,13 +518,12 @@ Use case ends.
 * 2b. There are no quarantined people.
     * 2b1. Go to 2a.
     
-**UC09 - View locations that infected people have been to**
+**UC09 - View locations that an infected person has been to**
 
 **MSS**
-
-1. User requests to list locations that infected people have been to.
-2. System finds the infected person.
-2. System shows a list of locations that infected people have been to.  
+ 
+1. User requests to list locations that an infected person has been to.
+2. System shows a list of locations that the infected person has been to.  
 
   Use case ends.
 
@@ -532,15 +531,19 @@ Use case ends.
 
 * 3a. The list is empty.
 
-    Use case ends.    
-
-* 2a. System is unable to find the infected person specified by the user.     
-    * 2a1. System requests for correct details of the person.
-    * 2a2. User enters the new details.  
+    Use case ends.
     
-  Steps 2a1 - 2a2 are repeated until the person specified by the user exists.  
-  
-  Use case resumes from step 3.
+* 2b. The person is not infected.
+
+    Use case ends. 
+    
+* 2c. The system detects invalid user input.
+    * 2c1. The system prompts the user to enter valid input.
+    * 2c2. User enters new input.
+    Steps 2c1-2c2 are repeated until the input entered is correct.  
+        Use case resumes at step 2.
+        
+        Use case ends.       
 
 **UC10 - View people in contact with an infected person**
 
@@ -558,13 +561,17 @@ Use case ends.
 
     Use case ends.   
     
-* 2a. System is unable to find the infected person specified by the user.     
-    * 2a1. System requests for correct details of the person.
-    * 2a2. User enters the new details.  
+* 2b. The person is not infected.
+
+    Use case ends. 
     
-  Steps 2a1 - 2a2 are repeated until the person specified by the user exists.  
-  
-  Use case resumes from step 3.
+* 2c. The system detects invalid user input.
+    * 2c1. The system prompts the user to enter valid input.
+    * 2c2. User enters new input.
+    Steps 2c1-2c2 are repeated until the input entered is correct.  
+        Use case resumes at step 2.
+        
+        Use case ends.  
     
 **UC11 - View high-risk locations**
 
