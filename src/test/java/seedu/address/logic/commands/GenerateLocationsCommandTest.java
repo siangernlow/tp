@@ -7,6 +7,8 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAY
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.GenerateLocationsCommand.MESSAGE_PERSON_HAS_NO_VISITS;
 import static seedu.address.logic.commands.GenerateLocationsCommand.MESSAGE_PERSON_IS_NOT_INFECTED;
+import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_INFECTED;
+import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_QUARANTINED;
 import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
@@ -96,7 +98,7 @@ public class GenerateLocationsCommandTest {
     }
 
     @Test
-    public void execute_validInput_success() {
+    public void execute_validInputFromViewingAllPeople_success() {
         String expectedMessage = "Generated locations for: Daniel Meier";
         Model expectedModelForGenerate = expectedModel;
         Predicate<Location> locationPredicate = location -> location.getId().getOneBased() == 6;
@@ -104,5 +106,33 @@ public class GenerateLocationsCommandTest {
         Index index = Index.fromOneBased(4);
         GenerateLocationsCommand command = new GenerateLocationsCommand(index);
         assertCommandSuccess(command, model, expectedMessage, expectedModelForGenerate);
+    }
+
+    @Test
+    public void execute_validInputFromViewingAllInfected_success() {
+        String expectedMessage = "Generated locations for: Daniel Meier";
+        Model modelForAllInfected = model;
+        modelForAllInfected.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
+        Model expectedModelForGenerate = expectedModel;
+        Predicate<Location> locationPredicate = location -> location.getId().getOneBased() == 6;
+        expectedModelForGenerate.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
+        expectedModelForGenerate.updateFilteredLocationList(locationPredicate);
+        Index index = Index.fromOneBased(1);
+        GenerateLocationsCommand command = new GenerateLocationsCommand(index);
+        assertCommandSuccess(command, modelForAllInfected, expectedMessage, expectedModelForGenerate);
+    }
+
+    @Test
+    public void execute_invalidInputFromViewingAllQuarantined_throwCommandException() {
+        String expectedMessage = MESSAGE_PERSON_IS_NOT_INFECTED;
+        Model modelForAllQuarantined = model;
+        modelForAllQuarantined.updateFilteredPersonList(PREDICATE_SHOW_ALL_QUARANTINED);
+        Index index = Index.fromOneBased(1);
+        GenerateLocationsCommand command = new GenerateLocationsCommand(index);
+        try {
+            command.execute(modelForAllQuarantined);
+        } catch (CommandException e) {
+            assertTrue(e.getMessage().equals(expectedMessage));
+        }
     }
 }

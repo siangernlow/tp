@@ -8,6 +8,8 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.GeneratePeopleCommand.MESSAGE_NO_PEOPLE_FOUND;
 import static seedu.address.logic.commands.GeneratePeopleCommand.MESSAGE_PERSON_HAS_NO_VISITS;
 import static seedu.address.logic.commands.GeneratePeopleCommand.MESSAGE_PERSON_IS_NOT_INFECTED;
+import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_INFECTED;
+import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_QUARANTINED;
 import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
@@ -111,7 +113,7 @@ public class GeneratePeopleCommandTest {
     }
 
     @Test
-    public void execute_validInput_success() {
+    public void execute_validInputFromViewingAllPeople_success() {
         String expectedMessage = "Generated people for: Daniel Meier";
         Model expectedModelForGenerate = expectedModel;
         Predicate<Person> personPredicate = person -> person.getId().getOneBased() == 3;
@@ -119,5 +121,32 @@ public class GeneratePeopleCommandTest {
         Index index = Index.fromOneBased(4);
         GeneratePeopleCommand command = new GeneratePeopleCommand(index);
         assertCommandSuccess(command, model, expectedMessage, expectedModelForGenerate);
+    }
+
+    @Test
+    public void execute_validInputFromViewingAllInfected_success() {
+        String expectedMessage = "Generated people for: Daniel Meier";
+        Model modelForAllInfected = model;
+        modelForAllInfected.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
+        Model expectedModelForGenerate = expectedModel;
+        Predicate<Person> expectedPersonPredicate = person -> person.getId().getOneBased() == 3;
+        expectedModelForGenerate.updateFilteredPersonList(expectedPersonPredicate);
+        Index index = Index.fromOneBased(1);
+        GeneratePeopleCommand command = new GeneratePeopleCommand(index);
+        assertCommandSuccess(command, modelForAllInfected, expectedMessage, expectedModelForGenerate);
+    }
+
+    @Test
+    public void execute_invalidInputFromViewingAllQuarantined_throwCommandException() {
+        String expectedMessage = MESSAGE_PERSON_IS_NOT_INFECTED;
+        Model modelForAllInfected = model;
+        modelForAllInfected.updateFilteredPersonList(PREDICATE_SHOW_ALL_QUARANTINED);
+        Index index = Index.fromOneBased(1);
+        GeneratePeopleCommand command = new GeneratePeopleCommand(index);
+        try {
+            command.execute(modelForAllInfected);
+        } catch (CommandException e) {
+            assertTrue(e.getMessage().equals(expectedMessage));
+        }
     }
 }
