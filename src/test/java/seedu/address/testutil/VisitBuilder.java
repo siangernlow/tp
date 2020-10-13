@@ -18,13 +18,11 @@ public class VisitBuilder {
     public static final Index DEFAULT_LOCATION_INDEX;
     public static final LocalDate DEFAULT_DATE;
 
-//    public static final Index INFECTED_PERSON_INDEX;
     static {
         DEFAULT_PERSON_INDEX = Index.fromOneBased(Integer.parseInt(DEFAULT_PERSON_ID));
         DEFAULT_LOCATION_INDEX = Index.fromOneBased(Integer.parseInt(DEFAULT_LOCATION_ID));
         DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         DEFAULT_DATE = LocalDate.parse(DEFAULT_DATE_STRING, inputFormat);
-//        INFECTED_PERSON_INDEX = Index.fromOneBased(Integer.parseInt())
     }
 
     private Index personId;

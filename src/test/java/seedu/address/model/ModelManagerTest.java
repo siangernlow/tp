@@ -158,13 +158,15 @@ public class ModelManagerTest {
 
     @Test
     public void hasVisit_visitNotInVisitBook_returnsFalse() {
-        Visit sampleA = new VisitBuilder().withPersonId(INDEX_FIRST).withLocationId(INDEX_SECOND).withDate("2020-09-09").build();
+        Visit sampleA = new VisitBuilder().withPersonId(INDEX_FIRST).withLocationId(INDEX_SECOND)
+                .withDate("2020-09-09").build();
         assertFalse(modelManager.hasVisit(sampleA));
     }
 
     @Test
     public void hasVisit_visitInAddressBook_returnsTrue() {
-        Visit sampleA = new VisitBuilder().withPersonId(INDEX_FIRST).withLocationId(INDEX_SECOND).withDate("2020-02-09").build();
+        Visit sampleA = new VisitBuilder().withPersonId(INDEX_FIRST).withLocationId(INDEX_SECOND)
+                .withDate("2020-02-09").build();
         modelManager.addVisit(sampleA);
         assertTrue(modelManager.hasVisit(sampleA));
     }
@@ -177,7 +179,8 @@ public class ModelManagerTest {
                 .build();
         LocationBook differentLocationBook = new LocationBook();
 
-        Visit sampleB = new VisitBuilder().withPersonId(INDEX_FIRST).withLocationId(INDEX_SECOND).withDate("2020-02-09").build();
+        Visit sampleB = new VisitBuilder().withPersonId(INDEX_FIRST).withLocationId(INDEX_SECOND)
+                .withDate("2020-02-09").build();
         VisitBook visitBook = new VisitBookBuilder().withVisit(sampleB).build();
         VisitBook differentVisitBook = new VisitBook();
         UserPrefs userPrefs = new UserPrefs();
