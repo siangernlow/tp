@@ -1,11 +1,31 @@
 package seedu.address.testutil;
 
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIFTH;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FOURTH;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SIXTH;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD;
+import static seedu.address.testutil.TypicalLocations.ALICE_LOCATION;
+import static seedu.address.testutil.TypicalLocations.AMY_LOCATION;
+import static seedu.address.testutil.TypicalLocations.BENSON_LOCATION;
+import static seedu.address.testutil.TypicalLocations.BOB_LOCATION;
+import static seedu.address.testutil.TypicalLocations.CARL_LOCATION;
+import static seedu.address.testutil.TypicalLocations.DANIEL_LOCATION;
+import static seedu.address.testutil.TypicalLocations.ELLE_LOCATION;
+import static seedu.address.testutil.TypicalLocations.FIONA_LOCATION;
+import static seedu.address.testutil.TypicalLocations.GEORGE_LOCATION;
+import static seedu.address.testutil.TypicalLocations.HOON_LOCATION;
+import static seedu.address.testutil.TypicalLocations.IDA_LOCATION;
+import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.AMY;
+import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.BOB;
+import static seedu.address.testutil.TypicalPersons.CARL;
+import static seedu.address.testutil.TypicalPersons.DANIEL;
+import static seedu.address.testutil.TypicalPersons.ELLE;
+import static seedu.address.testutil.TypicalPersons.FIONA;
+import static seedu.address.testutil.TypicalPersons.GEORGE;
+import static seedu.address.testutil.TypicalPersons.HOON;
+import static seedu.address.testutil.TypicalPersons.IDA;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,36 +39,28 @@ import seedu.address.model.visit.VisitBook;
  * A utility class containing a list of {@code Visit} objects to be used in tests.
  */
 public class TypicalVisits {
-    public static final Visit FIRST_VISIT = new VisitBuilder().withPersonId("1")
-            .withLocationId("2").withDate("2020-09-12").build();
-    public static final Visit SECOND_VISIT = new VisitBuilder().withPersonId("2")
-            .withLocationId("3").withDate("2020-09-12").build();
-    public static final Visit THIRD_VISIT = new VisitBuilder().withPersonId("3")
-            .withLocationId("1").withDate("2020-09-12").build();
-    public static final Visit FOURTH_VISIT = new VisitBuilder().withPersonId("1")
-            .withLocationId("4").withDate("2020-09-12").build();
-    public static final Visit FIFTH_VISIT = new VisitBuilder().withPersonId("1")
-            .withLocationId("5").withDate("2020-09-13").build();
-    public static final Visit SIXTH_VISIT = new VisitBuilder().withPersonId("1")
-            .withLocationId("2").withDate("2020-09-13").build();
-    public static final Visit SEVENTH_VISIT = new VisitBuilder().withPersonId("5")
-            .withLocationId("6").withDate("2020-09-13").build();
-    public static final Visit EIGHTH_VISIT = new VisitBuilder().withPersonId("4")
-            .withLocationId("1").withDate("2020-09-13").build();
-
-    // Manually added
-    public static final Visit NINTH_VISIT = new VisitBuilder().withPersonId("6")
-            .withLocationId("2").withDate("2020-09-14").build();
-    public static final Visit TENTH_VISIT = new VisitBuilder().withPersonId("4")
-            .withLocationId("5").withDate("2020-09-14").build();
-    public static final Visit ELEVENTH_VISIT = new VisitBuilder().withPersonId("6")
-            .withLocationId("3").withDate("2020-09-14").build();
-    public static final Visit TWELFTH_VISIT = new VisitBuilder().withPersonId("5")
-            .withLocationId("2").withDate("2020-09-14").build();
-    public static final Visit THIRTEENTH_VISIT = new VisitBuilder().withPersonId("4")
-            .withLocationId("2").withDate("2020-09-14").build();
-    public static final Visit FOURTEENTH_VISIT = new VisitBuilder().withPersonId("5")
-            .withLocationId("3").withDate("2020-09-14").build();
+    public static final Visit FIRST_VISIT = new VisitBuilder().withPerson(BENSON)
+            .withLocation(BENSON_LOCATION).withDate("2020-09-12").build();
+    public static final Visit SECOND_VISIT = new VisitBuilder().withPerson(AMY)
+            .withLocation(AMY_LOCATION).withDate("2020-09-12").build();
+    public static final Visit THIRD_VISIT = new VisitBuilder().withPerson(ALICE)
+            .withLocation(ALICE_LOCATION).withDate("2020-09-12").build();
+    public static final Visit FOURTH_VISIT = new VisitBuilder().withPerson(BOB)
+            .withLocation(BOB_LOCATION).withDate("2020-09-12").build();
+    public static final Visit FIFTH_VISIT = new VisitBuilder().withPerson(CARL)
+            .withLocation(CARL_LOCATION).withDate("2020-09-13").build();
+    public static final Visit SIXTH_VISIT = new VisitBuilder().withPerson(DANIEL)
+            .withLocation(DANIEL_LOCATION).withDate("2020-09-13").build();
+    public static final Visit SEVENTH_VISIT = new VisitBuilder().withPerson(ELLE)
+            .withLocation(ELLE_LOCATION).withDate("2020-09-13").build();
+    public static final Visit EIGHTH_VISIT = new VisitBuilder().withPerson(FIONA)
+            .withLocation(FIONA_LOCATION).withDate("2020-09-13").build();
+    public static final Visit NINTH_VISIT = new VisitBuilder().withPerson(GEORGE)
+            .withLocation(GEORGE_LOCATION).withDate("2020-09-14").build();
+    public static final Visit TENTH_VISIT = new VisitBuilder().withPerson(HOON)
+            .withLocation(HOON_LOCATION).withDate("2020-09-14").build();
+    public static final Visit ELEVENTH_VISIT = new VisitBuilder().withPerson(IDA)
+            .withLocation(IDA_LOCATION).withDate("2020-09-14").build();
 
     private TypicalVisits() {} // prevents instantiation
 
@@ -101,15 +113,10 @@ public class TypicalVisits {
                 FIFTH_VISIT, SIXTH_VISIT, SEVENTH_VISIT, EIGHTH_VISIT));
     }
 
-    public static List<Index> getLocationIdsOfTypicalVisits() {
-        return new ArrayList<>(Arrays.asList(INDEX_SECOND, INDEX_THIRD, INDEX_FIRST, INDEX_FOURTH,
-                INDEX_FIFTH, INDEX_SECOND, INDEX_SIXTH, INDEX_FIRST));
-    }
-
     public static List<Visit> getAllVisits() {
         return new ArrayList<>(Arrays.asList(FIRST_VISIT, SECOND_VISIT, THIRD_VISIT, FOURTH_VISIT,
                 FIFTH_VISIT, SIXTH_VISIT, SEVENTH_VISIT, EIGHTH_VISIT, NINTH_VISIT, TENTH_VISIT,
-                ELEVENTH_VISIT, TWELFTH_VISIT, THIRTEENTH_VISIT, FOURTEENTH_VISIT));
+                ELEVENTH_VISIT));
     }
 
     /**
@@ -118,7 +125,7 @@ public class TypicalVisits {
      */
     public static List<Visit> getVisitsForTest() {
         return new ArrayList<>(Arrays.asList(FIRST_VISIT, SECOND_VISIT, FOURTH_VISIT, FIFTH_VISIT,
-                SIXTH_VISIT, THIRTEENTH_VISIT, NINTH_VISIT, TENTH_VISIT, ELEVENTH_VISIT, FOURTEENTH_VISIT));
+                SIXTH_VISIT, SEVENTH_VISIT, NINTH_VISIT, TENTH_VISIT, ELEVENTH_VISIT, EIGHTH_VISIT));
     }
 
     /**
@@ -137,7 +144,7 @@ public class TypicalVisits {
         // FIRST_VISIT ,SECOND_VISIT and THIRD_VISIT are non-infected Visits. The remaining Visits are
         // infected Visits.
         return new ArrayList<>(Arrays.asList(FIRST_VISIT, SECOND_VISIT, THIRD_VISIT, NINTH_VISIT,
-                TENTH_VISIT, THIRTEENTH_VISIT, FOURTEENTH_VISIT));
+                TENTH_VISIT, FIFTH_VISIT, FOURTH_VISIT));
     }
 
     /**
@@ -146,7 +153,7 @@ public class TypicalVisits {
      */
     public static List<Visit> getMoreThanSixtyPercentInfectedVisits() {
         // FIRST_VISIT and SECOND_VISIT are non-infected Visits. The remaining Visits are infected Visits.
-        return new ArrayList<>(Arrays.asList(FIRST_VISIT, SECOND_VISIT, THIRTEENTH_VISIT, NINTH_VISIT,
-                TENTH_VISIT, ELEVENTH_VISIT, TWELFTH_VISIT, FOURTEENTH_VISIT));
+        return new ArrayList<>(Arrays.asList(FIRST_VISIT, SECOND_VISIT, SIXTH_VISIT, NINTH_VISIT,
+                TENTH_VISIT, ELEVENTH_VISIT, THIRD_VISIT, EIGHTH_VISIT));
     }
 }

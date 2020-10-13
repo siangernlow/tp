@@ -146,7 +146,7 @@ public class InfoHandlerTest {
         List<Visit> visits = TypicalVisits.getVisitsForTest();
         HashMap<Index, Integer> locations = new HashMap<>();
         for (Visit visit : visits) {
-            Index id = visit.getLocationId();
+            Index id = visit.getLocation().getId();
             if (locations.containsKey(id)) {
                 locations.put(id, locations.get(id) + 1);
             } else {

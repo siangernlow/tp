@@ -30,7 +30,7 @@ public class ModelPredicate {
 
     /** {@code Predicate} for filtering out the infected visits from all visits */
     public static Predicate<Visit> getPredicateForInfectedVisits(HashSet<Index> infectedIds) {
-        return visit -> infectedIds.contains(visit.getPersonId());
+        return visit -> infectedIds.contains(visit.getPerson().getId());
     }
 
     /** {@code Predicate} for filtering high risk locations */

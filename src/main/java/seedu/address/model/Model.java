@@ -204,13 +204,20 @@ public interface Model {
     void updateFilteredVisitList(Predicate<Visit> predicate);
 
     //=========== Info Handler ======================================================================================
-
     /**
      * @return the {@code InfoHandler} associated with the model.
      */
     InfoHandler getInfoHandler();
 
-    Index getPersonIdFromIndex(Index index);
+     /**
+     * Gets the given person using the index.
+     * {@code index} must already exist in the person book.
+     */
+    Person getPersonFromIndex(Index index);
 
-    Index getLocationIdFromIndex(Index index);
+    /**
+     * Gets the given location using the index.
+     * {@code index} must already exist in the location book.
+     */
+    Location getLocationFromIndex(Index index);
 }
