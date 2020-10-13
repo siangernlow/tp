@@ -47,7 +47,7 @@ public class GenerateLocationsCommand extends Command {
         if (visitsByPerson.getVisitList().isEmpty()) {
             throw new CommandException(MESSAGE_PERSON_HAS_NO_VISITS);
         }
-        List<Integer> locationIds = model.getInfoHandler().generateLocationIdsByVisitBook(visitsByPerson);
+        List<Index> locationIds = model.getInfoHandler().generateLocationIdsByVisitBook(visitsByPerson);
         model.updateFilteredLocationList(ModelPredicate.getPredicateShowLocationsById(locationIds));
         return new CommandResult(
                 "Generated locations for: " + model.getPersonBook()
