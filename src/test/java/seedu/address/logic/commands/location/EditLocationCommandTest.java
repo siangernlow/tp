@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.location.EditLocationCommand.EditLocationDescriptor;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -48,8 +49,10 @@ class EditLocationCommandTest {
         Model expectedModel = new ModelManager(new PersonBook(model.getPersonBook()),
                 new LocationBook(model.getLocationBook()), new VisitBook(model.getVisitBook()), new UserPrefs());
         expectedModel.setLocation(model.getFilteredLocationList().get(0), editedLocation);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
+                CommandResult.SWITCH_TO_VIEW_LOCATIONS);
 
-        assertCommandSuccess(editLocationCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(editLocationCommand, model, expectedCommandResult, expectedModel);
     }
 
     @Test
@@ -68,8 +71,10 @@ class EditLocationCommandTest {
         Model expectedModel = new ModelManager(new PersonBook(model.getPersonBook()),
                 new LocationBook(model.getLocationBook()), new VisitBook(model.getVisitBook()), new UserPrefs());
         expectedModel.setLocation(lastLocation, editedLocation);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
+                CommandResult.SWITCH_TO_VIEW_LOCATIONS);
 
-        assertCommandSuccess(editLocationCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(editLocationCommand, model, expectedCommandResult, expectedModel);
     }
 
     @Test
@@ -82,8 +87,10 @@ class EditLocationCommandTest {
 
         Model expectedModel = new ModelManager(new PersonBook(model.getPersonBook()),
                 new LocationBook(model.getLocationBook()), new VisitBook(model.getVisitBook()), new UserPrefs());
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
+                CommandResult.SWITCH_TO_VIEW_LOCATIONS);
 
-        assertCommandSuccess(editLocationCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(editLocationCommand, model, expectedCommandResult, expectedModel);
     }
 
     @Test
@@ -100,8 +107,10 @@ class EditLocationCommandTest {
         Model expectedModel = new ModelManager(new PersonBook(model.getPersonBook()),
                 new LocationBook(model.getLocationBook()), new VisitBook(model.getVisitBook()), new UserPrefs());
         expectedModel.setLocation(model.getFilteredLocationList().get(0), editedLocation);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
+                CommandResult.SWITCH_TO_VIEW_LOCATIONS);
 
-        assertCommandSuccess(editLocationCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(editLocationCommand, model, expectedCommandResult, expectedModel);
     }
 
     @Test
