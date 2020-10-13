@@ -9,6 +9,7 @@ import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.commands.CommandResult;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -35,9 +36,11 @@ public class AddPersonCommandIntegrationTest {
         Model expectedModel = new ModelManager(model.getPersonBook(), model.getLocationBook(),
                 model.getVisitBook(), new UserPrefs());
         expectedModel.addPerson(validPerson);
+        String expectedMessage = String.format(AddPersonCommand.MESSAGE_SUCCESS, validPerson);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
+                CommandResult.SWITCH_TO_VIEW_PEOPLE);
 
-        assertCommandSuccess(new AddPersonCommand(validPerson), model,
-                String.format(AddPersonCommand.MESSAGE_SUCCESS, validPerson), expectedModel);
+        assertCommandSuccess(new AddPersonCommand(validPerson), model, expectedCommandResult, expectedModel);
     }
 
     @Test

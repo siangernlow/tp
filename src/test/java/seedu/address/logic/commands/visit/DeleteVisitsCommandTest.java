@@ -16,6 +16,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.commands.CommandResult;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -54,8 +55,9 @@ public class DeleteVisitsCommandTest {
         expectedModel.deleteVisit(visits.get(3));
 
         String expectedResult = expectedMessage.toString();
-
-        assertCommandSuccess(deleteVisitsCommand, model, expectedResult, expectedModel);
+        CommandResult expectedCommandResult = new CommandResult(expectedResult, false, false,
+                CommandResult.SWITCH_TO_VIEW_VISITS);
+        assertCommandSuccess(deleteVisitsCommand, model, expectedCommandResult, expectedModel);
     }
 
     @Test
@@ -93,7 +95,9 @@ public class DeleteVisitsCommandTest {
 
         showNoVisit(expectedModel);
 
-        assertCommandSuccess(deleteVisitsCommand, model, expectedResult, expectedModel);
+        CommandResult expectedCommandResult = new CommandResult(expectedResult, false, false,
+                CommandResult.SWITCH_TO_VIEW_VISITS);
+        assertCommandSuccess(deleteVisitsCommand, model, expectedCommandResult, expectedModel);
     }
 
     @Test
