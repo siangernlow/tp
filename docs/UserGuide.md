@@ -171,13 +171,14 @@ VirusTracker data saves in the hard disk automatically after any command that ch
 
 ### Adding a visit: 
 
-Adds a visit by the personId, locationId and date of visit.
+Adds a visit by the personIndex, locationIndex and date of visit.
 
-Format: `addVisit PersonId LocationId d/DATE`
+Format: `addVisit INDEX INDEX d/DATE`
 
 * The visit is added to the visits list to track close contacts, especially for the infected people.
-* PersonId refers to the id stored in the people list.
-* LocationId refers to the id stored in the location list that the person with the personId visits.
+* First index refers to the Index shown in the people list.
+* Second index refers to the Index shown in the location list.
+* Index should be the positive integers within the range of its shown list, otherwise exceptions would be thrown.
 * Date refers to the particular date the person has visited the location.
 * Date format should follow "yyyy-MM-dd", otherwise exceptions would be thrown.
 
