@@ -171,23 +171,33 @@ VirusTracker data saves in the hard disk automatically after any command that ch
 
 ### Adding a visit: 
 
-Adds a visit by the personId, location of visit and date of visit
+Adds a visit by the personId, locationId and date of visit.
 
-Format: `add personId location date`
+Format: `addVisit PersonId LocationId d/DATE`
 
-* The visit is added to the visits list to track close contacts, especially for the infected people
-* PersonId refers to the id stored in the people list which is available before using this app
-* location refers to the particular location the person with the personId visits
-* date refers to the particular date the person has visited the location
+* The visit is added to the visits list to track close contacts, especially for the infected people.
+* PersonId refers to the id stored in the people list.
+* LocationId refers to the id stored in the location list that the person with the personId visits.
+* Date refers to the particular date the person has visited the location.
+* Date format should follow "yyyy-MM-dd", otherwise exceptions would be thrown.
+
+Examples:
+* `addVisit 1 1 d/2020-09-12`
+* `addVisit 2 3 d/2020-09-10`
 
 ### Deleting visits by date: 
 
-Deletes all visits before the date
+Deletes all visits before and including the date.
 
-Format: `delete date`
+Format: `deleteVisits d/DATE`
 
-* Date corresponds to the dates that exist in the visits list, otherwise it will be invalid
-* All the visits before and including the date will be removed from the visits list
+* Date format should follow "yyyy-MM-dd", otherwise exceptions would be thrown.
+* Date corresponds to the dates that exist in the visits list, otherwise it will be invalid.
+* All the visits before and including the date will be removed from the visits list.
+
+Examples:
+* `deleteVisits d/2020-09-12`
+* `deleteVisits d/2020-09-10`
 
 ### Adding a location: 'addLocation'
 
