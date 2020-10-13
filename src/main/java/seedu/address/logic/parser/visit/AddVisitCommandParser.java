@@ -15,7 +15,6 @@ import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.logic.parser.exceptions.WrongDateFormatException;
 
 /**
  * Parses input arguments and creates a new AddVisitCommand object
@@ -27,7 +26,7 @@ public class AddVisitCommandParser implements Parser<AddVisitCommand> {
      * and returns an AddCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public AddVisitCommand parse(String args) throws ParseException, WrongDateFormatException {
+    public AddVisitCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_DATE);
 
@@ -48,11 +47,11 @@ public class AddVisitCommandParser implements Parser<AddVisitCommand> {
         }
 
         LocalDate date;
+
         try {
             date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
         } catch (ParseException pe) {
-            throw new WrongDateFormatException(String.format(MESSAGE_INVALID_DATE_FORMAT,
-                    AddVisitCommand.MESSAGE_USAGE), pe);
+            throw new ParseException(String.format(MESSAGE_INVALID_DATE_FORMAT, AddVisitCommand.MESSAGE_USAGE), pe);
         }
 
         return new AddVisitCommand(personIndex, locationIndex, date);

@@ -28,6 +28,7 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_DATE_FORMAT = "Wrong input date format";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -109,7 +110,6 @@ public class ParserUtil {
      * @throws ParseException if the given {@code date} is invalid.
      */
     public static LocalDate parseDate(String date) throws ParseException {
-
         // parse exception to be implemented in later stage
         requireNonNull(date);
         String trimmedDate = date.trim();
@@ -118,7 +118,7 @@ public class ParserUtil {
         try {
             parsedDate = LocalDate.parse(trimmedDate, inputFormat);
         } catch (DateTimeParseException e) {
-            throw new ParseException("Wrong input date format");
+            throw new ParseException(MESSAGE_INVALID_DATE_FORMAT);
         }
         return parsedDate;
     }

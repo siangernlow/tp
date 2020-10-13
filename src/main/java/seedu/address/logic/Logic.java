@@ -7,7 +7,6 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.logic.parser.exceptions.WrongDateFormatException;
 import seedu.address.model.location.Location;
 import seedu.address.model.location.ReadOnlyLocationBook;
 import seedu.address.model.person.Person;
@@ -25,7 +24,7 @@ public interface Logic {
      * @throws CommandException If an error occurs during command execution.
      * @throws ParseException If an error occurs during parsing.
      */
-    CommandResult execute(String commandText) throws CommandException, ParseException, WrongDateFormatException;
+    CommandResult execute(String commandText) throws CommandException, ParseException;
 
     //=========== Person Book =======================================================================================
 
