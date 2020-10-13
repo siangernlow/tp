@@ -10,7 +10,6 @@ VirusTracker can help you generate various statistics on the pandemic quickly an
 * Quick Start
 * Features
     1. Adding data: `add`
-        1. 
     2. Deleting data: `delete`
     3. Editing data: `edit`
     4. Finding data: `find`
@@ -75,7 +74,7 @@ VirusTracker can help you generate various statistics on the pandemic quickly an
 
 To add data to VirusTracker, there are various `add` commands that could be used.
 
-#### Adding a person: `add`
+#### Adding a person
 
 Adds a person to VirusTracker.
 
@@ -89,18 +88,18 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 q/true`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 q/false t/criminal`
 
-#### Adding a visit: 
+#### Adding a visit
 
 Adds a visit by the personId, location of visit and date of visit
 
-Format: `add personId location date`
+Format: `add personId locationId date`
 
 * The visit is added to the visits list to track close contacts, especially for the infected people
 * PersonId refers to the id stored in the people list which is available before using this app
 * location refers to the particular location the person with the personId visits
 * date refers to the particular date the person has visited the location
 
-#### Adding a location: 'addLocation'
+#### Adding a location
 
 Adds a location to VirusTracker.
 
@@ -118,7 +117,7 @@ Examples:
 ### Deleting data: `delete`
 To delete data from VirusTracker, there are various `delete` commands that could be used.
 
-#### Deleting a person : `delete`
+#### Deleting a person
 
 Deletes the specified person from the people list.
 
@@ -132,7 +131,7 @@ Examples:
 * `list` followed by `delete 2` deletes the 2nd person in the people list.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
-#### Deleting visits by date: 
+#### Deleting visits by date
 
 Deletes all visits before the date
 
@@ -145,7 +144,7 @@ Format: `delete date`
 ### Editing data: `edit`
 To edit data in VirusTracker, there are various `edit` commands that could be used.
 
-#### Editing a person : `edit`
+#### Editing a person
 
 Edits an existing person in VirusTracker.
 
@@ -234,12 +233,17 @@ Format `listAllPersonsInContact PERSONID`
 
 #### Listing high risk locations
 
-Lists the top ten locations with highest risk of Covid infection.
+Lists the locations with high risk of Covid infection.
 
-Format: `list l/highrisk`
+Format: `list l/high-risk-locations`
 
-* Risk is treated as the number of infected people entering the location.
-* The list is presented in order of highest risk to lowest.
+* A location is considered as infected if an infected person visited that location.
+* If number of infected locations are more than 60% of number of total locations, number of high risk locations equals 
+to 40% of number of total locations. Else, number of high risk locations equals to number of infected locations.
+* Let number of high risk locations be `n`. The first `n` number of most infected locations are shown.
+* For example, number of total locations is `10`, number of infected locations is `7`, so the number of high risk 
+locations is `40% * 10 = 4`. The first `4` infected locations from the list of infected locations sorted from highest to 
+lowest risk are displayed.
 * If there are less than ten locations that are infected, all locations will
   be shown.
   

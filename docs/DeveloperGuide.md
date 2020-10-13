@@ -417,7 +417,25 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 2b. There are no infected people.
     * 2b1. Go to 2a.
     
-**UC08 - View locations that infected people have been to**
+**UC08 - View all quarantined people**
+
+**MSS**
+
+1. User requests to list all quarantined people
+2. System shows a list of all quarantined people.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 2b. There are no quarantined people.
+    * 2b1. Go to 2a.
+    
+**UC09 - View locations that infected people have been to**
 
 **MSS**
 
@@ -432,7 +450,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.    
     
-**UC09 - View people in contact with an infected person**
+**UC10 - View people in contact with an infected person**
 
 **MSS**
 
@@ -447,7 +465,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.   
     
-**UC10 - View high-risk locations**
+**UC11 - View high-risk locations**
 
 **MSS**
 
@@ -462,7 +480,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-**UC11 - View summary of data**
+**UC12 - View summary of data**
 
 **MSS**
 
@@ -477,7 +495,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 2a1. System flags that statistic as unavailable.
     * 2a2. For remaining valid statistics, go to 2. 
 
-**UC12 - Update infection status**
+**UC13 - Update infection status**
 
 **MSS**
 
@@ -502,7 +520,7 @@ Use case ends.
     
     Use case ends.  
     
-**UC13 - Update quarantine status**
+**UC14 - Update quarantine status**
 
 **MSS**
 
