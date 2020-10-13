@@ -17,11 +17,14 @@ public class VisitBuilder {
     public static final Index DEFAULT_PERSON_INDEX;
     public static final Index DEFAULT_LOCATION_INDEX;
     public static final LocalDate DEFAULT_DATE;
+
+//    public static final Index INFECTED_PERSON_INDEX;
     static {
         DEFAULT_PERSON_INDEX = Index.fromOneBased(Integer.parseInt(DEFAULT_PERSON_ID));
         DEFAULT_LOCATION_INDEX = Index.fromOneBased(Integer.parseInt(DEFAULT_LOCATION_ID));
         DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         DEFAULT_DATE = LocalDate.parse(DEFAULT_DATE_STRING, inputFormat);
+//        INFECTED_PERSON_INDEX = Index.fromOneBased(Integer.parseInt())
     }
 
     private Index personId;
@@ -49,16 +52,16 @@ public class VisitBuilder {
     /**
      * Sets the {@code personId} of the {@code Visit} that we are building.
      */
-    public VisitBuilder withPersonId(String personId) {
-        this.personId = Index.fromOneBased(Integer.parseInt(personId));
+    public VisitBuilder withPersonId(Index personId) {
+        this.personId = personId;
         return this;
     }
 
     /**
      * Sets the {@code locationId} of the {@code Visit} that we are building.
      */
-    public VisitBuilder withLocationId(String locationId) {
-        this.locationId = Index.fromOneBased(Integer.parseInt(locationId));
+    public VisitBuilder withLocationId(Index locationId) {
+        this.locationId = locationId;
         return this;
     }
 

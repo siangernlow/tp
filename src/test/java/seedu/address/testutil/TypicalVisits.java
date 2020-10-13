@@ -19,36 +19,36 @@ import seedu.address.model.visit.VisitBook;
  * A utility class containing a list of {@code Visit} objects to be used in tests.
  */
 public class TypicalVisits {
-    public static final Visit FIRST_VISIT = new VisitBuilder().withPersonId("1")
-            .withLocationId("2").withDate("2020-09-12").build();
-    public static final Visit SECOND_VISIT = new VisitBuilder().withPersonId("2")
-            .withLocationId("3").withDate("2020-09-12").build();
-    public static final Visit THIRD_VISIT = new VisitBuilder().withPersonId("3")
-            .withLocationId("1").withDate("2020-09-12").build();
-    public static final Visit FOURTH_VISIT = new VisitBuilder().withPersonId("1")
-            .withLocationId("4").withDate("2020-09-12").build();
-    public static final Visit FIFTH_VISIT = new VisitBuilder().withPersonId("1")
-            .withLocationId("5").withDate("2020-09-13").build();
-    public static final Visit SIXTH_VISIT = new VisitBuilder().withPersonId("1")
-            .withLocationId("2").withDate("2020-09-13").build();
-    public static final Visit SEVENTH_VISIT = new VisitBuilder().withPersonId("5")
-            .withLocationId("6").withDate("2020-09-13").build();
-    public static final Visit EIGHTH_VISIT = new VisitBuilder().withPersonId("4")
-            .withLocationId("1").withDate("2020-09-13").build();
+    public static final Visit FIRST_VISIT = new VisitBuilder().withPersonId(INDEX_FIRST)
+            .withLocationId(INDEX_SECOND).withDate("2020-09-12").build();
+    public static final Visit SECOND_VISIT = new VisitBuilder().withPersonId(INDEX_SECOND)
+            .withLocationId(INDEX_THIRD).withDate("2020-09-12").build();
+    public static final Visit THIRD_VISIT = new VisitBuilder().withPersonId(INDEX_THIRD)
+            .withLocationId(INDEX_FIRST).withDate("2020-09-12").build();
+    public static final Visit FOURTH_VISIT = new VisitBuilder().withPersonId(INDEX_FIRST)
+            .withLocationId(INDEX_FOURTH).withDate("2020-09-12").build();
+    public static final Visit FIFTH_VISIT = new VisitBuilder().withPersonId(INDEX_FIRST)
+            .withLocationId(INDEX_FIFTH).withDate("2020-09-13").build();
+    public static final Visit SIXTH_VISIT = new VisitBuilder().withPersonId(INDEX_FIRST)
+            .withLocationId(INDEX_SECOND).withDate("2020-09-13").build();
+    public static final Visit SEVENTH_VISIT = new VisitBuilder().withPersonId(INDEX_FIFTH)
+            .withLocationId(INDEX_SIXTH).withDate("2020-09-13").build();
+    public static final Visit EIGHTH_VISIT = new VisitBuilder().withPersonId(INDEX_FOURTH)
+            .withLocationId(INDEX_FIRST).withDate("2020-09-13").build();
 
     // Manually added
-    public static final Visit NINTH_VISIT = new VisitBuilder().withPersonId("6")
-            .withLocationId("2").withDate("2020-09-14").build();
-    public static final Visit TENTH_VISIT = new VisitBuilder().withPersonId("4")
-            .withLocationId("5").withDate("2020-09-14").build();
-    public static final Visit ELEVENTH_VISIT = new VisitBuilder().withPersonId("6")
-            .withLocationId("3").withDate("2020-09-14").build();
-    public static final Visit TWELFTH_VISIT = new VisitBuilder().withPersonId("5")
-            .withLocationId("2").withDate("2020-09-14").build();
-    public static final Visit THIRTEENTH_VISIT = new VisitBuilder().withPersonId("4")
-            .withLocationId("2").withDate("2020-09-14").build();
-    public static final Visit FOURTEENTH_VISIT = new VisitBuilder().withPersonId("5")
-            .withLocationId("3").withDate("2020-09-14").build();
+    public static final Visit NINTH_VISIT = new VisitBuilder().withPersonId(INDEX_SIXTH)
+            .withLocationId(INDEX_SECOND).withDate("2020-09-14").build();
+    public static final Visit TENTH_VISIT = new VisitBuilder().withPersonId(INDEX_FOURTH)
+            .withLocationId(INDEX_FIFTH).withDate("2020-09-14").build();
+    public static final Visit ELEVENTH_VISIT = new VisitBuilder().withPersonId(INDEX_SIXTH)
+            .withLocationId(INDEX_THIRD).withDate("2020-09-14").build();
+    public static final Visit TWELFTH_VISIT = new VisitBuilder().withPersonId(INDEX_FIFTH)
+            .withLocationId(INDEX_SECOND).withDate("2020-09-14").build();
+    public static final Visit THIRTEENTH_VISIT = new VisitBuilder().withPersonId(INDEX_FOURTH)
+            .withLocationId(INDEX_SECOND).withDate("2020-09-14").build();
+    public static final Visit FOURTEENTH_VISIT = new VisitBuilder().withPersonId(INDEX_FIFTH)
+            .withLocationId(INDEX_THIRD).withDate("2020-09-14").build();
 
     private TypicalVisits() {} // prevents instantiation
 
