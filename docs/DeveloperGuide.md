@@ -415,12 +415,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 2b. There are no infected people.
     * 2b1. Go to 2a.
     
-**UC08 - View locations that infected people have been to**
+**UC08 - View locations that an infected person has been to**
 
 **MSS**
 
-1. User requests to list locations that infected people have been to.
-2. System shows a list of locations that infected people have been to.  
+1. User requests to list locations that an infected person has been to.
+2. System shows a list of locations that the infected person has been to.  
 
   Use case ends.
 
@@ -428,7 +428,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2a. The list is empty.
 
-    Use case ends.    
+    Use case ends.
+    
+* 2b. The person is not infected.
+
+    Use case ends. 
+    
+* 2c. The system detects invalid user input.
+    * 2c1. The system prompts the user to enter valid input.
+    * 2c2. User enters new input.
+    Steps 2c1-2c2 are repeated until the input entered is correct.  
+        Use case resumes at step 2.
+        
+        Use case ends.       
     
 **UC09 - View people in contact with an infected person**
 
@@ -444,6 +456,18 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 2a. The list is empty.
 
     Use case ends.   
+    
+* 2b. The person is not infected.
+
+    Use case ends. 
+    
+* 2c. The system detects invalid user input.
+    * 2c1. The system prompts the user to enter valid input.
+    * 2c2. User enters new input.
+    Steps 2c1-2c2 are repeated until the input entered is correct.  
+        Use case resumes at step 2.
+        
+        Use case ends.  
     
 **UC10 - View high-risk locations**
 
