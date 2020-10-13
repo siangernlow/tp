@@ -408,7 +408,7 @@ Use case ends.
 * *a. At any time, user choose to cancel the update.  
     
     Use case ends.  
-    
+            
 **UC07 - Update quarantine status**
 
 **MSS**
@@ -516,7 +516,7 @@ Use case ends.
 * 2b. There are no quarantined people.
     * 2b1. Go to 2a.
     
-**UC13 - View locations that infected people have been to**
+**UC09 - View locations that infected people have been to**
 
 **MSS**
 
@@ -540,8 +540,7 @@ Use case ends.
   
   Use case resumes from step 3.
 
-    
-**UC14 - View people in contact with an infected person**
+**UC10 - View people in contact with an infected person**
 
 **MSS**
 
@@ -565,7 +564,7 @@ Use case ends.
   
   Use case resumes from step 3.
     
-**UC15 - View high-risk locations**
+**UC11 - View high-risk locations**
 
 **MSS**
 
@@ -580,7 +579,7 @@ Use case ends.
 
     Use case ends.
 
-**UC16 - View daily statistics**
+**UC12 - View daily statistics**
 
 **MSS**
 

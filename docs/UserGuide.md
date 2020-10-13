@@ -100,6 +100,22 @@ Examples:
 * `list l/quarantined`
 * `list l/infected`
 
+### Listing high risk locations
+
+Lists the locations with high risk of Covid infection.
+
+Format: `list l/high-risk-locations`
+
+* Risk is treated as the number of infected people entering the location.
+* The list is presented in order of highest risk to lowest.
+* A location is considered as infected if an infected person visited that location.
+* If number of infected locations are more than 60% of number of total locations, number of high risk locations equals 
+to 40% of number of total locations. Else, number of high risk locations equals to number of infected locations.
+* Let number of high risk locations be `n`. The first `n` number of most infected locations are shown.
+* For example, number of total locations is `10`, number of infected locations is `7`, so the number of high risk 
+locations is `40% * 10 = 4`. The first `4` infected locations from the list of infected locations sorted from highest to 
+lowest risk are displayed.F
+
 ### Adding a person: `add`
 
 Adds a person to VirusTracker.
@@ -245,17 +261,6 @@ Format `listAllPersonsInContact PERSONID`
 * The result given is a filtered list of persons that the person was in contact with in the past 2 weeks.
 * This function can be used to identify people needing to be quarantined after being in contact with an infected person.
 
-### Listing high risk locations
-
-Lists the top ten locations with highest risk of Covid infection.
-
-Format: `list l/highrisk`
-
-* Risk is treated as the number of infected people entering the location.
-* The list is presented in order of highest risk to lowest.
-* If there are less than ten locations that are infected, all locations will
-  be shown.
-  
 ### Listing daily statistics
 
 Shows the general overview of statistics related to Covid-19 for the day.
