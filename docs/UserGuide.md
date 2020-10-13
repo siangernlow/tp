@@ -9,13 +9,19 @@ VirusTracker can help you generate various statistics on the pandemic quickly an
 ## **Table of Contents**
 * Quick Start
 * Features
-    * Adding data: `add`
-    * Clearing the current list: `clear`
-    * Deleting data: `delete`
-    * Editing data: `edit`
-    * Finding data: `find`
-    * Listing data: `list`
     * Viewing help: `help`
+    * Listing data: `list`
+    * Adding person: `add`
+    * Editing person: `edit`
+    * Finding person: `find`
+    * Deleting person: `delete`
+    * Adding location: `addLocation`
+    * Deleting location: `deleteLocation`
+    * Editing location: `editLocation`
+    * Adding visit: `addVisit`
+    * Deleting visit: `deleteVisit`        
+    * Clearing the current list: `clear`
+        
 * Command Summary
 --------------------------------------------------------------------------------------------------------------------
 
@@ -76,6 +82,23 @@ Shows a message explaning how to access the help page.
 
 Format: `help`
 
+### Listing: `list`
+
+Shows a list of one of the following types in VirusTracker.
+* People
+* Locations
+* Visits
+* Infected
+* Quarantined
+
+Format: `list l/KEYWORD`
+
+Examples:
+* `list l/people`
+* `list l/locations`
+* `list l/visits`
+* `list l/quarantined`
+* `list l/infected`
 
 ### Adding a person: `add`
 
@@ -90,19 +113,6 @@ A person can have any number of tags (including 0)
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 q/true`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 q/false t/criminal`
-
-### Listing: `list`
-
-Shows a list of one of the following types in VirusTracker.
-* People
-* Locations
-* Visits
-
-Format: `list l/KEYWORD`
-
-Examples:
-* `list l/people`
-* `list l/locations`
 
 ### Editing a person : `edit`
 
@@ -150,46 +160,10 @@ Format: `delete INDEX`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the people list.
+* `list l/people` followed by `delete 2` deletes the 2nd person in the people list.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
-### Clearing all entries : `clear`
-
-Clears all entries from VirusTracker.
-
-Format: `clear`
-
-### Exiting the program : `exit`
-
-Exits the program.
-
-Format: `exit`
-
-### Saving the data
-
-VirusTracker data saves in the hard disk automatically after any command that changes the data. There is no need to save manually.
-
-### Adding a visit: 
-
-Adds a visit by the personId, location of visit and date of visit
-
-Format: `add personId location date`
-
-* The visit is added to the visits list to track close contacts, especially for the infected people
-* PersonId refers to the id stored in the people list which is available before using this app
-* location refers to the particular location the person with the personId visits
-* date refers to the particular date the person has visited the location
-
-### Deleting visits by date: 
-
-Deletes all visits before the date
-
-Format: `delete date`
-
-* Date corresponds to the dates that exist in the visits list, otherwise it will be invalid
-* All the visits before and including the date will be removed from the visits list
-
-### Adding a location: 'addLocation'
+### Adding a location : `addLocation`
 
 Adds a location to VirusTracker.
 
@@ -203,7 +177,54 @@ Examples:
 * `addLocation n/Vivocity a/John street, block 123, #01-01`
 * `addLocation n/Betsy Crowe's House a/Newgate Prison`
 
-### Listing all locations visited by a person: `listAllLocationsVisited` `[coming in v1.2]`
+### Deleting a location : `deleteLocation`
+
+Deletes a location from VirusTracker.
+
+Format: `deleteLocation INDEX`
+
+* Deletes the person at the specified `INDEX`.
+* The index refers to the index number shown in the displayed location list.
+* The index **must be a positive integer** 1, 2, 3, …​
+
+Examples:
+* `list l/locations` followed by `delete 2` deletes the 2nd location in the location list.
+
+### Editing a location : `editLocation`
+
+Edits an existing location in VirusTracker.
+
+Format: `editLocation INDEX [n/NAME] [a/ADDRESS]`
+
+* Edits the location at the specified `INDEX`. The index refers to the index number shown in the displayed location list. The index **must be a positive integer** 1, 2, 3, …​
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+
+Examples:
+*  `edit 1 n/School of Computing` Edits the name of the 1st location to be `School of Computing`.
+*  `edit 2 n/NTU a/50 Nanyang Ave, 639798` Edits the name and address of the 2nd location to be `NTU` and `50 Nanyang Ave, 639798` respectively.
+
+### Adding a visit : `addVisit` 
+
+Adds a visit by the personId, location of visit and date of visit
+
+Format: `add personId location date`
+
+* The visit is added to the visits list to track close contacts, especially for the infected people
+* PersonId refers to the id stored in the people list which is available before using this app
+* location refers to the particular location the person with the personId visits
+* date refers to the particular date the person has visited the location
+
+### Deleting visits by date: `deleteVisit`
+
+Deletes all visits before the date
+
+Format: `delete date`
+
+* Date corresponds to the dates that exist in the visits list, otherwise it will be invalid
+* All the visits before and including the date will be removed from the visits list
+
+### Listing all locations visited by a person: `listAllLocationsVisited`
 
 Shows a list of locations visited by a specified person in the past 2 weeks. 
 
@@ -213,7 +234,7 @@ Format: `listAllLcationsVisited INDEX`
 * The result given is a filtered list of locations that the person visited in the past 2 weeks.
 * This function can be used to identify locations needing to be disinfected after being visited by an infected person.
 
-### Listing all people in contact with a person: `listAllPersonsInContact` `[coming in v1.2]`
+### Listing all people in contact with a person: `listAllPersonsInContact`
 
 Shows a list of people who have been in the same location as a person in the past 2 weeks. The purpose is to identify people who need to be quarantined for contact with an infectious person.
 
@@ -223,10 +244,6 @@ Format `listAllPersonsInContact PERSONID`
 * Two people are in contact when they visit the same location on the same day.
 * The result given is a filtered list of persons that the person was in contact with in the past 2 weeks.
 * This function can be used to identify people needing to be quarantined after being in contact with an infected person.
-
-### Archiving data files `[coming in v2.0]`
-
-_{explain the feature here}_
 
 ### Listing high risk locations
 
@@ -250,6 +267,25 @@ Format: `list l/stats`
 * The statistics generated by this command provides a brief summary of the pandemic. You may view a specific aspect
 of the stats in more detail by using the other `list` commands above.
 
+### Clearing all entries : `clear`
+
+Clears all entries from VirusTracker.
+
+Format: `clear`
+
+### Exiting the program : `exit`
+
+Exits the program.
+
+Format: `exit`
+
+### Archiving data files `[coming in v2.0]`
+
+_{explain the feature here}_
+
+### Saving the data
+
+VirusTracker data saves in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 --------------------------------------------------------------------------------------------------------------------
 
