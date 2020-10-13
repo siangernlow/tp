@@ -88,9 +88,9 @@ public class ListCommandTest {
                 + "Total number of people: 7" + "\n"
                 + "Total number of locations: 7" + "\n"
                 + "Total number of visits: 8" + "\n"
-                + "Total number of infected people: 4" + "\n"
+                + "Total number of infected people: 5" + "\n"
                 + "Total number of quarantined people: 2" + "\n"
-                + "Percentage of people infected: 57.14%" + "\n"
+                + "Percentage of people infected: 71.43%" + "\n"
                 + "Percentage of people quarantined: 28.57%" + "\n";
         assertCommandSuccess(new ListCommand(STATISTICS_LIST),
                 model, expectedMessage, expectedModel);

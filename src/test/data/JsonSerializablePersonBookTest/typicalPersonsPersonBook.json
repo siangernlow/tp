@@ -15,7 +15,7 @@
     "email" : "johnd@example.com",
     "address" : "311, Clementi Ave 2, #02-25",
     "quarantineStatus": "true",
-    "infectionStatus" : "false",
+    "infectionStatus" : "true",
     "id" : "2",
     "tagged" : [ "owesMoney", "friends" ]
   }, {
