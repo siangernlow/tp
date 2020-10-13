@@ -278,12 +278,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-
 1.  User chooses to add a visit.
 2.  System requests for details of the visit. 
 3.  User enters the required details.
 4.  System adds the new visit.
-5. System displays the updated visits list.
+5.  System displays the updated visits list.
 
     Use case ends.
 
@@ -294,9 +293,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 3a2. User enters new data.  
     Steps 3a1-3a2 are repeated until the data entered are correct.  
     Use case resumes at step 4.
-
-* *a. At any time, User wishes to cancel the command.
-    * a1. System acknowledges and returns user to main page.
          
     Use case ends.
 
@@ -304,8 +300,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User chooses to clear the visit history.
-2. System requests for details.
+1. User chooses to clear all the visits up to and before a date.
+2. System requests for details of the targeted date.
 3. User enters the required information.
 4. System deletes the visits based on the information entered.
 5. System displays the updated visits list.  
@@ -319,9 +315,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 3a2. User enters new data.  
     Steps 3a1-3a2 are repeated until the data entered are correct.  
     Use case resumes at step 4.
-       
-* *a. At any time, User wishes to cancel the command.
-    * a1. System acknowledges and returns user to main page.
          
     Use case ends.
 
