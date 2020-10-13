@@ -228,17 +228,34 @@ Format `listAllPersonsInContact PERSONID`
 
 _{explain the feature here}_
 
+### Listing all infected people
+
+Show a list of all infected people.
+
+Format: `list l/infected`
+
+### Listing all quarantined people
+
+Show a list of all quarantined people.
+
+Format: `list l/quarantined`
+
 ### Listing high risk locations
 
-Lists the top ten locations with highest risk of Covid infection.
+Lists the locations with high risk of Covid infection.
 
-Format: `list l/highrisk`
+Format: `list l/high-risk-locations`
 
 * Risk is treated as the number of infected people entering the location.
 * The list is presented in order of highest risk to lowest.
-* If there are less than ten locations that are infected, all locations will
-  be shown.
-  
+* A location is considered as infected if an infected person visited that location.
+* If number of infected locations are more than 60% of number of total locations, number of high risk locations equals 
+to 40% of number of total locations. Else, number of high risk locations equals to number of infected locations.
+* Let number of high risk locations be `n`. The first `n` number of most infected locations are shown.
+* For example, number of total locations is `10`, number of infected locations is `7`, so the number of high risk 
+locations is `40% * 10 = 4`. The first `4` infected locations from the list of infected locations sorted from highest to 
+lowest risk are displayed.
+
 ### Listing daily statistics
 
 Shows the general overview of statistics related to Covid-19 for the day.

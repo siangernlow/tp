@@ -94,12 +94,8 @@ public class Visit {
         final StringBuilder builder = new StringBuilder();
         builder.append(" Person: ")
                 .append(getPerson().getName())
-                .append(" with Id: ")
-                .append(getPerson().getId())
                 .append(" Location: ")
                 .append(getLocation().getName())
-                .append(" with Id: ")
-                .append(getLocation().getId())
                 .append(" Date: ")
                 .append(getDate().format(DateTimeFormatter.ofPattern("MMM dd yyyy")));
 

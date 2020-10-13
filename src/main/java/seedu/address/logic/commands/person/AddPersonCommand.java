@@ -63,7 +63,8 @@ public class AddPersonCommand extends Command {
         }
 
         model.addPerson(toAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd), false, false,
+                CommandResult.SWITCH_TO_VIEW_PEOPLE);
     }
 
     @Override

@@ -61,7 +61,8 @@ public class AddVisitCommand extends Command {
         }
 
         model.addVisit(visit);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, visit));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, visit), false, false,
+                CommandResult.SWITCH_TO_VIEW_VISITS);
     }
 
     @Override

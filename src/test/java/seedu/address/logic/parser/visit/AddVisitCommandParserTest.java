@@ -27,7 +27,7 @@ public class AddVisitCommandParserTest {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddVisitCommand.MESSAGE_USAGE);
 
         // missing location id and date
-        assertParseFailure(parser, " 1 " , expectedMessage);
+        assertParseFailure(parser, " 1 ", expectedMessage);
 
         // missing date
         assertParseFailure(parser, " 1 " + " 2 ", expectedMessage);
