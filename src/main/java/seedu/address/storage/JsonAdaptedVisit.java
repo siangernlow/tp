@@ -51,15 +51,15 @@ public class JsonAdaptedVisit {
         //to be further implemented
 
         if (person == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "person is missing"));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "person"));
         }
 
         if (location == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "location is missing"));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "location"));
         }
 
         if (dateOfVisit == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "date is missing"));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "date"));
         }
 
         if (dateOfVisit.trim().equals("")) {

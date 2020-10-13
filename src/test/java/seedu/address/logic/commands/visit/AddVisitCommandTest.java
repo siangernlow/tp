@@ -14,7 +14,9 @@ import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_DATE;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_DATE_STRING;
+import static seedu.address.testutil.VisitBuilder.DEFAULT_LOCATION;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_LOCATION_INDEX;
+import static seedu.address.testutil.VisitBuilder.DEFAULT_PERSON;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_PERSON_INDEX;
 
 import java.time.LocalDate;
@@ -151,12 +153,12 @@ public class AddVisitCommandTest {
 
         @Override
         public Person getPersonFromIndex(Index index) {
-            return Index.fromOneBased(1);
+            return visit.getPerson();
         }
 
         @Override
         public Location getLocationFromIndex(Index index) {
-            return Index.fromOneBased(1);
+            return visit.getLocation();
         }
     }
 
@@ -180,12 +182,12 @@ public class AddVisitCommandTest {
 
         @Override
         public Person getPersonFromIndex(Index index) {
-            return model.getPersonFromIndex(index);
+            return DEFAULT_PERSON;
         }
 
         @Override
         public Location getLocationFromIndex(Index index) {
-            return Index.fromOneBased(1);
+            return DEFAULT_LOCATION;
         }
 
         @Override

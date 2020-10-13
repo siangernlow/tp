@@ -1,9 +1,8 @@
 package seedu.address.testutil;
 
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIFTH;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FOURTH;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD;
 import static seedu.address.testutil.TypicalLocations.ALICE_LOCATION;
 import static seedu.address.testutil.TypicalLocations.AMY_LOCATION;
 import static seedu.address.testutil.TypicalLocations.BENSON_LOCATION;
@@ -120,12 +119,11 @@ public class TypicalVisits {
     }
 
     /**
-     * Returns a list of {@code Visit} with 4 visits to location with id 2, 3 visits to location with id 3,
-     * 2 visits to location with id 5 and 1 visit to location with id 4.
+     * Returns a list of {@code Visit} with 3 visits to location with id 1, 1 visit to location with id 5,
+     * 1 visit to location with id 2.
      */
     public static List<Visit> getVisitsForTest() {
-        return new ArrayList<>(Arrays.asList(FIRST_VISIT, SECOND_VISIT, FOURTH_VISIT, FIFTH_VISIT,
-                SIXTH_VISIT, SEVENTH_VISIT, NINTH_VISIT, TENTH_VISIT, ELEVENTH_VISIT, EIGHTH_VISIT));
+        return new ArrayList<>(Arrays.asList(SECOND_VISIT, SECOND_VISIT, FOURTH_VISIT, FIFTH_VISIT, THIRD_VISIT));
     }
 
     /**
@@ -133,7 +131,7 @@ public class TypicalVisits {
      * by {@code getVisitsForTest}
      */
     public static List<Index> getLocationsIdsFromVisitsForTest() {
-        return new ArrayList<>(Arrays.asList(INDEX_SECOND, INDEX_THIRD, INDEX_FIFTH, INDEX_FOURTH));
+        return new ArrayList<>(Arrays.asList(INDEX_FIRST, INDEX_SECOND, INDEX_FIFTH));
     }
 
     /**
@@ -153,7 +151,7 @@ public class TypicalVisits {
      */
     public static List<Visit> getMoreThanSixtyPercentInfectedVisits() {
         // FIRST_VISIT and SECOND_VISIT are non-infected Visits. The remaining Visits are infected Visits.
-        return new ArrayList<>(Arrays.asList(FIRST_VISIT, SECOND_VISIT, SIXTH_VISIT, NINTH_VISIT,
-                TENTH_VISIT, ELEVENTH_VISIT, THIRD_VISIT, EIGHTH_VISIT));
+        return new ArrayList<>(Arrays.asList(FIRST_VISIT, SECOND_VISIT, THIRD_VISIT, NINTH_VISIT,
+                FOURTH_VISIT, ELEVENTH_VISIT, SEVENTH_VISIT, EIGHTH_VISIT));
     }
 }

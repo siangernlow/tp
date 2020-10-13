@@ -28,21 +28,21 @@ public class JsonAdaptedVisitTest {
     @Test
     public void toModelType_invalidPersonId_throwsIllegalValueException() {
         JsonAdaptedVisit visit = new JsonAdaptedVisit(INVALID_PERSON, BENSON_LOCATION, VALID_DATE);
-        String expectedMessage = "Please enter the correct personId";
+        String expectedMessage = "Visit's person field is missing!";
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
     }
 
     @Test
     public void toModelType_invalidLocationId_throwsIllegalValueException() {
         JsonAdaptedVisit visit = new JsonAdaptedVisit(BENSON, INVALID_LOCATION, VALID_DATE);
-        String expectedMessage = "Please enter the correct locationId";
+        String expectedMessage = "Visit's location field is missing!";
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
     }
 
     @Test
     public void toModelType_nullDate_throwsIllegalValueException() {
         JsonAdaptedVisit visit = new JsonAdaptedVisit(BENSON, BENSON_LOCATION, null);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, "date is missing");
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, "date");
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
     }
 }

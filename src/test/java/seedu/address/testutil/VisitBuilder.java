@@ -17,15 +17,13 @@ import seedu.address.model.visit.Visit;
 public class VisitBuilder {
     public static final String DEFAULT_DATE_STRING = "2020-02-01";
 
-    public static final Person DEFAULT_PERSON;
-    public static final Location DEFAULT_LOCATION;
+    public static final Person DEFAULT_PERSON = BENSON;
+    public static final Location DEFAULT_LOCATION = BENSON_LOCATION;
     public static final LocalDate DEFAULT_DATE;
-    public static final Index DEFAULT_PERSON_INDEX = Index.fromOneBased(1);
-    public static final Index DEFAULT_LOCATION_INDEX = Index.fromOneBased(1);
+    public static final Index DEFAULT_PERSON_INDEX = DEFAULT_PERSON.getId();
+    public static final Index DEFAULT_LOCATION_INDEX = DEFAULT_LOCATION.getId();
 
     static {
-        DEFAULT_PERSON = BENSON;
-        DEFAULT_LOCATION = BENSON_LOCATION;
         DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         DEFAULT_DATE = LocalDate.parse(DEFAULT_DATE_STRING, inputFormat);
     }
