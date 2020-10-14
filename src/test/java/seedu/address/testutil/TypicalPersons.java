@@ -46,7 +46,7 @@ public class TypicalPersons {
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25").withQuarantineStatus("true")
             .withEmail("johnd@example.com").withPhone("98765432")
-            .withInfectionStatus("false")
+            .withInfectionStatus("true")
             .withTags("owesMoney", "friends").withId(INDEX_SECOND).build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("wall street").withInfectionStatus("false")
@@ -87,8 +87,12 @@ public class TypicalPersons {
     public static final List<Index> ID_LIST_OF_TYPICAL_PERSONS = Arrays.asList(INDEX_FIRST,
             INDEX_SECOND, INDEX_THIRD, INDEX_FOURTH, INDEX_FIFTH, INDEX_SIXTH, INDEX_SEVENTH);
     public static final HashSet<Index> ID_HASHSET_OF_TYPICAL_PERSONS = new HashSet<>(ID_LIST_OF_TYPICAL_PERSONS);
-
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
+
+    // Persons with specific properties
+    public static final Person INFECTED_PERSON = DANIEL;
+    public static final Person QUARANTINED_PERSON = ALICE;
+    public static final Person INFECTED_AND_QUARANTINED_PERSON = BENSON;
 
     private TypicalPersons() {} // prevents instantiation
 

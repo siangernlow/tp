@@ -23,17 +23,24 @@ public class AddVisitCommand extends Command {
 
     public static final String COMMAND_WORD = "addVisit";
 
-
     public static final String MESSAGE_SUCCESS = "New visit added: %1$s";
-    public static final String MESSAGE_DUPLICATE_VISIT = "This visit already exists in the visit book";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add a new visit to the visit book "
-            + "by the personId of visit, locationId of visit and date of visit "
-            + "Existing visits list will be updated.\n"
-            + "Parameters: PersonId (must be a positive integer within the range of person book) ,"
-            + "LocationId (must be a positive integer within the range of location book),  "
-            + "Date (must be in the format of yyyy-MM-dd "
-            + "Example: " + COMMAND_WORD + " 1 " + " 2 " + PREFIX_DATE + " 2020-09-09 ";
+    public static final String MESSAGE_DUPLICATE_VISIT = "This visit already exists in the address book";
+    public static final String MESSAGE_NO_WARNING = MESSAGE_SUCCESS;
+    public static final String MESSAGE_INFECTED_MADE_VISIT = MESSAGE_SUCCESS + "\n"
+            + "The following person is infected and "
+            + "may have violated the Stay-Home Notice.";
+    public static final String MESSAGE_QUARANTINED_MADE_VISIT = MESSAGE_SUCCESS + "\n"
+            + "The following person is in quarantine and "
+            + "may have violated the Stay-Home Notice.";
+    public static final String MESSAGE_INFECTED_AND_QUARANTINED_MADE_VISIT = MESSAGE_SUCCESS + "\n"
+            + "The following person is infected and "
+            + "is in quarantine. The Stay-Home Notice may have been violated.";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add a new visit to the visits list "
+            + "using a person's index, location's index and date of visit. "
+            + "Updates the existing visits list.\n"
+            + "Indexes are based on the most recently viewed persons and locations list.\n"
+            + "Parameters: PERSON_INDEX LOCATION_INDEX d/DATE\n"
+            + "Example: " + COMMAND_WORD + " 1 " + " 2 " + PREFIX_DATE + " 2020-05-31 ";
 
     private final Index personIndex;
     private final Index locationIndex;
@@ -61,8 +68,37 @@ public class AddVisitCommand extends Command {
         }
 
         model.addVisit(visit);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, visit), false, false,
+        String successMessage = getIllegalVisitWarning(person, location);
+        return new CommandResult(String.format(successMessage, visit), false, false,
                 CommandResult.SWITCH_TO_VIEW_VISITS);
+    }
+
+    /**
+     * Checks if the person made an illegal visit and returns the appropriate warning.
+     * An illegal visit occurs when a {@code Person} visits an {@code Address} that is
+     * not his own, and he is either infected, in quarantine or both.
+     *
+     * @param person The person to check.
+     * @param location The location the person visited.
+     * @return A warning string based on whether the visit is illegal or not.
+     */
+    private static String getIllegalVisitWarning(Person person, Location location) {
+        boolean isPersonInfected = person.getInfectionStatus().getStatusAsBoolean();
+        boolean isPersonQuarantined = person.getQuarantineStatus().getStatusAsBoolean();
+
+        if (person.getAddress().equals(location.getAddress())) { // Person stayed home
+            return MESSAGE_NO_WARNING;
+        }
+
+        if (isPersonInfected && isPersonQuarantined) { // Person is infected and in quarantine
+            return MESSAGE_INFECTED_AND_QUARANTINED_MADE_VISIT;
+        } else if (isPersonInfected) { // Person is infected only
+            return MESSAGE_INFECTED_MADE_VISIT;
+        } else if (isPersonQuarantined) { // Person is in quarantine only
+            return MESSAGE_QUARANTINED_MADE_VISIT;
+        } else { // Person is not infected or in quarantine
+            return MESSAGE_NO_WARNING;
+        }
     }
 
     @Override

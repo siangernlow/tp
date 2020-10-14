@@ -113,14 +113,16 @@ public class GenerateLocationsCommandTest {
 
     @Test
     public void execute_validInputFromViewingAllInfected_success() {
-        CommandResult expectedCommand = new CommandResult("Generated locations for: Daniel Meier",
+        CommandResult expectedCommand = new CommandResult("Generated locations for: Benson Meier",
                 false, false, CommandResult.SWITCH_TO_VIEW_LOCATIONS);
         Model modelForAllInfected = model;
         modelForAllInfected.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
+
         Model expectedModelForGenerate = expectedModel;
         Predicate<Location> locationPredicate = location -> location.getId().getOneBased() == 6;
         expectedModelForGenerate.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
         expectedModelForGenerate.updateFilteredLocationList(locationPredicate);
+
         Index index = Index.fromOneBased(1);
         GenerateLocationsCommand command = new GenerateLocationsCommand(index);
         assertCommandSuccess(command, modelForAllInfected, expectedCommand, expectedModelForGenerate);

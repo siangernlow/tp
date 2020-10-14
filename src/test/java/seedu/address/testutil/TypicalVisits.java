@@ -130,10 +130,9 @@ public class TypicalVisits {
      * that is infected
      */
     public static List<Visit> getLessThanSixtyPercentInfectedVisits() {
-        // FIRST_VISIT ,SECOND_VISIT and THIRD_VISIT are non-infected Visits. The remaining Visits are
-        // infected Visits.
-        return new ArrayList<>(Arrays.asList(FIRST_VISIT, SECOND_VISIT, THIRD_VISIT, NINTH_VISIT, EIGHTH_VISIT,
-                  FIFTH_VISIT, FOURTH_VISIT));
+        // SECOND_VISIT and THIRD_VISIT are non-infected Visits. The remaining Visits are
+        // infected Visits. The below list is fifty percent infected.
+        return new ArrayList<>(Arrays.asList(SECOND_VISIT, THIRD_VISIT, EIGHTH_VISIT, NINTH_VISIT));
     }
 
     /**
@@ -141,8 +140,8 @@ public class TypicalVisits {
      * that is infected
      */
     public static List<Visit> getMoreThanSixtyPercentInfectedVisits() {
-        // FIRST_VISIT and SECOND_VISIT are non-infected Visits. The remaining Visits are infected Visits.
-        return new ArrayList<>(Arrays.asList(FIRST_VISIT, SECOND_VISIT, THIRD_VISIT, NINTH_VISIT,
+        // SECOND_VISIT is a non-infected Visit. The remaining Visits are infected Visits.
+        return new ArrayList<>(Arrays.asList(SECOND_VISIT, THIRD_VISIT, NINTH_VISIT,
                 FOURTH_VISIT, SEVENTH_VISIT, EIGHTH_VISIT));
     }
 }

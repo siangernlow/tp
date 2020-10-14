@@ -6,7 +6,7 @@
     "email" : "johnd@example.com",
     "addressPerson" : "311, Clementi Ave 2, #02-25",
     "quarantineStatus" : "true",
-    "infectionStatus" : "false",
+    "infectionStatus" : "true",
     "idPerson" : "2",
     "tagged" : ["owesMoney", "friends"],
     "nameLocation" : "Benson Meier House",
