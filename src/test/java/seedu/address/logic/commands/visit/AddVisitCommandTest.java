@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showLocationAtIndex;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.Assert.assertThrows;
@@ -115,55 +116,60 @@ public class AddVisitCommandTest {
 
     @Test
     public void execute_infectedVisit_successWithWarning() {
-        ModelStubAcceptingVisitAdded modelStub =
+        ModelStubAcceptingVisitAdded model =
+                new AddVisitCommandTest.ModelStubAcceptingVisitAdded();
+
+        ModelStubAcceptingVisitAdded expectedModel =
                 new AddVisitCommandTest.ModelStubAcceptingVisitAdded();
         Visit visitWithInfected = new VisitBuilder().withPerson(INFECTED_PERSON).build();
-        try {
-            CommandResult commandResult = new AddVisitCommand(INFECTED_PERSON.getId(), DEFAULT_LOCATION_INDEX,
-                    DEFAULT_DATE).execute(modelStub);
+        expectedModel.addVisit(visitWithInfected);
 
-            assertEquals(String.format(AddVisitCommand.MESSAGE_INFECTED_MADE_VISIT, visitWithInfected),
-                    commandResult.getFeedbackToUser());
-            assertEquals(Arrays.asList(visitWithInfected), modelStub.visitsAdded);
-        } catch (CommandException e) {
-            assert false : "Command Exception not expected.";
-        }
+        AddVisitCommand actualCommand = new AddVisitCommand(INFECTED_PERSON.getId(), DEFAULT_LOCATION_INDEX,
+                DEFAULT_DATE);
+        String expectedMessage = String.format(AddVisitCommand.MESSAGE_INFECTED_MADE_VISIT, visitWithInfected);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
+                CommandResult.SWITCH_TO_VIEW_VISITS);
+        assertCommandSuccess(actualCommand, model, expectedCommandResult, expectedModel);
     }
 
     @Test
     public void execute_quarantinedVisit_successWithWarning() {
-        ModelStubAcceptingVisitAdded modelStub =
+        ModelStubAcceptingVisitAdded model =
+                new AddVisitCommandTest.ModelStubAcceptingVisitAdded();
+
+        ModelStubAcceptingVisitAdded expectedModel =
                 new AddVisitCommandTest.ModelStubAcceptingVisitAdded();
         Visit visitWithQuarantined = new VisitBuilder().withPerson(QUARANTINED_PERSON).build();
-        try {
-            CommandResult commandResult = new AddVisitCommand(QUARANTINED_PERSON.getId(), DEFAULT_LOCATION_INDEX,
-                    DEFAULT_DATE).execute(modelStub);
+        expectedModel.addVisit(visitWithQuarantined);
 
-            assertEquals(String.format(AddVisitCommand.MESSAGE_QUARANTINED_MADE_VISIT, visitWithQuarantined),
-                    commandResult.getFeedbackToUser());
-            assertEquals(Arrays.asList(visitWithQuarantined), modelStub.visitsAdded);
-        } catch (CommandException e) {
-            assert false : "Command Exception not expected.";
-        }
+        AddVisitCommand actualCommand = new AddVisitCommand(QUARANTINED_PERSON.getId(), DEFAULT_LOCATION_INDEX,
+                DEFAULT_DATE);
+        String expectedMessage = String.format(AddVisitCommand.MESSAGE_QUARANTINED_MADE_VISIT, visitWithQuarantined);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
+                CommandResult.SWITCH_TO_VIEW_VISITS);
+
+        assertCommandSuccess(actualCommand, model, expectedCommandResult, expectedModel);
     }
 
     @Test
     public void execute_infectedAndQuarantinedVisit_successWithWarning() {
-        ModelStubAcceptingVisitAdded modelStub =
+        ModelStubAcceptingVisitAdded model =
+                new AddVisitCommandTest.ModelStubAcceptingVisitAdded();
+
+        ModelStubAcceptingVisitAdded expectedModel =
                 new AddVisitCommandTest.ModelStubAcceptingVisitAdded();
         Visit visitWithInfectedAndQuarantined = new VisitBuilder().withPerson(INFECTED_AND_QUARANTINED_PERSON)
                 .withLocation(FIONA_LOCATION).build();
-        try {
-            CommandResult commandResult = new AddVisitCommand(INFECTED_AND_QUARANTINED_PERSON.getId(),
-                    FIONA_LOCATION.getId(), DEFAULT_DATE).execute(modelStub);
+        expectedModel.addVisit(visitWithInfectedAndQuarantined);
 
-            assertEquals(String.format(AddVisitCommand.MESSAGE_INFECTED_AND_QUARANTINED_MADE_VISIT,
-                    visitWithInfectedAndQuarantined),
-                    commandResult.getFeedbackToUser());
-            assertEquals(Arrays.asList(visitWithInfectedAndQuarantined), modelStub.visitsAdded);
-        } catch (CommandException e) {
-            assert false : "Command Exception not expected.";
-        }
+        AddVisitCommand actualCommand = new AddVisitCommand(INFECTED_AND_QUARANTINED_PERSON.getId(),
+                FIONA_LOCATION.getId(), DEFAULT_DATE);
+        String expectedMessage = String.format(AddVisitCommand.MESSAGE_INFECTED_AND_QUARANTINED_MADE_VISIT,
+                visitWithInfectedAndQuarantined);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
+                CommandResult.SWITCH_TO_VIEW_VISITS);
+
+        assertCommandSuccess(actualCommand, model, expectedCommandResult, expectedModel);
     }
 
     /**
@@ -171,23 +177,23 @@ public class AddVisitCommandTest {
      * person makes a visit to his own home.
      */
     @Test
-    public void execute_infectedButStayedHome_successNoWarning() {
-        ModelStubAcceptingVisitAdded modelStub =
+    public void execute_infectedAndQuarantinedButStayedHome_successNoWarning() {
+        ModelStubAcceptingVisitAdded model =
+                new AddVisitCommandTest.ModelStubAcceptingVisitAdded();
+
+        ModelStubAcceptingVisitAdded expectedModel =
                 new AddVisitCommandTest.ModelStubAcceptingVisitAdded();
         Visit visitWithInfectedAndQuarantined = new VisitBuilder().withPerson(INFECTED_AND_QUARANTINED_PERSON).build();
-        try {
-            // DEFAULT_LOCATION has the same address as the INFECTED_AND_QUARANTINED_PERSON
-            CommandResult commandResult = new AddVisitCommand(INFECTED_AND_QUARANTINED_PERSON.getId(),
-                    DEFAULT_LOCATION_INDEX,
-                    DEFAULT_DATE).execute(modelStub);
+        expectedModel.addVisit(visitWithInfectedAndQuarantined);
 
-            assertEquals(String.format(AddVisitCommand.MESSAGE_NO_WARNING,
-                    visitWithInfectedAndQuarantined),
-                    commandResult.getFeedbackToUser());
-            assertEquals(Arrays.asList(visitWithInfectedAndQuarantined), modelStub.visitsAdded);
-        } catch (CommandException e) {
-            assert false : "Command Exception not expected.";
-        }
+        AddVisitCommand actualCommand = new AddVisitCommand(INFECTED_AND_QUARANTINED_PERSON.getId(),
+                DEFAULT_LOCATION_INDEX, DEFAULT_DATE);
+        String expectedMessage = String.format(AddVisitCommand.MESSAGE_NO_WARNING,
+                visitWithInfectedAndQuarantined);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
+                CommandResult.SWITCH_TO_VIEW_VISITS);
+
+        assertCommandSuccess(actualCommand, model, expectedCommandResult, expectedModel);
     }
 
     @Test
@@ -288,6 +294,17 @@ public class AddVisitCommandTest {
         @Override
         public ReadOnlyVisitBook getVisitBook() {
             return new VisitBook();
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            // short circuit if same object
+            if (obj == this) {
+                return true;
+            }
+
+            // instanceof handles nulls
+            return obj instanceof ModelStubAcceptingVisitAdded;
         }
     }
 
