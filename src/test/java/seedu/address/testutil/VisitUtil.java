@@ -21,8 +21,8 @@ public class VisitUtil {
      */
     public static String getVisitDetails(Visit visit) {
         StringBuilder sb = new StringBuilder();
-        sb.append(visit.getPersonId() + " ");
-        sb.append(visit.getLocationId() + " ");
+        sb.append(visit.getPerson().getId() + " ");
+        sb.append(visit.getLocation().getId() + " ");
         sb.append(PREFIX_DATE + visit.getDate().toString() + " ");
         return sb.toString();
     }

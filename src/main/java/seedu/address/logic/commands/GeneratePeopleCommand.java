@@ -48,9 +48,9 @@ public class GeneratePeopleCommand extends Command {
         if (visitsByPerson.getVisitList().isEmpty()) {
             throw new CommandException(MESSAGE_PERSON_HAS_NO_VISITS);
         }
-        List<Integer> locationIds = model.getInfoHandler().generateLocationIdsByVisitBook(visitsByPerson);
+        List<Index> locationIds = model.getInfoHandler().generateLocationIdsByVisitBook(visitsByPerson);
         VisitBook affectedVisits = model.getInfoHandler().generateVisitsByLocationIds(locationIds);
-        List<Integer> personIds = model.getInfoHandler().generatePersonIdsByVisitBook(affectedVisits, personId);
+        List<Index> personIds = model.getInfoHandler().generatePersonIdsByVisitBook(affectedVisits, personId);
         if (personIds.isEmpty()) {
             throw new CommandException(MESSAGE_NO_PEOPLE_FOUND);
         }

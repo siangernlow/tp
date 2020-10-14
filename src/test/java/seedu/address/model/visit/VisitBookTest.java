@@ -4,7 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
+import static seedu.address.testutil.TypicalLocations.ALICE_LOCATION;
+import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
 
 import java.util.Collections;
@@ -40,25 +41,22 @@ public class VisitBookTest {
 
     @Test
     public void hasVisit_visitNotInVisitBook_returnsFalse() {
-        Visit sample = new VisitBuilder().withPersonId(INDEX_FIRST).withLocationId(INDEX_FIRST)
-                .withDate("2020-09-12").build();
+        Visit sample = new VisitBuilder().withPerson(ALICE).withLocation(ALICE_LOCATION).withDate("2020-09-12").build();
         assertFalse(visitBook.hasVisit(sample));
     }
 
     @Test
     public void hasVisit_visitInVisitBook_returnsTrue() {
-        Visit sample = new VisitBuilder().withPersonId(INDEX_FIRST).withLocationId(INDEX_FIRST)
-                .withDate("2020-09-12").build();
+        Visit sample = new VisitBuilder().withPerson(ALICE).withLocation(ALICE_LOCATION).withDate("2020-09-12").build();
         visitBook.addVisit(sample);
         assertTrue(visitBook.hasVisit(sample));
     }
 
     @Test
     public void hasVisit_visitWithSameIdentityFieldsInVisitBook_returnsTrue() {
-        Visit sample = new VisitBuilder().withPersonId(INDEX_FIRST).withLocationId(INDEX_FIRST)
-                .withDate("2020-09-13").build();
+        Visit sample = new VisitBuilder().withPerson(ALICE).withLocation(ALICE_LOCATION).withDate("2020-09-13").build();
         visitBook.addVisit(sample);
-        Visit editedSample = new VisitBuilder(sample).withPersonId(INDEX_FIRST).build();
+        Visit editedSample = new VisitBuilder(sample).withPerson(ALICE).build();
         assertTrue(visitBook.hasVisit(editedSample));
     }
 

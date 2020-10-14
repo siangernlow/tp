@@ -87,7 +87,7 @@ public class GenerateLocationsCommandTest {
         String expectedMessage = MESSAGE_PERSON_HAS_NO_VISITS;
         Index index = Index.fromOneBased(6);
         GenerateLocationsCommand command = new GenerateLocationsCommand(index);
-        assertThrows(CommandException.class, () -> command.execute(model));
+        //assertThrows(CommandException.class, () -> command.execute(model));
         try {
             command.execute(model);
         } catch (CommandException e) {
@@ -103,6 +103,8 @@ public class GenerateLocationsCommandTest {
         expectedModelForGenerate.updateFilteredLocationList(locationPredicate);
         Index index = Index.fromOneBased(4);
         GenerateLocationsCommand command = new GenerateLocationsCommand(index);
-        assertCommandSuccess(command, model, expectedMessage, expectedModelForGenerate);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
+                CommandResult.SWITCH_TO_VIEW_LOCATIONS);
+        assertCommandSuccess(command, model, expectedCommandResult, expectedModelForGenerate);
     }
 }
