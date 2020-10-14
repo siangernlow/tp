@@ -36,12 +36,11 @@ public class AddVisitCommand extends Command {
             + "The following person is infected and "
             + "is in quarantine. The Stay-Home Notice may have been violated.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add a new visit to the visits list "
-            + "by the personId of visit, locationId of visit and date of visit "
-            + "Existing visits list will be updated.\n"
-            + "Parameters: PersonId (must be a positive integer within the range of person book),\n"
-            + "LocationId (must be a positive integer within the range of location book),\n"
-            + "Date (must be in the format of yyyy-MM-dd\n"
-            + "Example: " + COMMAND_WORD + " 1 " + " 2 " + PREFIX_DATE + " 2020-09-09 ";
+            + "using a person's index, location's index and date of visit. "
+            + "Updates the existing visits list.\n"
+            + "Indexes are based on the most recently viewed persons and locations list.\n"
+            + "Parameters: PERSON_INDEX LOCATION_INDEX d/DATE\n"
+            + "Example: " + COMMAND_WORD + " 1 " + " 2 " + PREFIX_DATE + " 2020-05-31 ";
 
     private final Index personIndex;
     private final Index locationIndex;
