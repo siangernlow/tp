@@ -225,6 +225,36 @@ Format: `list l/people`
 
 * Displays the list of all people currently stored in VirusTracker.
 
+#### Adding a visit 
+Adds a visit by the personIndex, locationIndex and date of visit.
+
+Format: `addVisit INDEX INDEX d/DATE`
+
+* The visit is added to the visits list to track close contacts, especially for the infected people.
+* First index refers to the Index shown in the people list.
+* Second index refers to the Index shown in the location list.
+* Index should be the positive integers within the range of its shown list, otherwise exceptions would be thrown.
+* Date refers to the particular date the person has visited the location.
+* Date format should follow "yyyy-MM-dd", otherwise exceptions would be thrown.
+
+Examples:
+* `addVisit 1 1 d/2020-09-12`
+* `addVisit 2 3 d/2020-09-10`
+
+#### Deleting visits using date 
+
+Deletes all visits before and including the date.
+
+Format: `deleteVisits d/DATE`
+
+* Date format should follow "yyyy-MM-dd", otherwise exceptions would be thrown.
+* Date corresponds to the dates that exist in the visits list, otherwise it will be invalid.
+* All the visits before and including the date will be removed from the visits list.
+
+Examples:
+* `deleteVisits d/2020-09-12`
+* `deleteVisits d/2020-09-10`
+
 #### Listing all infected people 
 Format: `list l/infected`
 
