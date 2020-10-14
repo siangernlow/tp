@@ -36,14 +36,15 @@ public class GenerateLocationsCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        if (personId.getZeroBased() >= model.getPersonBook().getPersonList().size()) {
+        if (personId.getZeroBased() >= model.getFilteredPersonList().size()) {
             throw new CommandException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
+        Index personIdFromBook = model.getFilteredPersonList().get(personId.getZeroBased()).getId();
         if (!model.getPersonBook().getPersonList()
-                .get(personId.getZeroBased()).getInfectionStatus().getStatusAsBoolean()) {
+                .get(personIdFromBook.getZeroBased()).getInfectionStatus().getStatusAsBoolean()) {
             throw new CommandException(MESSAGE_PERSON_IS_NOT_INFECTED);
         }
-        VisitBook visitsByPerson = model.getInfoHandler().generateVisitsByPerson(personId);
+        VisitBook visitsByPerson = model.getInfoHandler().generateVisitsByPerson(personIdFromBook);
         if (visitsByPerson.getVisitList().isEmpty()) {
             throw new CommandException(MESSAGE_PERSON_HAS_NO_VISITS);
         }
@@ -51,7 +52,7 @@ public class GenerateLocationsCommand extends Command {
         model.updateFilteredLocationList(ModelPredicate.getPredicateShowLocationsById(locationIds));
         return new CommandResult(
                 "Generated locations for: " + model.getPersonBook()
-                        .getPersonList().get(personId.getZeroBased()).getName(),
+                        .getPersonList().get(personIdFromBook.getZeroBased()).getName(),
                 false, false, CommandResult.SWITCH_TO_VIEW_LOCATIONS);
     }
 
