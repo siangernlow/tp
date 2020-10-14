@@ -494,7 +494,7 @@ Use case ends.
 * 2b. There are no infected people.
     * 2b1. Go to 2a.
 
-**UC12 - View all quarantined people**
+**UC08 - View all quarantined people**
 
 **MSS**
 
@@ -515,7 +515,7 @@ Use case ends.
 **UC09 - View locations that an infected person has been to**
 
 **MSS**
- 
+
 1. User requests to list locations that an infected person has been to.
 2. System shows a list of locations that the infected person has been to.  
 

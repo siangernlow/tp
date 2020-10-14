@@ -9,6 +9,16 @@ VirusTracker can help you generate various statistics on the pandemic quickly an
 ## **Table of Contents**
 * Quick Start
 * Features
+<<<<<<< HEAD
+    * Adding data: `add`
+    * Clearing the current list: `clear`
+    * Deleting data: `delete`
+    * Editing data: `edit`
+    * Finding data: `find`
+    * Listing data: `list`
+    * Generating data: `generate`
+    * Viewing help: `help`
+=======
     1. Adding data: `add`
     2. Deleting data: `delete`
     3. Editing data: `edit`
@@ -19,6 +29,7 @@ VirusTracker can help you generate various statistics on the pandemic quickly an
     8. Clearing the current list: `clear`
     9. Viewing help: `help`
     10. Exiting the program: `exit`
+>>>>>>> fix-ids
 * Command Summary
 --------------------------------------------------------------------------------------------------------------------
 
@@ -321,6 +332,27 @@ lowest risk are displayed.
   
 #### Listing summary of data
 
+<<<<<<< HEAD
+### Generating all people in contact with an infected person: `generatePeople`
+
+Shows a list of people who where in contact with an infected person in the past 2 weeks. 
+
+Format: `generatePeople INDEX`
+
+* People listed were in contact with the infected person of the index given.
+* The result given is a filtered list of people who visited the same locations as that the infected person in the past 2 weeks.
+* This function can be used to identify people who need to be quarantined or issued Stay Home Notices.
+
+### Listing all locations visited by a person: `generateLocations`
+
+Shows a list of locations visited by an infected person in the past 2 weeks. 
+
+Format: `generateLocations INDEX`
+
+* Locations listed were visited by the infected person of the index given.
+* The result given is a filtered list of locations that the person visited in the past 2 weeks.
+* This function can be used to identify locations needing to be disinfected after being visited by an infected person.
+=======
 Shows the general summary of the data in the form of statistics.
 
 Format: `list l/stats`
@@ -339,6 +371,7 @@ Clears all entries from VirusTracker.
 
 Format: `clear`
 
+>>>>>>> fix-ids
 
 ### Viewing help : `help`
 
