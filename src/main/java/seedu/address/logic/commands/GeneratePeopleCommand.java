@@ -37,27 +37,28 @@ public class GeneratePeopleCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        if (personId.getZeroBased() >= model.getPersonBook().getPersonList().size()) {
+        if (personId.getZeroBased() >= model.getFilteredPersonList().size()) {
             throw new CommandException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
+        Index personIdFromBook = model.getFilteredPersonList().get(personId.getZeroBased()).getId();
         if (!model.getPersonBook().getPersonList()
-                .get(personId.getZeroBased()).getInfectionStatus().getStatusAsBoolean()) {
+                .get(personIdFromBook.getZeroBased()).getInfectionStatus().getStatusAsBoolean()) {
             throw new CommandException(MESSAGE_PERSON_IS_NOT_INFECTED);
         }
-        VisitBook visitsByPerson = model.getInfoHandler().generateVisitsByPerson(personId);
+        VisitBook visitsByPerson = model.getInfoHandler().generateVisitsByPerson(personIdFromBook);
         if (visitsByPerson.getVisitList().isEmpty()) {
             throw new CommandException(MESSAGE_PERSON_HAS_NO_VISITS);
         }
         List<Index> locationIds = model.getInfoHandler().generateLocationIdsByVisitBook(visitsByPerson);
         VisitBook affectedVisits = model.getInfoHandler().generateVisitsByLocationIds(locationIds);
-        List<Index> personIds = model.getInfoHandler().generatePersonIdsByVisitBook(affectedVisits, personId);
+        List<Index> personIds = model.getInfoHandler().generatePersonIdsByVisitBook(affectedVisits, personIdFromBook);
         if (personIds.isEmpty()) {
             throw new CommandException(MESSAGE_NO_PEOPLE_FOUND);
         }
         model.updateFilteredPersonList(ModelPredicate.getPredicateShowPeopleById(personIds));
         return new CommandResult(
                 "Generated people for: " + model.getPersonBook()
-                        .getPersonList().get(personId.getZeroBased()).getName(),
+                        .getPersonList().get(personIdFromBook.getZeroBased()).getName(),
                 false, false, CommandResult.SWITCH_TO_VIEW_PEOPLE);
     }
 
