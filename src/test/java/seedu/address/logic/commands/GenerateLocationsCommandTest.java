@@ -134,32 +134,4 @@ public class GenerateLocationsCommandTest {
         GenerateLocationsCommand command = new GenerateLocationsCommand(index);
         assertThrows(CommandException.class, () -> command.execute(modelForAllQuarantined));
     }
-
-    @Test
-    public void execute_validInputFromViewingAllInfected_success() {
-        String expectedMessage = "Generated locations for: Daniel Meier";
-        Model modelForAllInfected = model;
-        modelForAllInfected.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
-        Model expectedModelForGenerate = expectedModel;
-        Predicate<Location> locationPredicate = location -> location.getId().getOneBased() == 6;
-        expectedModelForGenerate.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
-        expectedModelForGenerate.updateFilteredLocationList(locationPredicate);
-        Index index = Index.fromOneBased(1);
-        GenerateLocationsCommand command = new GenerateLocationsCommand(index);
-        assertCommandSuccess(command, modelForAllInfected, expectedMessage, expectedModelForGenerate);
-    }
-
-    @Test
-    public void execute_invalidInputFromViewingAllQuarantined_throwCommandException() {
-        String expectedMessage = MESSAGE_PERSON_IS_NOT_INFECTED;
-        Model modelForAllQuarantined = model;
-        modelForAllQuarantined.updateFilteredPersonList(PREDICATE_SHOW_ALL_QUARANTINED);
-        Index index = Index.fromOneBased(1);
-        GenerateLocationsCommand command = new GenerateLocationsCommand(index);
-        try {
-            command.execute(modelForAllQuarantined);
-        } catch (CommandException e) {
-            assertTrue(e.getMessage().equals(expectedMessage));
-        }
-    }
 }

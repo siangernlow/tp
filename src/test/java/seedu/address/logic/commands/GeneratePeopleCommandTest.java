@@ -157,31 +157,4 @@ public class GeneratePeopleCommandTest {
         GeneratePeopleCommand command = new GeneratePeopleCommand(index);
         assertThrows(CommandException.class, () -> command.execute(modelForAllQuarantined));
     }
-
-    @Test
-    public void execute_validInputFromViewingAllInfected_success() {
-        String expectedMessage = "Generated people for: Daniel Meier";
-        Model modelForAllInfected = model;
-        modelForAllInfected.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
-        Model expectedModelForGenerate = expectedModel;
-        Predicate<Person> expectedPersonPredicate = person -> person.getId().getOneBased() == 3;
-        expectedModelForGenerate.updateFilteredPersonList(expectedPersonPredicate);
-        Index index = Index.fromOneBased(1);
-        GeneratePeopleCommand command = new GeneratePeopleCommand(index);
-        assertCommandSuccess(command, modelForAllInfected, expectedMessage, expectedModelForGenerate);
-    }
-
-    @Test
-    public void execute_invalidInputFromViewingAllQuarantined_throwCommandException() {
-        String expectedMessage = MESSAGE_PERSON_IS_NOT_INFECTED;
-        Model modelForAllInfected = model;
-        modelForAllInfected.updateFilteredPersonList(PREDICATE_SHOW_ALL_QUARANTINED);
-        Index index = Index.fromOneBased(1);
-        GeneratePeopleCommand command = new GeneratePeopleCommand(index);
-        try {
-            command.execute(modelForAllInfected);
-        } catch (CommandException e) {
-            assertTrue(e.getMessage().equals(expectedMessage));
-        }
-    }
 }
