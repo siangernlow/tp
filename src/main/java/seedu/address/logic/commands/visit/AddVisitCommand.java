@@ -38,9 +38,9 @@ public class AddVisitCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add a new visit to the visits list "
             + "by the personId of visit, locationId of visit and date of visit "
             + "Existing visits list will be updated.\n"
-            + "Parameters: PersonId (must be a positive integer) ,"
-            + "LocationId (must be a positive integer),  "
-            + "Date (must be in the format of yyyy-MM-dd "
+            + "Parameters: PersonId (must be a positive integer within the range of person book),\n"
+            + "LocationId (must be a positive integer within the range of location book),\n"
+            + "Date (must be in the format of yyyy-MM-dd\n"
             + "Example: " + COMMAND_WORD + " 1 " + " 2 " + PREFIX_DATE + " 2020-09-09 ";
 
     private final Index personIndex;
@@ -61,20 +61,17 @@ public class AddVisitCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        Index personId = model.getPersonIdFromIndex(personIndex);
-        Index locationId = model.getLocationIdFromIndex(locationIndex);
-        Visit visit = new Visit(personId, locationId, date);
+        Person person = model.getPersonFromIndex(personIndex);
+        Location location = model.getLocationFromIndex(locationIndex);
+        Visit visit = new Visit(person, location, date);
         if (model.hasVisit(visit)) {
             throw new CommandException(MESSAGE_DUPLICATE_VISIT);
         }
 
-        // Would have to be refactored in future iterations.
-        Person person = model.getFilteredPersonList().get(personIndex.getZeroBased());
-        Location location = model.getFilteredLocationList().get(locationIndex.getZeroBased());
-
         model.addVisit(visit);
         String successMessage = getIllegalVisitWarning(person, location);
-        return new CommandResult(String.format(successMessage, visit));
+        return new CommandResult(String.format(successMessage, visit), false, false,
+                CommandResult.SWITCH_TO_VIEW_VISITS);
     }
 
     /**
