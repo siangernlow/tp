@@ -178,7 +178,7 @@ public class InfoHandler {
         ReadOnlyVisitBook tempVisitBook = model.getVisitBook();
         VisitBook visitsByPerson = new VisitBook();
         for (int i = 0; i < tempVisitBook.getVisitList().size(); i++) {
-            if (tempVisitBook.getVisitList().get(i).getPersonId().equals(personId)) {
+            if (tempVisitBook.getVisitList().get(i).getPerson().getId().equals(personId)) {
                 visitsByPerson.addVisit(tempVisitBook.getVisitList().get(i));
             }
         }
@@ -190,10 +190,10 @@ public class InfoHandler {
      * @param visitBook List of visits.
      * @return List of location ids that are associated with the visits.
      */
-    public static List<Integer> generateLocationIdsByVisitBook(VisitBook visitBook) {
-        List<Integer> locationIds = new ArrayList<>();
+    public static List<Index> generateLocationIdsByVisitBook(VisitBook visitBook) {
+        List<Index> locationIds = new ArrayList<>();
         for (int i = 0; i < visitBook.getVisitList().size(); i++) {
-            locationIds.add(visitBook.getVisitList().get(i).getLocationId().getZeroBased());
+            locationIds.add(visitBook.getVisitList().get(i).getLocation().getId());
         }
         return locationIds;
     }
@@ -203,14 +203,13 @@ public class InfoHandler {
      * @param locationIds List of location Ids.
      * @return List of visits that are associated with the location Ids.
      */
-    public VisitBook generateVisitsByLocationIds(List<Integer> locationIds) {
+    public VisitBook generateVisitsByLocationIds(List<Index> locationIds) {
         ReadOnlyVisitBook tempVisitBook = model.getVisitBook();
         VisitBook associatedVisits = new VisitBook();
-        for (Integer locationId : locationIds) {
-            Index locationIndex = Index.fromZeroBased(locationId);
+        for (Index locationIndex : locationIds) {
             for (int i = 0; i < tempVisitBook.getVisitList().size(); i++) {
                 Visit visit = tempVisitBook.getVisitList().get(i);
-                if (visit.getLocationId().equals(locationIndex)) {
+                if (visit.getLocation().getId().equals(locationIndex)) {
                     associatedVisits.addVisit(visit);
                 }
             }
@@ -226,13 +225,19 @@ public class InfoHandler {
      * @param personId Original infected person visit book is associated with.
      * @return List of location ids that are associated with the visits.
      */
-    public List<Integer> generatePersonIdsByVisitBook(VisitBook visitBook, Index personId) {
-        List<Integer> personIds = new ArrayList<>();
+    public List<Index> generatePersonIdsByVisitBook(VisitBook visitBook, Index personId) {
+        List<Index> personIds = new ArrayList<>();
         for (Visit visit : visitBook.getVisitList()) {
-            if (visit.getPersonId().getZeroBased() == personId.getZeroBased()) {
+
+            if (visit.getPerson().getId().getZeroBased() == personId.getZeroBased()) {
                 continue;
             }
-            personIds.add(visit.getPersonId().getZeroBased());
+            personIds.add(visit.getPerson().getId());
+
+            if (visit.getPerson().getId().equals(personId)) {
+                continue;
+            }
+            personIds.add(visit.getPerson().getId());
         }
         return personIds;
     }
@@ -276,7 +281,7 @@ public class InfoHandler {
     public static ArrayList<Index> getLocationIdsFromInfectedVisitList(List<Visit> visits) {
         HashMap<Index, Integer> infectedLocations = new HashMap<>();
         for (Visit visit : visits) {
-            Index id = visit.getLocationId();
+            Index id = visit.getLocation().getId();
             if (infectedLocations.containsKey(id)) {
                 infectedLocations.put(id, infectedLocations.get(id) + 1);
             } else {

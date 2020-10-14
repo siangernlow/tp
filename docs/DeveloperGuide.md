@@ -257,6 +257,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | user | generate a list of people currently stored in VirusTracker|  
 | `* * *`  | user | generate a list of locations currently stored in VirusTracker|    
 | `* * *`  | user | generate a list of visits currently stored in VirusTracker|    
+| `* * *`  | user | generate a list of infected people currently stored in VirusTracker|    
+| `* * *`  | user | generate a list of quarantined people currently stored in VirusTracker|    
 | `* * *`  | user with access to visits data from SafeEntry app   | add visit data to a list | generate desired lists and track contacts with the infected cases|
 | `* * *`  | user with access to the visit list| delete all visits by date | remove all the outdated visits inside the list |
 | `* * *`  | user setting up SafeEntry checkpoints | identify locations with high risk of infection | know which places need these checkpoints the most |
@@ -415,10 +417,35 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 2b. There are no infected people.
     * 2b1. Go to 2a.
     
+<<<<<<< HEAD
 **UC08 - View locations that an infected person has been to**
 
 **MSS**
 
+=======
+**UC08 - View all quarantined people**
+
+**MSS**
+
+1. User requests to list all quarantined people
+2. System shows a list of all quarantined people.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 2b. There are no quarantined people.
+    * 2b1. Go to 2a.
+    
+**UC09 - View locations that an infected person has been to**
+
+**MSS**
+
+>>>>>>> fix-ids
 1. User requests to list locations that an infected person has been to.
 2. System shows a list of locations that the infected person has been to.  
 
@@ -441,8 +468,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
         Use case resumes at step 2.
         
         Use case ends.       
+<<<<<<< HEAD
+=======
+       
+>>>>>>> fix-ids
     
-**UC09 - View people in contact with an infected person**
+**UC10 - View people in contact with an infected person**
 
 **MSS**
 
@@ -469,7 +500,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
         
         Use case ends.  
     
+<<<<<<< HEAD
 **UC10 - View high-risk locations**
+=======
+**UC11 - View high-risk locations**
+>>>>>>> fix-ids
 
 **MSS**
 
@@ -484,22 +519,22 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-**UC11 - View daily statistics**
+**UC12 - View summary of data**
 
 **MSS**
 
-1. User requests to view statistics for that day.
-2. System shows the statistics for that day.
+1. User requests to view summary of data currently stored in the System.
+2. System shows the summary.
 
   Use case ends.
 
 **Extensions**
 
-* 2a. There is not enough information to produce statistics for that day.  
+* 2a. There is not enough information to produce a certain statistics.
+    * 2a1. System flags that statistic as unavailable.
+    * 2a2. For remaining valid statistics, go to 2. 
 
-    Use case ends.
-
-**UC12 - Update infection status**
+**UC13 - Update infection status**
 
 **MSS**
 
@@ -524,7 +559,7 @@ Use case ends.
     
     Use case ends.  
     
-**UC13 - Update quarantine status**
+**UC14 - Update quarantine status**
 
 **MSS**
 
@@ -551,7 +586,7 @@ Use case ends.
 2.  Should be able to hold up to 1000 items for each type of list without a noticeable sluggishness in performance for typical usage.
 3.  Should be able to switch between different types of data and manipulate them efficiently and quickly.
 4.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
+5.  Summary of statistics presented should be relevant and useful to the reader.
 *{More to be added}*
 
 ### Glossary

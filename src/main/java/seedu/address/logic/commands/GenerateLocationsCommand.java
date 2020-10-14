@@ -12,7 +12,7 @@ import seedu.address.model.ModelPredicate;
 import seedu.address.model.visit.VisitBook;
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
+ * Finds and lists all persons in visit book whose name contains any of the argument keywords.
  * Keyword matching is case insensitive.
  */
 public class GenerateLocationsCommand extends Command {
@@ -36,7 +36,7 @@ public class GenerateLocationsCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        if (personId.getZeroBased() >= model.getPersonBook().getPersonList().size()) {
+        if (personId.getZeroBased() >= model.getFilteredPersonList().size()) {
             throw new CommandException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
         Index personIdFromBook = model.getFilteredPersonList().get(personId.getZeroBased()).getId();
@@ -48,7 +48,7 @@ public class GenerateLocationsCommand extends Command {
         if (visitsByPerson.getVisitList().isEmpty()) {
             throw new CommandException(MESSAGE_PERSON_HAS_NO_VISITS);
         }
-        List<Integer> locationIds = model.getInfoHandler().generateLocationIdsByVisitBook(visitsByPerson);
+        List<Index> locationIds = model.getInfoHandler().generateLocationIdsByVisitBook(visitsByPerson);
         model.updateFilteredLocationList(ModelPredicate.getPredicateShowLocationsById(locationIds));
         return new CommandResult(
                 "Generated locations for: " + model.getPersonBook()

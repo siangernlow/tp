@@ -30,7 +30,7 @@ public class ModelPredicate {
 
     /** {@code Predicate} for filtering out the infected visits from all visits */
     public static Predicate<Visit> getPredicateForInfectedVisits(HashSet<Index> infectedIds) {
-        return visit -> infectedIds.contains(visit.getPersonId());
+        return visit -> infectedIds.contains(visit.getPerson().getId());
     }
 
     /** {@code Predicate} for filtering high risk locations */
@@ -58,22 +58,22 @@ public class ModelPredicate {
     }
 
     /** {@code Predicate} to generate a predicate for whether a person's Id is included in the list of person Ids  */
-    public static Predicate<Person> getPredicateShowPeopleById(List<Integer> personIds) {
+    public static Predicate<Person> getPredicateShowPeopleById(List<Index> personIds) {
         return person -> {
-            boolean isIncluded = person.getId().getZeroBased() == personIds.get(0);
+            boolean isIncluded = person.getId().equals(personIds.get(0));
             for (int i = 1; i < personIds.size(); i++) {
-                isIncluded = isIncluded || person.getId().getZeroBased() == personIds.get(i);
+                isIncluded = isIncluded || person.getId().equals(personIds.get(i));
             }
             return isIncluded;
         };
     }
 
     /** {@code Predicate} to generate predicate for whether a location's Id is included in the list of location Ids */
-    public static Predicate<Location> getPredicateShowLocationsById(List<Integer> locationIds) {
+    public static Predicate<Location> getPredicateShowLocationsById(List<Index> locationIds) {
         return location -> {
-            boolean isIncluded = location.getId().getZeroBased() == locationIds.get(0);
+            boolean isIncluded = location.getId().equals(locationIds.get(0));
             for (int i = 1; i < locationIds.size(); i++) {
-                isIncluded = isIncluded || location.getId().getZeroBased() == locationIds.get(i);
+                isIncluded = isIncluded || location.getId().equals(locationIds.get(i));
             }
             return isIncluded;
         };

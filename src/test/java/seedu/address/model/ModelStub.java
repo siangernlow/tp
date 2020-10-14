@@ -207,12 +207,12 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public Index getPersonIdFromIndex(Index index) {
+    public Person getPersonFromIndex(Index index) {
         throw new AssertionError("This method should not be called.");
     }
 
     @Override
-    public Index getLocationIdFromIndex(Index index) {
+    public Location getLocationFromIndex(Index index) {
         throw new AssertionError("This method should not be called.");
     }
 }

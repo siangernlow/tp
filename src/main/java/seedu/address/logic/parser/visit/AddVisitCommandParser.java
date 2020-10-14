@@ -1,6 +1,7 @@
 package seedu.address.logic.parser.visit;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_DATE_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 
 import java.time.LocalDate;
@@ -45,7 +46,13 @@ public class AddVisitCommandParser implements Parser<AddVisitCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddVisitCommand.MESSAGE_USAGE), pe);
         }
 
-        LocalDate date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
+        LocalDate date;
+
+        try {
+            date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
+        } catch (ParseException pe) {
+            throw new ParseException(String.format(MESSAGE_INVALID_DATE_FORMAT, AddVisitCommand.MESSAGE_USAGE), pe);
+        }
 
         return new AddVisitCommand(personIndex, locationIndex, date);
     }

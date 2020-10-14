@@ -17,6 +17,7 @@ import seedu.address.model.location.Location;
 import seedu.address.model.location.ReadOnlyLocationBook;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPersonBook;
+import seedu.address.model.visit.ReadOnlyVisitBook;
 import seedu.address.model.visit.Visit;
 import seedu.address.storage.Storage;
 
@@ -96,8 +97,18 @@ public class LogicManager implements Logic {
     //=========== Visit Book ========================================================================================
 
     @Override
+    public ReadOnlyVisitBook getVisitBook() {
+        return model.getVisitBook();
+    }
+
+    @Override
     public ObservableList<Visit> getFilteredVisitList() {
         return model.getFilteredVisitList();
+    }
+
+    @Override
+    public Path getVisitBookFilePath() {
+        return model.getVisitBookFilePath();
     }
 
     //=========== GUI Settings ======================================================================================

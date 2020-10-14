@@ -37,7 +37,7 @@ public class GeneratePeopleCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        if (personId.getZeroBased() >= model.getPersonBook().getPersonList().size()) {
+        if (personId.getZeroBased() >= model.getFilteredPersonList().size()) {
             throw new CommandException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
         Index personIdFromBook = model.getFilteredPersonList().get(personId.getZeroBased()).getId();
@@ -49,9 +49,9 @@ public class GeneratePeopleCommand extends Command {
         if (visitsByPerson.getVisitList().isEmpty()) {
             throw new CommandException(MESSAGE_PERSON_HAS_NO_VISITS);
         }
-        List<Integer> locationIds = model.getInfoHandler().generateLocationIdsByVisitBook(visitsByPerson);
+        List<Index> locationIds = model.getInfoHandler().generateLocationIdsByVisitBook(visitsByPerson);
         VisitBook affectedVisits = model.getInfoHandler().generateVisitsByLocationIds(locationIds);
-        List<Integer> personIds = model.getInfoHandler().generatePersonIdsByVisitBook(affectedVisits, personIdFromBook);
+        List<Index> personIds = model.getInfoHandler().generatePersonIdsByVisitBook(affectedVisits, personIdFromBook);
         if (personIds.isEmpty()) {
             throw new CommandException(MESSAGE_NO_PEOPLE_FOUND);
         }
