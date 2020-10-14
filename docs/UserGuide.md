@@ -75,7 +75,7 @@ VirusTracker can help you generate various statistics on the pandemic quickly an
   e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 
 * Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -146,6 +146,19 @@ Examples:
 * `list l/infected` followed by `delete 2` deletes the 2nd infected person in the displayed people list.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
+#### Deleting a location 
+
+Deletes the specified location from the location list.
+
+Format: `deleteLocation LOCATION_INDEX`
+
+* Deletes the location at the specified `LOCATION_INDEX`.
+* `LOCATION_INDEX` refers to the index of the location as viewed from the most recently displayed location list.
+* The index **must be a positive integer** 1, 2, 3, …​
+
+Examples:
+* `list l/infected` followed by `deleteLocation 2` deletes the 2nd location in the displayed location list.
+
 #### Deleting visits by date
 
 Deletes all visits before the date
@@ -179,6 +192,21 @@ Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+#### Editing a location
+
+Edits an existing location in VirusTracker.
+
+Format: `editLocation LOCATION_INDEX [n/NAME] [a/ADDRESS]`
+
+* Edits the location at the specified `LOCATION_INDEX`.
+* `LOCATION_INDEX` refers to the index of the location as viewed from the most recently displayed location list.
+* The index **must be a positive integer** 1, 2, 3, …​
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+
+Examples:
+*  `editLocation 1 n/NTU a/Bugis street` Edits the name and address of the 1st location to be `NTU` and `Bugis Street` respectively.
+*  `editLocation 2 n/NUS` Edits the name of the 2nd location to be `NUS`.
 
 ### Finding persons by name: `find`
 
@@ -207,6 +235,36 @@ There are a variety of `list` commands that list different types of data.
 Format: `list l/people`
 
 * Displays the list of all people currently stored in VirusTracker.
+
+#### Adding a visit 
+Adds a visit by the personIndex, locationIndex and date of visit.
+
+Format: `addVisit INDEX INDEX d/DATE`
+
+* The visit is added to the visits list to track close contacts, especially for the infected people.
+* First index refers to the Index shown in the people list.
+* Second index refers to the Index shown in the location list.
+* Index should be the positive integers within the range of its shown list, otherwise exceptions would be thrown.
+* Date refers to the particular date the person has visited the location.
+* Date format should follow "yyyy-MM-dd", otherwise exceptions would be thrown.
+
+Examples:
+* `addVisit 1 1 d/2020-09-12`
+* `addVisit 2 3 d/2020-09-10`
+
+#### Deleting visits using date 
+
+Deletes all visits before and including the date.
+
+Format: `deleteVisits d/DATE`
+
+* Date format should follow "yyyy-MM-dd", otherwise exceptions would be thrown.
+* Date corresponds to the dates that exist in the visits list, otherwise it will be invalid.
+* All the visits before and including the date will be removed from the visits list.
+
+Examples:
+* `deleteVisits d/2020-09-12`
+* `deleteVisits d/2020-09-10`
 
 #### Listing all infected people 
 Format: `list l/infected`

@@ -257,6 +257,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | user | generate a list of people currently stored in VirusTracker|  
 | `* * *`  | user | generate a list of locations currently stored in VirusTracker|    
 | `* * *`  | user | generate a list of visits currently stored in VirusTracker|    
+| `* * *`  | user | add location data to a list | generate information about which location needs to be disinfected |
+| `* * *`  | user | delete location data | to keep the locations list up to date|
+| `* * *`  | user | edit location data | to keep the location information up to date with the latest address or name |
 | `* * *`  | user | generate a list of infected people currently stored in VirusTracker|    
 | `* * *`  | user | generate a list of quarantined people currently stored in VirusTracker|    
 | `* * *`  | user with access to visits data from SafeEntry app   | add visit data to a list | generate desired lists and track contacts with the infected cases|
@@ -265,8 +268,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | user publishing daily reports | generate daily statistics quickly and easily|                                                         |
 | `* * *`  | user managing infected patient | update people's infection status | keep the current epidemic situation up to date |
 | `* * *`  | user managing quarantined people | update people's quarantine status | be aware of a person's quarantine status |
-| `* * *`  | user managing infected people | update people's infection status | be aware of a person's infection status |
-| `* * *`  | user | add location data to a list | generate information about which location needs to be disinfected |
 | `* * *`  | user worried about virus outbreaks | generate locations that infected people have been to | disinfect those locations |
 | `* * *`  | user worried about virus outbreaks | generate people that have been in contact with infected people | quarantine them for safety measures |
  
@@ -276,61 +277,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `VirusTracker` and the **Actor** is the `user`, unless specified otherwise)
 
-**UC01 - Add a visit**
+**UC01 - Add a location**
 
 **MSS**
-
-
-1.  User chooses to add a visit.
-2.  System requests for details of the visit. 
-3.  User enters the required details.
-4.  System adds the new visit.
-5. System displays the updated visits list.
-
-    Use case ends.
-
-**Extensions**
-      
-* 3a. System detects error in the entered data.
-    * 3a1. System prompts user for correct data.
-    * 3a2. User enters new data.  
-    Steps 3a1-3a2 are repeated until the data entered are correct.  
-    Use case resumes at step 4.
-
-* *a. At any time, User wishes to cancel the command.
-    * a1. System acknowledges and returns user to main page.
-         
-    Use case ends.
-
-**UC02 - Delete visits**
-
-**MSS**
-
-1. User chooses to clear the visit history.
-2. System requests for details.
-3. User enters the required information.
-4. System deletes the visits based on the information entered.
-5. System displays the updated visits list.  
-   
-   Use case ends.
-      
-**Extensions**
-       
-* 3a. System detects error in the entered data.
-    * 3a1. System prompts user for correct data.
-    * 3a2. User enters new data.  
-    Steps 3a1-3a2 are repeated until the data entered are correct.  
-    Use case resumes at step 4.
-       
-* *a. At any time, User wishes to cancel the command.
-    * a1. System acknowledges and returns user to main page.
-         
-    Use case ends.
-
-**UC03 - Add a location**
-
-**MSS**
-
 
 1.  User adds a location.
 2.  System adds the new location.
@@ -348,7 +297,135 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     
     Use case ends.
 
-**UC04 - View all people**
+**UC02 - Delete a location**
+
+**MSS**
+
+1.  User identifies a location to be deleted.
+2.  System deletes the location.
+3.  System displays the updated locations list.
+
+    Use case ends.
+
+**Extensions**
+      
+* 2a. System detects that location does not exist.
+    * 2a1. System prompts user for location to be deleted.
+    * 2a2. User enters new data.  
+    Steps 2a1-2a2 are repeated until the data entered are correct.  
+    Use case resumes at step 3.
+    
+    Use case ends.
+
+**UC03 - Edit a location**
+
+**MSS**
+
+1.  User edits a location.
+2.  System updates the old location with the edited location.
+3.  System displays the updated locations list.
+
+    Use case ends.
+
+**Extensions**
+      
+* 2a. System detects error in the entered data.
+    * 2a1. System prompts user for correct data.
+    * 2a2. User enters new data.  
+    Steps 2a1-2a2 are repeated until the data entered are correct.  
+    Use case resumes at step 3.
+    
+    Use case ends.
+
+**UC04 - Add a visit**
+
+**MSS**
+
+1.  User chooses to add a visit.
+2.  System requests for details of the visit. 
+3.  User enters the required details.
+4.  System adds the new visit.
+5.  System displays the updated visits list.
+
+    Use case ends.
+
+**Extensions**
+      
+* 3a. System detects error in the entered data.
+    * 3a1. System prompts user for correct data.
+    * 3a2. User enters new data.  
+    Steps 3a1-3a2 are repeated until the data entered are correct.  
+    Use case resumes at step 4.
+         
+    Use case ends.
+
+**UC05 - Delete visits**
+
+**MSS**
+
+1. User chooses to clear all the visits up to and before a date.
+2. System requests for details of the targeted date.
+3. User enters the required information.
+4. System deletes the visits based on the information entered.
+5. System displays the updated visits list.  
+   
+   Use case ends.
+      
+**Extensions**
+       
+* 3a. System detects error in the entered data.
+    * 3a1. System prompts user for correct data.
+    * 3a2. User enters new data.  
+    Steps 3a1-3a2 are repeated until the data entered are correct.  
+    Use case resumes at step 4.
+         
+    Use case ends.
+
+**UC06 - Update infection status**
+
+**MSS**
+
+1. User provides updated quarantine status of a person.
+2. System updates the quarantine status of the person.
+3. System shows the list of people.
+
+Use case ends.
+
+**Extension**
+
+* 2a. System is unable to find the person specified by the user.     
+    * 2a1. System requests for correct details of the person.
+    * 2a2. User enters the new details.  
+    
+  Steps 2a1 - 2a2 are repeated until the person specified by the user exists.  
+  
+  Use case resumes from step 3.
+  
+* *a. At any time, user choose to cancel the update.  
+    
+    Use case ends.  
+            
+**UC07 - Update quarantine status**
+
+**MSS**
+
+1. User provides updated quarantine status of a person.
+2. System updates the quarantine status of the person.
+3. System shows the list of people.
+
+**Extension**
+
+* 2a. System is unable to find the person specified by the user.     
+    * 2a1. System requests for correct details of the person.
+    * 2a2. User enters the new details.  
+    
+  Steps 2a1 - 2a2 are repeated until the person specified by the user exists.  
+  Use case resumes from step 3.
+  
+* *a. At any time, user choose to cancel the update.    
+    Use case ends.  
+
+**UC08 - View all people**
 
 **MSS**
 
@@ -365,7 +442,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     
   Use case ends.
     
-**UC05 - View all locations**
+**UC09 - View all locations**
 
 **MSS**
 
@@ -382,7 +459,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     
   Use case ends.
     
-**UC06 - View all visits**
+**UC10 - View all visits**
 
 **MSS**
 
@@ -399,7 +476,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     
   Use case ends.
     
-**UC07 - View all infected people**
+**UC11 - View all infected people**
 
 **MSS**
 
@@ -416,13 +493,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2b. There are no infected people.
     * 2b1. Go to 2a.
-    
-<<<<<<< HEAD
-**UC08 - View locations that an infected person has been to**
 
-**MSS**
-
-=======
 **UC08 - View all quarantined people**
 
 **MSS**
@@ -445,7 +516,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
->>>>>>> fix-ids
 1. User requests to list locations that an infected person has been to.
 2. System shows a list of locations that the infected person has been to.  
 
@@ -453,7 +523,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 2a. The list is empty.
+* 3a. The list is empty.
 
     Use case ends.
     
@@ -468,23 +538,20 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
         Use case resumes at step 2.
         
         Use case ends.       
-<<<<<<< HEAD
-=======
-       
->>>>>>> fix-ids
-    
+
 **UC10 - View people in contact with an infected person**
 
 **MSS**
 
 1. User requests to list people in contact with an infected person.
-2. System shows a list of people in contact with an infected person.  
+2. System finds the infected person.
+3. System shows a list of people in contact with an infected person.  
 
   Use case ends.
 
 **Extensions**
 
-* 2a. The list is empty.
+* 3a. The list is empty.
 
     Use case ends.   
     
@@ -500,11 +567,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
         
         Use case ends.  
     
-<<<<<<< HEAD
-**UC10 - View high-risk locations**
-=======
 **UC11 - View high-risk locations**
->>>>>>> fix-ids
 
 **MSS**
 
@@ -515,7 +578,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 2a. The list is empty.
+* 2a. The location list is empty.
 
     Use case ends.
 
@@ -523,8 +586,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to view summary of data currently stored in the System.
-2. System shows the summary.
+1. User requests to view statistics of the day.
+2. System shows the statistics of the day.
 
   Use case ends.
 
@@ -533,52 +596,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 2a. There is not enough information to produce a certain statistics.
     * 2a1. System flags that statistic as unavailable.
     * 2a2. For remaining valid statistics, go to 2. 
-
-**UC13 - Update infection status**
-
-**MSS**
-
-1. User requests to update the infection status of a person.
-2. System requests for details of the person to be updated.
-3. User enters the person's details.
-4. System toggles the person's infection status.  
-
-Use case ends.
-
-**Extension**
-
-* 4a. System is unable to find the person specified by the user.     
-    * 4a1. System requests for correct details of the person.
-    * 4a2. User enters the new details.  
-    
-  Steps 4a1 - 4a2 are repeated until the person specified by the user exists.  
-  
-  Use case resumes from step 4.
-  
-* *a. At any time, user choose to cancel the update.  
-    
-    Use case ends.  
-    
-**UC14 - Update quarantine status**
-
-**MSS**
-
-1. User requests to update the quarantine status of a person.
-2. System requests for details of the person to be updated.
-3. User enters the person's details.
-4. System toggles the person's quarantine status.
-
-**Extension**
-
-* 4a. System is unable to find the person specified by the user.     
-    * 4a1. System requests for correct details of the person.
-    * 4a2. User enters the new details.  
-    
-  Steps 4a1 - 4a2 are repeated until the person specified by the user exists.  
-  Use case resumes from step 4.
-  
-* *a. At any time, user choose to cancel the update.    
-    Use case ends.  
 
 ### Non-Functional Requirements
 
