@@ -129,6 +129,7 @@ public class AddVisitCommandTest {
         String expectedMessage = String.format(AddVisitCommand.MESSAGE_INFECTED_MADE_VISIT, visitWithInfected);
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
                 CommandResult.SWITCH_TO_VIEW_VISITS);
+
         assertCommandSuccess(actualCommand, model, expectedCommandResult, expectedModel);
     }
 
