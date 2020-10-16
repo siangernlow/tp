@@ -8,19 +8,23 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.location.Location;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.InfectionStatus;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.QuarantineStatus;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.visit.Visit;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -210,5 +214,17 @@ public class ParserUtil {
         default:
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
         }
+    }
+
+    public static List<Person> generatePersonsList(String filepath) {
+        return null;
+    }
+
+    public static List<Location> generateLocationsList(String filepath) {
+        return null;
+    }
+
+    public static List<Visit> generateVisitsList(String filepath) {
+        return null;
     }
 }
