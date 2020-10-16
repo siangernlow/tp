@@ -35,19 +35,20 @@ public class AddFromCsvCommandParser implements Parser<AddFromCsvCommand> {
 
         ListType listType = ParserUtil.parseListType(argMultimap.getValue(PREFIX_LIST).get());
         String filepath = argMultimap.getPreamble();
+
         if (!checkIfValidCsvExtension(filepath)) {
             throw new ParseException(String.format(MESSAGE_INVALID_FILE_EXTENSION, CSV_FILE_EXTENSION));
         }
 
         switch (listType) {
         case ALL_PEOPLE:
-            List<Person> personsList = ParserUtil.generatePersonsList(filepath);
+            List<Person> personsList = DataGenerator.generatePersonsList(filepath);
             return new AddPersonsFromCsvCommand(personsList);
         case ALL_LOCATIONS:
-            List<Location> locationsList = ParserUtil.generateLocationsList(filepath);
+            List<Location> locationsList = DataGenerator.generateLocationsList(filepath);
             return new AddLocationsFromCsvCommand(locationsList);
         case ALL_VISITS:
-            List<Visit> visitsList = ParserUtil.generateVisitsList(filepath);
+            List<Visit> visitsList = DataGenerator.generateVisitsList(filepath);
             return new AddVisitsFromCsvCommand(visitsList);
         default:
             throw new ParseException(String.format(MESSAGE_INVALID_DATA_TYPE, AddFromCsvCommand.MESSAGE_USAGE));
@@ -56,8 +57,8 @@ public class AddFromCsvCommandParser implements Parser<AddFromCsvCommand> {
 
     private boolean checkIfValidCsvExtension(String filepath) throws ParseException {
         int pathLength = filepath.length();
-        int startIndex = pathLength - CSV_FILE_EXTENSION.length() - 1;
-        int endIndex = pathLength - 1;
+        int startIndex = pathLength - CSV_FILE_EXTENSION.length();
+        int endIndex = pathLength;
 
         if (startIndex < 0) {
             throw new ParseException(String.format(MESSAGE_INVALID_FILE_EXTENSION, CSV_FILE_EXTENSION));
