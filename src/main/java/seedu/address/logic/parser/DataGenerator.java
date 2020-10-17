@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Address;
@@ -14,6 +15,7 @@ import seedu.address.model.visit.Visit;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -24,15 +26,25 @@ import java.util.Set;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_DATA_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_FILE_PATH;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 public class DataGenerator {
     public static final Character DEFAULT_SEPARATOR = ',';
     public static final Character DEFAULT_QUOTE = '"';
+
+    // Minimum number of parameters required to create the object
+    public static final int MIN_PERSON_PARAMETERS = 6;
+    public static final int MIN_LOCATION_PARAMETERS = 2;
+    public static final int MIN_VISIT_PARAMETERS = 3;
+
+    // Prevent instantiation
+    private DataGenerator() {};
+
     public static List<Person> generatePersonsList(String filepath) throws ParseException {
         Scanner scanner = readFile(filepath);
         List<Person> personsList = new ArrayList<>();
 
-        // Used for error output
+        // Used to detect which line had an error
         int lineNumber = 1;
 
         while (scanner.hasNext()) {
@@ -46,8 +58,10 @@ public class DataGenerator {
     }
 
     private static Person generatePerson(List<String> dataValues, int lineNumber) throws ParseException {
+        assert MIN_PERSON_PARAMETERS >= 6;
+
         // Check if enough parameters; 6 compulsory parameters required for adding a Person
-        if (dataValues.size() < 6) {
+        if (dataValues.size() < MIN_PERSON_PARAMETERS) {
             throw new ParseException(String.format(MESSAGE_INVALID_DATA_FORMAT, lineNumber));
         }
 
@@ -59,7 +73,7 @@ public class DataGenerator {
         InfectionStatus infectionStatus = ParserUtil.parseInfectionStatus(dataValues.get(5));
 
         Set<String> tags = new HashSet<>();
-        if (dataValues.size() > 6) {
+        if (dataValues.size() > MIN_PERSON_PARAMETERS) {
             String[] tagsAsString = dataValues.get(6).split(",");
             tags.addAll(Arrays.asList(tagsAsString));
         }
@@ -68,20 +82,87 @@ public class DataGenerator {
         return new Person(name, phone, email, address, quarantineStatus, infectionStatus, tagList);
     }
 
+
+
+    public static List<Location> generateLocationsList(String filepath) throws ParseException {
+        Scanner scanner = readFile(filepath);
+        List<Location> locationsList = new ArrayList<>();
+
+        // Used to detect which line had an error
+        int lineNumber = 1;
+
+        while (scanner.hasNext()) {
+            List<String> dataValues = generateDataValues(scanner.nextLine());
+            Location location = generateLocation(dataValues, lineNumber);
+            locationsList.add(location);
+            lineNumber++;
+        }
+
+        return locationsList;
+    }
+
+    private static Location generateLocation(List<String> dataValues, int lineNumber) throws ParseException {
+        assert MIN_LOCATION_PARAMETERS >= 6;
+
+        // Check if enough parameters; 2 compulsory parameters required for adding a Location
+        if (dataValues.size() < MIN_LOCATION_PARAMETERS) {
+            throw new ParseException(String.format(MESSAGE_INVALID_DATA_FORMAT, lineNumber));
+        }
+
+        Name name = ParserUtil.parseName(dataValues.get(0));
+        Address address = ParserUtil.parseAddress(dataValues.get(1));
+
+        return new Location(name, address);
+    }
+
+    public static List<VisitParameters> generateVisitsList(String filepath) throws ParseException {
+        Scanner scanner = readFile(filepath);
+        List<VisitParameters> visitParametersList = new ArrayList<>();
+
+        // Used to detect which line had an error
+        int lineNumber = 1;
+
+        while (scanner.hasNext()) {
+            List<String> dataValues = generateDataValues(scanner.nextLine());
+            VisitParameters visitParameters = generateVisitParameters(dataValues, lineNumber);
+            visitParametersList.add(visitParameters);
+            lineNumber++;
+        }
+
+        return visitParametersList;
+    }
+
+    private static VisitParameters generateVisitParameters(List<String> dataValues, int lineNumber)
+            throws ParseException {
+        assert MIN_VISIT_PARAMETERS >= 3;
+
+        // Check if enough parameters; 3 compulsory parameters required for adding a Visit
+        if (dataValues.size() < MIN_VISIT_PARAMETERS) {
+            throw new ParseException(String.format(MESSAGE_INVALID_DATA_FORMAT, lineNumber));
+        }
+
+        Index personIndex = ParserUtil.parseIndex(dataValues.get(0));
+        Index locationIndex = ParserUtil.parseIndex(dataValues.get(1));
+        LocalDate date = ParserUtil.parseDate(dataValues.get(2));
+
+        return new VisitParameters(personIndex, locationIndex, date);
+    }
+
     /**
-     * Generates a person from the given personData
-     * @param personData A string representing a person's information.
-     * @return A person with the values in personData.
-     * @throws ParseException if any arguments are not in the required format.
+     * Generates data values given by the data, delimited by commas.
+     * Accurately generates fields which have commas in them.
+     *
+     * @param data A string representaion of the object's data.
+     * @return A list with String fields which would be used to create the required object.
      */
-    private static List<String> generateDataValues(String personData) throws ParseException {
-        requireNonNull(personData);
-        assert !personData.isEmpty();
+    private static List<String> generateDataValues(String data) {
+        requireNonNull(data);
+        assert !data.isEmpty();
 
         List<String> dataValues = new ArrayList<>();
 
         // As certain fields may contain commas, we cannot simply split the string using a comma separator.
-        char[] chars = personData.toCharArray();
+        char[] chars = data.toCharArray();
 
         // If true, then any DEFAULT_SEPARATOR is to be treated as a normal character and not a delimiter.
         boolean isInQuotes = false;
@@ -109,24 +190,37 @@ public class DataGenerator {
         return dataValues;
     }
 
-    public static List<Location> generateLocationsList(String filepath) throws ParseException {
-        Scanner scanner = readFile(filepath);
-        List<Location> personsList = new ArrayList<>();
-        return null;
-    }
-
-    public static List<Visit> generateVisitsList(String filepath) throws ParseException {
-        Scanner scanner = readFile(filepath);
-        List<Visit> personsList = new ArrayList<>();
-        return null;
-    }
-
     private static Scanner readFile(String filepath) throws ParseException {
         try {
             Scanner scanner = new Scanner(new File(filepath));
             return scanner;
         } catch (FileNotFoundException e) {
             throw new ParseException(MESSAGE_INVALID_FILE_PATH);
+        }
+    }
+
+    public static class VisitParameters {
+        private final Index personIndex;
+        private final Index locationIndex;
+        private final LocalDate date;
+
+        public VisitParameters(Index personIndex, Index locationIndex, LocalDate date) {
+            requireAllNonNull(personIndex, locationIndex, date);
+            this.personIndex = personIndex;
+            this.locationIndex = locationIndex;
+            this.date = date;
+        }
+
+        public Index getPersonIndex() {
+            return personIndex;
+        }
+
+        public Index getLocationIndex() {
+            return locationIndex;
+        }
+
+        public LocalDate getDate() {
+            return date;
         }
     }
 }
