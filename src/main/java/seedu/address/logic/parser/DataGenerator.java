@@ -39,6 +39,9 @@ public class DataGenerator {
     public static final int MIN_LOCATION_PARAMETERS = 2;
     public static final int MIN_VISIT_PARAMETERS = 3;
 
+    public static final String INVALID_ROW_FORMAT =
+            "Invalid format detected on line %d. %s";
+
     // Prevent instantiation
     private DataGenerator() {};
 
@@ -82,21 +85,25 @@ public class DataGenerator {
             throw new ParseException(String.format(MESSAGE_INVALID_DATA_FORMAT, lineNumber));
         }
 
-        Name name = ParserUtil.parseName(dataValues.get(0));
-        Phone phone = ParserUtil.parsePhone(dataValues.get(1));
-        Email email = ParserUtil.parseEmail(dataValues.get(2));
-        Address address = ParserUtil.parseAddress(dataValues.get(3));
-        QuarantineStatus quarantineStatus = ParserUtil.parseQuarantineStatus(dataValues.get(4));
-        InfectionStatus infectionStatus = ParserUtil.parseInfectionStatus(dataValues.get(5));
+        try {
+            Name name = ParserUtil.parseName(dataValues.get(0));
+            Phone phone = ParserUtil.parsePhone(dataValues.get(1));
+            Email email = ParserUtil.parseEmail(dataValues.get(2));
+            Address address = ParserUtil.parseAddress(dataValues.get(3));
+            QuarantineStatus quarantineStatus = ParserUtil.parseQuarantineStatus(dataValues.get(4));
+            InfectionStatus infectionStatus = ParserUtil.parseInfectionStatus(dataValues.get(5));
 
-        Set<String> tags = new HashSet<>();
-        if (dataValues.size() > MIN_PERSON_PARAMETERS) {
-            String[] tagsAsString = dataValues.get(6).split(",");
-            tags.addAll(Arrays.asList(tagsAsString));
+            Set<String> tags = new HashSet<>();
+            if (dataValues.size() > MIN_PERSON_PARAMETERS) {
+                String[] tagsAsString = dataValues.get(6).split(",");
+                tags.addAll(Arrays.asList(tagsAsString));
+            }
+            Set<Tag> tagList = ParserUtil.parseTags(tags);
+
+            return new Person(name, phone, email, address, quarantineStatus, infectionStatus, tagList);
+        } catch (ParseException pe) {
+            throw new ParseException(String.format(INVALID_ROW_FORMAT, lineNumber, pe.getMessage()));
         }
-        Set<Tag> tagList = ParserUtil.parseTags(tags);
-
-        return new Person(name, phone, email, address, quarantineStatus, infectionStatus, tagList);
     }
 
 
@@ -140,10 +147,14 @@ public class DataGenerator {
             throw new ParseException(String.format(MESSAGE_INVALID_DATA_FORMAT, lineNumber));
         }
 
-        Name name = ParserUtil.parseName(dataValues.get(0));
-        Address address = ParserUtil.parseAddress(dataValues.get(1));
+        try {
+            Name name = ParserUtil.parseName(dataValues.get(0));
+            Address address = ParserUtil.parseAddress(dataValues.get(1));
 
-        return new Location(name, address);
+            return new Location(name, address);
+        } catch (ParseException pe) {
+                throw new ParseException(String.format(INVALID_ROW_FORMAT, lineNumber, pe.getMessage()));
+        }
     }
 
     /**
@@ -190,12 +201,15 @@ public class DataGenerator {
         if (dataValues.size() < MIN_VISIT_PARAMETERS) {
             throw new ParseException(String.format(MESSAGE_INVALID_DATA_FORMAT, lineNumber));
         }
+        try {
+            Index personIndex = ParserUtil.parseIndex(dataValues.get(0));
+            Index locationIndex = ParserUtil.parseIndex(dataValues.get(1));
+            LocalDate date = ParserUtil.parseDate(dataValues.get(2));
 
-        Index personIndex = ParserUtil.parseIndex(dataValues.get(0));
-        Index locationIndex = ParserUtil.parseIndex(dataValues.get(1));
-        LocalDate date = ParserUtil.parseDate(dataValues.get(2));
-
-        return new VisitParametersContainer(personIndex, locationIndex, date);
+            return new VisitParametersContainer(personIndex, locationIndex, date);
+        } catch (ParseException pe) {
+            throw new ParseException(String.format(INVALID_ROW_FORMAT, lineNumber, pe.getMessage()));
+        }
     }
 
     /**
