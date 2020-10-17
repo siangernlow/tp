@@ -48,8 +48,9 @@ public class AddFromCsvCommandParser implements Parser<AddFromCsvCommand> {
             List<Location> locationsList = DataGenerator.generateLocationsList(filepath);
             return new AddLocationsFromCsvCommand(locationsList);
         case ALL_VISITS:
-            List<DataGenerator.VisitParameters> visitParametersList = DataGenerator.generateVisitsList(filepath);
-            return new AddVisitsFromCsvCommand(visitParametersList);
+            List<DataGenerator.VisitParametersContainer> visitParametersContainersList =
+                    DataGenerator.generateVisitsList(filepath);
+            return new AddVisitsFromCsvCommand(visitParametersContainersList);
         default:
             throw new ParseException(String.format(MESSAGE_INVALID_DATA_TYPE, AddFromCsvCommand.MESSAGE_USAGE));
         }

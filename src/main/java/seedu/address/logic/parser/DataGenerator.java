@@ -11,7 +11,6 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.QuarantineStatus;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.visit.Visit;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -28,6 +27,9 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_DATA_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_FILE_PATH;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+/**
+ * Generates objects using data provided in CSV files.
+ */
 public class DataGenerator {
     public static final Character DEFAULT_SEPARATOR = ',';
     public static final Character DEFAULT_QUOTE = '"';
@@ -40,6 +42,13 @@ public class DataGenerator {
     // Prevent instantiation
     private DataGenerator() {};
 
+    /**
+     * Generates a list of {@code Person} from the given CSV file.
+     *
+     * @param filepath The absolute file path of the CSV file.
+     * @return A list of {@code Person}, one for each line in the CSV file.
+     * @throws ParseException if there is any formatting error present.
+     */
     public static List<Person> generatePersonsList(String filepath) throws ParseException {
         Scanner scanner = readFile(filepath);
         List<Person> personsList = new ArrayList<>();
@@ -57,6 +66,14 @@ public class DataGenerator {
         return personsList;
     }
 
+    /**
+     * Generates a {@code Person} from the given parameters.
+     *
+     * @param dataValues A list containing fields to create a {@code Person}.
+     * @param lineNumber The current line number of the CSV that we are on. Used for error handling.
+     * @return A person with the given parameters.
+     * @throws ParseException if there are not enough parameters to create a person.
+     */
     private static Person generatePerson(List<String> dataValues, int lineNumber) throws ParseException {
         assert MIN_PERSON_PARAMETERS >= 6;
 
@@ -83,7 +100,13 @@ public class DataGenerator {
     }
 
 
-
+    /**
+     * Generates a list of {@code Location} from the given CSV file.
+     *
+     * @param filepath The absolute file path of the CSV file.
+     * @return A list of {@code Location}, one for each line in the CSV file.
+     * @throws ParseException if there is any formatting error present.
+     */
     public static List<Location> generateLocationsList(String filepath) throws ParseException {
         Scanner scanner = readFile(filepath);
         List<Location> locationsList = new ArrayList<>();
@@ -101,8 +124,16 @@ public class DataGenerator {
         return locationsList;
     }
 
+    /**
+     * Generates a {@code Location} from the given parameters.
+     *
+     * @param dataValues A list containing fields to create a {@code Location}.
+     * @param lineNumber The current line number of the CSV that we are on. Used for error handling.
+     * @return A location with the given parameters.
+     * @throws ParseException if there are not enough parameters to create a location.
+     */
     private static Location generateLocation(List<String> dataValues, int lineNumber) throws ParseException {
-        assert MIN_LOCATION_PARAMETERS >= 6;
+        assert MIN_LOCATION_PARAMETERS >= 2;
 
         // Check if enough parameters; 2 compulsory parameters required for adding a Location
         if (dataValues.size() < MIN_LOCATION_PARAMETERS) {
@@ -115,16 +146,27 @@ public class DataGenerator {
         return new Location(name, address);
     }
 
-    public static List<VisitParameters> generateVisitsList(String filepath) throws ParseException {
+    /**
+     * Generates a list of {@code VisitParametersContainer} from the given CSV file.
+     * As there is a need to translate from the user input index to the
+     * actual id of the {@code Person} and {{@code Location}, a container class
+     * {@code VisitParameters} is used to store these indexes to be translated further down the
+     * pipeline.
+     *
+     * @param filepath The absolute file path of the CSV file.
+     * @return A list of {@code VisitParametersContainer}, one for each line in the CSV file.
+     * @throws ParseException if there is any formatting error present.
+     */
+    public static List<VisitParametersContainer> generateVisitsList(String filepath) throws ParseException {
         Scanner scanner = readFile(filepath);
-        List<VisitParameters> visitParametersList = new ArrayList<>();
+        List<VisitParametersContainer> visitParametersList = new ArrayList<>();
 
         // Used to detect which line had an error
         int lineNumber = 1;
 
         while (scanner.hasNext()) {
             List<String> dataValues = generateDataValues(scanner.nextLine());
-            VisitParameters visitParameters = generateVisitParameters(dataValues, lineNumber);
+            VisitParametersContainer visitParameters = generateVisitParametersContainer(dataValues, lineNumber);
             visitParametersList.add(visitParameters);
             lineNumber++;
         }
@@ -132,7 +174,15 @@ public class DataGenerator {
         return visitParametersList;
     }
 
-    private static VisitParameters generateVisitParameters(List<String> dataValues, int lineNumber)
+    /**
+     * Generates a {@code VisitParametersContainer} from the given parameters.
+     *
+     * @param dataValues A list containing fields to create a {@code VisitParametersContainer}.
+     * @param lineNumber The current line number of the CSV that we are on. Used for error handling.
+     * @return A VisitParametersContainer storing the given parameters.
+     * @throws ParseException if there are not enough parameters to create a VisitParametersContainer.
+     */
+    private static VisitParametersContainer generateVisitParametersContainer(List<String> dataValues, int lineNumber)
             throws ParseException {
         assert MIN_VISIT_PARAMETERS >= 3;
 
@@ -145,14 +195,14 @@ public class DataGenerator {
         Index locationIndex = ParserUtil.parseIndex(dataValues.get(1));
         LocalDate date = ParserUtil.parseDate(dataValues.get(2));
 
-        return new VisitParameters(personIndex, locationIndex, date);
+        return new VisitParametersContainer(personIndex, locationIndex, date);
     }
 
     /**
      * Generates data values given by the data, delimited by commas.
      * Accurately generates fields which have commas in them.
      *
-     * @param data A string representaion of the object's data.
+     * @param data A string representation of the object's data.
      * @return A list with String fields which would be used to create the required object.
      */
     private static List<String> generateDataValues(String data) {
@@ -190,6 +240,13 @@ public class DataGenerator {
         return dataValues;
     }
 
+    /**
+     * Reads the file at the given file path.
+     *
+     * @param filepath The absolute file path of the file.
+     * @return A scanner containing the file's data.
+     * @throws ParseException if the specified file path is invalid.
+     */
     private static Scanner readFile(String filepath) throws ParseException {
         try {
             Scanner scanner = new Scanner(new File(filepath));
@@ -199,12 +256,17 @@ public class DataGenerator {
         }
     }
 
-    public static class VisitParameters {
+    /**
+     * This class serves as a container for Visits.
+     * The stored parameters will be processed in the
+     * {@code AddVisitsFromCsvCommand}.
+     */
+    public static class VisitParametersContainer {
         private final Index personIndex;
         private final Index locationIndex;
         private final LocalDate date;
 
-        public VisitParameters(Index personIndex, Index locationIndex, LocalDate date) {
+        public VisitParametersContainer(Index personIndex, Index locationIndex, LocalDate date) {
             requireAllNonNull(personIndex, locationIndex, date);
             this.personIndex = personIndex;
             this.locationIndex = locationIndex;

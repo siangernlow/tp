@@ -11,7 +11,7 @@ import java.util.List;
 import static seedu.address.logic.commands.CommandResult.SWITCH_TO_VIEW_VISITS;
 
 public class AddVisitsFromCsvCommand extends AddFromCsvCommand {
-    public AddVisitsFromCsvCommand(List<DataGenerator.VisitParameters> visitsList) {
+    public AddVisitsFromCsvCommand(List<DataGenerator.VisitParametersContainer> visitsList) {
         super();
     }
 
