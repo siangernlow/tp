@@ -11,6 +11,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.QuarantineStatus;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.visit.Visit;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -23,8 +24,8 @@ import java.util.Scanner;
 import java.util.Set;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_DATA_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_FILE_PATH;
+import static seedu.address.commons.core.Messages.MESSAGE_MISSING_DATA_FORMAT;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 /**
@@ -82,7 +83,7 @@ public class DataGenerator {
 
         // Check if enough parameters; 6 compulsory parameters required for adding a Person
         if (dataValues.size() < MIN_PERSON_PARAMETERS) {
-            throw new ParseException(String.format(MESSAGE_INVALID_DATA_FORMAT, lineNumber));
+            throw new ParseException(String.format(MESSAGE_MISSING_DATA_FORMAT, lineNumber));
         }
 
         try {
@@ -144,7 +145,7 @@ public class DataGenerator {
 
         // Check if enough parameters; 2 compulsory parameters required for adding a Location
         if (dataValues.size() < MIN_LOCATION_PARAMETERS) {
-            throw new ParseException(String.format(MESSAGE_INVALID_DATA_FORMAT, lineNumber));
+            throw new ParseException(String.format(MESSAGE_MISSING_DATA_FORMAT, lineNumber));
         }
 
         try {
@@ -199,7 +200,7 @@ public class DataGenerator {
 
         // Check if enough parameters; 3 compulsory parameters required for adding a Visit
         if (dataValues.size() < MIN_VISIT_PARAMETERS) {
-            throw new ParseException(String.format(MESSAGE_INVALID_DATA_FORMAT, lineNumber));
+            throw new ParseException(String.format(MESSAGE_MISSING_DATA_FORMAT, lineNumber));
         }
         try {
             Index personIndex = ParserUtil.parseIndex(dataValues.get(0));
@@ -222,21 +223,19 @@ public class DataGenerator {
     private static List<String> generateDataValues(String data) {
         requireNonNull(data);
         assert !data.isEmpty();
-
         List<String> dataValues = new ArrayList<>();
-
         // As certain fields may contain commas, we cannot simply split the string using a comma separator.
         char[] chars = data.toCharArray();
 
         // If true, then any DEFAULT_SEPARATOR is to be treated as a normal character and not a delimiter.
         boolean isInQuotes = false;
-        StringBuffer currentValue = new StringBuffer();
+        StringBuilder currentValue = new StringBuilder();
 
         for (Character c : chars) {
             // Reached a delimiter, add the currentValue and reset.
             if (c.equals(DEFAULT_SEPARATOR) && !isInQuotes) {
                 dataValues.add(currentValue.toString());
-                currentValue = new StringBuffer();
+                currentValue = new StringBuilder();
                 continue;
             }
 
@@ -249,6 +248,11 @@ public class DataGenerator {
                 continue;
             }
             currentValue.append(c);
+        }
+
+        // Adding the last field
+        if (currentValue.length() > 0) {
+            dataValues.add(currentValue.toString());
         }
 
         return dataValues;
@@ -297,6 +301,22 @@ public class DataGenerator {
 
         public LocalDate getDate() {
             return date;
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (other == this) {
+                return true;
+            }
+
+            if (!(other instanceof VisitParametersContainer)) {
+                return false;
+            }
+
+            VisitParametersContainer otherVisitParametersContainer = (VisitParametersContainer) other;
+            return otherVisitParametersContainer.getPersonIndex().equals(getPersonIndex())
+                    && otherVisitParametersContainer.getLocationIndex().equals(getLocationIndex())
+                    && otherVisitParametersContainer.getDate().equals(getDate());
         }
     }
 }

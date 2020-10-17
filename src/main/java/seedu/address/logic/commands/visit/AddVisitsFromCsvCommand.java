@@ -46,7 +46,7 @@ public class AddVisitsFromCsvCommand extends AddFromCsvCommand {
             Location location = model.getLocationFromIndex(vpc.getLocationIndex());
             Visit visit = new Visit(person, location, vpc.getDate());
 
-            // Duplicate location found
+            // Duplicate visit found
             if (model.hasVisit(visit)) {
                 linesWithDuplicates.append(i + 1).append(" ");
                 continue;
