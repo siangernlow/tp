@@ -7,19 +7,25 @@ import seedu.address.logic.commands.visit.AddVisitsFromCsvCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
-import seedu.address.model.visit.Visit;
 
 import java.util.List;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LIST;
 
+/**
+ * Parses input arguments and creates a new AddFromCsvCommand object.
+ * The created object is a child class of the AddFromCsvCommand class,
+ * handling either adding people, locations or visits depending on the
+ * input arguments.
+ */
 public class AddFromCsvCommandParser implements Parser<AddFromCsvCommand> {
     public static final String CSV_FILE_EXTENSION = ".csv";
     public static final String MESSAGE_INVALID_FILE_EXTENSION = "Invalid file extension."
             + " Ensure that the file has the extension '%1$s'";
     public static final String MESSAGE_INVALID_DATA_TYPE = "That data type is not supported by this command."
             + "\n%1$s";
+
     /**
      * Parses the given {@code String} of arguments in the context of the AddFromCsvCommand
      * and returns a AddFromCsvCommand object for execution.
@@ -56,6 +62,13 @@ public class AddFromCsvCommandParser implements Parser<AddFromCsvCommand> {
         }
     }
 
+    /**
+     * Checks if the file path has the ".csv" extension.
+     *
+     * @param filepath The absolute file path of the file.
+     * @return true if the specified file is a CSV file, false otherwise.
+     * @throws ParseException if the filepath is too short to have a csv extension behind it.
+     */
     private boolean checkIfValidCsvExtension(String filepath) throws ParseException {
         int pathLength = filepath.length();
         int startIndex = pathLength - CSV_FILE_EXTENSION.length();
