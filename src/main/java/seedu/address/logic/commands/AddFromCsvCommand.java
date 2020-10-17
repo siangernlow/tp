@@ -18,5 +18,9 @@ public abstract class AddFromCsvCommand extends Command {
             + "in the respective add functions. Refer to the user guide for more details.\n"
             + "Example: " + COMMAND_WORD + " "
             + "C:/Users/admin/peopleData.csv l/people";
-
+    public static final String MESSAGE_DUPLICATES_NOT_ADDED = "Duplicate %1$s were detected on the "
+            + "following lines:\n"
+            + "%2$s\n "
+            + "and will not be added.";
+    public static final String MESSAGE_SUCCESS = "%d %s successfully added to VirusTracker.";
 }
