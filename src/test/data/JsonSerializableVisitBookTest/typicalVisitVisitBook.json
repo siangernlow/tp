@@ -35,8 +35,8 @@
     "infectionStatus" : "false",
     "idPerson" : "1",
     "tagged" : [ "friends" ],
-    "nameLocation" : "Alice Pauline House",
-    "addressLocation" : "123, Jurong West Ave 6, #08-111",
+    "nameLocation" : "Amy Bee",
+    "addressLocation" : "Block 312, Amy Street 1",
     "idLocation" : "1",
     "dateOfVisit" : "2020-09-12"
   },{

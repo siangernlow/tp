@@ -29,7 +29,7 @@ import static seedu.address.testutil.Assert.assertThrows;
 
 
 public class DataGeneratorTest {
-    private static Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "AddFromCsvCommandTest");
+    private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "AddFromCsvCommandTest");
     private static final String INVALID_FILE_PATH = "validFileNameButFileDoesNotExist.csv";
 
     private static final String VALID_PERSONS_CSV_FILE = TEST_DATA_FOLDER.resolve("PersonsList.csv").toString();
@@ -173,10 +173,11 @@ public class DataGeneratorTest {
                     -> DataGenerator.generateVisitsList(VISITS_LIST_INVALID_DATE_SECOND_ROW));
         }
     }
+
     @Test
     public void generateVisitsList_missingCompulsoryField_throwsParseException() {
-        String expectedErrorMessage = String.format(MESSAGE_MISSING_DATA_FORMAT, 2);
+        String expectedErrorMessage = String.format(MESSAGE_MISSING_DATA_FORMAT, 1);
         assertThrows(ParseException.class, expectedErrorMessage, ()
-                -> DataGenerator.generateLocationsList(LOCATIONS_LIST_MISSING_ADDRESS_SECOND_ROW));
+                -> DataGenerator.generateVisitsList(VISITS_LIST_MISSING_DATE_FIRST_ROW));
     }
 }

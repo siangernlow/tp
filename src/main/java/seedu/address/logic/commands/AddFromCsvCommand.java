@@ -22,5 +22,5 @@ public abstract class AddFromCsvCommand extends Command {
             + "following lines:\n"
             + "%2$s\n "
             + "and will not be added.";
-    public static final String MESSAGE_SUCCESS = "%d %s successfully added to VirusTracker.";
+    public static final String MESSAGE_SUCCESS = "%d %s successfully added to VirusTracker.\n";
 }

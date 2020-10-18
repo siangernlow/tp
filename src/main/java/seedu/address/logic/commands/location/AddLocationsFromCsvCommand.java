@@ -3,6 +3,7 @@ package seedu.address.logic.commands.location;
 import seedu.address.logic.commands.AddFromCsvCommand;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.person.AddPersonsFromCsvCommand;
 import seedu.address.model.Model;
 import seedu.address.model.location.Location;
 
@@ -63,7 +64,8 @@ public class AddLocationsFromCsvCommand extends AddFromCsvCommand {
     private String createSuccessMessage(int numOfUniqueAdditions, String linesWithDuplicates) {
         assert numOfUniqueAdditions <= locationsToAdd.size();
 
-        StringBuilder successMessage = new StringBuilder(String.format(MESSAGE_SUCCESS, numOfUniqueAdditions));
+        StringBuilder successMessage = new StringBuilder(String.format(MESSAGE_SUCCESS, numOfUniqueAdditions,
+                LOCATIONS));
 
         // There are duplicates
         if (numOfUniqueAdditions < locationsToAdd.size()) {
@@ -71,5 +73,12 @@ public class AddLocationsFromCsvCommand extends AddFromCsvCommand {
         }
 
         return successMessage.toString();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AddLocationsFromCsvCommand) // instanceof handles nulls
+                && locationsToAdd.equals(((AddLocationsFromCsvCommand) other).locationsToAdd); // state check
     }
 }

@@ -39,7 +39,7 @@ public class TypicalVisits {
     public static final Visit SECOND_VISIT = new VisitBuilder().withPerson(AMY)
             .withLocation(AMY_LOCATION).withDate("2020-09-12").build();
     public static final Visit THIRD_VISIT = new VisitBuilder().withPerson(ALICE)
-            .withLocation(ALICE_LOCATION).withDate("2020-09-12").build();
+            .withLocation(AMY_LOCATION).withDate("2020-09-12").build();
     public static final Visit FOURTH_VISIT = new VisitBuilder().withPerson(BOB)
             .withLocation(BOB_LOCATION).withDate("2020-09-12").build();
     public static final Visit FIFTH_VISIT = new VisitBuilder().withPerson(CARL)

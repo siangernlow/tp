@@ -2,6 +2,7 @@ package seedu.address.testutil;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.parser.DataGenerator;
+import seedu.address.model.visit.Visit;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -49,7 +50,24 @@ public class TypicalVisitParametersContainers {
                 SEVENTH_VPC, EIGHTH_VPC, NINTH_VPC));
     }
 
-    private static class VpcBuilder {
+    public static List<DataGenerator.VisitParametersContainer> getVisitsAsVpc(List<Visit> visits) {
+        assert visits.size() > 0;
+
+        List<DataGenerator.VisitParametersContainer> visitParametersContainerList = new ArrayList<>();
+        for (Visit visit : visits) {
+            visitParametersContainerList.add(getVisitAsVpc(visit));
+        }
+        return visitParametersContainerList;
+    }
+
+    private static DataGenerator.VisitParametersContainer getVisitAsVpc(Visit visit) {
+        Index personIndex = visit.getPerson().getId();
+        Index locationIndex = visit.getLocation().getId();
+        LocalDate date = visit.getDate();
+        return new DataGenerator.VisitParametersContainer(personIndex, locationIndex, date);
+    }
+
+    public static class VpcBuilder {
         private static DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         public static final Index DEFAULT_PERSON_INDEX = INDEX_FIRST;

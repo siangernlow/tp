@@ -39,7 +39,12 @@ public class AddFromCsvCommandParser implements Parser<AddFromCsvCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddFromCsvCommand.MESSAGE_USAGE));
         }
 
-        ListType listType = ParserUtil.parseListType(argMultimap.getValue(PREFIX_LIST).get());
+        ListType listType;
+        try {
+            listType = ParserUtil.parseListType(argMultimap.getValue(PREFIX_LIST).get());
+        } catch (ParseException pe) {
+            throw new ParseException(String.format(MESSAGE_INVALID_DATA_TYPE, AddFromCsvCommand.MESSAGE_USAGE));
+        }
         String filepath = argMultimap.getPreamble();
 
         if (!checkIfValidCsvExtension(filepath)) {

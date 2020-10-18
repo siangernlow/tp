@@ -2,6 +2,7 @@ package seedu.address.logic.commands.person;
 
 import seedu.address.logic.commands.AddFromCsvCommand;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
@@ -72,5 +73,12 @@ public class AddPersonsFromCsvCommand extends AddFromCsvCommand {
         }
 
         return successMessage.toString();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AddPersonsFromCsvCommand) // instanceof handles nulls
+                && peopleToAdd.equals(((AddPersonsFromCsvCommand) other).peopleToAdd); // state check
     }
 }
