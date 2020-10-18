@@ -27,7 +27,7 @@ public class TypicalLocations {
     public static final Location ELLE_LOCATION = new LocationBuilder().withName("Elle Meyer House")
             .withAddress("michegan ave").withId("L567E").build();
     public static final Location FIONA_LOCATION = new LocationBuilder().withName("Fiona Kunz House")
-            .withAddress("little tokyo").withId("L678f").build();
+            .withAddress("little tokyo").withId("L678F").build();
     public static final Location GEORGE_LOCATION = new LocationBuilder().withName("George Best House")
             .withAddress("4th street").withId("L789G").build();
 

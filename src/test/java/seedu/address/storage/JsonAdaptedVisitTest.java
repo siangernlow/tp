@@ -12,14 +12,14 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.commons.core.index.exceptions.InvalidIndexException;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.attribute.Name;
 
 
 
 public class JsonAdaptedVisitTest {
-    private static final String INVALID_ID_LOCATION = "0";
+    private static final String INVALID_ID_LOCATION = " 0";
     private static final String INVALID_NAME_PERSON = "R@chel";
     private static final String VALID_NAME_LOCATION = BENSON_LOCATION.getName().toString();
     private static final String VALID_ADDRESS_LOCATION = BENSON_LOCATION.getAddress().toString();
@@ -62,8 +62,8 @@ public class JsonAdaptedVisitTest {
                 VALID_NAME_PERSON, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS_PERSON,
                 VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON, VALID_TAGS,
                 VALID_NAME_LOCATION, VALID_ADDRESS_LOCATION, INVALID_ID_LOCATION, VALID_DATE);
-        String expectedMessage = new InvalidIndexException().getMessage();
-        assertThrows(InvalidIndexException.class, expectedMessage, visit::toModelType);
+        String expectedMessage = Id.MESSAGE_CONSTRAINTS;
+        assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
     }
 
     @Test

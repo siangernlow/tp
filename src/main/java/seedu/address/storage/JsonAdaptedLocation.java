@@ -62,7 +62,7 @@ public class JsonAdaptedLocation {
         final Address modelAddress = new Address(address);
 
         if (id == null) {
-            throw new IllegalValueException(MISSING_FIELD_MESSAGE_FORMAT);
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Id.class.getSimpleName()));
         }
         if (!Id.isValidId(id)) {
             throw new IllegalValueException(Id.MESSAGE_CONSTRAINTS);
