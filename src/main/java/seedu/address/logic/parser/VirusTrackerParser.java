@@ -6,6 +6,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import seedu.address.logic.commands.AddFromCsvCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.ExitCommand;
@@ -105,6 +106,9 @@ public class VirusTrackerParser {
 
         case DeleteVisitsCommand.COMMAND_WORD:
             return new DeleteVisitsCommandParser().parse(arguments);
+
+        case AddFromCsvCommand.COMMAND_WORD:
+            return new AddFromCsvCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

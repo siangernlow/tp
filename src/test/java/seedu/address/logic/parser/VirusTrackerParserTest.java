@@ -11,6 +11,8 @@ import static seedu.address.testutil.VisitBuilder.DEFAULT_DATE;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_LOCATION_INDEX;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_PERSON_INDEX;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -19,19 +21,23 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.commands.AddFromCsvCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.location.AddLocationCommand;
+import seedu.address.logic.commands.location.AddLocationsFromCsvCommand;
 import seedu.address.logic.commands.location.DeleteLocationCommand;
 import seedu.address.logic.commands.location.EditLocationCommand;
 import seedu.address.logic.commands.location.EditLocationCommand.EditLocationDescriptor;
 import seedu.address.logic.commands.person.AddPersonCommand;
+import seedu.address.logic.commands.person.AddPersonsFromCsvCommand;
 import seedu.address.logic.commands.person.DeletePersonCommand;
 import seedu.address.logic.commands.person.EditPersonCommand;
 import seedu.address.logic.commands.person.FindPersonCommand;
 import seedu.address.logic.commands.visit.AddVisitCommand;
+import seedu.address.logic.commands.visit.AddVisitsFromCsvCommand;
 import seedu.address.logic.commands.visit.DeleteVisitsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.location.Location;
@@ -48,6 +54,8 @@ import seedu.address.testutil.VisitBuilder;
 import seedu.address.testutil.VisitUtil;
 
 public class VirusTrackerParserTest {
+    private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "AddFromCsvCommandTest");
+    private static final String EMPTY_CSV_FILE = TEST_DATA_FOLDER.resolve("EmptyCsvFile.csv").toString();
 
     private final VirusTrackerParser parser = new VirusTrackerParser();
 
@@ -148,6 +156,14 @@ public class VirusTrackerParserTest {
         assertTrue(parser.parseCommand(commandAndPrefix + "people") instanceof ListCommand);
         assertTrue(parser.parseCommand(commandAndPrefix + "locations") instanceof ListCommand);
         assertTrue(parser.parseCommand(commandAndPrefix + "visits") instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_addFromCsv() throws Exception {
+        String commandAndPrefix = AddFromCsvCommand.COMMAND_WORD + " " + EMPTY_CSV_FILE + " " + PREFIX_LIST;
+        assertTrue(parser.parseCommand(commandAndPrefix + "people") instanceof AddPersonsFromCsvCommand);
+        assertTrue(parser.parseCommand(commandAndPrefix + "locations") instanceof AddLocationsFromCsvCommand);
+        assertTrue(parser.parseCommand(commandAndPrefix + "visits") instanceof AddVisitsFromCsvCommand);
     }
 
     @Test
