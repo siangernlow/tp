@@ -58,37 +58,31 @@ public class AddPersonCommandParserTest {
         Person expectedPerson = new PersonBuilder(BOB).withTags(VALID_TAG_FRIEND).build();
 
         // whitespace only preamble
-        Person.setPersonCount(expectedPerson.getId().getOneBased());
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + QUARANTINE_STATUS_DESC_BOB + ADDRESS_DESC_BOB + INFECTION_DESC_BOB + TAG_DESC_FRIEND,
                 new AddPersonCommand(expectedPerson));
 
         // multiple names - last name accepted
-        Person.setPersonCount(expectedPerson.getId().getOneBased());
         assertParseSuccess(parser, NAME_DESC_AMY + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + QUARANTINE_STATUS_DESC_BOB + ADDRESS_DESC_BOB + INFECTION_DESC_BOB + TAG_DESC_FRIEND,
                 new AddPersonCommand(expectedPerson));
 
         // multiple phones - last phone accepted
-        Person.setPersonCount(expectedPerson.getId().getOneBased());
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + QUARANTINE_STATUS_DESC_BOB + ADDRESS_DESC_BOB + INFECTION_DESC_BOB + TAG_DESC_FRIEND,
                 new AddPersonCommand(expectedPerson));
 
         // multiple emails - last email accepted
-        Person.setPersonCount(expectedPerson.getId().getOneBased());
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_AMY + EMAIL_DESC_BOB
                 + QUARANTINE_STATUS_DESC_BOB + ADDRESS_DESC_BOB + INFECTION_DESC_BOB + TAG_DESC_FRIEND,
                 new AddPersonCommand(expectedPerson));
 
         // multiple addresses - last address accepted
-        Person.setPersonCount(expectedPerson.getId().getOneBased());
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_AMY
                 + QUARANTINE_STATUS_DESC_BOB + ADDRESS_DESC_BOB + INFECTION_DESC_BOB + TAG_DESC_FRIEND,
                 new AddPersonCommand(expectedPerson));
 
         // multiple quarantine statuses - last quarantine status accepted
-        Person.setPersonCount(expectedPerson.getId().getOneBased());
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + QUARANTINE_STATUS_DESC_AMY
                 + QUARANTINE_STATUS_DESC_BOB + ADDRESS_DESC_BOB + INFECTION_DESC_BOB + TAG_DESC_FRIEND,
                 new AddPersonCommand(expectedPerson));
@@ -96,7 +90,6 @@ public class AddPersonCommandParserTest {
         // multiple tags - all accepted
         Person expectedPersonMultipleTags = new PersonBuilder(BOB).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
                 .build();
-        Person.setPersonCount(expectedPersonMultipleTags.getId().getOneBased());
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
                 + QUARANTINE_STATUS_DESC_BOB + INFECTION_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 new AddPersonCommand(expectedPersonMultipleTags));
@@ -106,7 +99,6 @@ public class AddPersonCommandParserTest {
     public void parse_optionalFieldsMissing_success() {
         // zero tags
         Person expectedPerson = new PersonBuilder(AMY).withTags().build();
-        Person.setPersonCount(expectedPerson.getId().getOneBased());
         assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + QUARANTINE_STATUS_DESC_AMY + INFECTION_DESC_AMY, new AddPersonCommand(expectedPerson));
     }

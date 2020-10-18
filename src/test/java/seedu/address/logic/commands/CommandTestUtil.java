@@ -10,11 +10,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_QUARANTINE_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
-import static seedu.address.testutil.TypicalIndexes.INDEX_NINTH;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
-import static seedu.address.testutil.TypicalIndexes.INDEX_TENTH;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,12 +51,12 @@ public class CommandTestUtil {
     public static final String VALID_INFECTION_STATUS_BOB = "true";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
-    public static final Index VALID_ID_AMY_LOCATION = INDEX_SECOND;
-    public static final Index VALID_ID_BOB_LOCATION = INDEX_THIRD;
-    public static final Index VALID_ID_AMY = INDEX_NINTH;
-    public static final Index VALID_ID_BOB = INDEX_TENTH;
-    public static final Index VALID_ID_NUS = INDEX_FIRST;
-    public static final Index VALID_ID_VIVOCITY = INDEX_SECOND;
+    public static final String VALID_ID_AMY_LOCATION = "L234B";
+    public static final String VALID_ID_BOB_LOCATION = "L345C";
+    public static final String VALID_ID_AMY = "S91011I";
+    public static final String VALID_ID_BOB = "S101112J";
+    public static final String VALID_ID_NUS = "L123A";
+    public static final String VALID_ID_VIVOCITY = "L234B";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;

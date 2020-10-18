@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
 import seedu.address.model.visit.Visit;
@@ -20,8 +21,10 @@ public class VisitBuilder {
     public static final Person DEFAULT_PERSON = BENSON;
     public static final Location DEFAULT_LOCATION = BENSON_LOCATION;
     public static final LocalDate DEFAULT_DATE;
-    public static final Index DEFAULT_PERSON_INDEX = DEFAULT_PERSON.getId();
-    public static final Index DEFAULT_LOCATION_INDEX = DEFAULT_LOCATION.getId();
+    public static final Id DEFAULT_PERSON_ID = DEFAULT_PERSON.getId();
+    public static final Index DEFAULT_PERSON_INDEX = Index.fromOneBased(2);
+    public static final Id DEFAULT_LOCATION_ID = DEFAULT_LOCATION.getId();
+    public static final Index DEFAULT_LOCATION_INDEX = Index.fromOneBased(2);
 
     static {
         DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");

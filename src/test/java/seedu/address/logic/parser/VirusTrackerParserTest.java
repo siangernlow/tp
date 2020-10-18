@@ -54,7 +54,6 @@ public class VirusTrackerParserTest {
     @Test
     public void parseCommand_add() throws Exception {
         Person person = new PersonBuilder().build();
-        Person.setPersonCount(person.getId().getOneBased());
         AddPersonCommand command = (AddPersonCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
         assertEquals(new AddPersonCommand(person), command);
     }
@@ -62,7 +61,6 @@ public class VirusTrackerParserTest {
     @Test
     public void parseCommand_addLocation() throws Exception {
         Location location = new LocationBuilder().build();
-        Location.setLocationCount(1);
         AddLocationCommand command =
                 (AddLocationCommand) parser.parseCommand(LocationUtil.getAddLocationCommand(location));
         assertEquals(new AddLocationCommand(location), command);

@@ -10,6 +10,8 @@ import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FOURTH;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SIXTH;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD;
 import static seedu.address.testutil.TypicalLocations.FIONA_LOCATION;
 import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
@@ -124,7 +126,7 @@ public class AddVisitCommandTest {
         Visit visitWithInfected = new VisitBuilder().withPerson(INFECTED_PERSON).build();
         expectedModel.addVisit(visitWithInfected);
 
-        AddVisitCommand actualCommand = new AddVisitCommand(INFECTED_PERSON.getId(), DEFAULT_LOCATION_INDEX,
+        AddVisitCommand actualCommand = new AddVisitCommand(INDEX_FOURTH, INDEX_FOURTH,
                 DEFAULT_DATE);
         String expectedMessage = String.format(AddVisitCommand.MESSAGE_INFECTED_MADE_VISIT, visitWithInfected);
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
@@ -143,7 +145,7 @@ public class AddVisitCommandTest {
         Visit visitWithQuarantined = new VisitBuilder().withPerson(QUARANTINED_PERSON).build();
         expectedModel.addVisit(visitWithQuarantined);
 
-        AddVisitCommand actualCommand = new AddVisitCommand(QUARANTINED_PERSON.getId(), DEFAULT_LOCATION_INDEX,
+        AddVisitCommand actualCommand = new AddVisitCommand(INDEX_FIRST, INDEX_FIRST,
                 DEFAULT_DATE);
         String expectedMessage = String.format(AddVisitCommand.MESSAGE_QUARANTINED_MADE_VISIT, visitWithQuarantined);
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
@@ -163,8 +165,7 @@ public class AddVisitCommandTest {
                 .withLocation(FIONA_LOCATION).build();
         expectedModel.addVisit(visitWithInfectedAndQuarantined);
 
-        AddVisitCommand actualCommand = new AddVisitCommand(INFECTED_AND_QUARANTINED_PERSON.getId(),
-                FIONA_LOCATION.getId(), DEFAULT_DATE);
+        AddVisitCommand actualCommand = new AddVisitCommand(INDEX_SECOND, INDEX_SIXTH, DEFAULT_DATE);
         String expectedMessage = String.format(AddVisitCommand.MESSAGE_INFECTED_AND_QUARANTINED_MADE_VISIT,
                 visitWithInfectedAndQuarantined);
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
@@ -187,8 +188,7 @@ public class AddVisitCommandTest {
         Visit visitWithInfectedAndQuarantined = new VisitBuilder().withPerson(INFECTED_AND_QUARANTINED_PERSON).build();
         expectedModel.addVisit(visitWithInfectedAndQuarantined);
 
-        AddVisitCommand actualCommand = new AddVisitCommand(INFECTED_AND_QUARANTINED_PERSON.getId(),
-                DEFAULT_LOCATION_INDEX, DEFAULT_DATE);
+        AddVisitCommand actualCommand = new AddVisitCommand(INDEX_SECOND, DEFAULT_LOCATION_INDEX, DEFAULT_DATE);
         String expectedMessage = String.format(AddVisitCommand.MESSAGE_NO_WARNING,
                 visitWithInfectedAndQuarantined);
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,

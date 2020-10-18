@@ -101,7 +101,6 @@ public class UniquePersonListTest {
     @Test
     public void add_unidentifiablePerson_throwsPersonNotIdentifiableException() {
         uniquePersonList.add(ALICE);
-        Person.setPersonCount(ALICE.getId().getOneBased());
         Person unidentifiablePerson = new PersonBuilder(ALICE).withName(VALID_NAME_BOB)
                 .withAddress(VALID_ADDRESS_BOB).withEmail(VALID_EMAIL_BOB)
                 .withInfectionStatus(VALID_INFECTION_STATUS_BOB)
@@ -164,7 +163,7 @@ public class UniquePersonListTest {
     public void setPerson_editedPersonIsNotIdentifiable_throwsPersonNotIdentifiableException() {
         uniquePersonList.add(ALICE);
         uniquePersonList.add(BOB);
-        Person editedPerson = new PersonBuilder(AMY).withId(ALICE.getId()).build();
+        Person editedPerson = new PersonBuilder(AMY).withId("S123A").build();
         assertThrows(PersonNotIdentifiableException.class, () -> uniquePersonList.setPerson(BOB, editedPerson));
     }
 

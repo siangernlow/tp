@@ -1,8 +1,8 @@
 package seedu.address.testutil;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.location.EditLocationCommand.EditLocationDescriptor;
 import seedu.address.model.attribute.Address;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.attribute.Name;
 import seedu.address.model.location.Location;
 
@@ -51,8 +51,8 @@ public class EditLocationDescriptorBuilder {
     /**
      * Sets the {@code id} of the {@code EditLocationDescriptor} that we are building.
      */
-    public EditLocationDescriptorBuilder withId(Index id) {
-        descriptor.setId(id);
+    public EditLocationDescriptorBuilder withId(String id) {
+        descriptor.setId(new Id(id));
         return this;
     }
 

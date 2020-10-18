@@ -119,7 +119,7 @@ public class EditLocationCommand extends Command {
     public static class EditLocationDescriptor {
         private Name name;
         private Address address;
-        private Index id;
+        private Id id;
 
         public EditLocationDescriptor() {}
 
@@ -155,11 +155,11 @@ public class EditLocationCommand extends Command {
             return Optional.ofNullable(address);
         }
 
-        public void setId(Index id) {
+        public void setId(Id id) {
             this.id = id;
         }
 
-        public Optional<Index> getId() {
+        public Optional<Id> getId() {
             return Optional.ofNullable(id);
         }
 

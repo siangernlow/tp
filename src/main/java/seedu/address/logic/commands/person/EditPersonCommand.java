@@ -147,7 +147,7 @@ public class EditPersonCommand extends Command {
         private Address address;
         private QuarantineStatus quarantineStatus;
         private InfectionStatus infectionStatus;
-        private Index id;
+        private Id id;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -222,11 +222,11 @@ public class EditPersonCommand extends Command {
             return Optional.ofNullable(infectionStatus);
         }
 
-        public void setId(Index id) {
+        public void setId(Id id) {
             this.id = id;
         }
 
-        public Optional<Index> getId() {
+        public Optional<Id> getId() {
             return Optional.ofNullable(id);
         }
 
