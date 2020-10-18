@@ -7,8 +7,8 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.core.index.exceptions.InvalidIndexException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.location.Location;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Name;
+import seedu.address.model.attribute.Address;
+import seedu.address.model.attribute.Name;
 
 /**
  * Jackson-friendly version of {@link Location}.

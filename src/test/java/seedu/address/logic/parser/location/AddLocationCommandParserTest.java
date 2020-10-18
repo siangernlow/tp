@@ -19,8 +19,8 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.location.AddLocationCommand;
 import seedu.address.model.location.Location;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Name;
+import seedu.address.model.attribute.Address;
+import seedu.address.model.attribute.Name;
 import seedu.address.testutil.LocationBuilder;
 
 public class AddLocationCommandParserTest {
