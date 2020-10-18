@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.List;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.person.Person;
 
 /**
  * Wraps all data at the visit-book level
@@ -90,6 +91,13 @@ public class VisitBook implements ReadOnlyVisitBook {
      */
     public void removeVisit(Visit key) {
         visits.remove(key);
+    }
+
+    /**
+     * Removes all visits that contain the person as given in the argument
+     */
+    public void deleteVisitsWithPerson(Person personToDelete) {
+        visits.removeVisitsWithPerson(personToDelete);
     }
 
     //// util methods

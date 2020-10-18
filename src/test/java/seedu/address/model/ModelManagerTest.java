@@ -9,8 +9,15 @@ import static seedu.address.testutil.TypicalLocations.ALICE_LOCATION;
 import static seedu.address.testutil.TypicalLocations.BENSON_LOCATION;
 import static seedu.address.testutil.TypicalLocations.CARL_LOCATION;
 import static seedu.address.testutil.TypicalLocations.DANIEL_LOCATION;
+import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.CARL;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalVisits.FIFTH_VISIT;
+import static seedu.address.testutil.TypicalVisits.SECOND_VISIT;
+import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -169,6 +176,22 @@ public class ModelManagerTest {
                 .withLocation(ALICE_LOCATION).withDate("2020-02-09").build();
         modelManager.addVisit(sampleA);
         assertTrue(modelManager.hasVisit(sampleA));
+    }
+
+    @Test
+    public void deleteVisitsWithPerson_success() {
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
+                getTypicalVisitBook(), new UserPrefs());
+        Model actualModel = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
+                getTypicalVisitBook(), new UserPrefs());
+
+        expectedModel.deleteVisit(SECOND_VISIT);
+        actualModel.deleteVisitsWithPerson(AMY);
+        assertEquals(expectedModel, actualModel);
+
+        expectedModel.deleteVisit(FIFTH_VISIT);
+        actualModel.deleteVisitsWithPerson(CARL);
+        assertEquals(expectedModel, actualModel);
     }
 
     @Test

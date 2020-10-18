@@ -266,6 +266,11 @@ public class ModelManager implements Model {
         visitBook.removeVisit(visit);
     }
 
+    @Override
+    public void deleteVisitsWithPerson(Person personToDelete) {
+        visitBook.deleteVisitsWithPerson(personToDelete);
+    }
+
     /**
      * Returns an unmodifiable view of the list of {@code Visit} backed by the internal list of
      * {@code versionedVisitBook}

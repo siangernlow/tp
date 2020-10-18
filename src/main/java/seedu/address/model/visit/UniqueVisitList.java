@@ -9,6 +9,7 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.location.exceptions.DuplicateLocationException;
+import seedu.address.model.person.Person;
 import seedu.address.model.visit.exceptions.DuplicateVisitException;
 import seedu.address.model.visit.exceptions.VisitNotFoundException;
 
@@ -57,6 +58,15 @@ public class UniqueVisitList implements Iterable<Visit> {
         if (!internalList.remove(toRemove)) {
             throw new VisitNotFoundException();
         }
+    }
+
+    /**
+     * Removes all Visits that contain the person as given in the argument
+     */
+    public void removeVisitsWithPerson(Person personToDelete) {
+        requireNonNull(personToDelete);
+
+        internalList.removeIf(visit -> visit.isSamePerson(personToDelete));
     }
 
     /**

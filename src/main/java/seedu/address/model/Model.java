@@ -194,6 +194,11 @@ public interface Model {
      */
     void deleteVisit(Visit visit);
 
+    /**
+     * Deletes all visits that contain the person as given in the argument
+     */
+    void deleteVisitsWithPerson(Person personToDelete);
+
     /** Returns an unmodifiable view of the filtered visit list */
     ObservableList<Visit> getFilteredVisitList();
 
