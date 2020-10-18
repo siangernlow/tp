@@ -25,6 +25,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.attribute.Address;
 import seedu.address.model.attribute.Email;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.attribute.InfectionStatus;
 import seedu.address.model.attribute.Name;
 import seedu.address.model.attribute.Phone;
@@ -110,11 +111,11 @@ public class EditPersonCommand extends Command {
                 .orElse(personToEdit.getQuarantineStatus());
         InfectionStatus updatedInfectionStatus = editPersonDescriptor.getInfectionStatus()
                                             .orElse(personToEdit.getInfectionStatus());
-        Index updatedId = personToEdit.getId();
+        Id updatedId = personToEdit.getId();
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
-                updatedQuarantineStatus, updatedInfectionStatus, updatedId, updatedTags);
+        return new Person(updatedId, updatedName, updatedPhone, updatedEmail, updatedAddress,
+                updatedQuarantineStatus, updatedInfectionStatus, updatedTags);
     }
 
     @Override

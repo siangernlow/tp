@@ -16,6 +16,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.attribute.Address;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.attribute.Name;
 import seedu.address.model.location.Location;
 
@@ -88,9 +89,9 @@ public class EditLocationCommand extends Command {
 
         Name updatedName = editLocationDescriptor.getName().orElse(locationToEdit.getName());
         Address updatedAddress = editLocationDescriptor.getAddress().orElse(locationToEdit.getAddress());
-        Index updatedId = locationToEdit.getId();
+        Id updatedId = locationToEdit.getId();
 
-        return new Location(updatedName, updatedAddress, updatedId);
+        return new Location(updatedId, updatedName, updatedAddress);
     }
 
     @Override
