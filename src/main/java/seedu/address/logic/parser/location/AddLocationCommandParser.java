@@ -14,9 +14,10 @@ import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.location.Location;
 import seedu.address.model.attribute.Address;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.attribute.Name;
+import seedu.address.model.location.Location;
 
 /**
  * Parses input arguments and creates a new AddLocationCommand object
@@ -40,7 +41,7 @@ public class AddLocationCommandParser implements Parser<AddLocationCommand> {
 
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
-        String id = argMultimap.getValue(PREFIX_LOCATION_ID).get();
+        Id id = ParserUtil.parseId(argMultimap.getValue(PREFIX_LOCATION_ID).get());
 
         Location location = new Location(id, name, address);
 

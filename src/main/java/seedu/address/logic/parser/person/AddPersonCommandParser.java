@@ -22,12 +22,13 @@ import seedu.address.logic.parser.Prefix;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.attribute.Address;
 import seedu.address.model.attribute.Email;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.attribute.InfectionStatus;
 import seedu.address.model.attribute.Name;
-import seedu.address.model.person.Person;
 import seedu.address.model.attribute.Phone;
 import seedu.address.model.attribute.QuarantineStatus;
 import seedu.address.model.attribute.Tag;
+import seedu.address.model.person.Person;
 
 /**
  * Parses input arguments and creates a new AddPersonCommand object
@@ -49,7 +50,7 @@ public class AddPersonCommandParser implements Parser<AddPersonCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPersonCommand.MESSAGE_USAGE));
         }
 
-        String id = argMultimap.getValue(PREFIX_PERSON_ID).get();
+        Id id = ParserUtil.parseId(argMultimap.getValue(PREFIX_PERSON_ID).get());
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());

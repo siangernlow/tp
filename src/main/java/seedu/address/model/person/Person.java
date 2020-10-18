@@ -9,6 +9,7 @@ import java.util.Set;
 
 import seedu.address.model.attribute.Address;
 import seedu.address.model.attribute.Email;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.attribute.InfectionStatus;
 import seedu.address.model.attribute.Name;
 import seedu.address.model.attribute.Phone;
@@ -25,7 +26,7 @@ public class Person {
     private final Name name;
     private final Phone phone;
     private final Email email;
-    private final String id;
+    private final Id id;
 
     // Data fields
     private final Address address;
@@ -37,7 +38,7 @@ public class Person {
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, QuarantineStatus quarantineStatus,
-                  InfectionStatus infectionStatus, String id, Set<Tag> tags) {
+                  InfectionStatus infectionStatus, Id id, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, quarantineStatus, infectionStatus, id, tags);
 
         this.name = name;
@@ -74,7 +75,7 @@ public class Person {
         return infectionStatus;
     }
 
-    public String getId() {
+    public Id getId() {
         return id;
     }
 

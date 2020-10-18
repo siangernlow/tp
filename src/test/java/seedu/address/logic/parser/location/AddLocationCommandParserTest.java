@@ -18,9 +18,9 @@ import static seedu.address.testutil.TypicalLocations.BOB_LOCATION;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.location.AddLocationCommand;
-import seedu.address.model.location.Location;
 import seedu.address.model.attribute.Address;
 import seedu.address.model.attribute.Name;
+import seedu.address.model.location.Location;
 import seedu.address.testutil.LocationBuilder;
 
 public class AddLocationCommandParserTest {

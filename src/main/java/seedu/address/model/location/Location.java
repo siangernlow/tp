@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.Objects;
 
 import seedu.address.model.attribute.Address;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.attribute.Name;
 
 /**
@@ -18,12 +19,12 @@ public class Location {
 
     // Data fields
     private final Address address;
-    private final String id;
+    private final Id id;
 
     /**
      * Every field must be present and not null. Id must be unique.
      */
-    public Location(String id, Name name, Address address) {
+    public Location(Id id, Name name, Address address) {
         requireAllNonNull(name, address, id);
 
         this.name = name;
@@ -39,7 +40,7 @@ public class Location {
         return address;
     }
 
-    public String getId() {
+    public Id getId() {
         return id;
     }
 

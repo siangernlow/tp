@@ -27,10 +27,10 @@ import seedu.address.model.attribute.Address;
 import seedu.address.model.attribute.Email;
 import seedu.address.model.attribute.InfectionStatus;
 import seedu.address.model.attribute.Name;
-import seedu.address.model.person.Person;
 import seedu.address.model.attribute.Phone;
 import seedu.address.model.attribute.QuarantineStatus;
 import seedu.address.model.attribute.Tag;
+import seedu.address.model.person.Person;
 
 /**
  * Edits the details of an existing person in the address book.

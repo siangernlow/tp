@@ -2,9 +2,10 @@ package seedu.address.testutil;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.location.EditLocationCommand.EditLocationDescriptor;
-import seedu.address.model.location.Location;
 import seedu.address.model.attribute.Address;
 import seedu.address.model.attribute.Name;
+import seedu.address.model.location.Location;
+
 
 /**
  * A utility class to help with building EditLocationDescriptor objects.

@@ -12,8 +12,8 @@ import java.util.Set;
 
 import seedu.address.logic.commands.person.AddPersonCommand;
 import seedu.address.logic.commands.person.EditPersonCommand.EditPersonDescriptor;
-import seedu.address.model.person.Person;
 import seedu.address.model.attribute.Tag;
+import seedu.address.model.person.Person;
 
 /**
  * A utility class for Person.
