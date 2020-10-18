@@ -9,13 +9,11 @@ import java.util.regex.Pattern;
 import seedu.address.logic.commands.AddFromCsvCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.GenerateLocationsCommand;
 import seedu.address.logic.commands.GeneratePeopleCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.location.AddLocationCommand;
 import seedu.address.logic.commands.location.DeleteLocationCommand;
 import seedu.address.logic.commands.location.EditLocationCommand;
@@ -35,7 +33,6 @@ import seedu.address.logic.parser.person.EditPersonCommandParser;
 import seedu.address.logic.parser.person.FindPersonCommandParser;
 import seedu.address.logic.parser.visit.AddVisitCommandParser;
 import seedu.address.logic.parser.visit.DeleteVisitsCommandParser;
-import seedu.address.model.Model;
 
 /**
  * Parses user input.

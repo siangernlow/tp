@@ -3,7 +3,6 @@ package seedu.address.testutil;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIFTH;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
-import static seedu.address.testutil.TypicalLocations.ALICE_LOCATION;
 import static seedu.address.testutil.TypicalLocations.AMY_LOCATION;
 import static seedu.address.testutil.TypicalLocations.BENSON_LOCATION;
 import static seedu.address.testutil.TypicalLocations.BOB_LOCATION;

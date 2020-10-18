@@ -1,5 +1,10 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LIST;
+
+import java.util.List;
+
 import seedu.address.logic.commands.AddFromCsvCommand;
 import seedu.address.logic.commands.location.AddLocationsFromCsvCommand;
 import seedu.address.logic.commands.person.AddPersonsFromCsvCommand;
@@ -7,11 +12,6 @@ import seedu.address.logic.commands.visit.AddVisitsFromCsvCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
-
-import java.util.List;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_LIST;
 
 /**
  * Parses input arguments and creates a new AddFromCsvCommand object.

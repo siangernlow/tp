@@ -1,17 +1,9 @@
 package seedu.address.logic.parser;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.location.Location;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.InfectionStatus;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.QuarantineStatus;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.visit.Visit;
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_FILE_PATH;
+import static seedu.address.commons.core.Messages.MESSAGE_MISSING_DATA_FORMAT;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -23,10 +15,20 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_FILE_PATH;
-import static seedu.address.commons.core.Messages.MESSAGE_MISSING_DATA_FORMAT;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.location.Location;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.InfectionStatus;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.QuarantineStatus;
+import seedu.address.model.tag.Tag;
+
+
+
 
 /**
  * Generates objects using data provided in CSV files.
@@ -154,7 +156,7 @@ public class DataGenerator {
 
             return new Location(name, address);
         } catch (ParseException pe) {
-                throw new ParseException(String.format(INVALID_ROW_FORMAT, lineNumber, pe.getMessage()));
+            throw new ParseException(String.format(INVALID_ROW_FORMAT, lineNumber, pe.getMessage()));
         }
     }
 
@@ -284,6 +286,13 @@ public class DataGenerator {
         private final Index locationIndex;
         private final LocalDate date;
 
+        /**
+         * Creates a VisitParametersContainer object from the given args.
+         *
+         * @param personIndex The index of the person as viewed in the last displayed list.
+         * @param locationIndex The index of a location as viewed in the last displayed list.
+         * @param date The date of the visit.
+         */
         public VisitParametersContainer(Index personIndex, Index locationIndex, LocalDate date) {
             requireAllNonNull(personIndex, locationIndex, date);
             this.personIndex = personIndex;

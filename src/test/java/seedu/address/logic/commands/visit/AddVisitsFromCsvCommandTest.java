@@ -1,22 +1,5 @@
 package seedu.address.logic.commands.visit;
 
-import org.junit.jupiter.api.Test;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.DataGenerator;
-import seedu.address.model.ModelStub;
-import seedu.address.model.location.Location;
-import seedu.address.model.person.Person;
-import seedu.address.model.visit.Visit;
-import seedu.address.testutil.TypicalVisitParametersContainers;
-import seedu.address.testutil.TypicalVisits;
-import seedu.address.testutil.VisitBuilder;
-
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -28,6 +11,26 @@ import static seedu.address.logic.commands.visit.AddVisitsFromCsvCommand.VISITS;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalVisits.FIRST_VISIT;
 import static seedu.address.testutil.TypicalVisits.SECOND_VISIT;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.DataGenerator;
+import seedu.address.model.ModelStub;
+import seedu.address.model.location.Location;
+import seedu.address.model.person.Person;
+import seedu.address.model.visit.Visit;
+import seedu.address.testutil.TypicalVisitParametersContainers;
+import seedu.address.testutil.TypicalVisits;
+
+
+
+
 
 public class AddVisitsFromCsvCommandTest {
 
@@ -68,8 +71,8 @@ public class AddVisitsFromCsvCommandTest {
         List<DataGenerator.VisitParametersContainer> visitsToAdd = new ArrayList<>();
 
         AddVisitsFromCsvCommand actualCommand = new AddVisitsFromCsvCommand(visitsToAdd);
-        assertThrows(CommandException.class, MESSAGE_EMPTY_LIST,
-                () -> actualCommand.execute(model));
+        assertThrows(CommandException.class, MESSAGE_EMPTY_LIST, ()
+            -> actualCommand.execute(model));
     }
 
     @Test
@@ -146,7 +149,7 @@ public class AddVisitsFromCsvCommandTest {
      * A Model stub that always accepts the visit being added.
      */
     private static class ModelStubAcceptingVisitsAdded extends ModelStub {
-        ArrayList<Visit> visitsAdded = new ArrayList<>();
+        private final ArrayList<Visit> visitsAdded = new ArrayList<>();
 
         public ArrayList<Visit> getVisitsAdded() {
             return visitsAdded;

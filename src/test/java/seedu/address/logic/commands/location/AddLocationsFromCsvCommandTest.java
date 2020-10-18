@@ -1,21 +1,8 @@
 package seedu.address.logic.commands.location;
 
-import org.junit.jupiter.api.Test;
-import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.ModelStub;
-import seedu.address.model.location.Location;
-import seedu.address.testutil.LocationBuilder;
-import seedu.address.testutil.TypicalLocations;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.AddFromCsvCommand.MESSAGE_DUPLICATES_NOT_ADDED;
 import static seedu.address.logic.commands.AddFromCsvCommand.MESSAGE_SUCCESS;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -24,6 +11,19 @@ import static seedu.address.logic.commands.location.AddLocationsFromCsvCommand.M
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalLocations.ALICE_LOCATION;
 import static seedu.address.testutil.TypicalLocations.BENSON_LOCATION;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
+import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.ModelStub;
+import seedu.address.model.location.Location;
+import seedu.address.testutil.LocationBuilder;
+import seedu.address.testutil.TypicalLocations;
+
 
 public class AddLocationsFromCsvCommandTest {
 
@@ -60,8 +60,8 @@ public class AddLocationsFromCsvCommandTest {
         List<Location> locationsToAdd = new ArrayList<>();
 
         AddLocationsFromCsvCommand actualCommand = new AddLocationsFromCsvCommand(locationsToAdd);
-        assertThrows(CommandException.class, MESSAGE_EMPTY_LIST,
-                () -> actualCommand.execute(model));
+        assertThrows(CommandException.class, MESSAGE_EMPTY_LIST, ()
+            -> actualCommand.execute(model));
     }
 
     @Test
@@ -131,7 +131,7 @@ public class AddLocationsFromCsvCommandTest {
      * A Model stub that always accepts the locations being added.
      */
     private static class ModelStubAcceptingLocationsAdded extends ModelStub {
-        ArrayList<Location> locationsAdded = new ArrayList<>();
+        private final ArrayList<Location> locationsAdded = new ArrayList<>();
 
         public ArrayList<Location> getLocationsAdded() {
             return locationsAdded;

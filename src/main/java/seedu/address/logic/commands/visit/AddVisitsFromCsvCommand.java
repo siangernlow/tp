@@ -1,25 +1,24 @@
 package seedu.address.logic.commands.visit;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.commands.CommandResult.SWITCH_TO_VIEW_VISITS;
+
+import java.util.List;
+
 import seedu.address.logic.commands.AddFromCsvCommand;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.commands.person.AddPersonsFromCsvCommand;
 import seedu.address.logic.parser.DataGenerator;
 import seedu.address.model.Model;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
 import seedu.address.model.visit.Visit;
 
-import java.util.List;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.commands.CommandResult.SWITCH_TO_VIEW_VISITS;
-
 public class AddVisitsFromCsvCommand extends AddFromCsvCommand {
-    private final List<DataGenerator.VisitParametersContainer> visitParametersContainersToAdd;
-
     public static final String VISITS = "visit(s)";
     public static final String MESSAGE_EMPTY_LIST = "There are no visits to be added into VirusTracker.";
+
+    private final List<DataGenerator.VisitParametersContainer> visitParametersContainersToAdd;
 
     /**
      * Creates an AddVisitsFromCsvCommand to add the specified list of {@code VisitParametersContainer}.

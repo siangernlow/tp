@@ -1,22 +1,21 @@
 package seedu.address.logic.commands.person;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.commands.CommandResult.SWITCH_TO_VIEW_PEOPLE;
+
+import java.util.List;
+
 import seedu.address.logic.commands.AddFromCsvCommand;
 import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 
-import java.util.List;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.commands.CommandResult.SWITCH_TO_VIEW_PEOPLE;
-
 public class AddPersonsFromCsvCommand extends AddFromCsvCommand {
-    private final List<Person> peopleToAdd;
-
     public static final String PERSONS = "person(s)";
     public static final String MESSAGE_EMPTY_LIST = "There are no people to be added into VirusTracker.";
+
+    private final List<Person> peopleToAdd;
 
     /**
      * Creates an AddPersonsFromCsvCommand to add the specified list of {@code Person}.

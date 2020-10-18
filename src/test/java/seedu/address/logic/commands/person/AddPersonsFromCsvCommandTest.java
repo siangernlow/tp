@@ -1,16 +1,5 @@
 package seedu.address.logic.commands.person;
 
-import org.junit.jupiter.api.Test;
-import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.ModelStub;
-import seedu.address.model.person.Person;
-import seedu.address.testutil.PersonBuilder;
-import seedu.address.testutil.TypicalPersons;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -22,6 +11,18 @@ import static seedu.address.logic.commands.person.AddPersonsFromCsvCommand.PERSO
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
+import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.ModelStub;
+import seedu.address.model.person.Person;
+import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.TypicalPersons;
 
 public class AddPersonsFromCsvCommandTest {
 
@@ -58,8 +59,8 @@ public class AddPersonsFromCsvCommandTest {
         List<Person> personsToAdd = new ArrayList<>();
 
         AddPersonsFromCsvCommand actualCommand = new AddPersonsFromCsvCommand(personsToAdd);
-        assertThrows(CommandException.class, MESSAGE_EMPTY_LIST,
-                () -> actualCommand.execute(model));
+        assertThrows(CommandException.class, MESSAGE_EMPTY_LIST, ()
+            -> actualCommand.execute(model));
     }
 
     @Test
@@ -129,7 +130,7 @@ public class AddPersonsFromCsvCommandTest {
      * A Model stub that always accepts the person being added.
      */
     private static class ModelStubAcceptingPersonsAdded extends ModelStub {
-        ArrayList<Person> personsAdded = new ArrayList<>();
+        private final ArrayList<Person> personsAdded = new ArrayList<>();
 
         public ArrayList<Person> getPersonsAdded() {
             return personsAdded;

@@ -1,15 +1,5 @@
 package seedu.address.testutil;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.parser.DataGenerator;
-import seedu.address.model.visit.Visit;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import static seedu.address.testutil.TypicalIndexes.INDEX_EIGHTH;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIFTH;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
@@ -19,6 +9,16 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SEVENTH;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SIXTH;
 import static seedu.address.testutil.TypicalIndexes.INDEX_TENTH;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.parser.DataGenerator;
+import seedu.address.model.visit.Visit;
 
 /**
  * A utility class containing a list of {@code VisitParametersContainer} objects to be used in tests.
@@ -68,32 +68,49 @@ public class TypicalVisitParametersContainers {
     }
 
     public static class VpcBuilder {
-        private static DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
         public static final Index DEFAULT_PERSON_INDEX = INDEX_FIRST;
         public static final Index DEFAULT_LOCATION_INDEX = INDEX_FIRST;
+        private static final DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         public static final LocalDate DEFAULT_DATE = LocalDate.parse("2020-10-12", inputFormat);
 
         private Index personIndex;
         private Index locationIndex;
         private LocalDate date;
 
+        /**
+         * Creates a default VpcBuilder using the default values.
+         */
         public VpcBuilder() {
             this.personIndex = DEFAULT_PERSON_INDEX;
             this.locationIndex = DEFAULT_LOCATION_INDEX;
             this.date = DEFAULT_DATE;
         }
 
+        /**
+        * Sets the {@code personIndex} of the {@code VpcBuilder} that we are building.
+        * @param personIndex The updated index.
+        * @return The new {@code VpcBuilder}.
+        */
         public VpcBuilder withPersonIndex(Index personIndex) {
             this.personIndex = personIndex;
             return this;
         }
 
+        /**
+         * Sets the {@code locationIndex} of the {@code VpcBuilder} that we are building.
+         * @param locationIndex The updated index.
+         * @return The new {@code VpcBuilder}.
+         */
         public VpcBuilder withLocationIndex(Index locationIndex) {
             this.locationIndex = locationIndex;
             return this;
         }
 
+        /**
+         * Sets the {@code date} of the {@code VpcBuilder} that we are building.
+         * @param date The updated date.
+         * @return The new {@code VpcBuilder}.
+         */
         public VpcBuilder withDate(String date) {
             this.date = LocalDate.parse(date, inputFormat);
             return this;

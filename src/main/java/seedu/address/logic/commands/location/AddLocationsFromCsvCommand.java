@@ -1,22 +1,24 @@
 package seedu.address.logic.commands.location;
 
-import seedu.address.logic.commands.AddFromCsvCommand;
-import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.commands.person.AddPersonsFromCsvCommand;
-import seedu.address.model.Model;
-import seedu.address.model.location.Location;
-
-import java.util.List;
-
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.commands.CommandResult.SWITCH_TO_VIEW_LOCATIONS;
 
-public class AddLocationsFromCsvCommand extends AddFromCsvCommand {
-    private final List<Location> locationsToAdd;
+import java.util.List;
 
+import seedu.address.logic.commands.AddFromCsvCommand;
+import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
+import seedu.address.model.location.Location;
+
+
+
+
+public class AddLocationsFromCsvCommand extends AddFromCsvCommand {
     public static final String LOCATIONS = "location(s)";
     public static final String MESSAGE_EMPTY_LIST = "There are no locations to be added into VirusTracker.";
+
+    private final List<Location> locationsToAdd;
 
     /**
      * Creates an AddLocationsFromCsvCommand to add the specified list of {@code Location}.

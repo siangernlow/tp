@@ -54,7 +54,7 @@ import seedu.address.testutil.VisitBuilder;
 import seedu.address.testutil.VisitUtil;
 
 public class VirusTrackerParserTest {
-    private static Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "AddFromCsvCommandTest");
+    private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "AddFromCsvCommandTest");
     private static final String EMPTY_CSV_FILE = TEST_DATA_FOLDER.resolve("EmptyCsvFile.csv").toString();
 
     private final VirusTrackerParser parser = new VirusTrackerParser();

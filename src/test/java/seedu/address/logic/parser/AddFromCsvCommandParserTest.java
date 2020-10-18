@@ -1,21 +1,5 @@
 package seedu.address.logic.parser;
 
-import org.junit.jupiter.api.Test;
-import seedu.address.logic.commands.AddFromCsvCommand;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.location.AddLocationsFromCsvCommand;
-import seedu.address.logic.commands.person.AddPersonsFromCsvCommand;
-import seedu.address.logic.commands.visit.AddVisitCommand;
-import seedu.address.logic.commands.visit.AddVisitsFromCsvCommand;
-import seedu.address.model.location.Location;
-import seedu.address.model.person.Person;
-import seedu.address.model.visit.Visit;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.AddFromCsvCommandParser.CSV_FILE_EXTENSION;
 import static seedu.address.logic.parser.AddFromCsvCommandParser.MESSAGE_INVALID_DATA_TYPE;
@@ -23,6 +7,25 @@ import static seedu.address.logic.parser.AddFromCsvCommandParser.MESSAGE_INVALID
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LIST;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
+import seedu.address.logic.commands.AddFromCsvCommand;
+import seedu.address.logic.commands.location.AddLocationsFromCsvCommand;
+import seedu.address.logic.commands.person.AddPersonsFromCsvCommand;
+import seedu.address.logic.commands.visit.AddVisitsFromCsvCommand;
+import seedu.address.model.location.Location;
+import seedu.address.model.person.Person;
+
+
+
+
+
 
 public class AddFromCsvCommandParserTest {
 
