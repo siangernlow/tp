@@ -11,11 +11,10 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.commons.core.index.exceptions.InvalidIndexException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.attribute.Address;
 import seedu.address.model.attribute.Email;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.attribute.InfectionStatus;
 import seedu.address.model.attribute.Name;
 import seedu.address.model.attribute.Phone;
@@ -86,13 +85,13 @@ public class JsonAdaptedVisit {
         addressPerson = source.getPerson().getAddress().value;
         quarantineStatus = source.getPerson().getQuarantineStatus().value;
         infectionStatus = source.getPerson().getInfectionStatus().getStatusAsString();
-        idPerson = source.getPerson().getId().toString();
+        idPerson = source.getPerson().getId().value;
         tagged.addAll(source.getPerson().getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
         nameLocation = source.getLocation().getName().fullName;
         addressLocation = source.getLocation().getAddress().value;
-        idLocation = source.getLocation().getId().toString();
+        idLocation = source.getLocation().getId().value;
         dateOfVisit = source.getDate().toString();
     }
 
@@ -159,20 +158,16 @@ public class JsonAdaptedVisit {
         final InfectionStatus modelInfectionStatus = new InfectionStatus(infectionStatus);
 
         if (idPerson == null) {
-            throw new IllegalValueException(
-                    String.format(MISSING_FIELD_MESSAGE_FORMAT, "id")
-            );
+            throw new IllegalValueException(MISSING_FIELD_MESSAGE_FORMAT);
         }
-        final Index modelId;
-        try {
-            modelId = Index.fromOneBased(Integer.parseInt(idPerson));
-        } catch (ClassCastException | IndexOutOfBoundsException e) {
-            throw new InvalidIndexException();
+        if (!Id.isValidId(idPerson)) {
+            throw new IllegalValueException(Id.MESSAGE_CONSTRAINTS);
         }
+        final Id modelIdPerson = new Id(idPerson);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        final Person modelPerson = new Person(modelName, modelPhone, modelEmail, modelAddress, modelQuarantineStatus,
-                modelInfectionStatus, modelId, modelTags);
+        final Person modelPerson = new Person(modelIdPerson, modelName, modelPhone, modelEmail, modelAddress,
+                modelQuarantineStatus, modelInfectionStatus, modelTags);
 
         if (nameLocation == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
@@ -193,14 +188,12 @@ public class JsonAdaptedVisit {
         if (idLocation == null) {
             throw new IllegalValueException(MISSING_FIELD_MESSAGE_FORMAT);
         }
-        final Index modelIdLocation;
-        try {
-            modelIdLocation = Index.fromOneBased(Integer.parseInt(idLocation));
-        } catch (ClassCastException | IndexOutOfBoundsException e) {
-            throw new InvalidIndexException();
+        if (!Id.isValidId(idLocation)) {
+            throw new IllegalValueException(Id.MESSAGE_CONSTRAINTS);
         }
+        final Id modelIdLocation = new Id(idLocation);
 
-        final Location modelLocation = new Location(modelNameLocation, modelAddressLocation, modelIdLocation);
+        final Location modelLocation = new Location(modelIdLocation, modelNameLocation, modelAddressLocation);
 
         if (dateOfVisit == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "date"));

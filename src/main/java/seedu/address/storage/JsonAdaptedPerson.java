@@ -9,11 +9,10 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.commons.core.index.exceptions.InvalidIndexException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.attribute.Address;
 import seedu.address.model.attribute.Email;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.attribute.InfectionStatus;
 import seedu.address.model.attribute.Name;
 import seedu.address.model.attribute.Phone;
@@ -138,20 +137,17 @@ class JsonAdaptedPerson {
         final InfectionStatus modelInfectionStatus = new InfectionStatus(infectionStatus);
 
         if (id == null) {
-            throw new IllegalValueException(
-                    String.format(MISSING_FIELD_MESSAGE_FORMAT, "id")
-            );
+            throw new IllegalValueException(MISSING_FIELD_MESSAGE_FORMAT);
         }
-        final Index modelId;
-        try {
-            modelId = Index.fromOneBased(Integer.parseInt(id));
-        } catch (ClassCastException | IndexOutOfBoundsException e) {
-            throw new InvalidIndexException();
+        if (!Id.isValidId(id)) {
+            throw new IllegalValueException(Id.MESSAGE_CONSTRAINTS);
         }
+        final Id modelId = new Id(id);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelQuarantineStatus,
-                modelInfectionStatus, modelId, modelTags);
+
+        return new Person(modelId, modelName, modelPhone, modelEmail, modelAddress, modelQuarantineStatus,
+                modelInfectionStatus, modelTags);
     }
 
 }
