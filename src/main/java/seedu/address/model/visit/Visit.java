@@ -54,7 +54,7 @@ public class Visit {
      * Returns true if the person of the visit corresponds to the entered person
      */
     public boolean isSamePerson(Person person) {
-        return person == this.person;
+        return person.isSamePerson(this.person);
     }
 
     /**

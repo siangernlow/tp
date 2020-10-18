@@ -52,6 +52,7 @@ public class EditPersonCommandTest {
         Model expectedModel = new ModelManager(new PersonBook(model.getPersonBook()),
                 new LocationBook(model.getLocationBook()), new VisitBook(model.getVisitBook()), new UserPrefs());
         expectedModel.setPerson(model.getFilteredPersonList().get(0), editedPerson);
+        expectedModel.updateVisitBookWithEditedPerson(editedPerson);
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
                 CommandResult.SWITCH_TO_VIEW_PEOPLE);
         assertCommandSuccess(editPersonCommand, model, expectedCommandResult, expectedModel);
@@ -75,6 +76,7 @@ public class EditPersonCommandTest {
         Model expectedModel = new ModelManager(new PersonBook(model.getPersonBook()),
                 new LocationBook(model.getLocationBook()), new VisitBook(model.getVisitBook()), new UserPrefs());
         expectedModel.setPerson(lastPerson, editedPerson);
+        expectedModel.updateVisitBookWithEditedPerson(editedPerson);
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
                 CommandResult.SWITCH_TO_VIEW_PEOPLE);
 
@@ -90,6 +92,7 @@ public class EditPersonCommandTest {
 
         Model expectedModel = new ModelManager(new PersonBook(model.getPersonBook()),
                 new LocationBook(model.getLocationBook()), new VisitBook(model.getVisitBook()), new UserPrefs());
+
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
                 CommandResult.SWITCH_TO_VIEW_PEOPLE);
 
@@ -110,6 +113,8 @@ public class EditPersonCommandTest {
         Model expectedModel = new ModelManager(new PersonBook(model.getPersonBook()),
                 new LocationBook(model.getLocationBook()), new VisitBook(model.getVisitBook()), new UserPrefs());
         expectedModel.setPerson(model.getFilteredPersonList().get(0), editedPerson);
+
+        expectedModel.updateVisitBookWithEditedPerson(editedPerson);
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
                 CommandResult.SWITCH_TO_VIEW_PEOPLE);
 

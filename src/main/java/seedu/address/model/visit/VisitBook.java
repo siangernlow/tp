@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.List;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.person.Person;
 
 /**
  * Wraps all data at the visit-book level
@@ -82,6 +83,15 @@ public class VisitBook implements ReadOnlyVisitBook {
         requireNonNull(editedVisit);
 
         visits.setVisit(target, editedVisit);
+    }
+
+    /**
+     * Update the visit book with edited person
+     */
+    public void updateWithEditedPerson(Person editedPerson) {
+        requireNonNull(editedPerson);
+
+        visits.updateWithEditedPerson(editedPerson);
     }
 
     /**

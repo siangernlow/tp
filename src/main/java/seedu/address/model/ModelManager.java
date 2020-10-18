@@ -255,6 +255,23 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void updateVisitBookWithEditedPerson(Person editedPerson) {
+        this.visitBook.updateWithEditedPerson(editedPerson);
+    }
+
+    /**
+     * Replaces the given visit {@code target} in the list with {@code editedVisit}.
+     * {@code target} must exist in the visit book.
+     * The identities of {@code editedVisit} must not be the same as another existing
+     * visit in the visit book.
+     */
+    @Override
+    public void setVisit(Visit target, Visit editedVisit) {
+        requireNonNull(editedVisit);
+        visitBook.setVisit(target, editedVisit);
+    }
+
+    @Override
     public void addVisit(Visit visit) {
         visitBook.addVisit(visit);
         updateFilteredVisitList(PREDICATE_SHOW_ALL_VISITS); // needs to be updated to persons when doing list command

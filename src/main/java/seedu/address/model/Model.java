@@ -178,9 +178,20 @@ public interface Model {
     void setVisitBook(ReadOnlyVisitBook visitBook);
 
     /**
+     * Update visit book with {@code editedLocation}
+     */
+    void updateVisitBookWithEditedPerson(Person editedPerson);
+
+    /**
      * Returns true if a visit with the same identity as {@code visit} exists in the visit book.
      */
     boolean hasVisit(Visit visit);
+
+    /**
+     * Replaces the given visit {@code target} with {@code editedVisit}.
+     * {@code target} must exist in the visit book.
+     */
+    void setVisit(Visit target, Visit editedVisit);
 
     /**
      * Adds the given visit.
