@@ -5,9 +5,6 @@ import static seedu.address.model.InfoHandler.getIdHashSetFromPersonsList;
 import static seedu.address.model.InfoHandler.getLocationIdsFromInfectedVisitList;
 import static seedu.address.model.InfoHandler.getNumberOfHighRiskLocations;
 import static seedu.address.model.InfoHandler.sortByValues;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIFTH;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 import static seedu.address.testutil.TypicalLocations.getTypicalLocations;
 import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 
@@ -20,6 +17,7 @@ import java.util.function.Predicate;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
 import seedu.address.model.visit.Visit;
@@ -129,7 +127,7 @@ public class InfoHandlerTest {
     @Test
     public void getIdHashSetFromPersonsList_success() {
         List<Person> typicalPersons = TypicalPersons.getTypicalPersons();
-        HashSet<Index> expectedPersonsIds = TypicalPersons.getIdsOfTypicalPersonsAsHashSet();
+        HashSet<Id> expectedPersonsIds = TypicalPersons.getIdsOfTypicalPersonsAsHashSet();
         assertEquals(expectedPersonsIds, getIdHashSetFromPersonsList(typicalPersons));
     }
 
@@ -143,20 +141,20 @@ public class InfoHandlerTest {
     @Test
     public void sortByValues_success() {
         List<Visit> visits = TypicalVisits.getVisitsForTest();
-        HashMap<Index, Integer> locations = new HashMap<>();
+        HashMap<Id, Integer> locations = new HashMap<>();
         for (Visit visit : visits) {
-            Index id = visit.getLocation().getId();
+            Id id = visit.getLocation().getId();
             if (locations.containsKey(id)) {
                 locations.put(id, locations.get(id) + 1);
             } else {
                 locations.put(id, 1);
             }
         }
-        HashMap<Index, Integer> actualHashMap = sortByValues(locations);
-        HashMap<Index, Integer> expectedHashMap = new LinkedHashMap<>();
-        expectedHashMap.put(INDEX_FIRST, 3);
-        expectedHashMap.put(INDEX_SECOND, 1);
-        expectedHashMap.put(INDEX_FIFTH, 1);
+        HashMap<Id, Integer> actualHashMap = sortByValues(locations);
+        HashMap<Id, Integer> expectedHashMap = new LinkedHashMap<>();
+        expectedHashMap.put(new Id("S123A"), 3);
+        expectedHashMap.put(new Id("S234B"), 1);
+        expectedHashMap.put(new Id("S567E"), 1);
         assertEquals(expectedHashMap, actualHashMap);
     }
 

@@ -3,9 +3,9 @@ package seedu.address.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.model.attribute.Address;
 import seedu.address.model.attribute.Email;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.attribute.InfectionStatus;
 import seedu.address.model.attribute.Name;
 import seedu.address.model.attribute.Phone;
@@ -25,7 +25,7 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_QUARANTINE_STATUS = "false";
     public static final String DEFAULT_INFECTION_STATUS = "false";
-    public static final String DEFAULT_ID = "1";
+    public static final String DEFAULT_ID = "S123A";
 
     private Name name;
     private Phone phone;
@@ -33,7 +33,7 @@ public class PersonBuilder {
     private Address address;
     private QuarantineStatus quarantineStatus;
     private InfectionStatus infectionStatus;
-    private Index id;
+    private Id id;
     private Set<Tag> tags;
 
     /**
@@ -46,7 +46,7 @@ public class PersonBuilder {
         address = new Address(DEFAULT_ADDRESS);
         quarantineStatus = new QuarantineStatus(DEFAULT_QUARANTINE_STATUS);
         infectionStatus = new InfectionStatus(DEFAULT_INFECTION_STATUS);
-        id = Index.fromOneBased(Integer.parseInt(DEFAULT_ID));
+        id = new Id(DEFAULT_ID);
         tags = new HashSet<>();
     }
 
@@ -126,12 +126,12 @@ public class PersonBuilder {
     /**
      * Sets the {@code id} of the {@code Person} that we are building.
      */
-    public PersonBuilder withId(Index id) {
-        this.id = id;
+    public PersonBuilder withId(String id) {
+        this.id = new Id(id);
         return this;
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, quarantineStatus, infectionStatus, id, tags);
+        return new Person(id, name, phone, email, address, quarantineStatus, infectionStatus, tags);
     }
 }
