@@ -2,6 +2,8 @@ package seedu.address.testutil;
 
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ID_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ID_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 
@@ -39,9 +41,9 @@ public class TypicalLocations {
 
     // Manually added - Location's details found in {@code CommandTestUtil}
     public static final Location AMY_LOCATION = new LocationBuilder().withName(VALID_NAME_AMY)
-            .withAddress(VALID_ADDRESS_AMY).withId("L101112J").build();
+            .withAddress(VALID_ADDRESS_AMY).withId(VALID_ID_AMY).build();
     public static final Location BOB_LOCATION = new LocationBuilder().withName(VALID_NAME_BOB)
-            .withAddress(VALID_ADDRESS_BOB).withId("L111213K").build();
+            .withAddress(VALID_ADDRESS_BOB).withId(VALID_ID_BOB).build();
 
     private TypicalLocations() {} // prevents instantiation
 

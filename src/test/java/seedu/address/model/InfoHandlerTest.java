@@ -16,7 +16,6 @@ import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
@@ -134,7 +133,7 @@ public class InfoHandlerTest {
     @Test
     public void getLocationIdsFromVisitList_success() {
         List<Visit> typicalVisits = TypicalVisits.getVisitsForTest();
-        List<Index> expectedLocationIds = TypicalVisits.getLocationsIdsFromVisitsForTest();
+        List<Id> expectedLocationIds = TypicalVisits.getLocationsIdsFromVisitsForTest();
         assertEquals(expectedLocationIds, getLocationIdsFromInfectedVisitList(typicalVisits));
     }
 
@@ -152,9 +151,9 @@ public class InfoHandlerTest {
         }
         HashMap<Id, Integer> actualHashMap = sortByValues(locations);
         HashMap<Id, Integer> expectedHashMap = new LinkedHashMap<>();
-        expectedHashMap.put(new Id("S123A"), 3);
-        expectedHashMap.put(new Id("S234B"), 1);
-        expectedHashMap.put(new Id("S567E"), 1);
+        expectedHashMap.put(new Id("L123A"), 3);
+        expectedHashMap.put(new Id("L345C"), 1);
+        expectedHashMap.put(new Id("L111213K"), 1);
         assertEquals(expectedHashMap, actualHashMap);
     }
 

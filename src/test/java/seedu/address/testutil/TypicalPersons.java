@@ -4,6 +4,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ID_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ID_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_INFECTION_STATUS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_INFECTION_STATUS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
@@ -68,15 +70,15 @@ public class TypicalPersons {
             .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
             .withQuarantineStatus(VALID_QUARANTINE_STATUS_AMY)
             .withInfectionStatus(VALID_INFECTION_STATUS_AMY).withTags(VALID_TAG_FRIEND)
-            .withId("S101112J").build();
+            .withId(VALID_ID_AMY).build();
     public static final Person BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withInfectionStatus(VALID_INFECTION_STATUS_BOB)
             .withQuarantineStatus(VALID_QUARANTINE_STATUS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
-            .withId("S111213K").build();
+            .withId(VALID_ID_BOB).build();
 
     // HashSet of Indexes corresponding to typical persons (ALICE to GEORGE)
     public static final List<Id> ID_LIST_OF_TYPICAL_PERSONS = Arrays.asList(new Id("S123A"),
-            new Id("S234B"), new Id("S345C"), new Id("S456D"), new Id("S567E"), new Id("S678F"), new Id("S789g"));
+            new Id("S234B"), new Id("S345C"), new Id("S456D"), new Id("S567E"), new Id("S678F"), new Id("S789G"));
     public static final HashSet<Id> ID_HASHSET_OF_TYPICAL_PERSONS = new HashSet<>(ID_LIST_OF_TYPICAL_PERSONS);
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 

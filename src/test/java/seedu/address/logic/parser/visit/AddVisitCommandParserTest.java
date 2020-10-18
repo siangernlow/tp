@@ -18,7 +18,7 @@ public class AddVisitCommandParserTest {
     @Test
     public void parse_allFieldsPresent_success() {
 
-        assertParseSuccess(parser, PREAMBLE_WHITESPACE + " 2" + " 3" + " d/ 2020-09-12",
+        assertParseSuccess(parser, PREAMBLE_WHITESPACE + " 2" + " 2" + " d/ 2020-09-12",
                 new AddVisitCommand(DEFAULT_PERSON_INDEX, DEFAULT_LOCATION_INDEX, DEFAULT_DATE));
     }
 
