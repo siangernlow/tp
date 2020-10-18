@@ -6,12 +6,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalLocations.ALICE_LOCATION;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalVisits.getNonUniqueLocationsVisitBook;
 import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
 
 import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.model.location.Location;
+import seedu.address.testutil.LocationBuilder;
 import seedu.address.testutil.VisitBuilder;
 
 public class VisitBookTest {
@@ -32,6 +35,25 @@ public class VisitBookTest {
         VisitBook newData = getTypicalVisitBook();
         visitBook.resetData(newData);
         assertEquals(newData, visitBook);
+    }
+
+    @Test
+    public void updateWithEditedLocation_success() {
+        VisitBook expectedVisitBook = getNonUniqueLocationsVisitBook();
+        VisitBook actualVisitBook = getNonUniqueLocationsVisitBook();
+
+        Visit secondVisit = expectedVisitBook.getVisitList().get(1);
+        Visit thirdVisit = expectedVisitBook.getVisitList().get(2);
+        Location editedLocation = new LocationBuilder(secondVisit.getLocation())
+                .withName(ALICE_LOCATION.getName().toString()).build();
+        expectedVisitBook.setVisit(secondVisit,
+                new Visit(secondVisit.getPerson(), editedLocation, secondVisit.getDate()));
+        expectedVisitBook.setVisit(thirdVisit,
+                new Visit(thirdVisit.getPerson(), editedLocation, thirdVisit.getDate()));
+
+        actualVisitBook.updateWithEditedLocation(editedLocation);
+
+        assertEquals(expectedVisitBook, actualVisitBook);
     }
 
     @Test
