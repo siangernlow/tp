@@ -4,7 +4,6 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Name;
 
@@ -14,37 +13,19 @@ import seedu.address.model.person.Name;
  */
 public class Location {
 
-    // Used to create unique identifiers for Locations by counting the number created
-    private static int locationCount = 1;
-
     // Identity fields
     private final Name name;
 
     // Data fields
     private final Address address;
-    private final Index id; // Id is not used when checking duplicates
+    private final String id;
 
     /**
-     * Every field must be present and not null. The Id is obtained from the class itself.
+     * Every field must be present and not null. Id must be unique.
      */
-    public Location(Name name, Address address) {
-        requireAllNonNull(name, address);
-        this.name = name;
-        this.address = address;
-        this.id = Index.fromOneBased(locationCount);
-        locationCount += 1;
-    }
-
-    /**
-     * This constructor is used when creating copies of Locations due to edits or initialization.
-     */
-    public Location(Name name, Address address, Index id) {
+    public Location(String id, Name name, Address address) {
         requireAllNonNull(name, address, id);
 
-        // This update to location count is needed during initialization.
-        if (id.getOneBased() >= locationCount) {
-            locationCount = id.getOneBased() + 1;
-        }
         this.name = name;
         this.address = address;
         this.id = id;
@@ -58,13 +39,8 @@ public class Location {
         return address;
     }
 
-    public Index getId() {
+    public String getId() {
         return id;
-    }
-
-    // for use in tests only
-    public static void setLocationCount(int count) {
-        locationCount = count;
     }
 
     /**
