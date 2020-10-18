@@ -8,7 +8,6 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.location.exceptions.DuplicateLocationException;
 import seedu.address.model.visit.exceptions.DuplicateVisitException;
 import seedu.address.model.visit.exceptions.VisitNotFoundException;
 
@@ -43,7 +42,7 @@ public class UniqueVisitList implements Iterable<Visit> {
     public void add(Visit toAdd) {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
-            throw new DuplicateLocationException();
+            throw new DuplicateVisitException();
         }
         internalList.add(toAdd);
     }
@@ -72,8 +71,8 @@ public class UniqueVisitList implements Iterable<Visit> {
             throw new VisitNotFoundException();
         }
 
-        if (target.equals(editedVisit) || contains(editedVisit)) {
-            throw new DuplicateLocationException();
+        if (!target.equals(editedVisit) && contains(editedVisit)) {
+            throw new DuplicateVisitException();
         }
 
         internalList.set(index, editedVisit);
