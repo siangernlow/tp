@@ -401,7 +401,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | user managing quarantined people | update people's quarantine status | be aware of a person's quarantine status |
 | `* * *`  | user worried about virus outbreaks | generate locations that infected people have been to | disinfect those locations |
 | `* * *`  | user worried about virus outbreaks | generate people that have been in contact with infected people | quarantine them for safety measures |
- 
+| `* * *`  | user with data stored in Excel files | import data from Excel files into VirusTracker | avoid typing out the data again |
+| `* * *`  | user | export data from VirusTracker into a portable format | use the same data on multiple devices |
+
 *{More to be added}*
 
 ### Use cases
@@ -727,7 +729,32 @@ Use case ends.
 * 2a. There is not enough information to produce a certain statistics.
     * 2a1. System flags that statistic as unavailable.
     * 2a2. For remaining valid statistics, go to 2. 
+    
+**UC13 - Add data from CSV file**
 
+**MSS**
+
+1. User requests to add data from a CSV file.
+2. System requests for information for adding.
+3. User enters the information required.
+4. System adds the items and informs the user.
+
+  Use case ends.
+
+**Extensions**
+
+* 3a. There is an error in the information entered.
+    * 3a1. System requests for correct information.
+    * 3a2. User enters new input.
+    
+    Steps 3a1 - 3a2 are repeated until the information entered is correct.  
+        Use case resumes at step 3.
+* 4a. The system is unable to add certain items in the file.
+    * 4a1. System records the errors and notifies the user.
+    
+    System may decide to continue adding items. In that case, return to step 4.
+    Otherwise, use case ends.
+    
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
