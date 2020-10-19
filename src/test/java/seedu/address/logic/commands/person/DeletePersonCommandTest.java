@@ -100,6 +100,7 @@ public class DeletePersonCommandTest {
         ModelManager expectedModel = new ModelManager(model.getPersonBook(), model.getLocationBook(),
                 model.getVisitBook(), new UserPrefs());
         expectedModel.deletePerson(personToDelete);
+        expectedModel.deleteVisitsWithPerson(personToDelete);
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
                 CommandResult.SWITCH_TO_VIEW_PEOPLE);
 
