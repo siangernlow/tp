@@ -133,6 +133,132 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+### Add person
+
+This is a placeholder section for the "Manage data using CSV files section." Please update the link in that section if the header of this
+section is changed.
+### Add location
+
+### Add visit
+
+### Manage data using CSV files (Siang Ern)
+
+Most data collected by the target user group are likely to be in the form of Excel documents. As such, it is necessary for VirusTracker to include features to import and export data in a way that is compatible with Excel.
+
+The features are facilitated by the `addFromCsv` and `exportToCsv` commands. They allow VirusTracker to manage data using **Comma-separated values** files which could also be handled by Excel.
+
+#### Importing data from a CSV file
+
+This feature essentially acts as a "bulk add" operation. The number of rows in the CSV file corresponds to the **maximum** number of objects that could be added to VirusTracker.
+
+**Format:** `addFromCsv FILEPATH l/LIST_TYPE`
+
+* `FILEPATH` refers to the absolute path that the file would be located at.
+* `LIST_TYPE` is the data type that the user is attempting to add. The `addFromCsv` command supports three list types:
+    1. [people](#add-person)
+    2. [locations](#add-location)
+    3. [visits](#add-visit)
+* Each row in the specified CSV file must follow the format for the add command of the respective type. To find out about the format, you may click the relevant list type above.
+
+An example of a CSV file that is used to add people is shown below. Notice that column G is not completely filled as the field is optional.
+
+![SamplePersonCsv](images/ExamplePersonCsv.png)
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The number of columns in the CSV file should correspond to the number of parameters required to create the related object. Information on additional columns **will be disregarded**.
+
+</div>
+
+#### Sequence diagram
+
+The sequence diagram below shows how the adding operation works. Certain utility classes have been omitted for readability.
+
+![AddFromCsvCommandSequenceDiagram](images/AddFromCsvSequenceDiagram.png)
+
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The above sequence diagram uses the `AddPersonsFromCsvCommand` to handle adding people from CSV files. For locations and visits, replace the command with `AddLocationsFromCsvCommand` and
+`AddVisitsFromCsvCommand` respectively. The behaviour of the three commands are the same as the above sequence diagram.
+
+</div>
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** Lifelines should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+
+</div>
+
+The following activity diagram summarizes what happens when a user executes the `addFromCsv` command.
+
+![AddFromCsvActivityDiagram](images/AddFromCsvActivityDiagram.png)
+
+
+#### Design considerations:
+
+The design considerations below highlight alternative ways the command could have been implemented, and provides reasons for the choice of implementation.
+
+##### Aspect: How are exceptions handled
+
+For this aspect, we make a distinction between fatal exceptions and non-fatal exceptions.
+
+* Fatal exceptions
+  * Exceptions that cause the command to be unable to execute further.
+  * These exceptions include but are not limited to: _missing parameters in CSV file_, _invalid file path, etc._    
+
+* Non-fatal exceptions
+  * The command could still continue executing even if this exception occured.
+  * For example, _duplicate objects in the CSV file._
+  * They tend to occur on a row by row basis in the CSV file.
+  
+* **Alternative 1:** Stop execution of command only for destructive exceptions.
+  * Pros: User does not need to rerun the command for every exception that occurs.
+  * Cons: Allowing certain exceptions to pass through may result in some bugs further down the line.
+
+* **Alternative 2:** Stop execution for every exception that occurs.
+  * Pros: Ensures correctness of the added objects.
+  * Cons: May lead to worse user experience having to constantly rerun the command.
+  
+**Implementation**
+ 
+Alternative 1 was chosen as the implementation with considerations from alternative 2.
+* Upon encountering:
+  * Fatal exception
+    * The command stops execution and informs the user of the error.
+  * Non-fatal exception
+    * The command continues executing.
+    * The rows where the exception occurs are recorded.
+    * Upon finishing execution, the user is informed of the success and notified of the erroneous rows.
+    
+**Rationale**
+
+As this command handles data from CSV files, it is likely the CSV files would be large (containing more than 10,000 rows).
+  * Time taken for the `addFromCsv` command to execute is significant.
+  
+As such, the above implementation helps to reduce the need to read the large file repeatedly. 
+  * User can fix the erroneous rows on a new CSV file.
+  * Execution of the command would be faster than if the same large file was executed again.
+
+This would minimise the impact to user experience as the user would spend less time fixing the errors.
+
+#### Aspect: Absolute file path
+
+The file path the command uses is the absolute path.
+* The absolute path provides the complete details to locate the CSV file.
+* Helps to avoid navigation errors that may result from using relative path names.
+
+By allowing the user to specify the path name, it also gives the user a choice on where to put his CSV files instead of enforcing a particular directory for
+him to store the files.
+
+#### Aspect: Reusing list types and the list prefix 'l/'
+
+**Concern**: The list types are used for the `list` command, which appear to be unrelated to the `addFromCsv` command.
+
+**Rationale**
+
+This command handles people, locations and visits which corresponded to the list types already implemented for use for the list command.
+
+By using a format similar to the `list` command, it avoids the need for implementing a possible **data type** parameter which would not have a
+significant difference from list type.
+
+Furthermore, it allows the user to use a format that they are already comfortable with.
+
+_{more aspects and alternatives to be added}_
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
