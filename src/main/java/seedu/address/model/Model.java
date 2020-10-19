@@ -97,6 +97,9 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
 
+    /** Returns an unmodifiable view of the unfiltered person list */
+    ObservableList<Person> getUnfilteredPersonList();
+
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
@@ -150,6 +153,9 @@ public interface Model {
 
     /** Returns an unmodifiable view of the filtered location list */
     ObservableList<Location> getFilteredLocationList();
+
+    /** Returns an unmodifiable view of the unfiltered location list */
+    ObservableList<Location> getUnfilteredLocationList();
 
     /**
      * Updates the filter of the filtered location list to filter by the given {@code predicate}.
