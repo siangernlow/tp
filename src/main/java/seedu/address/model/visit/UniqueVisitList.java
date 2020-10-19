@@ -3,11 +3,13 @@ package seedu.address.model.visit;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.location.Location;
 import seedu.address.model.location.exceptions.DuplicateLocationException;
 import seedu.address.model.visit.exceptions.DuplicateVisitException;
 import seedu.address.model.visit.exceptions.VisitNotFoundException;
@@ -57,6 +59,15 @@ public class UniqueVisitList implements Iterable<Visit> {
         if (!internalList.remove(toRemove)) {
             throw new VisitNotFoundException();
         }
+    }
+
+    /**
+     * Removes all the visits that have the same location as given in the argument.
+     */
+    public void removeVisitsWithLocation(Location locationToDelete) {
+        requireNonNull(locationToDelete);
+
+        internalList.removeIf(visit -> visit.isSameLocation(locationToDelete));
     }
 
     /**

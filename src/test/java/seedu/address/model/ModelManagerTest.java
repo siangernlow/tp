@@ -6,11 +6,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalLocations.ALICE_LOCATION;
+import static seedu.address.testutil.TypicalLocations.AMY_LOCATION;
 import static seedu.address.testutil.TypicalLocations.BENSON_LOCATION;
 import static seedu.address.testutil.TypicalLocations.CARL_LOCATION;
 import static seedu.address.testutil.TypicalLocations.DANIEL_LOCATION;
+import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalVisits.FIRST_VISIT;
+import static seedu.address.testutil.TypicalVisits.SECOND_VISIT;
+import static seedu.address.testutil.TypicalVisits.THIRD_VISIT;
+import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -169,6 +176,23 @@ public class ModelManagerTest {
                 .withLocation(ALICE_LOCATION).withDate("2020-02-09").build();
         modelManager.addVisit(sampleA);
         assertTrue(modelManager.hasVisit(sampleA));
+    }
+
+    @Test
+    public void deleteVisitsWithLocation_success() {
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
+                getTypicalVisitBook(), new UserPrefs());
+        Model actualModel = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
+                getTypicalVisitBook(), new UserPrefs());
+
+        expectedModel.deleteVisit(FIRST_VISIT);
+        actualModel.deleteVisitsWithLocation(BENSON_LOCATION);
+        assertEquals(expectedModel, actualModel);
+
+        expectedModel.deleteVisit(SECOND_VISIT);
+        expectedModel.deleteVisit(THIRD_VISIT);
+        actualModel.deleteVisitsWithLocation(AMY_LOCATION);
+        assertEquals(expectedModel, actualModel);
     }
 
     @Test
