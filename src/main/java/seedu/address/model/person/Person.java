@@ -7,8 +7,14 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.attribute.Address;
+import seedu.address.model.attribute.Email;
+import seedu.address.model.attribute.Id;
+import seedu.address.model.attribute.InfectionStatus;
+import seedu.address.model.attribute.Name;
+import seedu.address.model.attribute.Phone;
+import seedu.address.model.attribute.QuarantineStatus;
+import seedu.address.model.attribute.Tag;
 
 /**
  * Represents a Person in the person book.
@@ -16,13 +22,11 @@ import seedu.address.model.tag.Tag;
  */
 public class Person {
 
-    private static int personCount = 1;
-
     // Identity fields
     private final Name name;
     private final Phone phone;
     private final Email email;
-    private final Index id;
+    private final Id id;
 
     // Data fields
     private final Address address;
@@ -33,30 +37,9 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, QuarantineStatus quarantineStatus,
+    public Person(Id id, Name name, Phone phone, Email email, Address address, QuarantineStatus quarantineStatus,
                   InfectionStatus infectionStatus, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, quarantineStatus, infectionStatus, tags);
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        this.quarantineStatus = quarantineStatus;
-        this.infectionStatus = infectionStatus;
-        this.tags.addAll(tags);
-        this.id = Index.fromOneBased(personCount);
-        personCount += 1;
-    }
-
-    /**
-     * This constructor is used when creating copies of Locations due to edits or initialization.
-     */
-    public Person(Name name, Phone phone, Email email, Address address, QuarantineStatus quarantineStatus,
-                  InfectionStatus infectionStatus, Index id, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, quarantineStatus, infectionStatus, id, tags);
-
-        if (id.getOneBased() >= personCount) {
-            personCount = id.getOneBased() + 1;
-        }
 
         this.name = name;
         this.phone = phone;
@@ -92,7 +75,7 @@ public class Person {
         return infectionStatus;
     }
 
-    public Index getId() {
+    public Id getId() {
         return id;
     }
 
@@ -102,13 +85,6 @@ public class Person {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
-    }
-
-    /**
-     * Sets the personCount in Person class. For testing only.
-     */
-    public static void setPersonCount(int count) {
-        personCount = count;
     }
 
     /**

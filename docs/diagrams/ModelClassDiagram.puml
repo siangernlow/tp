@@ -5,52 +5,61 @@ skinparam arrowColor MODEL_COLOR
 skinparam classBackgroundColor MODEL_COLOR
 
 Package Model <<Rectangle>>{
-Interface ReadOnlyAddressBook <<Interface>>
-Interface Model <<Interface>>
-Interface ObservableList <<Interface>>
-Class AddressBook
-Class ReadOnlyAddressBook
-Class Model
-Class ModelManager
-Class UserPrefs
-Class ReadOnlyUserPrefs
+    Interface ReadOnlyAddressBook <<Interface>>
+    Interface Model <<Interface>>
+    Interface ObservableList <<Interface>>
+    Class PersonBook
+    Class LocationBook
+    Class VisitBook
+    Class ReadOnlyPersonBook
+    Class ReadOnlyLocationBook
+    Class ReadOnlyVisitBook
+    Class Model
+    Class ModelManager
+    Class UserPrefs
+    Class ReadOnlyUserPrefs
 
 Package Person {
-Class Person
-Class Address
-Class Email
-Class Name
-Class Phone
-Class UniquePersonList
+    Class Person
+    Class UniquePersonList
 }
 
-Package Tag {
-Class Tag
+Package Location {
+    Class Location
+    Class UniqueLocationList
+}
+
+Package Visit {
+    Class Visit
+    Class UniqueVisitList
 }
 }
 
 Class HiddenOutside #FFFFFF
 HiddenOutside ..> Model
 
-AddressBook .up.|> ReadOnlyAddressBook
+PersonBook .up.|> ReadOnlyPersonBook
+LocationBook .up.|> ReadOnlyLocationBook
+VisitBook .up.|> ReadOnlyVisitBook
 
 ModelManager .up.|> Model
 Model .right.> ObservableList
-ModelManager o--> "1" AddressBook
+ModelManager o--> "1" PersonBook
+ModelManager o--> "1" LocationBook
+ModelManager o--> "1" VisitBook
 ModelManager o-left-> "1" UserPrefs
 UserPrefs .up.|> ReadOnlyUserPrefs
 
-AddressBook *--> "1" UniquePersonList
+PersonBook *--> "1" UniquePersonList
 UniquePersonList o--> "*" Person
-Person *--> Name
-Person *--> Phone
-Person *--> Email
-Person *--> Address
-Person *--> "*" Tag
 
-Name -[hidden]right-> Phone
-Phone -[hidden]right-> Address
-Address -[hidden]right-> Email
+LocationBook *--> "1" UniqueLocationList
+UniqueLocationList o--> "*" Location
+
+VisitBook *--> "1" UniqueVisitList
+UniqueVisitList o--> "*" Visit
 
 ModelManager -->"1" Person : filtered list
+ModelManager -->"1" Location : filtered list
+ModelManager -->"1" Visit : filtered list
 @enduml

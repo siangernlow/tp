@@ -6,7 +6,7 @@
     "address": "123, Jurong West Ave 6, #08-111",
     "quarantineStatus": "false",
     "infectionStatus": "false",
-    "id" : "1",
+    "id" : "S1",
     "tagged": [ "friends" ]
   }, {
     "name": "Alice Pauline",
@@ -15,6 +15,6 @@
     "address": "4th street",
     "quarantineStatus": "false",
     "infectionStatus": "true",
-    "id" : "1"
+    "id" : "S1"
   } ]
 }

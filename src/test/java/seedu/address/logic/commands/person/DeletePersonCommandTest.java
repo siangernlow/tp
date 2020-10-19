@@ -8,6 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
+import static seedu.address.testutil.TypicalPersons.ID_NOT_IN_TYPICAL_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
 
@@ -19,6 +20,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.person.Person;
 
 /**
@@ -89,25 +91,70 @@ public class DeletePersonCommandTest {
     }
 
     @Test
+    public void execute_validId_success() {
+        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST.getZeroBased());
+        DeletePersonCommand deletePersonCommand = new DeletePersonCommand(personToDelete.getId());
+
+        String expectedMessage = String.format(DeletePersonCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
+
+        ModelManager expectedModel = new ModelManager(model.getPersonBook(), model.getLocationBook(),
+                model.getVisitBook(), new UserPrefs());
+        expectedModel.deletePerson(personToDelete);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
+                CommandResult.SWITCH_TO_VIEW_PEOPLE);
+
+        assertCommandSuccess(deletePersonCommand, model, expectedCommandResult, expectedModel);
+    }
+
+    @Test
+    public void execute_invalidId_throwsCommandException() {
+        DeletePersonCommand deletePersonCommand = new DeletePersonCommand(ID_NOT_IN_TYPICAL_PERSON);
+
+        assertCommandFailure(deletePersonCommand, model, Messages.MESSAGE_INVALID_PERSON_ID);
+    }
+
+    @Test
     public void equals() {
-        DeletePersonCommand deleteFirstCommand = new DeletePersonCommand(INDEX_FIRST);
-        DeletePersonCommand deleteSecondCommand = new DeletePersonCommand(INDEX_SECOND);
+        DeletePersonCommand deleteFirstIndexCommand = new DeletePersonCommand(INDEX_FIRST);
+        DeletePersonCommand deleteSecondIndexCommand = new DeletePersonCommand(INDEX_SECOND);
 
         // same object -> returns true
-        assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
+        assertTrue(deleteFirstIndexCommand.equals(deleteFirstIndexCommand));
 
         // same values -> returns true
-        DeletePersonCommand deleteFirstCommandCopy = new DeletePersonCommand(INDEX_FIRST);
-        assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
+        DeletePersonCommand deleteFirstIndexCommandCopy = new DeletePersonCommand(INDEX_FIRST);
+        assertTrue(deleteFirstIndexCommand.equals(deleteFirstIndexCommandCopy));
 
         // different types -> returns false
-        assertFalse(deleteFirstCommand.equals(1));
+        assertFalse(deleteFirstIndexCommand.equals(1));
 
         // null -> returns false
-        assertFalse(deleteFirstCommand.equals(null));
+        assertFalse(deleteFirstIndexCommand.equals(null));
 
-        // different person -> returns false
-        assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
+        // different index -> returns false
+        assertFalse(deleteFirstIndexCommand.equals(deleteSecondIndexCommand));
+
+        DeletePersonCommand deleteFirstIdCommand = new DeletePersonCommand(new Id("S1"));
+        DeletePersonCommand deleteSecondIdCommand = new DeletePersonCommand(new Id("S2"));
+
+        // same object -> returns true
+        assertTrue(deleteFirstIdCommand.equals(deleteFirstIdCommand));
+
+        // same values -> returns true
+        DeletePersonCommand deleteFirstIdCommandCopy = new DeletePersonCommand(new Id("S1"));
+        assertTrue(deleteFirstIdCommand.equals(deleteFirstIdCommandCopy));
+
+        // different types -> returns false
+        assertFalse(deleteFirstIdCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(deleteFirstIdCommand.equals(null));
+
+        // different id -> returns false
+        assertFalse(deleteFirstIdCommand.equals(deleteSecondIdCommand));
+
+        // different identification -> returns false
+        assertFalse(deleteFirstIdCommand.equals(deleteFirstIndexCommand));
     }
 
     /**

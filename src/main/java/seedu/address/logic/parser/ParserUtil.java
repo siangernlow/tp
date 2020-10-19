@@ -14,13 +14,14 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.InfectionStatus;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.QuarantineStatus;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.attribute.Address;
+import seedu.address.model.attribute.Email;
+import seedu.address.model.attribute.Id;
+import seedu.address.model.attribute.InfectionStatus;
+import seedu.address.model.attribute.Name;
+import seedu.address.model.attribute.Phone;
+import seedu.address.model.attribute.QuarantineStatus;
+import seedu.address.model.attribute.Tag;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -29,6 +30,20 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INVALID_DATE_FORMAT = "Wrong input date format";
+
+    /**
+     * Parses {@code id} into an {@code Id} and returns it.
+     * Leading and trailing whitespaces will be trimmed.
+     * @throws ParseException if the specified id is invalid.
+     */
+    public static Id parseId(String id) throws ParseException {
+        requireNonNull(id);
+        String trimmedId = id.trim();
+        if (!Id.isValidId(trimmedId)) {
+            throw new ParseException(Id.MESSAGE_CONSTRAINTS);
+        }
+        return new Id(trimmedId);
+    }
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be

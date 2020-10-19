@@ -1,6 +1,8 @@
 package seedu.address.testutil;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION_ID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
 
 import seedu.address.logic.commands.visit.AddVisitCommand;
 import seedu.address.model.visit.Visit;
@@ -21,8 +23,8 @@ public class VisitUtil {
      */
     public static String getVisitDetails(Visit visit) {
         StringBuilder sb = new StringBuilder();
-        sb.append(visit.getPerson().getId() + " ");
-        sb.append(visit.getLocation().getId() + " ");
+        sb.append(PREFIX_PERSON_ID + visit.getPerson().getId().value + " ");
+        sb.append(PREFIX_LOCATION_ID + visit.getLocation().getId().value + " ");
         sb.append(PREFIX_DATE + visit.getDate().toString() + " ");
         return sb.toString();
     }

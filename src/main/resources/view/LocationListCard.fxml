@@ -18,7 +18,7 @@
                 <Insets top="5" right="5" bottom="5" left="15" />
             </padding>
             <HBox spacing="5" alignment="CENTER_LEFT">
-                <Label fx:id="id" styleClass="cell_big_label">
+                <Label fx:id="index" styleClass="cell_big_label">
                     <minWidth>
                         <!-- Ensures that the label text is never truncated -->
                         <Region fx:constant="USE_PREF_SIZE" />
@@ -26,6 +26,7 @@
                 </Label>
                 <Label fx:id="locationName" text="\$first" styleClass="cell_big_label" />
             </HBox>
+            <Label fx:id="id" styleClass="cell_small_label" text="\$id" />
             <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
         </VBox>
     </GridPane>
