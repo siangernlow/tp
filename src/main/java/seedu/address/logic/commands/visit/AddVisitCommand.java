@@ -5,12 +5,14 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
 import seedu.address.model.visit.Visit;
@@ -42,8 +44,10 @@ public class AddVisitCommand extends Command {
             + "Parameters: PERSON_INDEX LOCATION_INDEX d/DATE\n"
             + "Example: " + COMMAND_WORD + " 1 " + " 2 " + PREFIX_DATE + " 2020-05-31 ";
 
-    private final Index personIndex;
-    private final Index locationIndex;
+    private final Optional<Index> personIndex;
+    private final Optional<Index> locationIndex;
+    private final Optional<Id> personId;
+    private final Optional<Id> locationId;
     private final LocalDate date;
 
     /**
@@ -51,8 +55,22 @@ public class AddVisitCommand extends Command {
      */
     public AddVisitCommand(Index personIndex, Index locationIndex, LocalDate date) {
         requireAllNonNull(personIndex, locationIndex, date);
-        this.personIndex = personIndex;
-        this.locationIndex = locationIndex;
+        this.personIndex = Optional.of(personIndex);
+        this.locationIndex = Optional.of(locationIndex);
+        personId = Optional.empty();
+        locationId = Optional.empty();
+        this.date = date;
+    }
+
+    /**
+     * Creates an AddVisitCommand to add the specified {@code Visit}
+     */
+    public AddVisitCommand(Id personId, Id locationId, LocalDate date) {
+        requireAllNonNull(personId, locationId, date);
+        this.personId = Optional.of(personId);
+        this.locationId = Optional.of(locationId);
+        personIndex = Optional.empty();
+        locationIndex = Optional.empty();
         this.date = date;
     }
 
@@ -60,17 +78,38 @@ public class AddVisitCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
+        Visit visit = null;
+        if (personId.isPresent() && locationId.isPresent()) {
+            visit = getVisitToAdd(personId.get(), locationId.get(), model);
+        } else if (personIndex.isPresent() && locationIndex.isPresent()) {
+            visit = getVisitToAdd(personIndex.get(), locationIndex.get(), model);
+        }
+        requireNonNull(visit);
+
+        model.addVisit(visit);
+        String successMessage = getIllegalVisitWarning(visit);
+        return new CommandResult(String.format(successMessage, visit), false, false,
+                CommandResult.SWITCH_TO_VIEW_VISITS);
+    }
+
+    private Visit getVisitToAdd(Id personId, Id locationId, Model model) throws CommandException {
+        Person person = model.getPersonFromId(personId);
+        Location location = model.getLocationFromId(locationId);
+        Visit visit = new Visit(person, location, date);
+        if (model.hasVisit(visit)) {
+            throw new CommandException(MESSAGE_DUPLICATE_VISIT);
+        }
+        return visit;
+    }
+
+    private Visit getVisitToAdd(Index personIndex, Index locationIndex, Model model) throws CommandException {
         Person person = model.getPersonFromIndex(personIndex);
         Location location = model.getLocationFromIndex(locationIndex);
         Visit visit = new Visit(person, location, date);
         if (model.hasVisit(visit)) {
             throw new CommandException(MESSAGE_DUPLICATE_VISIT);
         }
-
-        model.addVisit(visit);
-        String successMessage = getIllegalVisitWarning(person, location);
-        return new CommandResult(String.format(successMessage, visit), false, false,
-                CommandResult.SWITCH_TO_VIEW_VISITS);
+        return visit;
     }
 
     /**
@@ -78,11 +117,12 @@ public class AddVisitCommand extends Command {
      * An illegal visit occurs when a {@code Person} visits an {@code Address} that is
      * not his own, and he is either infected, in quarantine or both.
      *
-     * @param person The person to check.
-     * @param location The location the person visited.
+     * @param visit The visit to check
      * @return A warning string based on whether the visit is illegal or not.
      */
-    private static String getIllegalVisitWarning(Person person, Location location) {
+    private static String getIllegalVisitWarning(Visit visit) {
+        Person person = visit.getPerson();
+        Location location = visit.getLocation();
         boolean isPersonInfected = person.getInfectionStatus().getStatusAsBoolean();
         boolean isPersonQuarantined = person.getQuarantineStatus().getStatusAsBoolean();
 
@@ -117,6 +157,8 @@ public class AddVisitCommand extends Command {
         AddVisitCommand e = (AddVisitCommand) other;
         return personIndex.equals(e.personIndex)
                 && locationIndex.equals(e.locationIndex)
+                && personId.equals(e.personId)
+                && locationId.equals(e.locationId)
                 && date.equals(e.date);
     }
 }

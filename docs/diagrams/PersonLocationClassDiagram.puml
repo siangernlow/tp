@@ -1,0 +1,51 @@
+@startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor MODEL_COLOR
+skinparam classBackgroundColor MODEL_COLOR
+
+Package Model{
+Class UniqueLocationList
+Class UniquePersonList
+
+Package Location <<Rectangle>>{
+    Class Location
+    Class hidden #FFFFFFF
+}
+
+Package Person <<Rectangle>>{
+    Class Person
+    Class Email
+    Class Phone
+}
+
+Package Tag {
+    Class Tag
+}
+
+Class Name
+Class Address
+Class Id
+}
+
+
+UniquePersonList o--> "*" Person
+UniqueLocationList o--> "*" Location
+
+hidden -[hidden]> Location
+
+Name -down[hidden]-> Address
+Address -down[hidden]-> Id
+
+Person *-left-> Phone
+Person *-left-> Email
+Person *-down-> Tag
+
+Person *--> Name
+Location *--> Name
+Person *--> Address
+Location *--> Address
+Person *--> Id
+Location *--> Id
+
+@enduml
