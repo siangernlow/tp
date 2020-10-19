@@ -81,7 +81,7 @@ public class DeleteLocationCommand extends Command {
         }
         model.deleteLocation(locationToDelete.get());
         return new CommandResult(String.format(MESSAGE_DELETE_LOCATION_SUCCESS, locationToDelete.get()), false, false,
-                CommandResult.SWITCH_TO_VIEW_PEOPLE);
+                CommandResult.SWITCH_TO_VIEW_LOCATIONS);
     }
 
     private CommandResult deleteLocation(Index index, Model model) throws CommandException {
@@ -93,13 +93,14 @@ public class DeleteLocationCommand extends Command {
         Location locationToDelete = lastShownList.get(index.getZeroBased());
         model.deleteLocation(locationToDelete);
         return new CommandResult(String.format(MESSAGE_DELETE_LOCATION_SUCCESS, locationToDelete), false, false,
-                CommandResult.SWITCH_TO_VIEW_PEOPLE);
+                CommandResult.SWITCH_TO_VIEW_LOCATIONS);
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof DeleteLocationCommand // instanceof handles nulls
-                && targetIndex.equals(((DeleteLocationCommand) other).targetIndex)); // state check
+                && targetIndex.equals(((DeleteLocationCommand) other).targetIndex)
+                && targetId.equals(((DeleteLocationCommand) other).targetId)); // state check
     }
 }

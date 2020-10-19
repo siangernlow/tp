@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
 import seedu.address.model.location.LocationBook;
 
@@ -44,6 +45,8 @@ public class TypicalLocations {
             .withAddress(VALID_ADDRESS_AMY).withId(VALID_ID_AMY_LOCATION).build();
     public static final Location BOB_LOCATION = new LocationBuilder().withName(VALID_NAME_BOB)
             .withAddress(VALID_ADDRESS_BOB).withId(VALID_ID_BOB_LOCATION).build();
+
+    public static final Id ID_NOT_IN_TYPICAL_LOCATIONS = new Id("L1111");
 
     private TypicalLocations() {} // prevents instantiation
 

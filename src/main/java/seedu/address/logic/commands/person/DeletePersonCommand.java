@@ -101,6 +101,7 @@ public class DeletePersonCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof DeletePersonCommand // instanceof handles nulls
-                && targetIndex.equals(((DeletePersonCommand) other).targetIndex)); // state check
+                && targetIndex.equals(((DeletePersonCommand) other).targetIndex)
+                && targetId.equals(((DeletePersonCommand) other).targetId)); // state check
     }
 }

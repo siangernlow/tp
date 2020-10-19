@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.attribute.Address;
 import seedu.address.model.attribute.Email;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.attribute.Name;
 import seedu.address.model.attribute.Phone;
 import seedu.address.model.attribute.Tag;
@@ -28,6 +29,7 @@ public class ParserUtilTest {
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_DATE = "2020/11/11";
     private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_ID = " ";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
@@ -36,6 +38,7 @@ public class ParserUtilTest {
     private static final String VALID_DATE = "2020-11-11";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_ID = "S1";
 
     private static final String WHITESPACE = " \t\r\n";
 
@@ -57,6 +60,29 @@ public class ParserUtilTest {
 
         // Leading and trailing whitespaces
         assertEquals(INDEX_FIRST, ParserUtil.parseIndex("  1  "));
+    }
+
+    @Test
+    public void parseId_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseId((String) null));
+    }
+
+    @Test
+    public void parseId_invalidValue_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseId(INVALID_ID));
+    }
+
+    @Test
+    public void parseId_validValueWithoutWhitespace_returnsId() throws Exception {
+        Id expectedId = new Id(VALID_ID);
+        assertEquals(expectedId, ParserUtil.parseId(VALID_ID));
+    }
+
+    @Test
+    public void parseId_validValueWithWhitespace_returnsTrimmedId() throws Exception {
+        String idWithWhitespace = WHITESPACE + VALID_ID + WHITESPACE;
+        Id expectedId = new Id(VALID_ID);
+        assertEquals(expectedId, ParserUtil.parseId(idWithWhitespace));
     }
 
     @Test

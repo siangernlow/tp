@@ -87,6 +87,8 @@ public class TypicalPersons {
     public static final Person QUARANTINED_PERSON = ALICE;
     public static final Person INFECTED_AND_QUARANTINED_PERSON = BENSON;
 
+    public static final Id ID_NOT_IN_TYPICAL_PERSON = new Id("S1111");
+
     private TypicalPersons() {} // prevents instantiation
 
     /**
