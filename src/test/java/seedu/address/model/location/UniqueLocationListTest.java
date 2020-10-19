@@ -131,9 +131,10 @@ public class UniqueLocationListTest {
     @Test
     public void setLocation_editedLocationHasDifferentIdentity_success() {
         uniqueLocationList.add(ALICE_LOCATION);
-        uniqueLocationList.setLocation(ALICE_LOCATION, AMY_LOCATION);
+        Location editedLocation = new LocationBuilder().withId("L1").build();
+        uniqueLocationList.setLocation(ALICE_LOCATION, editedLocation);
         UniqueLocationList expectedUniqueLocationList = new UniqueLocationList();
-        expectedUniqueLocationList.add(AMY_LOCATION);
+        expectedUniqueLocationList.add(editedLocation);
         assertEquals(expectedUniqueLocationList, uniqueLocationList);
     }
 

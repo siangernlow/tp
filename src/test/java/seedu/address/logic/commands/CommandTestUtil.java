@@ -53,17 +53,17 @@ public class CommandTestUtil {
     public static final String VALID_INFECTION_STATUS_BOB = "true";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
-    public static final String VALID_ID_AMY_LOCATION = "L234B";
-    public static final String VALID_ID_BOB_LOCATION = "L345C";
-    public static final String VALID_ID_AMY = "S91011I";
-    public static final String VALID_ID_BOB = "S101112J";
-    public static final String VALID_ID_NUS = "L123A";
-    public static final String VALID_ID_VIVOCITY = "L234B";
+    public static final String VALID_ID_AMY_LOCATION = "L9";
+    public static final String VALID_ID_BOB_LOCATION = "L10";
+    public static final String VALID_ID_AMY = "S9";
+    public static final String VALID_ID_BOB = "S10";
+    public static final String VALID_ID_NUS = "L1";
+    public static final String VALID_ID_VIVOCITY = "L2";
 
     public static final String ID_DESC_AMY = " " + PREFIX_PERSON_ID + VALID_ID_AMY;
     public static final String ID_DESC_BOB = " " + PREFIX_PERSON_ID + VALID_ID_BOB;
-    public static final String ID_DESC_AMY_LOCATION = " " + PREFIX_LOCATION_ID + VALID_ID_AMY;
-    public static final String ID_DESC_BOB_LOCATION = " " + PREFIX_LOCATION_ID + VALID_ID_BOB;
+    public static final String ID_DESC_AMY_LOCATION = " " + PREFIX_LOCATION_ID + VALID_ID_AMY_LOCATION;
+    public static final String ID_DESC_BOB_LOCATION = " " + PREFIX_LOCATION_ID + VALID_ID_BOB_LOCATION;
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
     public static final String NAME_DESC_NUS = " " + PREFIX_NAME + VALID_NAME_NUS;
@@ -95,7 +95,7 @@ public class CommandTestUtil {
             + PREFIX_QUARANTINE_STATUS + "quarantined"; // only booleans allowed
     public static final String INVALID_INFECTION_DESC = " " + PREFIX_INFECTION + "nope"; // only true or false allowed
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
-    public static final String INVALID_ID_LOCATION = "-1";
+    public static final String INVALID_ID_LOCATION = " -1";
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";

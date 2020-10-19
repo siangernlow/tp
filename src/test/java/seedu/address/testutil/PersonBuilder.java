@@ -25,7 +25,7 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_QUARANTINE_STATUS = "false";
     public static final String DEFAULT_INFECTION_STATUS = "false";
-    public static final String DEFAULT_ID = "S123A";
+    public static final String DEFAULT_ID = "S1";
 
     private Name name;
     private Phone phone;

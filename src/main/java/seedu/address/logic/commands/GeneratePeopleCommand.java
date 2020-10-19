@@ -43,7 +43,7 @@ public class GeneratePeopleCommand extends Command {
             throw new CommandException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
         Person infectedPerson = model.getFilteredPersonList().get(personId.getZeroBased());
-        if (infectedPerson.getInfectionStatus().getStatusAsBoolean()) {
+        if (!infectedPerson.getInfectionStatus().getStatusAsBoolean()) {
             throw new CommandException(MESSAGE_PERSON_IS_NOT_INFECTED);
         }
         Id personIdFromBook = infectedPerson.getId();

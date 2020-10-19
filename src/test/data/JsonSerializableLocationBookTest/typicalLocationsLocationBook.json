@@ -3,30 +3,30 @@
   "locations" : [ {
     "name" : "Alice Pauline House",
     "address" : "123, Jurong West Ave 6, #08-111",
-    "id": "L123A"
+    "id": "L1"
   }, {
     "name" : "Benson Meier House",
     "address" : "311, Clementi Ave 2, #02-25",
-    "id": "L234B"
+    "id": "L2"
   }, {
     "name" : "Carl Kurz House",
     "address" : "wall street",
-    "id": "L345C"
+    "id": "L3"
   }, {
     "name" : "Daniel Meier House",
     "address" : "10th street",
-    "id": "L456D"
+    "id": "L4"
   }, {
     "name" : "Elle Meyer House",
     "address" : "michegan ave",
-    "id": "L567E"
+    "id": "L5"
   }, {
     "name" : "Fiona Kunz House",
     "address" : "little tokyo",
-    "id": "L678F"
+    "id": "L6"
   }, {
     "name" : "George Best House",
     "address" : "4th street",
-    "id": "L789G"
+    "id": "L7"
   } ]
 }

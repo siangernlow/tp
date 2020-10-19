@@ -4,10 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LIST;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_DATE;
+import static seedu.address.testutil.VisitBuilder.DEFAULT_DATE_STRING;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_LOCATION_INDEX;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_PERSON_INDEX;
 
@@ -37,15 +39,12 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
-import seedu.address.model.visit.Visit;
 import seedu.address.testutil.EditLocationDescriptorBuilder;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.LocationBuilder;
 import seedu.address.testutil.LocationUtil;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
-import seedu.address.testutil.VisitBuilder;
-import seedu.address.testutil.VisitUtil;
 
 public class VirusTrackerParserTest {
 
@@ -68,9 +67,12 @@ public class VirusTrackerParserTest {
 
     @Test
     public void parseCommand_addVisit() throws Exception {
-        Visit visit = new VisitBuilder().build();
+        String addVisitString = AddVisitCommand.COMMAND_WORD + " "
+                + DEFAULT_PERSON_INDEX.getOneBased() + " "
+                + DEFAULT_LOCATION_INDEX.getOneBased() + " "
+                + PREFIX_DATE + DEFAULT_DATE_STRING;
         AddVisitCommand command =
-                (AddVisitCommand) parser.parseCommand(VisitUtil.getAddVisitCommand(visit));
+                (AddVisitCommand) parser.parseCommand(addVisitString);
         assertEquals(new AddVisitCommand(DEFAULT_PERSON_INDEX, DEFAULT_LOCATION_INDEX, DEFAULT_DATE), command);
     }
 

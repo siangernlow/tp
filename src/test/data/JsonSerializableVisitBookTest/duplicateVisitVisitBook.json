@@ -6,11 +6,11 @@
     "addressPerson" : "little tokyo",
     "quarantineStatus": "false",
     "infectionStatus" : "true",
-    "idPerson" : "S678F",
+    "idPerson" : "S6",
     "tagged" : [ ],
     "nameLocation" : "Fiona Kunz House",
     "addressLocation" : "little tokyo",
-    "idLocation": "L101112G",
+    "idLocation": "L10",
     "dateOfVisit" : "2020-09-13"
   },{
     "namePerson" : "Fiona Kunz",
@@ -19,11 +19,11 @@
     "addressPerson" : "little tokyo",
     "quarantineStatus": "false",
     "infectionStatus" : "true",
-    "idPerson" : "S678F",
+    "idPerson" : "S6",
     "tagged" : [ ],
     "nameLocation" : "Fiona Kunz House",
     "addressLocation" : "little tokyo",
-    "idLocation": "L101112G",
+    "idLocation": "L10",
     "dateOfVisit" : "2020-09-13"
   }
   ]

@@ -23,9 +23,7 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_DATE;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_DATE_STRING;
-import static seedu.address.testutil.VisitBuilder.DEFAULT_LOCATION;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_LOCATION_INDEX;
-import static seedu.address.testutil.VisitBuilder.DEFAULT_PERSON;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_PERSON_INDEX;
 
 import java.time.LocalDate;
@@ -126,7 +124,7 @@ public class AddVisitCommandTest {
         Visit visitWithInfected = new VisitBuilder().withPerson(INFECTED_PERSON).build();
         expectedModel.addVisit(visitWithInfected);
 
-        AddVisitCommand actualCommand = new AddVisitCommand(INDEX_FOURTH, INDEX_FOURTH,
+        AddVisitCommand actualCommand = new AddVisitCommand(INDEX_FOURTH, INDEX_SECOND,
                 DEFAULT_DATE);
         String expectedMessage = String.format(AddVisitCommand.MESSAGE_INFECTED_MADE_VISIT, visitWithInfected);
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
@@ -145,7 +143,7 @@ public class AddVisitCommandTest {
         Visit visitWithQuarantined = new VisitBuilder().withPerson(QUARANTINED_PERSON).build();
         expectedModel.addVisit(visitWithQuarantined);
 
-        AddVisitCommand actualCommand = new AddVisitCommand(INDEX_FIRST, INDEX_FIRST,
+        AddVisitCommand actualCommand = new AddVisitCommand(INDEX_FIRST, INDEX_SECOND,
                 DEFAULT_DATE);
         String expectedMessage = String.format(AddVisitCommand.MESSAGE_QUARANTINED_MADE_VISIT, visitWithQuarantined);
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
@@ -274,22 +272,12 @@ public class AddVisitCommandTest {
 
         @Override
         public Person getPersonFromIndex(Index index) {
-            for (Person p : getTypicalPersons()) {
-                if (p.getId().equals(index)) {
-                    return p;
-                }
-            }
-            return DEFAULT_PERSON;
+            return getTypicalPersons().get(index.getZeroBased());
         }
 
         @Override
         public Location getLocationFromIndex(Index index) {
-            for (Location loc : getTypicalLocations()) {
-                if (loc.getId().equals(index)) {
-                    return loc;
-                }
-            }
-            return DEFAULT_LOCATION;
+            return getTypicalLocations().get(index.getZeroBased());
         }
 
         @Override

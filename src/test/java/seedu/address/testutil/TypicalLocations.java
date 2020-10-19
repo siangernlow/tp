@@ -2,8 +2,8 @@ package seedu.address.testutil;
 
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ID_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ID_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ID_AMY_LOCATION;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ID_BOB_LOCATION;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 
@@ -19,31 +19,31 @@ import seedu.address.model.location.LocationBook;
  */
 public class TypicalLocations {
     public static final Location ALICE_LOCATION = new LocationBuilder().withName("Alice Pauline House")
-            .withAddress("123, Jurong West Ave 6, #08-111").withId("L123A").build();
+            .withAddress("123, Jurong West Ave 6, #08-111").withId("L1").build();
     public static final Location BENSON_LOCATION = new LocationBuilder().withName("Benson Meier House")
-            .withAddress("311, Clementi Ave 2, #02-25").withId("L234B").build();
+            .withAddress("311, Clementi Ave 2, #02-25").withId("L2").build();
     public static final Location CARL_LOCATION = new LocationBuilder().withName("Carl Kurz House")
-            .withAddress("wall street").withId("L345C").build();
+            .withAddress("wall street").withId("L3").build();
     public static final Location DANIEL_LOCATION = new LocationBuilder().withName("Daniel Meier House")
-            .withAddress("10th street").withId("L456D").build();
+            .withAddress("10th street").withId("L4").build();
     public static final Location ELLE_LOCATION = new LocationBuilder().withName("Elle Meyer House")
-            .withAddress("michegan ave").withId("L567E").build();
+            .withAddress("michegan ave").withId("L5").build();
     public static final Location FIONA_LOCATION = new LocationBuilder().withName("Fiona Kunz House")
-            .withAddress("little tokyo").withId("L678F").build();
+            .withAddress("little tokyo").withId("L6").build();
     public static final Location GEORGE_LOCATION = new LocationBuilder().withName("George Best House")
-            .withAddress("4th street").withId("L789G").build();
+            .withAddress("4th street").withId("L7").build();
 
     // Manually added
     public static final Location HOON_LOCATION = new LocationBuilder().withName("Hoon Meier House")
-            .withAddress("little india").withId("L8910H").build();
+            .withAddress("little india").withId("L8").build();
     public static final Location IDA_LOCATION = new LocationBuilder().withName("Ida Mueller House")
-            .withAddress("chicago ave").withId("L91011I").build();
+            .withAddress("chicago ave").withId("L9").build();
 
     // Manually added - Location's details found in {@code CommandTestUtil}
     public static final Location AMY_LOCATION = new LocationBuilder().withName(VALID_NAME_AMY)
-            .withAddress(VALID_ADDRESS_AMY).withId(VALID_ID_AMY).build();
+            .withAddress(VALID_ADDRESS_AMY).withId(VALID_ID_AMY_LOCATION).build();
     public static final Location BOB_LOCATION = new LocationBuilder().withName(VALID_NAME_BOB)
-            .withAddress(VALID_ADDRESS_BOB).withId(VALID_ID_BOB).build();
+            .withAddress(VALID_ADDRESS_BOB).withId(VALID_ID_BOB_LOCATION).build();
 
     private TypicalLocations() {} // prevents instantiation
 
