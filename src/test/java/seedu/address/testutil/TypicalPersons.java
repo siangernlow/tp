@@ -4,6 +4,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ID_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ID_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_INFECTION_STATUS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_INFECTION_STATUS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
@@ -14,23 +16,13 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_QUARANTINE_STAT
 import static seedu.address.logic.commands.CommandTestUtil.VALID_QUARANTINE_STATUS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.testutil.TypicalIndexes.INDEX_EIGHTH;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIFTH;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FOURTH;
-import static seedu.address.testutil.TypicalIndexes.INDEX_NINTH;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SEVENTH;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SIXTH;
-import static seedu.address.testutil.TypicalIndexes.INDEX_TENTH;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
-import seedu.address.commons.core.index.Index;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonBook;
 
@@ -42,57 +34,60 @@ public class TypicalPersons {
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
             .withPhone("94351253").withQuarantineStatus("true")
-            .withInfectionStatus("false").withTags("friends").withId(INDEX_FIRST).build();
+            .withInfectionStatus("false").withTags("friends").withId("S1").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25").withQuarantineStatus("true")
             .withEmail("johnd@example.com").withPhone("98765432")
             .withInfectionStatus("true")
-            .withTags("owesMoney", "friends").withId(INDEX_SECOND).build();
+            .withTags("owesMoney", "friends").withId("S2").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("wall street").withInfectionStatus("false")
-            .withQuarantineStatus("false").withId(INDEX_THIRD).build();
+            .withQuarantineStatus("false").withId("S3").build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
             .withEmail("cornelia@example.com").withAddress("10th street").withTags("friends")
             .withQuarantineStatus("false")
-            .withInfectionStatus("true").withId(INDEX_FOURTH).build();
+            .withInfectionStatus("true").withId("S4").build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
             .withEmail("werner@example.com").withAddress("michegan ave").withQuarantineStatus("false")
-            .withInfectionStatus("true").withId(INDEX_FIFTH).build();
+            .withInfectionStatus("true").withId("S5").build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
             .withEmail("lydia@example.com").withAddress("little tokyo").withQuarantineStatus("false")
-            .withInfectionStatus("true").withId(INDEX_SIXTH).build();
+            .withInfectionStatus("true").withId("S6").build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
             .withEmail("anna@example.com").withAddress("4th street").withQuarantineStatus("false")
-            .withInfectionStatus("true").withId(INDEX_SEVENTH).build();
+            .withInfectionStatus("true").withId("S7").build();
 
     // Manually added
     public static final Person HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
             .withEmail("stefan@example.com").withAddress("little india").withInfectionStatus("false")
-            .withId(INDEX_EIGHTH).build();
+            .withId("S8").build();
     public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
-            .withEmail("hans@example.com").withAddress("chicago ave").withInfectionStatus("true").build();
+            .withEmail("hans@example.com").withAddress("chicago ave").withInfectionStatus("true")
+            .withId("S9").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
             .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
             .withQuarantineStatus(VALID_QUARANTINE_STATUS_AMY)
             .withInfectionStatus(VALID_INFECTION_STATUS_AMY).withTags(VALID_TAG_FRIEND)
-            .withId(INDEX_NINTH).build();
+            .withId(VALID_ID_AMY).build();
     public static final Person BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withInfectionStatus(VALID_INFECTION_STATUS_BOB)
             .withQuarantineStatus(VALID_QUARANTINE_STATUS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
-            .withId(INDEX_TENTH).build();
+            .withId(VALID_ID_BOB).build();
 
     // HashSet of Indexes corresponding to typical persons (ALICE to GEORGE)
-    public static final List<Index> ID_LIST_OF_TYPICAL_PERSONS = Arrays.asList(INDEX_FIRST,
-            INDEX_SECOND, INDEX_THIRD, INDEX_FOURTH, INDEX_FIFTH, INDEX_SIXTH, INDEX_SEVENTH);
-    public static final HashSet<Index> ID_HASHSET_OF_TYPICAL_PERSONS = new HashSet<>(ID_LIST_OF_TYPICAL_PERSONS);
+    public static final List<Id> ID_LIST_OF_TYPICAL_PERSONS = Arrays.asList(new Id("S1"),
+            new Id("S2"), new Id("S3"), new Id("S4"), new Id("S5"), new Id("S6"), new Id("S7"));
+    public static final HashSet<Id> ID_HASHSET_OF_TYPICAL_PERSONS = new HashSet<>(ID_LIST_OF_TYPICAL_PERSONS);
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
     // Persons with specific properties
     public static final Person INFECTED_PERSON = DANIEL;
     public static final Person QUARANTINED_PERSON = ALICE;
     public static final Person INFECTED_AND_QUARANTINED_PERSON = BENSON;
+
+    public static final Id ID_NOT_IN_TYPICAL_PERSON = new Id("S1111");
 
     private TypicalPersons() {} // prevents instantiation
 
@@ -111,7 +106,7 @@ public class TypicalPersons {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
 
-    public static HashSet<Index> getIdsOfTypicalPersonsAsHashSet() {
+    public static HashSet<Id> getIdsOfTypicalPersonsAsHashSet() {
         return ID_HASHSET_OF_TYPICAL_PERSONS;
     }
 }

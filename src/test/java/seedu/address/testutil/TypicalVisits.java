@@ -1,8 +1,5 @@
 package seedu.address.testutil;
 
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIFTH;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 import static seedu.address.testutil.TypicalLocations.AMY_LOCATION;
 import static seedu.address.testutil.TypicalLocations.BENSON_LOCATION;
 import static seedu.address.testutil.TypicalLocations.BOB_LOCATION;
@@ -25,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import seedu.address.commons.core.index.Index;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.visit.Visit;
 import seedu.address.model.visit.VisitBook;
 
@@ -120,8 +117,8 @@ public class TypicalVisits {
      * Returns a list of unique {@code LocationId} in the list of {@code Visit} provided
      * by {@code getVisitsForTest}
      */
-    public static List<Index> getLocationsIdsFromVisitsForTest() {
-        return new ArrayList<>(Arrays.asList(INDEX_FIRST, INDEX_SECOND, INDEX_FIFTH));
+    public static List<Id> getLocationsIdsFromVisitsForTest() {
+        return new ArrayList<>(Arrays.asList(new Id("L9"), new Id("L3"), new Id("L10")));
     }
 
     /**

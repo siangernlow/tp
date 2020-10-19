@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.index.Index;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
 import seedu.address.model.location.ReadOnlyLocationBook;
 import seedu.address.model.person.Person;
@@ -97,6 +98,9 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
 
+    /** Returns an unmodifiable view of the unfiltered person list */
+    ObservableList<Person> getUnfilteredPersonList();
+
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
@@ -150,6 +154,9 @@ public interface Model {
 
     /** Returns an unmodifiable view of the filtered location list */
     ObservableList<Location> getFilteredLocationList();
+
+    /** Returns an unmodifiable view of the unfiltered location list */
+    ObservableList<Location> getUnfilteredLocationList();
 
     /**
      * Updates the filter of the filtered location list to filter by the given {@code predicate}.
@@ -213,6 +220,18 @@ public interface Model {
      * @return the {@code InfoHandler} associated with the model.
      */
     InfoHandler getInfoHandler();
+
+    /**
+     * Gets the given person using the id.
+     * {@code id} must already exist in the person book.
+     */
+    Person getPersonFromId(Id id);
+
+    /**
+     * Gets the given location using the id.
+     * {@code id} must already exist in the location book.
+     */
+    Location getLocationFromId(Id id);
 
     /**
      * Gets the given person using the index.
