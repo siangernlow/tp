@@ -64,7 +64,7 @@ public class DeletePersonCommand extends Command {
         } else if (targetIndex.isPresent()) {
             return deletePerson(targetIndex.get(), model);
         } else {
-            assert false : "Delete command should have either non empty id or index.";
+            assert false : "Delete person command should have either non empty id or index.";
             return null;
         }
     }
