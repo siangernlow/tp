@@ -15,9 +15,11 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.attribute.Address;
+import seedu.address.model.attribute.Id;
+import seedu.address.model.attribute.Name;
 import seedu.address.model.location.Location;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Name;
+
 
 /**
  * Edits the details of an existing location in the location book.
@@ -90,9 +92,9 @@ public class EditLocationCommand extends Command {
 
         Name updatedName = editLocationDescriptor.getName().orElse(locationToEdit.getName());
         Address updatedAddress = editLocationDescriptor.getAddress().orElse(locationToEdit.getAddress());
-        Index updatedId = locationToEdit.getId();
+        Id updatedId = locationToEdit.getId();
 
-        return new Location(updatedName, updatedAddress, updatedId);
+        return new Location(updatedId, updatedName, updatedAddress);
     }
 
     @Override
@@ -120,7 +122,7 @@ public class EditLocationCommand extends Command {
     public static class EditLocationDescriptor {
         private Name name;
         private Address address;
-        private Index id;
+        private Id id;
 
         public EditLocationDescriptor() {}
 
@@ -156,11 +158,11 @@ public class EditLocationCommand extends Command {
             return Optional.ofNullable(address);
         }
 
-        public void setId(Index id) {
+        public void setId(Id id) {
             this.id = id;
         }
 
-        public Optional<Index> getId() {
+        public Optional<Id> getId() {
             return Optional.ofNullable(id);
         }
 

@@ -15,12 +15,15 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
 import seedu.address.model.location.LocationBook;
 import seedu.address.model.location.ReadOnlyLocationBook;
+import seedu.address.model.location.exceptions.LocationNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonBook;
 import seedu.address.model.person.ReadOnlyPersonBook;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.visit.ReadOnlyVisitBook;
 import seedu.address.model.visit.Visit;
 import seedu.address.model.visit.VisitBook;
@@ -158,6 +161,11 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public ObservableList<Person> getUnfilteredPersonList() {
+        return personBook.getPersonList();
+    }
+
+    @Override
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
@@ -217,6 +225,11 @@ public class ModelManager implements Model {
     @Override
     public ObservableList<Location> getFilteredLocationList() {
         return filteredLocations;
+    }
+
+    @Override
+    public ObservableList<Location> getUnfilteredLocationList() {
+        return locationBook.getLocationList();
     }
 
     @Override
@@ -299,13 +312,33 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public Person getPersonFromId(Id id) {
+        for (Person p : getUnfilteredPersonList()) {
+            if (p.getId().equals(id)) {
+                return p;
+            }
+        }
+        throw new PersonNotFoundException();
+    }
+
+    @Override
+    public Location getLocationFromId(Id id) {
+        for (Location l : getUnfilteredLocationList()) {
+            if (l.getId().equals(id)) {
+                return l;
+            }
+        }
+        throw new LocationNotFoundException();
+    }
+
+    @Override
     public Person getPersonFromIndex(Index index) {
-        return filteredPersons.get(index.getZeroBased());
+        return getFilteredPersonList().get(index.getZeroBased());
     }
 
     @Override
     public Location getLocationFromIndex(Index index) {
-        return filteredLocations.get(index.getZeroBased());
+        return getFilteredLocationList().get(index.getZeroBased());
     }
 
     @Override

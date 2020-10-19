@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
-import seedu.address.commons.core.index.Index;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
 import seedu.address.model.visit.ReadOnlyVisitBook;
@@ -174,7 +174,7 @@ public class InfoHandler {
      * @param personId Id of the person.
      * @return List of visits that the person is associated with.
      */
-    public VisitBook generateVisitsByPerson(Index personId) {
+    public VisitBook generateVisitsByPerson(Id personId) {
         ReadOnlyVisitBook tempVisitBook = model.getVisitBook();
         VisitBook visitsByPerson = new VisitBook();
         for (int i = 0; i < tempVisitBook.getVisitList().size(); i++) {
@@ -190,8 +190,8 @@ public class InfoHandler {
      * @param visitBook List of visits.
      * @return List of location ids that are associated with the visits.
      */
-    public static List<Index> generateLocationIdsByVisitBook(VisitBook visitBook) {
-        List<Index> locationIds = new ArrayList<>();
+    public static List<Id> generateLocationIdsByVisitBook(VisitBook visitBook) {
+        List<Id> locationIds = new ArrayList<>();
         for (int i = 0; i < visitBook.getVisitList().size(); i++) {
             locationIds.add(visitBook.getVisitList().get(i).getLocation().getId());
         }
@@ -203,13 +203,13 @@ public class InfoHandler {
      * @param locationIds List of location Ids.
      * @return List of visits that are associated with the location Ids.
      */
-    public VisitBook generateVisitsByLocationIds(List<Index> locationIds) {
+    public VisitBook generateVisitsByLocationIds(List<Id> locationIds) {
         ReadOnlyVisitBook tempVisitBook = model.getVisitBook();
         VisitBook associatedVisits = new VisitBook();
-        for (Index locationIndex : locationIds) {
+        for (Id locationId : locationIds) {
             for (int i = 0; i < tempVisitBook.getVisitList().size(); i++) {
                 Visit visit = tempVisitBook.getVisitList().get(i);
-                if (visit.getLocation().getId().equals(locationIndex)) {
+                if (visit.getLocation().getId().equals(locationId)) {
                     associatedVisits.addVisit(visit);
                 }
             }
@@ -225,11 +225,11 @@ public class InfoHandler {
      * @param personId Original infected person visit book is associated with.
      * @return List of location ids that are associated with the visits.
      */
-    public List<Index> generatePersonIdsByVisitBook(VisitBook visitBook, Index personId) {
-        List<Index> personIds = new ArrayList<>();
+    public List<Id> generatePersonIdsByVisitBook(VisitBook visitBook, Id personId) {
+        List<Id> personIds = new ArrayList<>();
         for (Visit visit : visitBook.getVisitList()) {
 
-            if (visit.getPerson().getId().getZeroBased() == personId.getZeroBased()) {
+            if (visit.getPerson().getId().equals(personId)) {
                 continue;
             }
             personIds.add(visit.getPerson().getId());
@@ -267,8 +267,8 @@ public class InfoHandler {
     /**
      * Returns a HashSet of ids of persons as given in the argument.
      */
-    public static HashSet<Index> getIdHashSetFromPersonsList(List<Person> persons) {
-        HashSet<Index> ids = new HashSet<>();
+    public static HashSet<Id> getIdHashSetFromPersonsList(List<Person> persons) {
+        HashSet<Id> ids = new HashSet<>();
         for (Person person : persons) {
             ids.add(person.getId());
         }
@@ -278,30 +278,30 @@ public class InfoHandler {
     /**
      * Returns an ArrayList of location ids of visits as given in the argument.
      */
-    public static ArrayList<Index> getLocationIdsFromInfectedVisitList(List<Visit> visits) {
-        HashMap<Index, Integer> infectedLocations = new HashMap<>();
+    public static ArrayList<Id> getLocationIdsFromInfectedVisitList(List<Visit> visits) {
+        HashMap<Id, Integer> infectedLocations = new HashMap<>();
         for (Visit visit : visits) {
-            Index id = visit.getLocation().getId();
+            Id id = visit.getLocation().getId();
             if (infectedLocations.containsKey(id)) {
                 infectedLocations.put(id, infectedLocations.get(id) + 1);
             } else {
                 infectedLocations.put(id, 1);
             }
         }
-        HashMap<Index, Integer> sortedInfectedLocations = sortByValues(infectedLocations);
+        HashMap<Id, Integer> sortedInfectedLocations = sortByValues(infectedLocations);
         return new ArrayList<>(sortedInfectedLocations.keySet());
     }
 
     /**
      * Sort HashMap by value. Only Used by method getLocationIdsFromInfectedVisitList.
      */
-    public static HashMap<Index, Integer> sortByValues(HashMap<Index, Integer> map) {
-        List<Map.Entry<Index, Integer>> list = new LinkedList<>(map.entrySet());
+    public static HashMap<Id, Integer> sortByValues(HashMap<Id, Integer> map) {
+        List<Map.Entry<Id, Integer>> list = new LinkedList<>(map.entrySet());
         // Sort in decreasing order
         list.sort((o1, o2) -> o2.getValue().compareTo(o1.getValue()));
 
-        HashMap<Index, Integer> sortedHashMap = new LinkedHashMap<>();
-        for (Map.Entry<Index, Integer> entry : list) {
+        HashMap<Id, Integer> sortedHashMap = new LinkedHashMap<>();
+        for (Map.Entry<Id, Integer> entry : list) {
             sortedHashMap.put(entry.getKey(), entry.getValue());
         }
         return sortedHashMap;

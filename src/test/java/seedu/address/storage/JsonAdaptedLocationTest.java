@@ -7,15 +7,15 @@ import static seedu.address.testutil.TypicalLocations.BENSON_LOCATION;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.commons.core.index.exceptions.InvalidIndexException;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Name;
+import seedu.address.model.attribute.Address;
+import seedu.address.model.attribute.Id;
+import seedu.address.model.attribute.Name;
 
 public class JsonAdaptedLocationTest {
     private static final String INVALID_NAME = "R@chel";
     private static final String INVALID_ADDRESS = " ";
-    private static final String INVALID_ID = "0";
+    private static final String INVALID_ID = " 0";
 
     private static final String VALID_NAME = BENSON_LOCATION.getName().toString();
     private static final String VALID_ADDRESS = BENSON_LOCATION.getAddress().toString();
@@ -61,14 +61,14 @@ public class JsonAdaptedLocationTest {
     public void toModelType_invalidId_throwsIllegalValueException() {
         JsonAdaptedLocation location =
                 new JsonAdaptedLocation(VALID_NAME, VALID_ADDRESS, INVALID_ID);
-        String expectedMessage = new InvalidIndexException().getMessage();
-        assertThrows(InvalidIndexException.class, expectedMessage, location::toModelType);
+        String expectedMessage = Id.MESSAGE_CONSTRAINTS;
+        assertThrows(IllegalValueException.class, expectedMessage, location::toModelType);
     }
 
     @Test
     public void toModelType_nullId_throwsIllegalValueException() {
         JsonAdaptedLocation location = new JsonAdaptedLocation(VALID_NAME, VALID_ADDRESS, null);
-        String expectedMessage = MISSING_FIELD_MESSAGE_FORMAT;
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Id.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, location::toModelType);
     }
 }

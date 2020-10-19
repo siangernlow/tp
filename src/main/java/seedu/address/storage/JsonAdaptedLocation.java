@@ -3,12 +3,11 @@ package seedu.address.storage;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.commons.core.index.exceptions.InvalidIndexException;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.attribute.Address;
+import seedu.address.model.attribute.Id;
+import seedu.address.model.attribute.Name;
 import seedu.address.model.location.Location;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Name;
 
 /**
  * Jackson-friendly version of {@link Location}.
@@ -37,7 +36,7 @@ public class JsonAdaptedLocation {
     public JsonAdaptedLocation(Location source) {
         name = source.getName().fullName;
         address = source.getAddress().value;
-        id = source.getId().toString();
+        id = source.getId().value;
     }
 
     /**
@@ -63,15 +62,14 @@ public class JsonAdaptedLocation {
         final Address modelAddress = new Address(address);
 
         if (id == null) {
-            throw new IllegalValueException(MISSING_FIELD_MESSAGE_FORMAT);
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Id.class.getSimpleName()));
         }
-        final Index modelId;
-        try {
-            modelId = Index.fromOneBased(Integer.parseInt(id));
-        } catch (ClassCastException | IndexOutOfBoundsException e) {
-            throw new InvalidIndexException();
+        if (!Id.isValidId(id)) {
+            throw new IllegalValueException(Id.MESSAGE_CONSTRAINTS);
         }
+        final Id modelId = new Id(id);
 
-        return new Location(modelName, modelAddress, modelId);
+
+        return new Location(modelId, modelName, modelAddress);
     }
 }

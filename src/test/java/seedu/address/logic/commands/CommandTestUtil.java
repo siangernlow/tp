@@ -5,16 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INFECTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_QUARANTINE_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
-import static seedu.address.testutil.TypicalIndexes.INDEX_NINTH;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
-import static seedu.address.testutil.TypicalIndexes.INDEX_TENTH;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,13 +56,17 @@ public class CommandTestUtil {
     public static final String VALID_INFECTION_STATUS_BOB = "true";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
-    public static final Index VALID_ID_AMY_LOCATION = INDEX_SECOND;
-    public static final Index VALID_ID_BOB_LOCATION = INDEX_THIRD;
-    public static final Index VALID_ID_AMY = INDEX_NINTH;
-    public static final Index VALID_ID_BOB = INDEX_TENTH;
-    public static final Index VALID_ID_NUS = INDEX_FIRST;
-    public static final Index VALID_ID_VIVOCITY = INDEX_SECOND;
+    public static final String VALID_ID_AMY_LOCATION = "L9";
+    public static final String VALID_ID_BOB_LOCATION = "L10";
+    public static final String VALID_ID_AMY = "S9";
+    public static final String VALID_ID_BOB = "S10";
+    public static final String VALID_ID_NUS = "L1";
+    public static final String VALID_ID_VIVOCITY = "L2";
 
+    public static final String ID_DESC_AMY = " " + PREFIX_PERSON_ID + VALID_ID_AMY;
+    public static final String ID_DESC_BOB = " " + PREFIX_PERSON_ID + VALID_ID_BOB;
+    public static final String ID_DESC_AMY_LOCATION = " " + PREFIX_LOCATION_ID + VALID_ID_AMY_LOCATION;
+    public static final String ID_DESC_BOB_LOCATION = " " + PREFIX_LOCATION_ID + VALID_ID_BOB_LOCATION;
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
     public static final String NAME_DESC_NUS = " " + PREFIX_NAME + VALID_NAME_NUS;
@@ -87,6 +88,8 @@ public class CommandTestUtil {
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
+    public static final String INVALID_PERSON_ID_DESC = " " + PREFIX_PERSON_ID + " "; // '&' not allowed in names
+    public static final String INVALID_LOCATION_ID_DESC = " " + PREFIX_LOCATION_ID + " "; // '&' not allowed in names
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
@@ -95,7 +98,7 @@ public class CommandTestUtil {
             + PREFIX_QUARANTINE_STATUS + "quarantined"; // only booleans allowed
     public static final String INVALID_INFECTION_DESC = " " + PREFIX_INFECTION + "nope"; // only true or false allowed
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
-    public static final String INVALID_ID_LOCATION = "-1";
+    public static final String INVALID_ID_LOCATION = " -1";
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
