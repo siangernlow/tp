@@ -21,7 +21,9 @@ import static seedu.address.testutil.TypicalPersons.QUARANTINED_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_DATE;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_DATE_STRING;
+import static seedu.address.testutil.VisitBuilder.DEFAULT_LOCATION;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_LOCATION_INDEX;
+import static seedu.address.testutil.VisitBuilder.DEFAULT_PERSON;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_PERSON_INDEX;
 
 import java.time.LocalDate;
@@ -233,6 +235,24 @@ public class AddVisitCommandTest {
         }
 
         @Override
+        public Person getPersonFromIndex(Index index) {
+            if (index.equals(DEFAULT_PERSON_INDEX)) {
+                return DEFAULT_PERSON;
+            } else if (index.equals(INDEX_FOURTH)) {
+                return INFECTED_PERSON;
+            } else if (index.equals(INDEX_FIRST)) {
+                return QUARANTINED_PERSON;
+            }
+            return DEFAULT_PERSON;
+        }
+
+        @Override
+        public Location getLocationFromIndex(Index index) {
+
+            return DEFAULT_LOCATION;
+        }
+
+        @Override
         public boolean hasVisit(Visit visit) {
             requireNonNull(visit);
             return this.visit.equals(visit);
@@ -255,6 +275,26 @@ public class AddVisitCommandTest {
         public void addVisit(Visit visit) {
             requireNonNull(visit);
             visitsAdded.add(visit);
+        }
+
+        @Override
+        public Person getPersonFromIndex(Index index) {
+            if (index.equals(DEFAULT_PERSON_INDEX)) {
+                return DEFAULT_PERSON;
+            } else if (index.equals(INDEX_FOURTH)) {
+                return INFECTED_PERSON;
+            } else if (index.equals(INDEX_FIRST)) {
+                return QUARANTINED_PERSON;
+            }
+            return DEFAULT_PERSON;
+        }
+
+        @Override
+        public Location getLocationFromIndex(Index index) {
+            if (index.equals(INDEX_SIXTH)) {
+                return FIONA_LOCATION;
+            }
+            return DEFAULT_LOCATION;
         }
 
         @Override

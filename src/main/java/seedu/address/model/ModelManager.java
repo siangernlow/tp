@@ -322,12 +322,12 @@ public class ModelManager implements Model {
 
     @Override
     public Person getPersonFromIndex(Index index) {
-        return getUnfilteredPersonList().get(index.getZeroBased());
+        return getFilteredPersonList().get(index.getZeroBased());
     }
 
     @Override
     public Location getLocationFromIndex(Index index) {
-        return getUnfilteredLocationList().get(index.getZeroBased());
+        return getFilteredLocationList().get(index.getZeroBased());
     }
 
     @Override

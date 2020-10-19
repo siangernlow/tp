@@ -226,9 +226,13 @@ public class ModelStub implements Model {
     public Location getLocationFromId(Id id) {
         throw new AssertionError("This method should not be called.");
     }
+
+    @Override
     public Person getPersonFromIndex(Index index) {
         throw new AssertionError("This method should not be called.");
     }
+
+    @Override
     public Location getLocationFromIndex(Index index) {
         throw new AssertionError("This method should not be called.");
     }

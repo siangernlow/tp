@@ -35,8 +35,8 @@ public class DataGenerator {
     public static final Character DEFAULT_QUOTE = '"';
 
     // Minimum number of parameters required to create the object
-    public static final int MIN_PERSON_PARAMETERS = 6;
-    public static final int MIN_LOCATION_PARAMETERS = 2;
+    public static final int MIN_PERSON_PARAMETERS = 7;
+    public static final int MIN_LOCATION_PARAMETERS = 3;
     public static final int MIN_VISIT_PARAMETERS = 3;
 
     public static final String INVALID_ROW_FORMAT =
@@ -96,7 +96,7 @@ public class DataGenerator {
 
             Set<String> tags = new HashSet<>();
             if (dataValues.size() > MIN_PERSON_PARAMETERS) {
-                String[] tagsAsString = dataValues.get(6).split(",");
+                String[] tagsAsString = dataValues.get(7).split(",");
                 tags.addAll(Arrays.asList(tagsAsString));
             }
             Set<Tag> tagList = ParserUtil.parseTags(tags);

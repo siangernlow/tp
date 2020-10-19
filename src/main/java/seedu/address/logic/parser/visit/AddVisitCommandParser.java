@@ -36,7 +36,7 @@ public class AddVisitCommandParser implements Parser<AddVisitCommand> {
         if (!arePrefixesPresent(argMultimap, PREFIX_DATE)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddVisitCommand.MESSAGE_USAGE));
         }
-        if (arePrefixesPresent(argMultimap, PREFIX_LOCATION_ID, PREFIX_PERSON_ID)
+        if ((arePrefixesPresent(argMultimap, PREFIX_LOCATION_ID) || arePrefixesPresent(argMultimap, PREFIX_PERSON_ID))
                 && !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddVisitCommand.MESSAGE_USAGE));
         }
