@@ -1,0 +1,67 @@
+@startuml
+!include style.puml
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":VirusTrackerParser" as VirusTrackerParser LOGIC_COLOR
+participant ":AddFromCsvCommandParser" as AddFromCsvCommandParser LOGIC_COLOR
+participant ":DataGenerator" as DataGenerator LOGIC_COLOR
+participant "addFromCsv:AddPersonsFromCsvCommand" as AddPersonsFromCsvCommand LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute(addFromCsv)
+activate LogicManager
+
+LogicManager -> VirusTrackerParser : parseCommand(addFromCsv)
+activate VirusTrackerParser
+
+VirusTrackerParser -> AddFromCsvCommandParser : parse(args)
+activate AddFromCsvCommandParser
+
+AddFromCsvCommandParser -> DataGenerator : generatePersonsList(filepath)
+activate DataGenerator
+
+DataGenerator --> AddFromCsvCommandParser : personsList
+deactivate DataGenerator
+DataGenerator -[hidden]-> AddFromCsvCommandParser : personsList
+destroy DataGenerator
+
+create AddPersonsFromCsvCommand
+AddFromCsvCommandParser -> AddPersonsFromCsvCommand : AddPersonsFromCsvCommand(personsList)
+activate AddPersonsFromCsvCommand
+
+AddPersonsFromCsvCommand --> AddFromCsvCommandParser
+deactivate AddPersonsFromCsvCommand
+
+AddFromCsvCommandParser --> VirusTrackerParser
+deactivate AddFromCsvCommandParser
+
+VirusTrackerParser --> LogicManager : addFromCsv
+deactivate VirusTrackerParser
+
+LogicManager -> AddPersonsFromCsvCommand : execute()
+activate AddPersonsFromCsvCommand
+
+loop until entire personsList has been read
+    AddPersonsFromCsvCommand -> Model : addPerson(person)
+    activate Model
+
+    Model --> AddPersonsFromCsvCommand
+    deactivate Model
+end
+
+
+
+AddPersonsFromCsvCommand --> LogicManager : result
+deactivate AddPersonsFromCsvCommand
+
+AddPersonsFromCsvCommand -[hidden]-> LogicManager : result
+destroy AddPersonsFromCsvCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

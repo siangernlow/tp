@@ -1,0 +1,28 @@
+@startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor MODEL_COLOR
+skinparam classBackgroundColor MODEL_COLOR
+
+Package Model{
+    Class UniqueVisitList
+
+Package Person <<Rectangle>> {
+    Class Person
+}
+
+Package Location <<Rectangle>>{
+    Class Location
+}
+
+Package Visit <<Rectangle>>{
+    Class Visit
+    Class LocalDate
+}
+}
+
+UniqueVisitList o-down-> "*" Visit
+Visit *--> LocalDate
+Visit *--> Person
+Visit *--> Location
+@enduml
