@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.index.Index;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
 import seedu.address.model.location.ReadOnlyLocationBook;
 import seedu.address.model.person.Person;
@@ -217,11 +218,17 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public Person getPersonFromIndex(Index index) {
+    public Person getPersonFromId(Id id) {
         throw new AssertionError("This method should not be called.");
     }
 
     @Override
+    public Location getLocationFromId(Id id) {
+        throw new AssertionError("This method should not be called.");
+    }
+    public Person getPersonFromIndex(Index index) {
+        throw new AssertionError("This method should not be called.");
+    }
     public Location getLocationFromIndex(Index index) {
         throw new AssertionError("This method should not be called.");
     }

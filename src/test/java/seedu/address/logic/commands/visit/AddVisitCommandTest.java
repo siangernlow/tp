@@ -15,12 +15,10 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SIXTH;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD;
 import static seedu.address.testutil.TypicalLocations.FIONA_LOCATION;
 import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
-import static seedu.address.testutil.TypicalLocations.getTypicalLocations;
 import static seedu.address.testutil.TypicalPersons.INFECTED_AND_QUARANTINED_PERSON;
 import static seedu.address.testutil.TypicalPersons.INFECTED_PERSON;
 import static seedu.address.testutil.TypicalPersons.QUARANTINED_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_DATE;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_DATE_STRING;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_LOCATION_INDEX;
@@ -51,7 +49,6 @@ public class AddVisitCommandTest {
 
     @Test
     public void constructor_nullInput_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new AddVisitCommand(null, null, null));
         assertThrows(NullPointerException.class, () -> new AddVisitCommand(DEFAULT_PERSON_INDEX,
                 DEFAULT_LOCATION_INDEX, null));
         assertThrows(NullPointerException.class, () -> new AddVisitCommand(DEFAULT_PERSON_INDEX,
@@ -240,16 +237,6 @@ public class AddVisitCommandTest {
             requireNonNull(visit);
             return this.visit.equals(visit);
         }
-
-        @Override
-        public Person getPersonFromIndex(Index index) {
-            return visit.getPerson();
-        }
-
-        @Override
-        public Location getLocationFromIndex(Index index) {
-            return visit.getLocation();
-        }
     }
 
     /**
@@ -268,16 +255,6 @@ public class AddVisitCommandTest {
         public void addVisit(Visit visit) {
             requireNonNull(visit);
             visitsAdded.add(visit);
-        }
-
-        @Override
-        public Person getPersonFromIndex(Index index) {
-            return getTypicalPersons().get(index.getZeroBased());
-        }
-
-        @Override
-        public Location getLocationFromIndex(Index index) {
-            return getTypicalLocations().get(index.getZeroBased());
         }
 
         @Override

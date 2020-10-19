@@ -5,12 +5,14 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
 import seedu.address.model.visit.Visit;
@@ -42,8 +44,10 @@ public class AddVisitCommand extends Command {
             + "Parameters: PERSON_INDEX LOCATION_INDEX d/DATE\n"
             + "Example: " + COMMAND_WORD + " 1 " + " 2 " + PREFIX_DATE + " 2020-05-31 ";
 
-    private final Index personIndex;
-    private final Index locationIndex;
+    private final Optional<Index> personIndex;
+    private final Optional<Index> locationIndex;
+    private final Optional<Id> personId;
+    private final Optional<Id> locationId;
     private final LocalDate date;
 
     /**
@@ -51,8 +55,22 @@ public class AddVisitCommand extends Command {
      */
     public AddVisitCommand(Index personIndex, Index locationIndex, LocalDate date) {
         requireAllNonNull(personIndex, locationIndex, date);
-        this.personIndex = personIndex;
-        this.locationIndex = locationIndex;
+        this.personIndex = Optional.of(personIndex);
+        this.locationIndex = Optional.of(locationIndex);
+        personId = Optional.empty();
+        locationId = Optional.empty();
+        this.date = date;
+    }
+
+    /**
+     * Creates an AddVisitCommand to add the specified {@code Visit}
+     */
+    public AddVisitCommand(Id personId, Id locationId, LocalDate date) {
+        requireAllNonNull(personId, locationId, date);
+        this.personId = Optional.of(personId);
+        this.locationId = Optional.of(locationId);
+        personIndex = Optional.empty();
+        locationIndex = Optional.empty();
         this.date = date;
     }
 
@@ -60,8 +78,8 @@ public class AddVisitCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        Person person = model.getPersonFromIndex(personIndex);
-        Location location = model.getLocationFromIndex(locationIndex);
+        Person person = model.getPersonFromId(personId.get());
+        Location location = model.getLocationFromId(locationId.get());
         Visit visit = new Visit(person, location, date);
         if (model.hasVisit(visit)) {
             throw new CommandException(MESSAGE_DUPLICATE_VISIT);

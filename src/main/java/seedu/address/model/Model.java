@@ -5,7 +5,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
-import seedu.address.commons.core.index.Index;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
 import seedu.address.model.location.ReadOnlyLocationBook;
 import seedu.address.model.person.Person;
@@ -219,11 +219,11 @@ public interface Model {
      * Gets the given person using the index.
      * {@code index} must already exist in the person book.
      */
-    Person getPersonFromIndex(Index index);
+    Person getPersonFromId(Id id);
 
     /**
      * Gets the given location using the index.
      * {@code index} must already exist in the location book.
      */
-    Location getLocationFromIndex(Index index);
+    Location getLocationFromId(Id id);
 }

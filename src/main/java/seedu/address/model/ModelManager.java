@@ -14,13 +14,15 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.core.index.Index;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
 import seedu.address.model.location.LocationBook;
 import seedu.address.model.location.ReadOnlyLocationBook;
+import seedu.address.model.location.exceptions.LocationNotIdentifiableException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonBook;
 import seedu.address.model.person.ReadOnlyPersonBook;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.visit.ReadOnlyVisitBook;
 import seedu.address.model.visit.Visit;
 import seedu.address.model.visit.VisitBook;
@@ -298,13 +300,23 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public Person getPersonFromIndex(Index index) {
-        return filteredPersons.get(index.getZeroBased());
+    public Person getPersonFromId(Id id) {
+        for (Person p : filteredPersons) {
+            if (p.getId().equals(id)) {
+                return p;
+            }
+        }
+        throw new PersonNotFoundException();
     }
 
     @Override
-    public Location getLocationFromIndex(Index index) {
-        return filteredLocations.get(index.getZeroBased());
+    public Location getLocationFromId(Id id) {
+        for (Location l : filteredLocations) {
+            if (l.getId().equals(id)) {
+                return l;
+            }
+        }
+        throw new LocationNotIdentifiableException();
     }
 
     @Override
