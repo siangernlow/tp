@@ -59,17 +59,19 @@ public class DeletePersonCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
+        Person personToDelete = null;
         if (targetId.isPresent()) {
-            return deletePerson(targetId.get(), model);
+            personToDelete = getPersonToDelete(targetId.get(), model);
         } else if (targetIndex.isPresent()) {
-            return deletePerson(targetIndex.get(), model);
-        } else {
-            assert false : "Delete person command should have either non empty id or index.";
-            return null;
+            personToDelete = getPersonToDelete(targetIndex.get(), model);
         }
+        requireNonNull(personToDelete);
+        model.deletePerson(personToDelete);
+        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete), false, false,
+                CommandResult.SWITCH_TO_VIEW_PEOPLE);
     }
 
-    private CommandResult deletePerson(Id id, Model model) throws CommandException {
+    private Person getPersonToDelete(Id id, Model model) throws CommandException {
         List<Person> lastShownList = model.getUnfilteredPersonList();
         Optional<Person> personToDelete = Optional.empty();
         for (Person p : lastShownList) {
@@ -80,21 +82,16 @@ public class DeletePersonCommand extends Command {
         if (personToDelete.isEmpty()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_ID);
         }
-        model.deletePerson(personToDelete.get());
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete.get()), false, false,
-                CommandResult.SWITCH_TO_VIEW_PEOPLE);
+        return personToDelete.get();
     }
 
-    private CommandResult deletePerson(Index index, Model model) throws CommandException {
+    private Person getPersonToDelete(Index index, Model model) throws CommandException {
         List<Person> lastShownList = model.getFilteredPersonList();
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        Person personToDelete = lastShownList.get(index.getZeroBased());
-        model.deletePerson(personToDelete);
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete), false, false,
-                CommandResult.SWITCH_TO_VIEW_PEOPLE);
+        return lastShownList.get(index.getZeroBased());
     }
 
     @Override

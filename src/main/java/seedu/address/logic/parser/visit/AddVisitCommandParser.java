@@ -3,6 +3,8 @@ package seedu.address.logic.parser.visit;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_DATE_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION_ID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
 
 import java.time.LocalDate;
 import java.util.stream.Stream;
@@ -15,6 +17,7 @@ import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.attribute.Id;
 
 /**
  * Parses input arguments and creates a new AddVisitCommand object
@@ -28,20 +31,50 @@ public class AddVisitCommandParser implements Parser<AddVisitCommand> {
      */
     public AddVisitCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_DATE);
+                ArgumentTokenizer.tokenize(args, PREFIX_DATE, PREFIX_LOCATION_ID, PREFIX_PERSON_ID);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_DATE) || argMultimap.getPreamble().isEmpty()) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_DATE)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddVisitCommand.MESSAGE_USAGE));
+        }
+        if (arePrefixesPresent(argMultimap, PREFIX_LOCATION_ID, PREFIX_PERSON_ID)
+                && !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddVisitCommand.MESSAGE_USAGE));
         }
 
-        String[] ids = argMultimap.getPreamble().split("\\s+");
+        AddVisitCommand addVisitCommand = null;
+        if (arePrefixesPresent(argMultimap, PREFIX_LOCATION_ID, PREFIX_PERSON_ID)) {
+            addVisitCommand = parseId(argMultimap);
+        } else if (!argMultimap.getPreamble().isEmpty()) {
+            addVisitCommand = parseIndex(argMultimap);
+        }
+        assert addVisitCommand != null : "All arguments should have been either IDs or indexes.";
+        return addVisitCommand;
+    }
+
+    private AddVisitCommand parseId(ArgumentMultimap argMultimap) throws ParseException {
+        LocalDate date;
+        Id personId;
+        Id locationId;
+        try {
+            personId = ParserUtil.parseId(argMultimap.getValue(PREFIX_PERSON_ID).get());
+            locationId = ParserUtil.parseId(argMultimap.getValue(PREFIX_LOCATION_ID).get());
+            date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
+        } catch (ParseException pe) {
+            throw new ParseException(String.format(MESSAGE_INVALID_DATE_FORMAT, AddVisitCommand.MESSAGE_USAGE), pe);
+        }
+
+        return new AddVisitCommand(personId, locationId, date);
+    }
+
+    private AddVisitCommand parseIndex(ArgumentMultimap argMultimap) throws ParseException {
+        String[] indexes = argMultimap.getPreamble().split("\\s+");
 
         Index personIndex;
         Index locationIndex;
 
         try {
-            personIndex = ParserUtil.parseIndex(ids[0]);
-            locationIndex = ParserUtil.parseIndex(ids[1]);
+            personIndex = ParserUtil.parseIndex(indexes[0]);
+            locationIndex = ParserUtil.parseIndex(indexes[1]);
         } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddVisitCommand.MESSAGE_USAGE), pe);
         }

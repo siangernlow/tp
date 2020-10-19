@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
 import seedu.address.model.location.ReadOnlyLocationBook;
@@ -216,14 +217,26 @@ public interface Model {
     InfoHandler getInfoHandler();
 
     /**
+     * Gets the given person using the id.
+     * {@code id} must already exist in the person book.
+     */
+    Person getPersonFromId(Id id);
+
+    /**
+     * Gets the given location using the id.
+     * {@code id} must already exist in the location book.
+     */
+    Location getLocationFromId(Id id);
+
+    /**
      * Gets the given person using the index.
      * {@code index} must already exist in the person book.
      */
-    Person getPersonFromId(Id id);
+    Person getPersonFromIndex(Index index);
 
     /**
      * Gets the given location using the index.
      * {@code index} must already exist in the location book.
      */
-    Location getLocationFromId(Id id);
+    Location getLocationFromIndex(Index index);
 }
