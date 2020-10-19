@@ -17,20 +17,16 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.DataGenerator;
 import seedu.address.model.ModelStub;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
 import seedu.address.model.visit.Visit;
 import seedu.address.testutil.TypicalVisitParametersContainers;
 import seedu.address.testutil.TypicalVisits;
-
-
-
-
 
 public class AddVisitsFromCsvCommandTest {
 
@@ -215,9 +211,9 @@ public class AddVisitsFromCsvCommandTest {
         }
 
         @Override
-        public Person getPersonFromIndex(Index index) {
+        public Person getPersonFromId(Id id) {
             for (Person person : personListToCheck) {
-                if (person.getId().equals(index)) {
+                if (person.getId().equals(id)) {
                     return person;
                 }
             }
@@ -225,9 +221,9 @@ public class AddVisitsFromCsvCommandTest {
         }
 
         @Override
-        public Location getLocationFromIndex(Index index) {
+        public Location getLocationFromId(Id id) {
             for (Location location : locationListToCheck) {
-                if (location.getId().equals(index)) {
+                if (location.getId().equals(id)) {
                     return location;
                 }
             }

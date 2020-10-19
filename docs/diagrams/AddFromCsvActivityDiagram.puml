@@ -1,0 +1,44 @@
+@startuml
+start
+
+'Since the beta syntax does not support placing the condition outside the
+'diamond we place it as the true branch instead.
+
+repeat :User executes command;
+repeat while () is ([incorrect args])
+->[else];
+
+:VirusTracker reads the CSV file;
+:List of objects to add is created;
+
+note right
+    **Objects** in this case refers to
+    either people, locations or visits
+endnote
+
+while () is ([list has remaining entries])
+    if () then ( [Object does not exist
+      in the VirusTracker])
+        :Add object in the list
+         to VirusTracker;
+    else ([Object is a duplicate])
+        :Record the line number
+         of this object;
+        note right
+            Line number in
+            the CSV file
+        endnote
+endif
+endwhile ([no more objects to add])
+
+
+:Command success message is
+displayed with warnings, if applicable;
+note right
+Warnings may include information such
+as which lines of the CSV file were ignored
+due to errors
+endnote
+stop
+
+@enduml

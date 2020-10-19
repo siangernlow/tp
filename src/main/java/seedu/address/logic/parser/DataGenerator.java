@@ -15,20 +15,17 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.attribute.Address;
+import seedu.address.model.attribute.Email;
+import seedu.address.model.attribute.Id;
+import seedu.address.model.attribute.InfectionStatus;
+import seedu.address.model.attribute.Name;
+import seedu.address.model.attribute.Phone;
+import seedu.address.model.attribute.QuarantineStatus;
+import seedu.address.model.attribute.Tag;
 import seedu.address.model.location.Location;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.InfectionStatus;
-import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.QuarantineStatus;
-import seedu.address.model.tag.Tag;
-
-
-
 
 /**
  * Generates objects using data provided in CSV files.
@@ -38,8 +35,8 @@ public class DataGenerator {
     public static final Character DEFAULT_QUOTE = '"';
 
     // Minimum number of parameters required to create the object
-    public static final int MIN_PERSON_PARAMETERS = 6;
-    public static final int MIN_LOCATION_PARAMETERS = 2;
+    public static final int MIN_PERSON_PARAMETERS = 7;
+    public static final int MIN_LOCATION_PARAMETERS = 3;
     public static final int MIN_VISIT_PARAMETERS = 3;
 
     public static final String INVALID_ROW_FORMAT =
@@ -89,21 +86,22 @@ public class DataGenerator {
         }
 
         try {
-            Name name = ParserUtil.parseName(dataValues.get(0));
-            Phone phone = ParserUtil.parsePhone(dataValues.get(1));
-            Email email = ParserUtil.parseEmail(dataValues.get(2));
-            Address address = ParserUtil.parseAddress(dataValues.get(3));
-            QuarantineStatus quarantineStatus = ParserUtil.parseQuarantineStatus(dataValues.get(4));
-            InfectionStatus infectionStatus = ParserUtil.parseInfectionStatus(dataValues.get(5));
+            Id id = ParserUtil.parseId(dataValues.get(0));
+            Name name = ParserUtil.parseName(dataValues.get(1));
+            Phone phone = ParserUtil.parsePhone(dataValues.get(2));
+            Email email = ParserUtil.parseEmail(dataValues.get(3));
+            Address address = ParserUtil.parseAddress(dataValues.get(4));
+            QuarantineStatus quarantineStatus = ParserUtil.parseQuarantineStatus(dataValues.get(5));
+            InfectionStatus infectionStatus = ParserUtil.parseInfectionStatus(dataValues.get(6));
 
             Set<String> tags = new HashSet<>();
             if (dataValues.size() > MIN_PERSON_PARAMETERS) {
-                String[] tagsAsString = dataValues.get(6).split(",");
+                String[] tagsAsString = dataValues.get(7).split(",");
                 tags.addAll(Arrays.asList(tagsAsString));
             }
             Set<Tag> tagList = ParserUtil.parseTags(tags);
 
-            return new Person(name, phone, email, address, quarantineStatus, infectionStatus, tagList);
+            return new Person(id, name, phone, email, address, quarantineStatus, infectionStatus, tagList);
         } catch (ParseException pe) {
             throw new ParseException(String.format(INVALID_ROW_FORMAT, lineNumber, pe.getMessage()));
         }
@@ -151,10 +149,11 @@ public class DataGenerator {
         }
 
         try {
-            Name name = ParserUtil.parseName(dataValues.get(0));
-            Address address = ParserUtil.parseAddress(dataValues.get(1));
+            Id id = ParserUtil.parseId(dataValues.get(0));
+            Name name = ParserUtil.parseName(dataValues.get(1));
+            Address address = ParserUtil.parseAddress(dataValues.get(2));
 
-            return new Location(name, address);
+            return new Location(id, name, address);
         } catch (ParseException pe) {
             throw new ParseException(String.format(INVALID_ROW_FORMAT, lineNumber, pe.getMessage()));
         }
@@ -205,8 +204,8 @@ public class DataGenerator {
             throw new ParseException(String.format(MESSAGE_MISSING_DATA_FORMAT, lineNumber));
         }
         try {
-            Index personIndex = ParserUtil.parseIndex(dataValues.get(0));
-            Index locationIndex = ParserUtil.parseIndex(dataValues.get(1));
+            Id personIndex = ParserUtil.parseId(dataValues.get(0));
+            Id locationIndex = ParserUtil.parseId(dataValues.get(1));
             LocalDate date = ParserUtil.parseDate(dataValues.get(2));
 
             return new VisitParametersContainer(personIndex, locationIndex, date);
@@ -282,8 +281,8 @@ public class DataGenerator {
      * {@code AddVisitsFromCsvCommand}.
      */
     public static class VisitParametersContainer {
-        private final Index personIndex;
-        private final Index locationIndex;
+        private final Id personIndex;
+        private final Id locationIndex;
         private final LocalDate date;
 
         /**
@@ -293,18 +292,18 @@ public class DataGenerator {
          * @param locationIndex The index of a location as viewed in the last displayed list.
          * @param date The date of the visit.
          */
-        public VisitParametersContainer(Index personIndex, Index locationIndex, LocalDate date) {
+        public VisitParametersContainer(Id personIndex, Id locationIndex, LocalDate date) {
             requireAllNonNull(personIndex, locationIndex, date);
             this.personIndex = personIndex;
             this.locationIndex = locationIndex;
             this.date = date;
         }
 
-        public Index getPersonIndex() {
+        public Id getPersonIndex() {
             return personIndex;
         }
 
-        public Index getLocationIndex() {
+        public Id getLocationIndex() {
             return locationIndex;
         }
 
