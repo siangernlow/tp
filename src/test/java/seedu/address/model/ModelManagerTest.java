@@ -14,6 +14,8 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.CARL;
+import static seedu.address.testutil.TypicalPersons.HOON;
+import static seedu.address.testutil.TypicalPersons.IDA;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalVisits.FIFTH_VISIT;
 import static seedu.address.testutil.TypicalVisits.SECOND_VISIT;
@@ -179,7 +181,7 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void deleteVisitsWithPerson_success() {
+    public void deleteVisitsWithPerson_visitsContainDeletedPerson_success() {
         Model expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
                 getTypicalVisitBook(), new UserPrefs());
         Model actualModel = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
@@ -191,6 +193,20 @@ public class ModelManagerTest {
 
         expectedModel.deleteVisit(FIFTH_VISIT);
         actualModel.deleteVisitsWithPerson(CARL);
+        assertEquals(expectedModel, actualModel);
+    }
+
+    @Test
+    public void deleteVisitsWithPerson_visitsDoNotContainDeletedPerson_success() {
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
+                getTypicalVisitBook(), new UserPrefs());
+        Model actualModel = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
+                getTypicalVisitBook(), new UserPrefs());
+
+        actualModel.deleteVisitsWithPerson(HOON);
+        assertEquals(expectedModel, actualModel);
+
+        actualModel.deleteVisitsWithPerson(IDA);
         assertEquals(expectedModel, actualModel);
     }
 
