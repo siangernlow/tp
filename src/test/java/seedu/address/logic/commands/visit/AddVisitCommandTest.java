@@ -22,8 +22,10 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_DATE;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_DATE_STRING;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_LOCATION;
+import static seedu.address.testutil.VisitBuilder.DEFAULT_LOCATION_ID;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_LOCATION_INDEX;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_PERSON;
+import static seedu.address.testutil.VisitBuilder.DEFAULT_PERSON_ID;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_PERSON_INDEX;
 
 import java.time.LocalDate;
@@ -40,6 +42,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ModelStub;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
 import seedu.address.model.visit.ReadOnlyVisitBook;
@@ -57,10 +60,17 @@ public class AddVisitCommandTest {
                 null, DEFAULT_DATE));
         assertThrows(NullPointerException.class, () -> new AddVisitCommand(null,
                 DEFAULT_LOCATION_INDEX, DEFAULT_DATE));
+        assertThrows(NullPointerException.class, () -> new AddVisitCommand(DEFAULT_PERSON_ID,
+                DEFAULT_LOCATION_ID, null));
+        assertThrows(NullPointerException.class, () -> new AddVisitCommand(DEFAULT_PERSON_ID,
+                null, DEFAULT_DATE));
+        assertThrows(NullPointerException.class, () -> new AddVisitCommand(null,
+                DEFAULT_LOCATION_ID, DEFAULT_DATE));
+
     }
 
     @Test
-    public void execute_unfilteredList_addSuccessful() {
+    public void execute_unfilteredListIndex_success() {
         ModelStubAcceptingVisitAdded modelStub =
                 new AddVisitCommandTest.ModelStubAcceptingVisitAdded();
         Visit validVisit = new VisitBuilder().build();
@@ -79,7 +89,26 @@ public class AddVisitCommandTest {
     }
 
     @Test
-    public void execute_filteredList_success() {
+    public void execute_unfilteredListId_success() {
+        ModelStubAcceptingVisitAdded modelStub =
+                new AddVisitCommandTest.ModelStubAcceptingVisitAdded();
+        Visit validVisit = new VisitBuilder().build();
+
+        try {
+            CommandResult commandResult = new AddVisitCommand(DEFAULT_PERSON_ID, DEFAULT_LOCATION_ID,
+                    DEFAULT_DATE).execute(modelStub);
+
+            assertEquals(String.format(AddVisitCommand.MESSAGE_SUCCESS, validVisit),
+                    commandResult.getFeedbackToUser());
+            assertEquals(Arrays.asList(validVisit), modelStub.visitsAdded);
+            assertEquals(commandResult.getSwitchState(), CommandResult.SWITCH_TO_VIEW_VISITS);
+        } catch (CommandException e) {
+            assert false : "Command Exception not expected.";
+        }
+    }
+
+    @Test
+    public void execute_filteredListIndex_success() {
         Model model = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
                 new VisitBook(), new UserPrefs());
 
@@ -103,7 +132,7 @@ public class AddVisitCommandTest {
     }
 
     @Test
-    public void execute_duplicateVisit_throwsCommandException() {
+    public void execute_duplicateVisitIndex_throwsCommandException() {
         Visit validVisit = new VisitBuilder().build();
         AddVisitCommand addvisitCommand = new AddVisitCommand(DEFAULT_PERSON_INDEX, DEFAULT_LOCATION_INDEX,
                 DEFAULT_DATE);
@@ -295,6 +324,16 @@ public class AddVisitCommandTest {
                 return FIONA_LOCATION;
             }
             return DEFAULT_LOCATION;
+        }
+
+        @Override
+        public Location getLocationFromId(Id id) {
+            return DEFAULT_LOCATION;
+        }
+
+        @Override
+        public Person getPersonFromId(Id id) {
+            return DEFAULT_PERSON;
         }
 
         @Override
