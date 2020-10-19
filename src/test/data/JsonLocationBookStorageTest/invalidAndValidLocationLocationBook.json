@@ -2,10 +2,10 @@
   "locations": [ {
     "name": "Valid Location",
     "address": "4th street",
-    "id": "1"
+    "id": "L1"
   }, {
     "name": "Location With Invalid Address Field",
     "address": "   4th street",
-    "id": "0"
+    "id": "L2"
   } ]
 }

@@ -25,7 +25,6 @@ public class JsonSerializableVisitBookTest {
                 JsonSerializableVisitBook.class).get();
         VisitBook visitBookFromFile = dataFromFile.toModelType();
         VisitBook typicalVisitVisitBook = TypicalVisits.getTypicalVisitBook();
-
         assertEquals(visitBookFromFile, typicalVisitVisitBook);
     }
 

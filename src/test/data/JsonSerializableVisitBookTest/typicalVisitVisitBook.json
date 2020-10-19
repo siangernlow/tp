@@ -7,11 +7,11 @@
     "addressPerson" : "311, Clementi Ave 2, #02-25",
     "quarantineStatus" : "true",
     "infectionStatus" : "true",
-    "idPerson" : "2",
+    "idPerson" : "S2",
     "tagged" : ["owesMoney", "friends"],
     "nameLocation" : "Benson Meier House",
     "addressLocation" : "311, Clementi Ave 2, #02-25",
-    "idLocation" : "3",
+    "idLocation" : "L2",
     "dateOfVisit" : "2020-09-12"
   },{
     "namePerson" : "Amy Bee",
@@ -20,11 +20,11 @@
     "addressPerson" : "Block 312, Amy Street 1",
     "quarantineStatus" : "true",
     "infectionStatus" : "false",
-    "idPerson" : "9",
+    "idPerson" : "S9",
     "tagged" : ["friend"],
     "nameLocation" : "Amy Bee",
     "addressLocation" : "Block 312, Amy Street 1",
-    "idLocation" : "1",
+    "idLocation" : "L9",
     "dateOfVisit" : "2020-09-12"
   },{
     "namePerson" : "Alice Pauline",
@@ -33,11 +33,11 @@
     "addressPerson" : "123, Jurong West Ave 6, #08-111",
     "quarantineStatus" : "true",
     "infectionStatus" : "false",
-    "idPerson" : "1",
+    "idPerson" : "S1",
     "tagged" : [ "friends" ],
     "nameLocation" : "Amy Bee",
     "addressLocation" : "Block 312, Amy Street 1",
-    "idLocation" : "1",
+    "idLocation" : "L9",
     "dateOfVisit" : "2020-09-12"
   },{
     "namePerson" : "Bob Choo",
@@ -46,11 +46,11 @@
     "addressPerson" : "Block 123, Bobby Street 3",
     "quarantineStatus" : "false",
     "infectionStatus" : "true",
-    "idPerson" : "10",
+    "idPerson" : "S10",
     "tagged" : ["husband", "friend"],
     "nameLocation" : "Bob Choo",
     "addressLocation" : "Block 123, Bobby Street 3",
-    "idLocation" : "2",
+    "idLocation" : "L10",
     "dateOfVisit" : "2020-09-12"
   },{
     "namePerson" : "Carl Kurz",
@@ -59,11 +59,11 @@
     "addressPerson" : "wall street",
     "quarantineStatus": "false",
     "infectionStatus" : "false",
-    "idPerson" : "3",
+    "idPerson" : "S3",
     "tagged" : [ ],
     "nameLocation" : "Carl Kurz House",
     "addressLocation" : "wall street",
-    "idLocation": "5",
+    "idLocation": "L3",
     "dateOfVisit" : "2020-09-13"
   },{
     "namePerson" : "Daniel Meier",
@@ -72,11 +72,11 @@
     "addressPerson" : "10th street",
     "quarantineStatus": "false",
     "infectionStatus" : "true",
-    "idPerson" : "4",
+    "idPerson" : "S4",
     "tagged" : [ "friends" ],
     "nameLocation" : "Daniel Meier House",
     "addressLocation" : "10th street",
-    "idLocation": "7",
+    "idLocation": "L4",
     "dateOfVisit" : "2020-09-13"
   },{
     "namePerson" : "Elle Meyer",
@@ -85,11 +85,11 @@
     "addressPerson" : "michegan ave",
     "quarantineStatus": "false",
     "infectionStatus" : "true",
-    "idPerson" : "5",
+    "idPerson" : "S5",
     "tagged" : [ ],
     "nameLocation" : "Elle Meyer House",
     "addressLocation" : "michegan ave",
-    "idLocation": "8",
+    "idLocation": "L5",
     "dateOfVisit" : "2020-09-13"
   },{
     "namePerson" : "Fiona Kunz",
@@ -98,11 +98,11 @@
     "addressPerson" : "little tokyo",
     "quarantineStatus": "false",
     "infectionStatus" : "true",
-    "idPerson" : "6",
+    "idPerson" : "S6",
     "tagged" : [ ],
     "nameLocation" : "Fiona Kunz House",
     "addressLocation" : "little tokyo",
-    "idLocation": "10",
+    "idLocation": "L6",
     "dateOfVisit" : "2020-09-13"
   },{
     "namePerson" : "George Best",
@@ -111,11 +111,11 @@
     "addressPerson" : "4th street",
     "quarantineStatus": "false",
     "infectionStatus" : "true",
-    "idPerson" : "7",
+    "idPerson" : "S7",
     "tagged" : [ ],
     "nameLocation" : "George Best House",
     "addressLocation" : "4th street",
-    "idLocation": "6",
+    "idLocation": "L7",
     "dateOfVisit" : "2020-09-14"
   }
   ]
