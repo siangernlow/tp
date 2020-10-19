@@ -102,7 +102,7 @@ public class GenerateLocationsCommandTest {
     public void execute_validInputFromViewingAllPeople_success() {
         String expectedMessage = "Generated locations for: Daniel Meier";
         Model expectedModelForGenerate = expectedModel;
-        Predicate<Location> locationPredicate = location -> location.getId().getOneBased() == 6;
+        Predicate<Location> locationPredicate = location -> location.getId().equals("L456D");
         expectedModelForGenerate.updateFilteredLocationList(locationPredicate);
         Index index = Index.fromOneBased(4);
         GenerateLocationsCommand command = new GenerateLocationsCommand(index);
@@ -119,7 +119,7 @@ public class GenerateLocationsCommandTest {
         modelForAllInfected.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
 
         Model expectedModelForGenerate = expectedModel;
-        Predicate<Location> locationPredicate = location -> location.getId().getOneBased() == 6;
+        Predicate<Location> locationPredicate = location -> location.getId().equals("L456D");
         expectedModelForGenerate.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
         expectedModelForGenerate.updateFilteredLocationList(locationPredicate);
 

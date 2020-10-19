@@ -9,6 +9,8 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelPredicate;
+import seedu.address.model.attribute.Id;
+import seedu.address.model.person.Person;
 import seedu.address.model.visit.VisitBook;
 
 /**
@@ -39,20 +41,19 @@ public class GenerateLocationsCommand extends Command {
         if (personId.getZeroBased() >= model.getFilteredPersonList().size()) {
             throw new CommandException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-        Index personIdFromBook = model.getFilteredPersonList().get(personId.getZeroBased()).getId();
-        if (!model.getPersonBook().getPersonList()
-                .get(personIdFromBook.getZeroBased()).getInfectionStatus().getStatusAsBoolean()) {
+        Person infectedPerson = model.getFilteredPersonList().get(personId.getZeroBased());
+        if (!infectedPerson.getInfectionStatus().getStatusAsBoolean()) {
             throw new CommandException(MESSAGE_PERSON_IS_NOT_INFECTED);
         }
+        Id personIdFromBook = infectedPerson.getId();
         VisitBook visitsByPerson = model.getInfoHandler().generateVisitsByPerson(personIdFromBook);
         if (visitsByPerson.getVisitList().isEmpty()) {
             throw new CommandException(MESSAGE_PERSON_HAS_NO_VISITS);
         }
-        List<Index> locationIds = model.getInfoHandler().generateLocationIdsByVisitBook(visitsByPerson);
+        List<Id> locationIds = model.getInfoHandler().generateLocationIdsByVisitBook(visitsByPerson);
         model.updateFilteredLocationList(ModelPredicate.getPredicateShowLocationsById(locationIds));
         return new CommandResult(
-                "Generated locations for: " + model.getPersonBook()
-                        .getPersonList().get(personIdFromBook.getZeroBased()).getName(),
+                "Generated locations for: " + infectedPerson.getName(),
                 false, false, CommandResult.SWITCH_TO_VIEW_LOCATIONS);
     }
 

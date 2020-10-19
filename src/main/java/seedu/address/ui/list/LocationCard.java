@@ -28,13 +28,16 @@ public class LocationCard extends UiPart<Region> {
     private HBox cardPane;
 
     @FXML
+    private Label id;
+
+    @FXML
     private Label locationName;
 
     @FXML
     private Label address;
 
     @FXML
-    private Label id;
+    private Label index;
 
 
     /**
@@ -43,7 +46,8 @@ public class LocationCard extends UiPart<Region> {
     public LocationCard(Location location, int displayedIndex) {
         super(FXML);
         this.location = location;
-        id.setText(displayedIndex + ". ");
+        index.setText(displayedIndex + ". ");
+        id.setText(location.getId().value);
         locationName.setText(location.getName().fullName);
         address.setText(location.getAddress().value);
     }
@@ -62,7 +66,7 @@ public class LocationCard extends UiPart<Region> {
 
         // state check
         LocationCard card = (LocationCard) other;
-        return id.getText().equals(card.id.getText())
+        return index.getText().equals(card.index.getText())
                 && location.equals(card.location);
     }
 }

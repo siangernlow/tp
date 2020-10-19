@@ -10,20 +10,22 @@ import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FOURTH;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SIXTH;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD;
 import static seedu.address.testutil.TypicalLocations.FIONA_LOCATION;
 import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
-import static seedu.address.testutil.TypicalLocations.getTypicalLocations;
 import static seedu.address.testutil.TypicalPersons.INFECTED_AND_QUARANTINED_PERSON;
 import static seedu.address.testutil.TypicalPersons.INFECTED_PERSON;
 import static seedu.address.testutil.TypicalPersons.QUARANTINED_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_DATE;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_DATE_STRING;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_LOCATION;
+import static seedu.address.testutil.VisitBuilder.DEFAULT_LOCATION_ID;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_LOCATION_INDEX;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_PERSON;
+import static seedu.address.testutil.VisitBuilder.DEFAULT_PERSON_ID;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_PERSON_INDEX;
 
 import java.time.LocalDate;
@@ -40,6 +42,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ModelStub;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
 import seedu.address.model.visit.ReadOnlyVisitBook;
@@ -51,17 +54,23 @@ public class AddVisitCommandTest {
 
     @Test
     public void constructor_nullInput_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new AddVisitCommand(null, null, null));
         assertThrows(NullPointerException.class, () -> new AddVisitCommand(DEFAULT_PERSON_INDEX,
                 DEFAULT_LOCATION_INDEX, null));
         assertThrows(NullPointerException.class, () -> new AddVisitCommand(DEFAULT_PERSON_INDEX,
                 null, DEFAULT_DATE));
         assertThrows(NullPointerException.class, () -> new AddVisitCommand(null,
                 DEFAULT_LOCATION_INDEX, DEFAULT_DATE));
+        assertThrows(NullPointerException.class, () -> new AddVisitCommand(DEFAULT_PERSON_ID,
+                DEFAULT_LOCATION_ID, null));
+        assertThrows(NullPointerException.class, () -> new AddVisitCommand(DEFAULT_PERSON_ID,
+                null, DEFAULT_DATE));
+        assertThrows(NullPointerException.class, () -> new AddVisitCommand(null,
+                DEFAULT_LOCATION_ID, DEFAULT_DATE));
+
     }
 
     @Test
-    public void execute_unfilteredList_addSuccessful() {
+    public void execute_unfilteredListIndex_success() {
         ModelStubAcceptingVisitAdded modelStub =
                 new AddVisitCommandTest.ModelStubAcceptingVisitAdded();
         Visit validVisit = new VisitBuilder().build();
@@ -80,7 +89,26 @@ public class AddVisitCommandTest {
     }
 
     @Test
-    public void execute_filteredList_success() {
+    public void execute_unfilteredListId_success() {
+        ModelStubAcceptingVisitAdded modelStub =
+                new AddVisitCommandTest.ModelStubAcceptingVisitAdded();
+        Visit validVisit = new VisitBuilder().build();
+
+        try {
+            CommandResult commandResult = new AddVisitCommand(DEFAULT_PERSON_ID, DEFAULT_LOCATION_ID,
+                    DEFAULT_DATE).execute(modelStub);
+
+            assertEquals(String.format(AddVisitCommand.MESSAGE_SUCCESS, validVisit),
+                    commandResult.getFeedbackToUser());
+            assertEquals(Arrays.asList(validVisit), modelStub.visitsAdded);
+            assertEquals(commandResult.getSwitchState(), CommandResult.SWITCH_TO_VIEW_VISITS);
+        } catch (CommandException e) {
+            assert false : "Command Exception not expected.";
+        }
+    }
+
+    @Test
+    public void execute_filteredListIndex_success() {
         Model model = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
                 new VisitBook(), new UserPrefs());
 
@@ -104,7 +132,7 @@ public class AddVisitCommandTest {
     }
 
     @Test
-    public void execute_duplicateVisit_throwsCommandException() {
+    public void execute_duplicateVisitIndex_throwsCommandException() {
         Visit validVisit = new VisitBuilder().build();
         AddVisitCommand addvisitCommand = new AddVisitCommand(DEFAULT_PERSON_INDEX, DEFAULT_LOCATION_INDEX,
                 DEFAULT_DATE);
@@ -124,7 +152,7 @@ public class AddVisitCommandTest {
         Visit visitWithInfected = new VisitBuilder().withPerson(INFECTED_PERSON).build();
         expectedModel.addVisit(visitWithInfected);
 
-        AddVisitCommand actualCommand = new AddVisitCommand(INFECTED_PERSON.getId(), DEFAULT_LOCATION_INDEX,
+        AddVisitCommand actualCommand = new AddVisitCommand(INDEX_FOURTH, INDEX_SECOND,
                 DEFAULT_DATE);
         String expectedMessage = String.format(AddVisitCommand.MESSAGE_INFECTED_MADE_VISIT, visitWithInfected);
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
@@ -143,7 +171,7 @@ public class AddVisitCommandTest {
         Visit visitWithQuarantined = new VisitBuilder().withPerson(QUARANTINED_PERSON).build();
         expectedModel.addVisit(visitWithQuarantined);
 
-        AddVisitCommand actualCommand = new AddVisitCommand(QUARANTINED_PERSON.getId(), DEFAULT_LOCATION_INDEX,
+        AddVisitCommand actualCommand = new AddVisitCommand(INDEX_FIRST, INDEX_SECOND,
                 DEFAULT_DATE);
         String expectedMessage = String.format(AddVisitCommand.MESSAGE_QUARANTINED_MADE_VISIT, visitWithQuarantined);
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
@@ -163,8 +191,7 @@ public class AddVisitCommandTest {
                 .withLocation(FIONA_LOCATION).build();
         expectedModel.addVisit(visitWithInfectedAndQuarantined);
 
-        AddVisitCommand actualCommand = new AddVisitCommand(INFECTED_AND_QUARANTINED_PERSON.getId(),
-                FIONA_LOCATION.getId(), DEFAULT_DATE);
+        AddVisitCommand actualCommand = new AddVisitCommand(INDEX_SECOND, INDEX_SIXTH, DEFAULT_DATE);
         String expectedMessage = String.format(AddVisitCommand.MESSAGE_INFECTED_AND_QUARANTINED_MADE_VISIT,
                 visitWithInfectedAndQuarantined);
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
@@ -187,8 +214,7 @@ public class AddVisitCommandTest {
         Visit visitWithInfectedAndQuarantined = new VisitBuilder().withPerson(INFECTED_AND_QUARANTINED_PERSON).build();
         expectedModel.addVisit(visitWithInfectedAndQuarantined);
 
-        AddVisitCommand actualCommand = new AddVisitCommand(INFECTED_AND_QUARANTINED_PERSON.getId(),
-                DEFAULT_LOCATION_INDEX, DEFAULT_DATE);
+        AddVisitCommand actualCommand = new AddVisitCommand(INDEX_SECOND, DEFAULT_LOCATION_INDEX, DEFAULT_DATE);
         String expectedMessage = String.format(AddVisitCommand.MESSAGE_NO_WARNING,
                 visitWithInfectedAndQuarantined);
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
@@ -238,19 +264,27 @@ public class AddVisitCommandTest {
         }
 
         @Override
-        public boolean hasVisit(Visit visit) {
-            requireNonNull(visit);
-            return this.visit.equals(visit);
-        }
-
-        @Override
         public Person getPersonFromIndex(Index index) {
-            return visit.getPerson();
+            if (index.equals(DEFAULT_PERSON_INDEX)) {
+                return DEFAULT_PERSON;
+            } else if (index.equals(INDEX_FOURTH)) {
+                return INFECTED_PERSON;
+            } else if (index.equals(INDEX_FIRST)) {
+                return QUARANTINED_PERSON;
+            }
+            return DEFAULT_PERSON;
         }
 
         @Override
         public Location getLocationFromIndex(Index index) {
-            return visit.getLocation();
+
+            return DEFAULT_LOCATION;
+        }
+
+        @Override
+        public boolean hasVisit(Visit visit) {
+            requireNonNull(visit);
+            return this.visit.equals(visit);
         }
     }
 
@@ -274,22 +308,32 @@ public class AddVisitCommandTest {
 
         @Override
         public Person getPersonFromIndex(Index index) {
-            for (Person p : getTypicalPersons()) {
-                if (p.getId().equals(index)) {
-                    return p;
-                }
+            if (index.equals(DEFAULT_PERSON_INDEX)) {
+                return DEFAULT_PERSON;
+            } else if (index.equals(INDEX_FOURTH)) {
+                return INFECTED_PERSON;
+            } else if (index.equals(INDEX_FIRST)) {
+                return QUARANTINED_PERSON;
             }
             return DEFAULT_PERSON;
         }
 
         @Override
         public Location getLocationFromIndex(Index index) {
-            for (Location loc : getTypicalLocations()) {
-                if (loc.getId().equals(index)) {
-                    return loc;
-                }
+            if (index.equals(INDEX_SIXTH)) {
+                return FIONA_LOCATION;
             }
             return DEFAULT_LOCATION;
+        }
+
+        @Override
+        public Location getLocationFromId(Id id) {
+            return DEFAULT_LOCATION;
+        }
+
+        @Override
+        public Person getPersonFromId(Id id) {
+            return DEFAULT_PERSON;
         }
 
         @Override

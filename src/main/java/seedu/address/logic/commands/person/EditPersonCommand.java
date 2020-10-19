@@ -23,14 +23,15 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.InfectionStatus;
-import seedu.address.model.person.Name;
+import seedu.address.model.attribute.Address;
+import seedu.address.model.attribute.Email;
+import seedu.address.model.attribute.Id;
+import seedu.address.model.attribute.InfectionStatus;
+import seedu.address.model.attribute.Name;
+import seedu.address.model.attribute.Phone;
+import seedu.address.model.attribute.QuarantineStatus;
+import seedu.address.model.attribute.Tag;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.QuarantineStatus;
-import seedu.address.model.tag.Tag;
 
 /**
  * Edits the details of an existing person in the address book.
@@ -113,11 +114,11 @@ public class EditPersonCommand extends Command {
                 .orElse(personToEdit.getQuarantineStatus());
         InfectionStatus updatedInfectionStatus = editPersonDescriptor.getInfectionStatus()
                                             .orElse(personToEdit.getInfectionStatus());
-        Index updatedId = personToEdit.getId();
+        Id updatedId = personToEdit.getId();
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
-                updatedQuarantineStatus, updatedInfectionStatus, updatedId, updatedTags);
+        return new Person(updatedId, updatedName, updatedPhone, updatedEmail, updatedAddress,
+                updatedQuarantineStatus, updatedInfectionStatus, updatedTags);
     }
 
     @Override
@@ -149,7 +150,7 @@ public class EditPersonCommand extends Command {
         private Address address;
         private QuarantineStatus quarantineStatus;
         private InfectionStatus infectionStatus;
-        private Index id;
+        private Id id;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -224,11 +225,11 @@ public class EditPersonCommand extends Command {
             return Optional.ofNullable(infectionStatus);
         }
 
-        public void setId(Index id) {
+        public void setId(Id id) {
             this.id = id;
         }
 
-        public Optional<Index> getId() {
+        public Optional<Id> getId() {
             return Optional.ofNullable(id);
         }
 
