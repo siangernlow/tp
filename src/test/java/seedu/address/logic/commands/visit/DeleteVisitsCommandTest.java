@@ -6,6 +6,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.visit.DeleteVisitsCommand.MESSAGE_DELETE_VISIT_FAILED;
 import static seedu.address.logic.commands.visit.DeleteVisitsCommand.MESSAGE_DELETE_VISIT_SUCCESS;
+import static seedu.address.model.ListComparator.SORT_DESCENDING_VISIT_DATE;
 import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
@@ -36,10 +37,10 @@ public class DeleteVisitsCommandTest {
         StringBuilder expectedMessage = new StringBuilder(MESSAGE_DELETE_VISIT_SUCCESS);
 
         List<Visit> visits = model.getFilteredVisitList();
-        expectedMessage.append(1).append(". ").append(visits.get(0)).append(" \n");
-        expectedMessage.append(2).append(". ").append(visits.get(1)).append(" \n");
-        expectedMessage.append(3).append(". ").append(visits.get(2)).append(" \n");
-        expectedMessage.append(4).append(". ").append(visits.get(3)).append(" \n");
+
+        for (int i =  visits.size() - 4; i < visits.size(); i++) {
+            expectedMessage.append(i - 4).append(". ").append(visits.get(i)).append(" \n");
+        }
 
         DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -49,10 +50,9 @@ public class DeleteVisitsCommandTest {
         ModelManager expectedModel = new ModelManager(model.getPersonBook(), model.getLocationBook(),
                 model.getVisitBook(), new UserPrefs());
 
-        expectedModel.deleteVisit(visits.get(0));
-        expectedModel.deleteVisit(visits.get(1));
-        expectedModel.deleteVisit(visits.get(2));
-        expectedModel.deleteVisit(visits.get(3));
+        for (int i = visits.size() - 1; i > visits.size() - 5; i--) {
+            expectedModel.deleteVisit(visits.get(i));
+        }
 
         String expectedResult = expectedMessage.toString();
         CommandResult expectedCommandResult = new CommandResult(expectedResult, false, false,
@@ -73,10 +73,10 @@ public class DeleteVisitsCommandTest {
         StringBuilder expectedMessage = new StringBuilder(MESSAGE_DELETE_VISIT_SUCCESS);
 
         List<Visit> visits = model.getFilteredVisitList();
-        expectedMessage.append(1).append(". ").append(visits.get(0)).append(" \n");
-        expectedMessage.append(2).append(". ").append(visits.get(1)).append(" \n");
-        expectedMessage.append(3).append(". ").append(visits.get(2)).append(" \n");
-        expectedMessage.append(4).append(". ").append(visits.get(3)).append(" \n");
+
+        for (int i =  visits.size() - 4; i < visits.size(); i++) {
+            expectedMessage.append(i - 4).append(". ").append(visits.get(i)).append(" \n");
+        }
 
         DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -86,10 +86,9 @@ public class DeleteVisitsCommandTest {
         Model expectedModel = new ModelManager(model.getPersonBook(), model.getLocationBook(),
                 model.getVisitBook(), new UserPrefs());
 
-        expectedModel.deleteVisit(visits.get(0));
-        expectedModel.deleteVisit(visits.get(1));
-        expectedModel.deleteVisit(visits.get(2));
-        expectedModel.deleteVisit(visits.get(3));
+        for (int i = visits.size() - 1; i > visits.size() - 5; i--) {
+            expectedModel.deleteVisit(visits.get(i));
+        }
 
         String expectedResult = expectedMessage.toString();
 
