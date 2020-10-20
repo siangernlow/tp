@@ -6,6 +6,7 @@ import java.util.List;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
+import seedu.address.model.location.Location;
 
 /**
  * Wraps all data at the visit-book level
@@ -53,6 +54,15 @@ public class VisitBook implements ReadOnlyVisitBook {
         requireNonNull(newData);
 
         setVisits(newData.getVisitList());
+    }
+
+    /**
+     * Update the visit book with edited location
+     */
+    public void updateWithEditedLocation(Location editedLocation) {
+        requireNonNull(editedLocation);
+
+        visits.updateWithEditedLocation(editedLocation);
     }
 
     //// visit-level operations

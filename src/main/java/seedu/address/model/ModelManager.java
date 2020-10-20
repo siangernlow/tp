@@ -262,6 +262,11 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void updateVisitBookWithEditedLocation(Location editedLocation) {
+        this.visitBook.updateWithEditedLocation(editedLocation);
+    }
+
+    @Override
     public boolean hasVisit(Visit visit) {
         requireNonNull(visit);
         return visitBook.hasVisit(visit);
@@ -294,6 +299,12 @@ public class ModelManager implements Model {
     public void deleteVisit(Visit visit) {
         requireNonNull(visit);
         visitBook.removeVisit(visit);
+    }
+
+    @Override
+    public void setVisit(Visit target, Visit editedVisit) {
+        requireAllNonNull(target, editedVisit);
+        visitBook.setVisit(target, editedVisit);
     }
 
     /**

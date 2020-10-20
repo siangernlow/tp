@@ -61,7 +61,7 @@ public class Visit {
      * Returns true if the location of the visit corresponds to the entered location
      */
     public boolean isSameLocation(Location location) {
-        return location == this.location;
+        return this.location.isSameLocation(location);
     }
 
     /**

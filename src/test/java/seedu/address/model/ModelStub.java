@@ -189,6 +189,11 @@ public class ModelStub implements Model {
     public void updateVisitBookWithEditedPerson(Person editedPerson) {
         throw new AssertionError("This method should not be called.");
     }
+  
+    @Override
+    public void updateVisitBookWithEditedLocation(Location editedLocation) {
+        throw new AssertionError("This method should not be called.");
+    }
 
     @Override
     public boolean hasVisit(Visit visit) {
