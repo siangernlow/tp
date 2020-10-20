@@ -78,7 +78,7 @@ public class DataGenerator {
      * @throws ParseException if there are not enough parameters to create a person.
      */
     private static Person generatePerson(List<String> dataValues, int lineNumber) throws ParseException {
-        assert MIN_PERSON_PARAMETERS >= 6;
+        assert MIN_PERSON_PARAMETERS >= 7;
 
         // Check if enough parameters; 6 compulsory parameters required for adding a Person
         if (dataValues.size() < MIN_PERSON_PARAMETERS) {
@@ -141,7 +141,7 @@ public class DataGenerator {
      * @throws ParseException if there are not enough parameters to create a location.
      */
     private static Location generateLocation(List<String> dataValues, int lineNumber) throws ParseException {
-        assert MIN_LOCATION_PARAMETERS >= 2;
+        assert MIN_LOCATION_PARAMETERS >= 3;
 
         // Check if enough parameters; 2 compulsory parameters required for adding a Location
         if (dataValues.size() < MIN_LOCATION_PARAMETERS) {
