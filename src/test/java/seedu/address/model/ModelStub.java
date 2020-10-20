@@ -206,6 +206,10 @@ public class ModelStub implements Model {
     }
 
     @Override
+    public void deleteVisitsWithPerson(Person personToDelete) {
+        throw new AssertionError("This method should not be called.");
+    }
+
     public void deleteVisitsWithLocation(Location locationToDelete) {
         throw new AssertionError("This method should not be called.");
     }

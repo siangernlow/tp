@@ -285,6 +285,10 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void deleteVisitsWithPerson(Person personToDelete) {
+        visitBook.deleteVisitsWithPerson(personToDelete);
+    }
+
     public void deleteVisitsWithLocation(Location locationToDelete) {
         visitBook.deleteVisitsWithLocation(locationToDelete);
     }

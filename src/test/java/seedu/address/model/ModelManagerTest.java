@@ -13,8 +13,13 @@ import static seedu.address.testutil.TypicalLocations.DANIEL_LOCATION;
 import static seedu.address.testutil.TypicalLocations.HOON_LOCATION;
 import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.CARL;
+import static seedu.address.testutil.TypicalPersons.HOON;
+import static seedu.address.testutil.TypicalPersons.IDA;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalVisits.FIFTH_VISIT;
 import static seedu.address.testutil.TypicalVisits.FIRST_VISIT;
 import static seedu.address.testutil.TypicalVisits.SECOND_VISIT;
 import static seedu.address.testutil.TypicalVisits.THIRD_VISIT;
@@ -179,6 +184,36 @@ public class ModelManagerTest {
                 .withLocation(ALICE_LOCATION).withDate("2020-02-09").build();
         modelManager.addVisit(sampleA);
         assertTrue(modelManager.hasVisit(sampleA));
+    }
+
+    @Test
+    public void deleteVisitsWithPerson_visitsContainDeletedPerson_success() {
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
+                getTypicalVisitBook(), new UserPrefs());
+        Model actualModel = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
+                getTypicalVisitBook(), new UserPrefs());
+
+        expectedModel.deleteVisit(SECOND_VISIT);
+        actualModel.deleteVisitsWithPerson(AMY);
+        assertEquals(expectedModel, actualModel);
+
+        expectedModel.deleteVisit(FIFTH_VISIT);
+        actualModel.deleteVisitsWithPerson(CARL);
+        assertEquals(expectedModel, actualModel);
+    }
+
+    @Test
+    public void deleteVisitsWithPerson_visitsDoNotContainDeletedPerson_success() {
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
+                getTypicalVisitBook(), new UserPrefs());
+        Model actualModel = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
+                getTypicalVisitBook(), new UserPrefs());
+
+        actualModel.deleteVisitsWithPerson(HOON);
+        assertEquals(expectedModel, actualModel);
+
+        actualModel.deleteVisitsWithPerson(IDA);
+        assertEquals(expectedModel, actualModel);
     }
 
     @Test

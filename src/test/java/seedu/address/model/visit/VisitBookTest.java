@@ -9,6 +9,7 @@ import static seedu.address.testutil.TypicalLocations.AMY_LOCATION;
 import static seedu.address.testutil.TypicalLocations.BENSON_LOCATION;
 import static seedu.address.testutil.TypicalLocations.HOON_LOCATION;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalVisits.FIRST_VISIT;
 import static seedu.address.testutil.TypicalVisits.SECOND_VISIT;
 import static seedu.address.testutil.TypicalVisits.THIRD_VISIT;
@@ -113,6 +114,20 @@ public class VisitBookTest {
         visitBook.addVisit(sample);
         Visit editedSample = new VisitBuilder(sample).withPerson(ALICE).build();
         assertTrue(visitBook.hasVisit(editedSample));
+    }
+
+    @Test
+    public void deleteVisitsWithPerson_success() {
+        VisitBook expectedVisitBook = getTypicalVisitBook();
+        VisitBook actualVisitBook = getTypicalVisitBook();
+
+        expectedVisitBook.removeVisit(SECOND_VISIT);
+        actualVisitBook.deleteVisitsWithPerson(AMY);
+        assertEquals(expectedVisitBook, actualVisitBook);
+
+        expectedVisitBook.removeVisit(THIRD_VISIT);
+        actualVisitBook.deleteVisitsWithPerson(ALICE);
+        assertEquals(expectedVisitBook, actualVisitBook);
     }
 
     @Test
