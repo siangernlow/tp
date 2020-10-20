@@ -37,10 +37,10 @@ public class GeneratePeopleCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        if (personId.getZeroBased() >= model.getFilteredPersonList().size()) {
+        if (personId.getZeroBased() >= model.getSortedPersonList().size()) {
             throw new CommandException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-        Index personIdFromBook = model.getFilteredPersonList().get(personId.getZeroBased()).getId();
+        Index personIdFromBook = model.getSortedPersonList().get(personId.getZeroBased()).getId();
         if (!model.getPersonBook().getPersonList()
                 .get(personIdFromBook.getZeroBased()).getInfectionStatus().getStatusAsBoolean()) {
             throw new CommandException(MESSAGE_PERSON_IS_NOT_INFECTED);

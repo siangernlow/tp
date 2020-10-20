@@ -35,7 +35,7 @@ public class DeleteVisitsCommandTest {
     public void execute_validDateUnfilteredList_success() {
         StringBuilder expectedMessage = new StringBuilder(MESSAGE_DELETE_VISIT_SUCCESS);
 
-        List<Visit> visits = model.getFilteredVisitList();
+        List<Visit> visits = model.getSortedVisitList();
 
         for (int i = visits.size() - 4; i < visits.size(); i++) {
             expectedMessage.append(i - 4).append(". ").append(visits.get(i)).append(" \n");
@@ -71,7 +71,7 @@ public class DeleteVisitsCommandTest {
     public void execute_validDateFilteredList_success() {
         StringBuilder expectedMessage = new StringBuilder(MESSAGE_DELETE_VISIT_SUCCESS);
 
-        List<Visit> visits = model.getFilteredVisitList();
+        List<Visit> visits = model.getSortedVisitList();
 
         for (int i = visits.size() - 4; i < visits.size(); i++) {
             expectedMessage.append(i - 4).append(". ").append(visits.get(i)).append(" \n");
@@ -130,6 +130,6 @@ public class DeleteVisitsCommandTest {
     private void showNoVisit(Model model) {
         model.updateFilteredVisitList(p -> false);
 
-        assertTrue(model.getFilteredVisitList().isEmpty());
+        assertTrue(model.getSortedVisitList().isEmpty());
     }
 }

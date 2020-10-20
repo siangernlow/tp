@@ -95,7 +95,7 @@ public interface Model {
     void setPerson(Person target, Person editedPerson);
 
     /** Returns an unmodifiable view of the filtered person list */
-    ObservableList<Person> getFilteredPersonList();
+    ObservableList<Person> getSortedPersonList();
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
@@ -149,7 +149,7 @@ public interface Model {
     void setLocation(Location target, Location editedLocation);
 
     /** Returns an unmodifiable view of the filtered location list */
-    ObservableList<Location> getFilteredLocationList();
+    ObservableList<Location> getSortedLocationList();
 
     /**
      * Updates the filter of the filtered location list to filter by the given {@code predicate}.
@@ -195,7 +195,7 @@ public interface Model {
     void deleteVisit(Visit visit);
 
     /** Returns an unmodifiable view of the filtered visit list */
-    ObservableList<Visit> getFilteredVisitList();
+    ObservableList<Visit> getSortedVisitList();
 
     /**
      * Updates the filter of the filtered visit list to filter by the given {@code predicate}.

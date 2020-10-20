@@ -48,7 +48,7 @@ class EditLocationCommandTest {
 
         Model expectedModel = new ModelManager(new PersonBook(model.getPersonBook()),
                 new LocationBook(model.getLocationBook()), new VisitBook(model.getVisitBook()), new UserPrefs());
-        expectedModel.setLocation(model.getFilteredLocationList().get(0), editedLocation);
+        expectedModel.setLocation(model.getSortedLocationList().get(0), editedLocation);
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
                 CommandResult.SWITCH_TO_VIEW_LOCATIONS);
 
@@ -57,8 +57,8 @@ class EditLocationCommandTest {
 
     @Test
     public void execute_someFieldsSpecifiedUnfilteredList_success() {
-        Index indexLastLocation = Index.fromOneBased(model.getFilteredLocationList().size());
-        Location lastLocation = model.getFilteredLocationList().get(indexLastLocation.getZeroBased());
+        Index indexLastLocation = Index.fromOneBased(model.getSortedLocationList().size());
+        Location lastLocation = model.getSortedLocationList().get(indexLastLocation.getZeroBased());
 
         LocationBuilder locationInList = new LocationBuilder(lastLocation);
         Location editedLocation = locationInList.withName(VALID_NAME_NUS).build();
@@ -81,7 +81,7 @@ class EditLocationCommandTest {
     public void execute_noFieldSpecifiedUnfilteredList_success() {
         EditLocationCommand editLocationCommand = new EditLocationCommand(INDEX_FIRST,
                 new EditLocationCommand.EditLocationDescriptor());
-        Location editedLocation = model.getFilteredLocationList().get(INDEX_FIRST.getZeroBased());
+        Location editedLocation = model.getSortedLocationList().get(INDEX_FIRST.getZeroBased());
 
         String expectedMessage = String.format(EditLocationCommand.MESSAGE_EDIT_LOCATION_SUCCESS, editedLocation);
 
@@ -97,7 +97,7 @@ class EditLocationCommandTest {
     public void execute_filteredList_success() {
         showLocationAtIndex(model, INDEX_FIRST);
 
-        Location locationInFilteredList = model.getFilteredLocationList().get(INDEX_FIRST.getZeroBased());
+        Location locationInFilteredList = model.getSortedLocationList().get(INDEX_FIRST.getZeroBased());
         Location editedLocation = new LocationBuilder(locationInFilteredList).withName(VALID_NAME_NUS).build();
         EditLocationCommand editLocationCommand = new EditLocationCommand(INDEX_FIRST,
                 new EditLocationDescriptorBuilder().withName(VALID_NAME_NUS).build());
@@ -106,7 +106,7 @@ class EditLocationCommandTest {
 
         Model expectedModel = new ModelManager(new PersonBook(model.getPersonBook()),
                 new LocationBook(model.getLocationBook()), new VisitBook(model.getVisitBook()), new UserPrefs());
-        expectedModel.setLocation(model.getFilteredLocationList().get(0), editedLocation);
+        expectedModel.setLocation(model.getSortedLocationList().get(0), editedLocation);
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
                 CommandResult.SWITCH_TO_VIEW_LOCATIONS);
 
@@ -115,7 +115,7 @@ class EditLocationCommandTest {
 
     @Test
     public void execute_duplicateLocationUnfilteredList_failure() {
-        Location firstLocation = model.getFilteredLocationList().get(INDEX_FIRST.getZeroBased());
+        Location firstLocation = model.getSortedLocationList().get(INDEX_FIRST.getZeroBased());
         EditLocationDescriptor descriptor = new EditLocationDescriptorBuilder(firstLocation).build();
         EditLocationCommand editLocationCommand = new EditLocationCommand(INDEX_SECOND, descriptor);
 
@@ -136,7 +136,7 @@ class EditLocationCommandTest {
 
     @Test
     public void execute_invalidLocationIndexUnfilteredList_failure() {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredLocationList().size() + 1);
+        Index outOfBoundIndex = Index.fromOneBased(model.getSortedLocationList().size() + 1);
         EditLocationCommand.EditLocationDescriptor descriptor = new EditLocationDescriptorBuilder()
                 .withName(VALID_NAME_NUS).build();
         EditLocationCommand editLocationCommand = new EditLocationCommand(outOfBoundIndex, descriptor);

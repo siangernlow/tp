@@ -103,7 +103,7 @@ public class ModelManagerTest {
 
     @Test
     public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
-        assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredPersonList().remove(0));
+        assertThrows(UnsupportedOperationException.class, () -> modelManager.getSortedPersonList().remove(0));
     }
 
     @Test
@@ -136,7 +136,7 @@ public class ModelManagerTest {
 
     @Test
     public void getFilteredLocationList_modifyList_throwsUnsupportedOperationException() {
-        assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredLocationList().remove(0));
+        assertThrows(UnsupportedOperationException.class, () -> modelManager.getSortedLocationList().remove(0));
     }
 
     @Test

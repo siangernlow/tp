@@ -58,7 +58,7 @@ public class EditLocationCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Location> lastShownList = model.getFilteredLocationList();
+        List<Location> lastShownList = model.getSortedLocationList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_LOCATION_DISPLAYED_INDEX);

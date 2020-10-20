@@ -169,7 +169,7 @@ public class ModelManager implements Model {
      * {@code versionedAddressBook}
      */
     @Override
-    public ObservableList<Person> getFilteredPersonList() {
+    public ObservableList<Person> getSortedPersonList() {
         return sortedPersons;
     }
 
@@ -230,7 +230,7 @@ public class ModelManager implements Model {
      * {@code versionedVisitBook}
      */
     @Override
-    public ObservableList<Location> getFilteredLocationList() {
+    public ObservableList<Location> getSortedLocationList() {
         return sortedLocations;
     }
 
@@ -286,7 +286,7 @@ public class ModelManager implements Model {
      * {@code versionedVisitBook}
      */
     @Override
-    public ObservableList<Visit> getFilteredVisitList() {
+    public ObservableList<Visit> getSortedVisitList() {
         return sortedVisits;
     }
 

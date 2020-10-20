@@ -57,15 +57,15 @@ public class InfoHandler {
     //=========== List Accessors ==============================================================
 
     public ObservableList<Person> getPersonList() {
-        return model.getFilteredPersonList();
+        return model.getSortedPersonList();
     }
 
     public ObservableList<Location> getLocationList() {
-        return model.getFilteredLocationList();
+        return model.getSortedLocationList();
     }
 
     public ObservableList<Visit> getVisitList() {
-        return model.getFilteredVisitList();
+        return model.getSortedVisitList();
     }
 
     /**

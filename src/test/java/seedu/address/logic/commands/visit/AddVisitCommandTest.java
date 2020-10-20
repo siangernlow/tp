@@ -87,8 +87,8 @@ public class AddVisitCommandTest {
         showLocationAtIndex(model, INDEX_THIRD);
         showPersonAtIndex(model, INDEX_FOURTH);
 
-        Person person = model.getFilteredPersonList().get(0);
-        Location location = model.getFilteredLocationList().get(0);
+        Person person = model.getSortedPersonList().get(0);
+        Location location = model.getSortedLocationList().get(0);
         Visit validVisit = new VisitBuilder().withDate(DEFAULT_DATE_STRING)
                 .withLocation(location)
                 .withPerson(person)
@@ -96,7 +96,7 @@ public class AddVisitCommandTest {
 
         try {
             CommandResult commandResult = new AddVisitCommand(INDEX_FIRST, INDEX_FIRST, DEFAULT_DATE).execute(model);
-            assertEquals(model.getFilteredVisitList().get(0), validVisit);
+            assertEquals(model.getSortedVisitList().get(0), validVisit);
             assertEquals(commandResult.getSwitchState(), CommandResult.SWITCH_TO_VIEW_VISITS);
         } catch (CommandException e) {
             assert false : "Command Exception not expected.";

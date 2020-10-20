@@ -47,24 +47,24 @@ public class InfoHandlerTest {
 
     @Test
     public void getPersonList_validList_returnTrue() {
-        assertEquals(modelManager.getFilteredPersonList(), infoHandler.getPersonList());
+        assertEquals(modelManager.getSortedPersonList(), infoHandler.getPersonList());
     }
 
     @Test
     public void getLocationList_validList_returnTrue() {
-        assertEquals(modelManager.getFilteredLocationList(), infoHandler.getLocationList());
+        assertEquals(modelManager.getSortedLocationList(), infoHandler.getLocationList());
     }
 
     @Test
     public void getVisitList_validList_returnTrue() {
-        assertEquals(modelManager.getFilteredVisitList(), infoHandler.getVisitList());
+        assertEquals(modelManager.getSortedVisitList(), infoHandler.getVisitList());
     }
 
     @Test
     public void updateModelPersonList_dummyPredicate_returnsTrue() {
         Predicate<Person> predicateAlwaysTrue = unused -> true;
         modelManager.updateFilteredPersonList(predicateAlwaysTrue);
-        assertEquals(modelManager.getFilteredPersonList(),
+        assertEquals(modelManager.getSortedPersonList(),
                 infoHandler.getPersonList());
     }
 
