@@ -8,6 +8,7 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.location.Location;
 import seedu.address.model.location.exceptions.DuplicateLocationException;
 import seedu.address.model.person.Person;
 import seedu.address.model.visit.exceptions.DuplicateVisitException;
@@ -104,6 +105,18 @@ public class UniqueVisitList implements Iterable<Visit> {
         }
 
         internalList.setAll(visits);
+    }
+
+    /**
+     * Update the visits that have outdated location in this list with {@code editedLocation}
+     */
+    public void updateWithEditedLocation(Location editedLocation) {
+        for (Visit visit : internalList) {
+            if (visit.getLocation().getId().equals(editedLocation.getId())) {
+                Visit editedVisit = new Visit(visit.getPerson(), editedLocation, visit.getDate());
+                setVisit(visit, editedVisit);
+            }
+        }
     }
 
     /**
