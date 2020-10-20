@@ -324,6 +324,145 @@ public class InfoHandler {
         }
     }
 
+    //=============== Exporting to CSV ============================================================
+
+    /**
+     * Converts the stored persons list in VirusTracker to a String of
+     * attributes in the format to be added to CSV files.
+     *
+     * @return A string representation of the persons list.
+     */
+    public String getPersonListAsString() {
+        List<Person> personList = getPersonList();
+        StringBuilder personListAsString = new StringBuilder();
+        for (Person person : personList) {
+            List<String> attributes = extractPersonAttributes(person);
+            personListAsString.append(convertListToCsvFormat(attributes));
+        }
+        return personListAsString.toString();
+    }
+
+    /**
+     * Converts the stored locations list in VirusTracker to a String of
+     * attributes in the format to be added to CSV files.
+     *
+     * @return A string representation of the locations list.
+     */
+    public String getLocationListAsString() {
+        List<Location> locationList = getLocationList();
+        StringBuilder locationListAsString = new StringBuilder();
+        for (Location location : locationList) {
+            List<String> attributes = extractLocationAttributes(location);
+            locationListAsString.append(convertListToCsvFormat(attributes));
+        }
+        return locationListAsString.toString();
+    }
+
+
+    /**
+     * Converts the stored visits list in VirusTracker to a String of
+     * attributes in the format to be added to CSV files.
+     *
+     * @return A string representation of the visits list.
+     */
+    public String getVisitListAsString() {
+        List<Visit> visitList = getVisitList();
+        StringBuilder visitListAsString = new StringBuilder();
+        for (Visit visit : visitList) {
+            List<String> attributes = extractVisitAttributes(visit);
+            visitListAsString.append(convertListToCsvFormat(attributes));
+        }
+        return visitListAsString.toString();
+    }
+
+    /**
+     * Converts the given list of attributes to a String representing a single row
+     * in the CSV file.
+     *
+     * @param attributes The list of attributes
+     * @return The string representing the list of attributes
+     */
+    private String convertListToCsvFormat(List<String> attributes) {
+        if (attributes.size() == 0) {
+            return "";
+        }
+
+        StringBuilder attributeString = new StringBuilder();
+
+        for (String attribute : attributes) {
+            // Possible empty strings
+            if (attribute.isEmpty()) {
+                continue;
+            }
+            // If the field contains commas, enclose the field with quotation marks
+            if (attribute.contains(",")) {
+                attributeString.append('"').append(attribute).append('"').append(",");
+            } else {
+                attributeString.append(attribute).append(",");
+            }
+        }
+        // To specify a new row in the CSV file
+        attributeString.append("\n");
+        // Remove trailing comma in last field
+        attributeString.deleteCharAt(attributeString.toString().length() - 2);
+
+        return attributeString.toString();
+    }
+
+    /**
+     * Converts a {@code Person} into a list of attributes.
+     *
+     * @param person The person to extract the attributes from.
+     * @return A list of attributes describing the person.
+     */
+    private List<String> extractPersonAttributes(Person person) {
+        List<String> attributes = new ArrayList<>();
+
+        attributes.add(person.getIdAsString());
+        attributes.add(person.getNameAsString());
+        attributes.add(person.getPhoneAsString());
+        attributes.add(person.getEmailAsString());
+        attributes.add(person.getAddressAsString());
+        attributes.add(person.getQuarantineStatusAsString());
+        attributes.add(person.getInfectionStatusAsString());
+        attributes.add(person.getTagsAsString());
+
+        return attributes;
+    }
+
+    /**
+     * Converts a {@code Location} into a list of attributes.
+     *
+     * @param location The location to extract the attributes from.
+     * @return A list of attributes describing the location.
+     */
+    private List<String> extractLocationAttributes(Location location) {
+        List<String> attributes = new ArrayList<>();
+
+        attributes.add(location.getIdAsString());
+        attributes.add(location.getNameAsString());
+        attributes.add(location.getAddressAsString());
+
+        return attributes;
+    }
+
+    /**
+     * Converts a {@code Visit} into a list of attributes.
+     *
+     * @param visit The vist to extract the attributes from.
+     * @return A list of attributes describing the visit.
+     */
+    private List<String> extractVisitAttributes(Visit visit) {
+        List<String> attributes = new ArrayList<>();
+
+        attributes.add(visit.getPersonIdAsString());
+        attributes.add(visit.getLocationIdAsString());
+        attributes.add(visit.getDateAsString());
+
+        return attributes;
+    }
+
+
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object

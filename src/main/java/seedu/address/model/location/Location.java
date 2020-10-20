@@ -44,6 +44,20 @@ public class Location {
         return id;
     }
 
+    //===================== For String conversions ============================
+
+    public String getIdAsString() {
+        return id.toString();
+    }
+
+    public String getNameAsString() {
+        return name.toString();
+    }
+
+    public String getAddressAsString() {
+        return address.toString();
+    }
+
     /**
      * Returns true if both locations have the same name.
      * This defines a weaker notion of equality between two locations.

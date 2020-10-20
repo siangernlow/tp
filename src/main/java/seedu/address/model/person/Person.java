@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.logic.parser.Parser;
 import seedu.address.model.attribute.Address;
 import seedu.address.model.attribute.Email;
 import seedu.address.model.attribute.Id;
@@ -77,6 +78,53 @@ public class Person {
 
     public Id getId() {
         return id;
+    }
+
+    //===================== For String conversions ============================
+
+    public String getIdAsString() {
+        return id.toString();
+    }
+
+    public String getNameAsString() {
+        return name.toString();
+    }
+
+    public String getPhoneAsString() {
+        return phone.toString();
+    }
+
+    public String getEmailAsString() {
+        return email.toString();
+    }
+
+    public String getAddressAsString() {
+        return address.toString();
+    }
+
+    public String getQuarantineStatusAsString() {
+        return quarantineStatus.toString();
+    }
+
+    public String getInfectionStatusAsString() {
+        return infectionStatus.toString();
+    }
+
+    public String getTagsAsString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Tag tag : tags) {
+            // toString() method of Tag adds '[' and ']', which is not needed here.
+            stringBuilder.append(tag.tagName).append(",");
+        }
+        String tagsString = stringBuilder.toString();
+
+        if (tagsString.isEmpty()) {
+            return tagsString;
+        }
+
+        // Remove trailing comma
+        tagsString = tagsString.substring(0, tagsString.length() - 1);
+        return tagsString;
     }
 
     /**

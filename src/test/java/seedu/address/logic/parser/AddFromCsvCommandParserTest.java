@@ -1,8 +1,8 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_DATA_TYPE;
 import static seedu.address.logic.parser.AddFromCsvCommandParser.CSV_FILE_EXTENSION;
-import static seedu.address.logic.parser.AddFromCsvCommandParser.MESSAGE_INVALID_DATA_TYPE;
 import static seedu.address.logic.parser.AddFromCsvCommandParser.MESSAGE_INVALID_FILE_EXTENSION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LIST;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -21,11 +21,6 @@ import seedu.address.logic.commands.person.AddPersonsFromCsvCommand;
 import seedu.address.logic.commands.visit.AddVisitsFromCsvCommand;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
-
-
-
-
-
 
 public class AddFromCsvCommandParserTest {
 
