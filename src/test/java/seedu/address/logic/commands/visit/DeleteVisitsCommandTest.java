@@ -6,7 +6,6 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.visit.DeleteVisitsCommand.MESSAGE_DELETE_VISIT_FAILED;
 import static seedu.address.logic.commands.visit.DeleteVisitsCommand.MESSAGE_DELETE_VISIT_SUCCESS;
-import static seedu.address.model.ListComparator.SORT_DESCENDING_VISIT_DATE;
 import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
@@ -38,7 +37,7 @@ public class DeleteVisitsCommandTest {
 
         List<Visit> visits = model.getFilteredVisitList();
 
-        for (int i =  visits.size() - 4; i < visits.size(); i++) {
+        for (int i = visits.size() - 4; i < visits.size(); i++) {
             expectedMessage.append(i - 4).append(". ").append(visits.get(i)).append(" \n");
         }
 
@@ -74,7 +73,7 @@ public class DeleteVisitsCommandTest {
 
         List<Visit> visits = model.getFilteredVisitList();
 
-        for (int i =  visits.size() - 4; i < visits.size(); i++) {
+        for (int i = visits.size() - 4; i < visits.size(); i++) {
             expectedMessage.append(i - 4).append(". ").append(visits.get(i)).append(" \n");
         }
 
