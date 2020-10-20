@@ -55,6 +55,15 @@ public class VisitBook implements ReadOnlyVisitBook {
         setVisits(newData.getVisitList());
     }
 
+    /**
+     * Update the visit book with edited location
+     */
+    public void updateWithEditedLocation(Location editedLocation) {
+        requireNonNull(editedLocation);
+
+        visits.updateWithEditedLocation(editedLocation);
+    }
+
     //// visit-level operations
 
     /**

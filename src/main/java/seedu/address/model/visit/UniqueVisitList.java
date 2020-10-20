@@ -107,6 +107,18 @@ public class UniqueVisitList implements Iterable<Visit> {
     }
 
     /**
+     * Update the visits that have outdated location in this list with {@code editedLocation}
+     */
+    public void updateWithEditedLocation(Location editedLocation) {
+        for (Visit visit : internalList) {
+            if (visit.getLocation().getId().equals(editedLocation.getId())) {
+                Visit editedVisit = new Visit(visit.getPerson(), editedLocation, visit.getDate());
+                setVisit(visit, editedVisit);
+            }
+        }
+    }
+
+    /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
     public ObservableList<Visit> asUnmodifiableObservableList() {

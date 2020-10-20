@@ -10,6 +10,7 @@ import static seedu.address.testutil.TypicalLocations.AMY_LOCATION;
 import static seedu.address.testutil.TypicalLocations.BENSON_LOCATION;
 import static seedu.address.testutil.TypicalLocations.CARL_LOCATION;
 import static seedu.address.testutil.TypicalLocations.DANIEL_LOCATION;
+import static seedu.address.testutil.TypicalLocations.HOON_LOCATION;
 import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
@@ -26,6 +27,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.location.Location;
 import seedu.address.model.location.LocationBook;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.PersonBook;
@@ -33,6 +35,7 @@ import seedu.address.model.visit.Visit;
 import seedu.address.model.visit.VisitBook;
 import seedu.address.testutil.AddressBookBuilder;
 import seedu.address.testutil.LocationBookBuilder;
+import seedu.address.testutil.LocationBuilder;
 import seedu.address.testutil.VisitBookBuilder;
 import seedu.address.testutil.VisitBuilder;
 
@@ -179,19 +182,52 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void deleteVisitsWithLocation_success() {
+    public void deleteVisitsWithLocation_visitsContainDeletedLocation_success() {
+        VisitBook expectedVisitBook = getTypicalVisitBook();
+        VisitBook actualVisitBook = getTypicalVisitBook();
+
+        expectedVisitBook.removeVisit(SECOND_VISIT);
+        expectedVisitBook.removeVisit(THIRD_VISIT);
+        actualVisitBook.deleteVisitsWithLocation(AMY_LOCATION);
+        assertEquals(expectedVisitBook, actualVisitBook);
+
+        expectedVisitBook.removeVisit(FIRST_VISIT);
+        actualVisitBook.deleteVisitsWithLocation(BENSON_LOCATION);
+        assertEquals(expectedVisitBook, actualVisitBook);
+    }
+
+    @Test
+    public void deleteVisitsWithLocation_visitsDoNotContainDeletedLocation_success() {
+        VisitBook expectedVisitBook = getTypicalVisitBook();
+        VisitBook actualVisitBook = getTypicalVisitBook();
+
+        actualVisitBook.deleteVisitsWithLocation(ALICE_LOCATION);
+        assertEquals(expectedVisitBook, actualVisitBook);
+
+        actualVisitBook.deleteVisitsWithLocation(HOON_LOCATION);
+        assertEquals(expectedVisitBook, actualVisitBook);
+    }
+
+    @Test
+    public void updateVisitBookWithEditedLocation_success() {
         Model expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
                 getTypicalVisitBook(), new UserPrefs());
         Model actualModel = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
                 getTypicalVisitBook(), new UserPrefs());
 
-        expectedModel.deleteVisit(FIRST_VISIT);
-        actualModel.deleteVisitsWithLocation(BENSON_LOCATION);
+        Location editedLocation = new LocationBuilder(BENSON_LOCATION).withName("benson location")
+                .build();
+        Visit editedVisit = new VisitBuilder(FIRST_VISIT).withLocation(editedLocation).build();
+        expectedModel.setVisit(FIRST_VISIT, editedVisit);
+        actualModel.updateVisitBookWithEditedLocation(editedLocation);
         assertEquals(expectedModel, actualModel);
 
-        expectedModel.deleteVisit(SECOND_VISIT);
-        expectedModel.deleteVisit(THIRD_VISIT);
-        actualModel.deleteVisitsWithLocation(AMY_LOCATION);
+        Location editedSecondLocation = new LocationBuilder(AMY_LOCATION).withName("amy location").build();
+        Visit editedSecondVisit = new VisitBuilder(SECOND_VISIT).withLocation(editedSecondLocation).build();
+        Visit editedThirdVisit = new VisitBuilder(THIRD_VISIT).withLocation(editedSecondLocation).build();
+        expectedModel.setVisit(SECOND_VISIT, editedSecondVisit);
+        expectedModel.setVisit(THIRD_VISIT, editedThirdVisit);
+        actualModel.updateVisitBookWithEditedLocation(editedSecondLocation);
         assertEquals(expectedModel, actualModel);
     }
 
