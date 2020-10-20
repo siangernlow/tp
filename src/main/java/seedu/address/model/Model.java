@@ -212,6 +212,11 @@ public interface Model {
     void deleteVisitsWithPerson(Person personToDelete);
 
     /**
+     * Deletes all visits that contains the location as given in the argument
+     */
+    void deleteVisitsWithLocation(Location locationToDelete);
+
+    /**
      * Replaces the given visit {@code target} with {@code editedVisit}.
      * {@code target} must exist in the visit book.
      */

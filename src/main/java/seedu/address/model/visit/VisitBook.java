@@ -110,6 +110,13 @@ public class VisitBook implements ReadOnlyVisitBook {
         visits.removeVisitsWithPerson(personToDelete);
     }
 
+    /**
+     * Removes all visits that contains the location as given in the argument.
+     */
+    public void deleteVisitsWithLocation(Location locationToDelete) {
+        visits.removeVisitsWithLocation(locationToDelete);
+    }
+
     //// util methods
 
     @Override

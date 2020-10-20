@@ -10,6 +10,7 @@ import static seedu.address.testutil.TypicalLocations.AMY_LOCATION;
 import static seedu.address.testutil.TypicalLocations.BENSON_LOCATION;
 import static seedu.address.testutil.TypicalLocations.CARL_LOCATION;
 import static seedu.address.testutil.TypicalLocations.DANIEL_LOCATION;
+import static seedu.address.testutil.TypicalLocations.HOON_LOCATION;
 import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.AMY;
@@ -215,6 +216,34 @@ public class ModelManagerTest {
         assertEquals(expectedModel, actualModel);
     }
 
+    @Test
+    public void deleteVisitsWithLocation_visitsContainDeletedLocation_success() {
+        VisitBook expectedVisitBook = getTypicalVisitBook();
+        VisitBook actualVisitBook = getTypicalVisitBook();
+
+        expectedVisitBook.removeVisit(SECOND_VISIT);
+        expectedVisitBook.removeVisit(THIRD_VISIT);
+        actualVisitBook.deleteVisitsWithLocation(AMY_LOCATION);
+        assertEquals(expectedVisitBook, actualVisitBook);
+
+        expectedVisitBook.removeVisit(FIRST_VISIT);
+        actualVisitBook.deleteVisitsWithLocation(BENSON_LOCATION);
+        assertEquals(expectedVisitBook, actualVisitBook);
+    }
+
+    @Test
+    public void deleteVisitsWithLocation_visitsDoNotContainDeletedLocation_success() {
+        VisitBook expectedVisitBook = getTypicalVisitBook();
+        VisitBook actualVisitBook = getTypicalVisitBook();
+
+        actualVisitBook.deleteVisitsWithLocation(ALICE_LOCATION);
+        assertEquals(expectedVisitBook, actualVisitBook);
+
+        actualVisitBook.deleteVisitsWithLocation(HOON_LOCATION);
+        assertEquals(expectedVisitBook, actualVisitBook);
+    }
+
+    @Test
     public void updateVisitBookWithEditedLocation_success() {
         Model expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
                 getTypicalVisitBook(), new UserPrefs());
