@@ -2,6 +2,9 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.ListComparator.SORT_ASCENDING_LOCATION_NAME;
+import static seedu.address.model.ListComparator.SORT_ASCENDING_PERSON_NAME;
+import static seedu.address.model.ListComparator.SORT_DESCENDING_VISIT_DATE;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_LOCATIONS;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_VISITS;
@@ -12,6 +15,7 @@ import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
@@ -39,6 +43,9 @@ public class ModelManager implements Model {
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Location> filteredLocations;
     private final FilteredList<Visit> filteredVisits;
+    private final SortedList<Person> sortedPersons;
+    private final SortedList<Location> sortedLocations;
+    private final SortedList<Visit> sortedVisits;
 
     /**
      * Initializes a ModelManager with the given personBook, locationBook, visitBook and userPrefs.
@@ -59,6 +66,15 @@ public class ModelManager implements Model {
         filteredPersons = new FilteredList<>(this.personBook.getPersonList());
         filteredLocations = new FilteredList<>(this.locationBook.getLocationList());
         filteredVisits = new FilteredList<>(this.visitBook.getVisitList());
+
+        sortedPersons = new SortedList<>(filteredPersons);
+        sortedPersons.setComparator(SORT_ASCENDING_PERSON_NAME);
+
+        sortedLocations = new SortedList<>(filteredLocations);
+        sortedLocations.setComparator(SORT_ASCENDING_LOCATION_NAME);
+
+        sortedVisits = new SortedList<>(filteredVisits);
+        sortedVisits.setComparator(SORT_DESCENDING_VISIT_DATE);
     }
 
     public ModelManager() {
@@ -154,7 +170,7 @@ public class ModelManager implements Model {
      */
     @Override
     public ObservableList<Person> getFilteredPersonList() {
-        return filteredPersons;
+        return sortedPersons;
     }
 
     @Override
@@ -195,7 +211,6 @@ public class ModelManager implements Model {
     @Override
     public void addLocation(Location location) {
         locationBook.addLocation(location);
-        // needs to be updated to persons when doing list command
         updateFilteredLocationList(PREDICATE_SHOW_ALL_LOCATIONS);
     }
 
@@ -216,7 +231,7 @@ public class ModelManager implements Model {
      */
     @Override
     public ObservableList<Location> getFilteredLocationList() {
-        return filteredLocations;
+        return sortedLocations;
     }
 
     @Override
@@ -272,7 +287,7 @@ public class ModelManager implements Model {
      */
     @Override
     public ObservableList<Visit> getFilteredVisitList() {
-        return filteredVisits;
+        return sortedVisits;
     }
 
     @Override
