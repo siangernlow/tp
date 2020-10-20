@@ -285,6 +285,10 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void deleteVisitsWithLocation(Location locationToDelete) {
+        visitBook.deleteVisitsWithLocation(locationToDelete);
+    }
+
     public void setVisit(Visit target, Visit editedVisit) {
         requireAllNonNull(target, editedVisit);
         visitBook.setVisit(target, editedVisit);
