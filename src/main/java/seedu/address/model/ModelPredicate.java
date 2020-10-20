@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
-import seedu.address.commons.core.index.Index;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
 import seedu.address.model.visit.Visit;
@@ -29,7 +29,7 @@ public class ModelPredicate {
         person -> person.getQuarantineStatus().getStatusAsBoolean();
 
     /** {@code Predicate} for filtering out the infected visits from all visits */
-    public static Predicate<Visit> getPredicateForInfectedVisits(HashSet<Index> infectedIds) {
+    public static Predicate<Visit> getPredicateForInfectedVisits(HashSet<Id> infectedIds) {
         return visit -> infectedIds.contains(visit.getPerson().getId());
     }
 
@@ -38,12 +38,12 @@ public class ModelPredicate {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
         ObservableList<Person> allInfectedPersons = model.getSortedPersonList();
 
-        HashSet<Index> infectedPersonIds = InfoHandler.getIdHashSetFromPersonsList(allInfectedPersons);
+        HashSet<Id> infectedPersonIds = InfoHandler.getIdHashSetFromPersonsList(allInfectedPersons);
 
         model.updateFilteredVisitList(getPredicateForInfectedVisits(infectedPersonIds));
         ObservableList<Visit> allInfectedVisits = model.getSortedVisitList();
 
-        ArrayList<Index> infectedLocationIds = InfoHandler.getLocationIdsFromInfectedVisitList(allInfectedVisits);
+        ArrayList<Id> infectedLocationIds = InfoHandler.getLocationIdsFromInfectedVisitList(allInfectedVisits);
 
         model.updateFilteredLocationList(PREDICATE_SHOW_ALL_LOCATIONS);
         int numberOfTotalLocations = model.getSortedLocationList().size();
@@ -51,14 +51,14 @@ public class ModelPredicate {
         int numberOfHighRiskLocations = InfoHandler.getNumberOfHighRiskLocations(
                 infectedLocationIds.size(), numberOfTotalLocations);
 
-        ArrayList<Index> highRiskLocationIds =
+        ArrayList<Id> highRiskLocationIds =
                 new ArrayList<>(infectedLocationIds.subList(0, numberOfHighRiskLocations));
 
         return location -> highRiskLocationIds.contains(location.getId());
     }
 
     /** {@code Predicate} to generate a predicate for whether a person's Id is included in the list of person Ids  */
-    public static Predicate<Person> getPredicateShowPeopleById(List<Index> personIds) {
+    public static Predicate<Person> getPredicateShowPeopleById(List<Id> personIds) {
         return person -> {
             boolean isIncluded = person.getId().equals(personIds.get(0));
             for (int i = 1; i < personIds.size(); i++) {
@@ -69,7 +69,7 @@ public class ModelPredicate {
     }
 
     /** {@code Predicate} to generate predicate for whether a location's Id is included in the list of location Ids */
-    public static Predicate<Location> getPredicateShowLocationsById(List<Index> locationIds) {
+    public static Predicate<Location> getPredicateShowLocationsById(List<Id> locationIds) {
         return location -> {
             boolean isIncluded = location.getId().equals(locationIds.get(0));
             for (int i = 1; i < locationIds.size(); i++) {

@@ -11,14 +11,14 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.commons.core.index.exceptions.InvalidIndexException;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.InfectionStatus;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.QuarantineStatus;
+import seedu.address.model.attribute.Address;
+import seedu.address.model.attribute.Email;
+import seedu.address.model.attribute.Id;
+import seedu.address.model.attribute.InfectionStatus;
+import seedu.address.model.attribute.Name;
+import seedu.address.model.attribute.Phone;
+import seedu.address.model.attribute.QuarantineStatus;
 
 public class JsonAdaptedPersonTest {
     private static final String INVALID_NAME = "R@chel";
@@ -28,7 +28,7 @@ public class JsonAdaptedPersonTest {
     private static final String INVALID_QUARANTINE_STATUS = "status";
     private static final String INVALID_INFECTION_STATUS = "nope";
     private static final String INVALID_TAG = "#friend";
-    private static final String INVALID_ID = "0";
+    private static final String INVALID_ID = " 0";
 
     private static final String VALID_NAME = BENSON.getName().toString();
     private static final String VALID_PHONE = BENSON.getPhone().toString();
@@ -161,18 +161,18 @@ public class JsonAdaptedPersonTest {
     }
 
     @Test
-    public void toModelType_invalidId_throwsInvalidIndexException() {
+    public void toModelType_invalidId_throwsIllegalValueException() {
         JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
                 VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, INVALID_ID, VALID_TAGS);
-        String expectedMessage = new InvalidIndexException().getMessage();
-        assertThrows(InvalidIndexException.class, expectedMessage, person::toModelType);
+        String expectedMessage = Id.MESSAGE_CONSTRAINTS;
+        assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 
     @Test
     public void toModelType_nullId_throwsIllegalValueException() {
         JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
                 VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, null, VALID_TAGS);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, "id");
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Id.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 }

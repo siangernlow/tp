@@ -120,12 +120,12 @@ public class GeneratePeopleCommandTest {
     @Test
     public void execute_validInputFromViewingAllPeople_success() {
         String expectedMessage = "Generated people for: Daniel Meier";
-        Visit testVisit = new Visit(new PersonBuilder().withId(Index.fromOneBased(8)).build(),
+        Visit testVisit = new Visit(new PersonBuilder().withId("S8910H").build(),
                 DANIEL_LOCATION, DEFAULT_DATE);
         model.addVisit(testVisit);
         Model expectedModelForGenerate = expectedModel;
         expectedModelForGenerate.addVisit(testVisit);
-        Predicate<Person> personPredicate = person -> person.getId().getOneBased() == 8;
+        Predicate<Person> personPredicate = person -> person.getId().equals("S8910H");
         expectedModelForGenerate.updateFilteredPersonList(personPredicate);
         Index index = Index.fromOneBased(4);
         GeneratePeopleCommand command = new GeneratePeopleCommand(index);

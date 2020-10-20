@@ -1,23 +1,13 @@
 package seedu.address.testutil;
 
-import static seedu.address.testutil.TypicalIndexes.INDEX_EIGHTH;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIFTH;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
-import static seedu.address.testutil.TypicalIndexes.INDEX_NINTH;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SEVENTH;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SIXTH;
-import static seedu.address.testutil.TypicalIndexes.INDEX_TENTH;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.parser.DataGenerator;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.visit.Visit;
 
 /**
@@ -25,23 +15,23 @@ import seedu.address.model.visit.Visit;
  */
 public class TypicalVisitParametersContainers {
     public static final DataGenerator.VisitParametersContainer FIRST_VPC =
-            new VpcBuilder().withPersonIndex(INDEX_TENTH).withLocationIndex(INDEX_FIFTH).build();
+            new VpcBuilder().withPersonIndex(new Id("S1")).withLocationIndex(new Id("L1")).build();
     public static final DataGenerator.VisitParametersContainer SECOND_VPC =
-            new VpcBuilder().withPersonIndex(INDEX_SIXTH).withLocationIndex(INDEX_SEVENTH).build();
+            new VpcBuilder().withPersonIndex(new Id("S2")).withLocationIndex(new Id("L2")).build();
     public static final DataGenerator.VisitParametersContainer THIRD_VPC =
-            new VpcBuilder().withPersonIndex(INDEX_FIRST).withLocationIndex(INDEX_EIGHTH).build();
+            new VpcBuilder().withPersonIndex(new Id("S3")).withLocationIndex(new Id("L3")).build();
     public static final DataGenerator.VisitParametersContainer FOURTH_VPC =
-            new VpcBuilder().withPersonIndex(INDEX_SEVENTH).withLocationIndex(INDEX_TENTH).build();
+            new VpcBuilder().withPersonIndex(new Id("S4")).withLocationIndex(new Id("L4")).build();
     public static final DataGenerator.VisitParametersContainer FIFTH_VPC =
-            new VpcBuilder().withPersonIndex(INDEX_NINTH).withLocationIndex(INDEX_TENTH).build();
+            new VpcBuilder().withPersonIndex(new Id("S5")).withLocationIndex(new Id("L5")).build();
     public static final DataGenerator.VisitParametersContainer SIXTH_VPC =
-            new VpcBuilder().withPersonIndex(INDEX_FIRST).withLocationIndex(INDEX_THIRD).build();
+            new VpcBuilder().withPersonIndex(new Id("S6")).withLocationIndex(new Id("L6")).build();
     public static final DataGenerator.VisitParametersContainer SEVENTH_VPC =
-            new VpcBuilder().withPersonIndex(INDEX_TENTH).withLocationIndex(INDEX_SEVENTH).build();
+            new VpcBuilder().withPersonIndex(new Id("S7")).withLocationIndex(new Id("L7")).build();
     public static final DataGenerator.VisitParametersContainer EIGHTH_VPC =
-            new VpcBuilder().withPersonIndex(INDEX_NINTH).withLocationIndex(INDEX_FIFTH).build();
+            new VpcBuilder().withPersonIndex(new Id("S8")).withLocationIndex(new Id("L8")).build();
     public static final DataGenerator.VisitParametersContainer NINTH_VPC =
-            new VpcBuilder().withPersonIndex(INDEX_SECOND).withLocationIndex(INDEX_THIRD).build();
+            new VpcBuilder().withPersonIndex(new Id("S9")).withLocationIndex(new Id("L9")).build();
 
     private TypicalVisitParametersContainers() {} // prevents instantiation
 
@@ -61,20 +51,20 @@ public class TypicalVisitParametersContainers {
     }
 
     private static DataGenerator.VisitParametersContainer getVisitAsVpc(Visit visit) {
-        Index personIndex = visit.getPerson().getId();
-        Index locationIndex = visit.getLocation().getId();
+        Id personId = visit.getPerson().getId();
+        Id locationId = visit.getLocation().getId();
         LocalDate date = visit.getDate();
-        return new DataGenerator.VisitParametersContainer(personIndex, locationIndex, date);
+        return new DataGenerator.VisitParametersContainer(personId, locationId, date);
     }
 
     public static class VpcBuilder {
-        public static final Index DEFAULT_PERSON_INDEX = INDEX_FIRST;
-        public static final Index DEFAULT_LOCATION_INDEX = INDEX_FIRST;
+        public static final Id DEFAULT_PERSON_INDEX = new Id("S1");
+        public static final Id DEFAULT_LOCATION_INDEX = new Id("L1");
         private static final DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         public static final LocalDate DEFAULT_DATE = LocalDate.parse("2020-10-12", inputFormat);
 
-        private Index personIndex;
-        private Index locationIndex;
+        private Id personIndex;
+        private Id locationIndex;
         private LocalDate date;
 
         /**
@@ -91,7 +81,7 @@ public class TypicalVisitParametersContainers {
         * @param personIndex The updated index.
         * @return The new {@code VpcBuilder}.
         */
-        public VpcBuilder withPersonIndex(Index personIndex) {
+        public VpcBuilder withPersonIndex(Id personIndex) {
             this.personIndex = personIndex;
             return this;
         }
@@ -101,7 +91,7 @@ public class TypicalVisitParametersContainers {
          * @param locationIndex The updated index.
          * @return The new {@code VpcBuilder}.
          */
-        public VpcBuilder withLocationIndex(Index locationIndex) {
+        public VpcBuilder withLocationIndex(Id locationIndex) {
             this.locationIndex = locationIndex;
             return this;
         }

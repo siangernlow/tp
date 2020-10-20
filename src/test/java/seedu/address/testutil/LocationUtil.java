@@ -1,6 +1,7 @@
 package seedu.address.testutil;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
 import seedu.address.logic.commands.location.AddLocationCommand;
@@ -23,6 +24,7 @@ public class LocationUtil {
      */
     public static String getLocationDetails(Location location) {
         StringBuilder sb = new StringBuilder();
+        sb.append(PREFIX_LOCATION_ID + location.getId().value + " ");
         sb.append(PREFIX_NAME + location.getName().fullName + " ");
         sb.append(PREFIX_ADDRESS + location.getAddress().value + " ");
         return sb.toString();
