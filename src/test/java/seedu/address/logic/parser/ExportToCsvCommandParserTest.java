@@ -4,32 +4,22 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_DATA_TYPE;
-import static seedu.address.logic.commands.AddFromCsvCommand.MESSAGE_SUCCESS;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.person.AddPersonsFromCsvCommand.PERSONS;
 import static seedu.address.logic.parser.AddFromCsvCommandParser.CSV_FILE_EXTENSION;
 import static seedu.address.logic.parser.AddFromCsvCommandParser.MESSAGE_INVALID_FILE_EXTENSION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LIST;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.logic.parser.ExportToCsvCommandParser.MESSAGE_FILE_CANNOT_BE_CREATED;
-import static seedu.address.testutil.Assert.assertThrows;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.ExportToCsvCommand;
-import seedu.address.logic.commands.person.AddPersonsFromCsvCommand;
-import seedu.address.logic.commands.person.AddPersonsFromCsvCommandTest;
-import seedu.address.model.person.Person;
-import seedu.address.testutil.TypicalPersons;
 
 public class ExportToCsvCommandParserTest {
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data",

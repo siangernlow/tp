@@ -1,11 +1,9 @@
 package seedu.address.logic.commands;
 
-import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_DATA_TYPE;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.assertCsvFilesAreEqual;
 import static seedu.address.logic.commands.ExportToCsvCommand.LOCATIONS;
@@ -15,7 +13,6 @@ import static seedu.address.logic.commands.ExportToCsvCommand.PERSONS;
 import static seedu.address.logic.commands.ExportToCsvCommand.VISITS;
 import static seedu.address.testutil.Assert.assertThrows;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -24,23 +21,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.sun.javafx.collections.ObservableListWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.commands.person.AddPersonsFromCsvCommand;
-import seedu.address.logic.commands.person.AddPersonsFromCsvCommandTest;
-import seedu.address.logic.parser.ExportToCsvCommandParser;
 import seedu.address.logic.parser.ListType;
 import seedu.address.model.InfoHandler;
 import seedu.address.model.ModelStub;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
 import seedu.address.model.visit.Visit;
-import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.TypicalLocations;
 import seedu.address.testutil.TypicalPersons;
 import seedu.address.testutil.TypicalVisits;
@@ -156,8 +147,8 @@ public class ExportToCsvCommandTest {
         ModelStubHasInfoHandler model = new ModelStubHasInfoHandler(emptyPersonList, null, null);
         ExportToCsvCommand command =
                 new ExportToCsvCommand(fileWriter, OUTPUT_CSV_FILE, VALID_LIST_TYPE);
-        assertThrows(CommandException.class, String.format(MESSAGE_NO_OBJECTS_TO_ADD, PERSONS),
-                () -> command.execute(model));
+        assertThrows(CommandException.class, String.format(MESSAGE_NO_OBJECTS_TO_ADD, PERSONS), ()
+            -> command.execute(model));
     }
 
     @Test
@@ -172,8 +163,8 @@ public class ExportToCsvCommandTest {
         ModelStubHasInfoHandler model = new ModelStubHasInfoHandler(null, emptyLocationList, null);
         ExportToCsvCommand command =
                 new ExportToCsvCommand(fileWriter, OUTPUT_CSV_FILE, ListType.ALL_LOCATIONS);
-        assertThrows(CommandException.class, String.format(MESSAGE_NO_OBJECTS_TO_ADD, LOCATIONS),
-                () -> command.execute(model));
+        assertThrows(CommandException.class, String.format(MESSAGE_NO_OBJECTS_TO_ADD, LOCATIONS), ()
+            -> command.execute(model));
     }
 
     @Test
@@ -188,8 +179,8 @@ public class ExportToCsvCommandTest {
         ModelStubHasInfoHandler model = new ModelStubHasInfoHandler(null, null, emptyVisitList);
         ExportToCsvCommand command =
                 new ExportToCsvCommand(fileWriter, OUTPUT_CSV_FILE, ListType.ALL_VISITS);
-        assertThrows(CommandException.class, String.format(MESSAGE_NO_OBJECTS_TO_ADD, VISITS),
-                () -> command.execute(model));
+        assertThrows(CommandException.class, String.format(MESSAGE_NO_OBJECTS_TO_ADD, VISITS), ()
+            -> command.execute(model));
     }
 
     @Test
@@ -203,8 +194,8 @@ public class ExportToCsvCommandTest {
         ModelStubHasInfoHandler model = new ModelStubHasInfoHandler(null, null, null);
         ExportToCsvCommand command =
                 new ExportToCsvCommand(fileWriter, OUTPUT_CSV_FILE, INVALID_LIST_TYPE);
-        assertThrows(CommandException.class, String.format(MESSAGE_INVALID_DATA_TYPE, ExportToCsvCommand.MESSAGE_USAGE),
-                () -> command.execute(model));
+        assertThrows(CommandException.class, String.format(MESSAGE_INVALID_DATA_TYPE,
+            ExportToCsvCommand.MESSAGE_USAGE), () -> command.execute(model));
     }
 
     @Test

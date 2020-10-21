@@ -35,10 +35,16 @@ public class ExportToCsvCommand extends Command {
     public static final String MESSAGE_SUCCESS = "The %1$s attributes CSV file has been successfully created.\n";
 
     private final FileWriter fileWriter;
-    // Used for equality checks as FileWriter does not have an inbuilt equals method.
     private final String filepath;
     private final ListType listType;
 
+    /**
+     * Creates an ExportToCsvCommand to export the specified list type to a CSV file.
+     *
+     * @param fileWriter The file writer to write the data to the CSV file.
+     * @param filepath The absolute file path of the file. Used for equality checking.
+     * @param listType The type of list to be exported.
+     */
     public ExportToCsvCommand(FileWriter fileWriter, String filepath, ListType listType) {
         requireAllNonNull(fileWriter, filepath, listType);
         this.fileWriter = fileWriter;

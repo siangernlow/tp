@@ -25,10 +25,8 @@ import static seedu.address.model.InfoHandler.getLocationIdsFromInfectedVisitLis
 import static seedu.address.model.InfoHandler.getNumberOfHighRiskLocations;
 import static seedu.address.model.InfoHandler.sortByValues;
 import static seedu.address.testutil.TypicalLocations.AMY_LOCATION;
-import static seedu.address.testutil.TypicalLocations.BENSON_LOCATION;
 import static seedu.address.testutil.TypicalLocations.getTypicalLocations;
 import static seedu.address.testutil.TypicalPersons.AMY;
-import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 import static seedu.address.testutil.TypicalVisits.SECOND_VISIT;
 
@@ -43,18 +41,17 @@ import org.junit.jupiter.api.Test;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.logic.commands.ExportToCsvCommandTest;
 import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
 import seedu.address.model.visit.Visit;
 import seedu.address.testutil.TypicalPersons;
 import seedu.address.testutil.TypicalVisits;
-import seedu.address.testutil.VisitBuilder;
+
 
 public class InfoHandlerTest {
-    private ModelManager modelManager = new ModelManager();
-    private InfoHandler infoHandler = new InfoHandler(modelManager);
+    private final ModelManager modelManager = new ModelManager();
+    private final InfoHandler infoHandler = new InfoHandler(modelManager);
     private final List<Person> typicalPersons;
     private final List<Location> typicalLocations;
 
