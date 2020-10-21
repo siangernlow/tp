@@ -9,7 +9,6 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.location.Location;
-import seedu.address.model.location.exceptions.DuplicateLocationException;
 import seedu.address.model.person.Person;
 import seedu.address.model.visit.exceptions.DuplicateVisitException;
 import seedu.address.model.visit.exceptions.VisitNotFoundException;
@@ -45,7 +44,7 @@ public class UniqueVisitList implements Iterable<Visit> {
     public void add(Visit toAdd) {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
-            throw new DuplicateLocationException();
+            throw new DuplicateVisitException();
         }
         internalList.add(toAdd);
     }
@@ -92,12 +91,13 @@ public class UniqueVisitList implements Iterable<Visit> {
             throw new VisitNotFoundException();
         }
 
-        if (target.equals(editedVisit) || contains(editedVisit)) {
-            throw new DuplicateLocationException();
+        if (!target.equals(editedVisit) && contains(editedVisit)) {
+            throw new DuplicateVisitException();
         }
 
         internalList.set(index, editedVisit);
     }
+
     public void setVisits(UniqueVisitList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
@@ -116,6 +116,17 @@ public class UniqueVisitList implements Iterable<Visit> {
         internalList.setAll(visits);
     }
 
+    /**
+     * Update the visits that have outdated person in this list with {@code editedPerson}
+     */
+    public void updateWithEditedPerson(Person editedPerson) {
+        for (Visit visit : internalList) {
+            if (visit.getPerson().getId().equals(editedPerson.getId())) {
+                Visit editedVisit = new Visit(editedPerson, visit.getLocation(), visit.getDate());
+                setVisit(visit, editedVisit);
+            }
+        }
+    }
     /**
      * Update the visits that have outdated location in this list with {@code editedLocation}
      */

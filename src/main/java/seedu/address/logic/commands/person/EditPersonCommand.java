@@ -92,6 +92,9 @@ public class EditPersonCommand extends Command {
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
+        model.updateVisitBookWithEditedPerson(editedPerson);
+
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson), false, false,
                 CommandResult.SWITCH_TO_VIEW_PEOPLE);
     }
