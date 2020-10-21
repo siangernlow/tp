@@ -92,7 +92,7 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public ObservableList<Person> getFilteredPersonList() {
+    public ObservableList<Person> getSortedPersonList() {
         throw new AssertionError("This method should not be called.");
     }
 
@@ -149,7 +149,7 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public ObservableList<Location> getFilteredLocationList() {
+    public ObservableList<Location> getSortedLocationList() {
         throw new AssertionError("This method should not be called.");
     }
 
@@ -210,6 +210,7 @@ public class ModelStub implements Model {
         throw new AssertionError("This method should not be called.");
     }
 
+    @Override
     public void deleteVisitsWithLocation(Location locationToDelete) {
         throw new AssertionError("This method should not be called.");
     }
@@ -220,7 +221,7 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public ObservableList<Visit> getFilteredVisitList() {
+    public ObservableList<Visit> getSortedVisitList() {
         throw new AssertionError("This method should not be called.");
     }
 

@@ -38,10 +38,11 @@ public class GenerateLocationsCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        if (personId.getZeroBased() >= model.getFilteredPersonList().size()) {
+        if (personId.getZeroBased() >= model.getSortedPersonList().size()) {
             throw new CommandException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-        Person infectedPerson = model.getFilteredPersonList().get(personId.getZeroBased());
+
+        Person infectedPerson = model.getSortedPersonList().get(personId.getZeroBased());
         if (!infectedPerson.getInfectionStatus().getStatusAsBoolean()) {
             throw new CommandException(MESSAGE_PERSON_IS_NOT_INFECTED);
         }
