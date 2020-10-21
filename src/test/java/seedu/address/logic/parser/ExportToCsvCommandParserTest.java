@@ -26,7 +26,7 @@ public class ExportToCsvCommandParserTest {
             "ExportToCsvCommandTest");
 
     private static final String INVALID_FILE_EXTENSION = "validFileNameButWrongExtension.xlsx";
-    private static final String INVALID_FILE_PATH = "questionMark?InName.csv";
+    private static final String INVALID_FILE_PATH = ".questio/nMa:rk?InName.csv";
 
     private static final String FILE_PATH_TOO_SHORT = ".cs";
     private static final String FILE_EXISTS_AND_IS_WRITABLE =
