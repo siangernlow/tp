@@ -146,6 +146,77 @@ section is changed.
 
 ### Add visit
 
+### Manage Persons, Locations and Visits using Unique Identifiers (Ho Pin Xian)
+
+Person objects have different aspects (including Name, Address, Phone Number, infection status etc) but none of which can
+uniquely identify a single Person. Family members may live in the same Address. Common names such as John may belong to multiple
+people. Young people without their own phones may be using their house number or a parent's number.
+The same can be said for Location objects as well. Hence, unique identifiers are required to uniquely and reliably identify
+each Person and Location.
+
+Since VirusTracker manages lists of Person and Location objects, it is necessary for VirusTracker to
+uniquely identify the Person and Location involved in a Visit. Unique Identifiers have great significance within VirusTracker
+and support many information generating functions and basic Model managing functions. 
+
+An example of how VirusTracker makes use of Unique Identifiers will be shown in the following Add Visit command example.
+
+<div markdown="span" class="alert alert-info">:information_source: 
+**Note:** Users may add Visits to VirusTracker via Unique Identifiers or Indexes. 
+However, we will only be showing the Unique Identifier case in the following example.
+</div>
+
+#### Adding Visit using Unique Identifiers
+
+Users may add a Visit from a specified Person to a specified Location on a specified date to the VirusTracker.
+Notice how VirusTracker is able to identify the Person and Location involved in the Visit without requiring the user
+to key in all properties of the Person and Location.
+
+**Format:** `addVisit idp/PERSON_ID idl/LOCATION_ID d/DATE`
+
+* `PERSON_ID` refers to the ID of the Person making the Visit. A Person with the specified ID must exist in VirusTracker.
+* `LOCATION_ID` refers to the ID of the Location where the Visit is at. A Location with the specified ID must exist in VirusTracker.
+* `DATE` is the date when the Visit occurred. 
+
+#### Sequence diagram
+
+The sequence diagram below shows how the adding operation works.
+
+![AddVisitUniqueIdentifierSequenceDiagram](images/AddVisitUniqueIdentifierSequenceDiagram.png)
+
+#### Activity diagram
+
+The following activity diagram summarizes what happens when a user executes the `addVisit` command.
+
+![AddVisitUniqueIdentifiersActivityDiagram](images/AddVisitUniqueIdentifiersActivityDiagram.png)
+
+#### Design considerations:
+
+The design considerations below highlight alternative solutions to Unique Identifiers in the management of Persons and Locations within VirusTracker and provides reasons for the choice of implementation.
+
+##### Aspect: User Input Identifiers Vs VirusTracker Created Identifiers
+  
+* **Alternative 1:** User Input Unique Identifiers.
+  * User inputs Unique Identifier during creation of Person and Location objects.
+ 
+* **Alternative 2:** VirusTracker Created Unique Identifiers.
+  * VirusTracker creates a Unique Identifier for each Person and Location object upon creation.
+
+For this aspect, we choose to make use of Unique Identifiers provided by the user as opposed to VirusTracker creating Unique Identifiers at the backend.
+      
+**Rationale**
+
+The target audience of VirusTracker are healthcare officials in charge of managing the response to an infectious pandemic. 
+It would thus be reasonable to assume that they have access to the Unique Identifiers given by the State to each Person.
+In Singapore's context, this would refer to the NRIC number. Similarly, the same would go for Locations.
+
+VirusTracker overloads functions to take in Unique Identifiers instead of Indexes as input when referring to Locations and Persons.
+The benefit of using Unique Identifiers over Indexes is that users do not have to scroll the list to find the Index of the
+Person/Location they wish to refer to. We expect that a user whom wants to generate data involving an object, would
+already be aware of the state given Unique Identifier of the object. 
+
+If VirusTracker creates the Unique Identifiers, this benefit would be lost since users will need to find the
+Unique Identifier provided by the VirusTracker. 
+
 ### Manage data using CSV files (Siang Ern)
 
 Most data collected by the target user group are likely to be in the form of Excel documents. As such, it is necessary for VirusTracker to include features to import and export data in a way that is compatible with Excel.
@@ -241,7 +312,7 @@ As such, the above implementation helps to reduce the need to read the large fil
 
 This would minimise the impact to user experience as the user would spend less time fixing the errors.
 
-#### Aspect: Absolute file path
+##### Aspect: Absolute file path
 
 The file path the command uses is the absolute path.
 * The absolute path provides the complete details to locate the CSV file.
@@ -250,7 +321,7 @@ The file path the command uses is the absolute path.
 By allowing the user to specify the path name, it also gives the user a choice on where to put his CSV files instead of enforcing a particular directory for
 him to store the files.
 
-#### Aspect: Reusing list types and the list prefix 'l/'
+##### Aspect: Reusing list types and the list prefix 'l/'
 
 **Concern**: The list types are used for the `list` command, which appear to be unrelated to the `addFromCsv` command.
 

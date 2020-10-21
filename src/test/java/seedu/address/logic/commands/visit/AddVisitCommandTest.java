@@ -35,6 +35,7 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -286,6 +287,16 @@ public class AddVisitCommandTest {
             requireNonNull(visit);
             return this.visit.equals(visit);
         }
+
+        @Override
+        public ObservableList<Person> getSortedPersonList() {
+            return getTypicalAddressBook().getPersonList();
+        }
+
+        @Override
+        public ObservableList<Location> getSortedLocationList() {
+            return getTypicalLocationBook().getLocationList();
+        }
     }
 
     /**
@@ -339,6 +350,16 @@ public class AddVisitCommandTest {
         @Override
         public ReadOnlyVisitBook getVisitBook() {
             return new VisitBook();
+        }
+
+        @Override
+        public ObservableList<Person> getSortedPersonList() {
+            return getTypicalAddressBook().getPersonList();
+        }
+
+        @Override
+        public ObservableList<Location> getSortedLocationList() {
+            return getTypicalLocationBook().getLocationList();
         }
 
         @Override
