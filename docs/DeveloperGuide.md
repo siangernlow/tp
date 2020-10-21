@@ -381,6 +381,26 @@ infected locations will be displayed.
 Else, number of high risk location is the number of infected location. Since less than 40% of total locations are 
 infected, all infected locations can be considered as high risk because they are the only few locations that are infected.
 
+### GUI Functionality for displaying lists of people, locations and visits (Koh Han Ming)
+VirusTracker manages lists of person, location and visit objects. Accordingly, it needs to be able to display the information stored in these objects in a meaningful way. As the lists can be updated, the information displayed must also be changed.
+These changes will be reflected on the GUI every time a list is updated. The lists are updated when the user inputs one of the following commands:
+
+1. Adding data: `add`
+2. Deleting data: `delete`
+3. Editing data: `edit`
+4. Finding data: `find`
+5. Listing data: `list`
+6. Generating people in contact with an infected person: `generatePeople`
+7. Generating locations an infected person has been to: `generateLocations`
+
+#### Sequence diagram
+The sequence diagram below shows how the GUI updates using the list all people command as an example: `list l/people`
+![DisplayListOfAllPeopleSequenceDiagram](images/DisplayListOfAllPeopleSequenceDiagram.png)
+
+#### Activity diagram
+The activity diagram below shows how the GUI updates using the list all people command as an example: `list l/people`
+![DisplayListOfAllPeopleActivityDiagram](images/DisplayListOfAllPeopleActivityDiagram.png)
+
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
