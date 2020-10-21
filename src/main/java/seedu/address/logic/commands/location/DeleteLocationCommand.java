@@ -85,7 +85,7 @@ public class DeleteLocationCommand extends Command {
     }
 
     private CommandResult deleteLocation(Index index, Model model) throws CommandException {
-        List<Location> lastShownList = model.getFilteredLocationList();
+        List<Location> lastShownList = model.getSortedLocationList();
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_LOCATION_DISPLAYED_INDEX);
         }

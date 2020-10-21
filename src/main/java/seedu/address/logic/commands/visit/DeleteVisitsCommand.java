@@ -71,7 +71,7 @@ public class DeleteVisitsCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
-        List<Visit> lastShownList = model.getFilteredVisitList();
+        List<Visit> lastShownList = model.getSortedVisitList();
         String result = deleteVisit(model, lastShownList, targetDate);
         return new CommandResult(result, false, false, CommandResult.SWITCH_TO_VIEW_VISITS);
     }

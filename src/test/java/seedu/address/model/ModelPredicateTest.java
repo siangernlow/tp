@@ -37,7 +37,7 @@ public class ModelPredicateTest {
         Predicate<Location> actualPredicate = ModelPredicate.getPredicateForHighRiskLocations(model);
         model.setLocationBook(getUnorderedTypicalLocationBook());
         model.updateFilteredLocationList(actualPredicate);
-        ObservableList<Location> actualList = model.getFilteredLocationList();
+        ObservableList<Location> actualList = model.getSortedLocationList();
 
         ObservableList<Location> expectedList = FXCollections.observableArrayList();
         expectedList.add(FIONA_LOCATION);
@@ -48,7 +48,7 @@ public class ModelPredicateTest {
         model.setVisitBook(getMoreThanSixtyPercentVisitBook());
         actualPredicate = ModelPredicate.getPredicateForHighRiskLocations(model);
         model.updateFilteredLocationList(actualPredicate);
-        actualList = model.getFilteredLocationList();
+        actualList = model.getSortedLocationList();
 
         expectedList.clear();
         expectedList.add(ELLE_LOCATION);

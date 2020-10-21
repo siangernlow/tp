@@ -163,21 +163,21 @@ public class CommandTestUtil {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
         PersonBook expectedPersonBook = new PersonBook(actualModel.getPersonBook());
-        List<Person> expectedFilteredPersonList = new ArrayList<>(actualModel.getFilteredPersonList());
+        List<Person> expectedFilteredPersonList = new ArrayList<>(actualModel.getSortedPersonList());
 
         LocationBook expectedLocationBook = new LocationBook(actualModel.getLocationBook());
-        List<Location> expectedLocationFilteredList = new ArrayList<>(actualModel.getFilteredLocationList());
+        List<Location> expectedLocationFilteredList = new ArrayList<>(actualModel.getSortedLocationList());
 
         VisitBook expectedVisitBook = new VisitBook(actualModel.getVisitBook());
-        List<Visit> expectedFilteredVisitList = new ArrayList<>(actualModel.getFilteredVisitList());
+        List<Visit> expectedFilteredVisitList = new ArrayList<>(actualModel.getSortedVisitList());
 
         assertThrows(CommandException.class, expectedMessage, () -> command.execute(actualModel));
         assertEquals(expectedPersonBook, actualModel.getPersonBook());
-        assertEquals(expectedFilteredPersonList, actualModel.getFilteredPersonList());
+        assertEquals(expectedFilteredPersonList, actualModel.getSortedPersonList());
         assertEquals(expectedLocationBook, actualModel.getLocationBook());
-        assertEquals(expectedLocationFilteredList, actualModel.getFilteredLocationList());
+        assertEquals(expectedLocationFilteredList, actualModel.getSortedLocationList());
         assertEquals(expectedVisitBook, actualModel.getVisitBook());
-        assertEquals(expectedFilteredVisitList, actualModel.getFilteredVisitList());
+        assertEquals(expectedFilteredVisitList, actualModel.getSortedVisitList());
     }
 
     /**
@@ -185,13 +185,13 @@ public class CommandTestUtil {
      * {@code model}'s address book.
      */
     public static void showPersonAtIndex(Model model, Index targetIndex) {
-        assertTrue(targetIndex.getZeroBased() < model.getFilteredPersonList().size());
+        assertTrue(targetIndex.getZeroBased() < model.getSortedPersonList().size());
 
-        Person person = model.getFilteredPersonList().get(targetIndex.getZeroBased());
+        Person person = model.getSortedPersonList().get(targetIndex.getZeroBased());
         final String[] splitName = person.getName().fullName.split("\\s+");
         model.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
-        assertEquals(1, model.getFilteredPersonList().size());
+        assertEquals(1, model.getSortedPersonList().size());
     }
 
     /**
@@ -199,12 +199,12 @@ public class CommandTestUtil {
      * {@code model}'s location book.
      */
     public static void showLocationAtIndex(Model model, Index targetIndex) {
-        assertTrue(targetIndex.getZeroBased() < model.getFilteredLocationList().size());
+        assertTrue(targetIndex.getZeroBased() < model.getSortedLocationList().size());
 
-        Location location = model.getFilteredLocationList().get(targetIndex.getZeroBased());
+        Location location = model.getSortedLocationList().get(targetIndex.getZeroBased());
         final String[] splitName = location.getName().fullName.split("\\s+");
         model.updateFilteredLocationList(new LocationNameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
-        assertEquals(1, model.getFilteredLocationList().size());
+        assertEquals(1, model.getSortedLocationList().size());
     }
 }

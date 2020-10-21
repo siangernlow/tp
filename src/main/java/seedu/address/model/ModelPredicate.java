@@ -36,17 +36,17 @@ public class ModelPredicate {
     /** {@code Predicate} for filtering high risk locations */
     public static Predicate<Location> getPredicateForHighRiskLocations(Model model) {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
-        ObservableList<Person> allInfectedPersons = model.getFilteredPersonList();
+        ObservableList<Person> allInfectedPersons = model.getSortedPersonList();
 
         HashSet<Id> infectedPersonIds = InfoHandler.getIdHashSetFromPersonsList(allInfectedPersons);
 
         model.updateFilteredVisitList(getPredicateForInfectedVisits(infectedPersonIds));
-        ObservableList<Visit> allInfectedVisits = model.getFilteredVisitList();
+        ObservableList<Visit> allInfectedVisits = model.getSortedVisitList();
 
         ArrayList<Id> infectedLocationIds = InfoHandler.getLocationIdsFromInfectedVisitList(allInfectedVisits);
 
         model.updateFilteredLocationList(PREDICATE_SHOW_ALL_LOCATIONS);
-        int numberOfTotalLocations = model.getFilteredLocationList().size();
+        int numberOfTotalLocations = model.getSortedLocationList().size();
 
         int numberOfHighRiskLocations = InfoHandler.getNumberOfHighRiskLocations(
                 infectedLocationIds.size(), numberOfTotalLocations);
