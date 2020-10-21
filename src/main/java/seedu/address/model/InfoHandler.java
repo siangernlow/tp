@@ -2,6 +2,16 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INFECTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION_ID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_QUARANTINE_STATUS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_INFECTED;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_QUARANTINED;
@@ -418,14 +428,14 @@ public class InfoHandler {
     private List<String> extractPersonAttributes(Person person) {
         List<String> attributes = new ArrayList<>();
 
-        attributes.add(person.getIdAsString());
-        attributes.add(person.getNameAsString());
-        attributes.add(person.getPhoneAsString());
-        attributes.add(person.getEmailAsString());
-        attributes.add(person.getAddressAsString());
-        attributes.add(person.getQuarantineStatusAsString());
-        attributes.add(person.getInfectionStatusAsString());
-        attributes.add(person.getTagsAsString());
+        attributes.add(PREFIX_PERSON_ID + person.getIdAsString());
+        attributes.add(PREFIX_NAME + person.getNameAsString());
+        attributes.add(PREFIX_PHONE + person.getPhoneAsString());
+        attributes.add(PREFIX_EMAIL + person.getEmailAsString());
+        attributes.add(PREFIX_ADDRESS + person.getAddressAsString());
+        attributes.add(PREFIX_QUARANTINE_STATUS + person.getQuarantineStatusAsString());
+        attributes.add(PREFIX_INFECTION + person.getInfectionStatusAsString());
+        attributes.add(PREFIX_TAG + person.getTagsAsString());
 
         return attributes;
     }
@@ -439,9 +449,9 @@ public class InfoHandler {
     private List<String> extractLocationAttributes(Location location) {
         List<String> attributes = new ArrayList<>();
 
-        attributes.add(location.getIdAsString());
-        attributes.add(location.getNameAsString());
-        attributes.add(location.getAddressAsString());
+        attributes.add(PREFIX_LOCATION_ID + location.getIdAsString());
+        attributes.add(PREFIX_NAME + location.getNameAsString());
+        attributes.add(PREFIX_ADDRESS + location.getAddressAsString());
 
         return attributes;
     }
@@ -455,9 +465,9 @@ public class InfoHandler {
     private List<String> extractVisitAttributes(Visit visit) {
         List<String> attributes = new ArrayList<>();
 
-        attributes.add(visit.getPersonIdAsString());
-        attributes.add(visit.getLocationIdAsString());
-        attributes.add(visit.getDateAsString());
+        attributes.add(PREFIX_PERSON_ID + visit.getPersonIdAsString());
+        attributes.add(PREFIX_LOCATION_ID + visit.getLocationIdAsString());
+        attributes.add(PREFIX_DATE + visit.getDateAsString());
 
         return attributes;
     }
