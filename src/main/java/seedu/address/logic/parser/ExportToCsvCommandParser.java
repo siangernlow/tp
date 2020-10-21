@@ -4,7 +4,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_DATA_TYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LIST;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -61,25 +60,6 @@ public class ExportToCsvCommandParser implements Parser<ExportToCsvCommand> {
             // Check if the provided file can be written to.
             checkIfValidCsvExtension(filepath);
             return new FileWriter(filepath);
-        } catch (IOException e) {
-            throw new ParseException(MESSAGE_FILE_CANNOT_BE_CREATED);
-        }
-    }
-
-    /**
-     * Checks if the provided file is a valid file, or can be created.
-     *
-     * @param file The file which can either exist or be created.
-     * @throws ParseException if the given file is invalid.
-     */
-    private void checkIfValidFile(File file) throws ParseException {
-        try {
-            /* Check if the file to be created is a csv file AND
-               either the file exists OR the file can be created at the file path */
-            if (checkIfValidCsvExtension(file.getPath())
-                    && (file.exists() || file.createNewFile())) {
-                return;
-            }
         } catch (IOException e) {
             throw new ParseException(MESSAGE_FILE_CANNOT_BE_CREATED);
         }
