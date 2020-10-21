@@ -3,7 +3,7 @@ package seedu.address.logic.commands.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_INFECTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INFECTION_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_QUARANTINE_STATUS;
@@ -49,7 +49,7 @@ public class EditPersonCommand extends Command {
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_QUARANTINE_STATUS + "QUARANTINE STATUS] "
-            + "[" + PREFIX_INFECTION + "INFECTION STATUS] "
+            + "[" + PREFIX_INFECTION_STATUS + "INFECTION STATUS] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
