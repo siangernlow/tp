@@ -8,7 +8,7 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.location.exceptions.DuplicateLocationException;
+import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
 import seedu.address.model.visit.exceptions.DuplicateVisitException;
 import seedu.address.model.visit.exceptions.VisitNotFoundException;
@@ -44,7 +44,7 @@ public class UniqueVisitList implements Iterable<Visit> {
     public void add(Visit toAdd) {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
-            throw new DuplicateLocationException();
+            throw new DuplicateVisitException();
         }
         internalList.add(toAdd);
     }
@@ -58,6 +58,24 @@ public class UniqueVisitList implements Iterable<Visit> {
         if (!internalList.remove(toRemove)) {
             throw new VisitNotFoundException();
         }
+    }
+
+    /**
+     * Removes all Visits that contain the person as given in the argument
+     */
+    public void removeVisitsWithPerson(Person personToDelete) {
+        requireNonNull(personToDelete);
+
+        internalList.removeIf(visit -> visit.isSamePerson(personToDelete));
+    }
+
+    /**
+     * Removes all the visits that have the same location as given in the argument.
+     */
+    public void removeVisitsWithLocation(Location locationToDelete) {
+        requireNonNull(locationToDelete);
+
+        internalList.removeIf(visit -> visit.isSameLocation(locationToDelete));
     }
 
     /**
@@ -105,6 +123,18 @@ public class UniqueVisitList implements Iterable<Visit> {
         for (Visit visit : internalList) {
             if (visit.getPerson().getId().equals(editedPerson.getId())) {
                 Visit editedVisit = new Visit(editedPerson, visit.getLocation(), visit.getDate());
+                setVisit(visit, editedVisit);
+            }
+        }
+    }
+  
+    /**
+     * Update the visits that have outdated location in this list with {@code editedLocation}
+     */
+    public void updateWithEditedLocation(Location editedLocation) {
+        for (Visit visit : internalList) {
+            if (visit.getLocation().getId().equals(editedLocation.getId())) {
+                Visit editedVisit = new Visit(visit.getPerson(), editedLocation, visit.getDate());
                 setVisit(visit, editedVisit);
             }
         }

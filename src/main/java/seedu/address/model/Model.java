@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.index.Index;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
 import seedu.address.model.location.ReadOnlyLocationBook;
 import seedu.address.model.person.Person;
@@ -95,7 +96,10 @@ public interface Model {
     void setPerson(Person target, Person editedPerson);
 
     /** Returns an unmodifiable view of the filtered person list */
-    ObservableList<Person> getFilteredPersonList();
+    ObservableList<Person> getSortedPersonList();
+
+    /** Returns an unmodifiable view of the unfiltered person list */
+    ObservableList<Person> getUnfilteredPersonList();
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
@@ -149,7 +153,10 @@ public interface Model {
     void setLocation(Location target, Location editedLocation);
 
     /** Returns an unmodifiable view of the filtered location list */
-    ObservableList<Location> getFilteredLocationList();
+    ObservableList<Location> getSortedLocationList();
+
+    /** Returns an unmodifiable view of the unfiltered location list */
+    ObservableList<Location> getUnfilteredLocationList();
 
     /**
      * Updates the filter of the filtered location list to filter by the given {@code predicate}.
@@ -182,6 +189,8 @@ public interface Model {
      */
     void updateVisitBookWithEditedPerson(Person editedPerson);
 
+    void updateVisitBookWithEditedLocation(Location editedLocation);
+
     /**
      * Returns true if a visit with the same identity as {@code visit} exists in the visit book.
      */
@@ -205,8 +214,24 @@ public interface Model {
      */
     void deleteVisit(Visit visit);
 
+    /**
+     * Deletes all visits that contain the person as given in the argument
+     */
+    void deleteVisitsWithPerson(Person personToDelete);
+
+    /**
+     * Deletes all visits that contains the location as given in the argument
+     */
+    void deleteVisitsWithLocation(Location locationToDelete);
+
+    /**
+     * Replaces the given visit {@code target} with {@code editedVisit}.
+     * {@code target} must exist in the visit book.
+     */
+    void setVisit(Visit target, Visit editedVisit);
+
     /** Returns an unmodifiable view of the filtered visit list */
-    ObservableList<Visit> getFilteredVisitList();
+    ObservableList<Visit> getSortedVisitList();
 
     /**
      * Updates the filter of the filtered visit list to filter by the given {@code predicate}.
@@ -219,6 +244,18 @@ public interface Model {
      * @return the {@code InfoHandler} associated with the model.
      */
     InfoHandler getInfoHandler();
+
+    /**
+     * Gets the given person using the id.
+     * {@code id} must already exist in the person book.
+     */
+    Person getPersonFromId(Id id);
+
+    /**
+     * Gets the given location using the id.
+     * {@code id} must already exist in the location book.
+     */
+    Location getLocationFromId(Id id);
 
     /**
      * Gets the given person using the index.

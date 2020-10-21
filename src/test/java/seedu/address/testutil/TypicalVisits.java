@@ -1,8 +1,5 @@
 package seedu.address.testutil;
 
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIFTH;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 import static seedu.address.testutil.TypicalLocations.AMY_LOCATION;
 import static seedu.address.testutil.TypicalLocations.BENSON_LOCATION;
 import static seedu.address.testutil.TypicalLocations.BOB_LOCATION;
@@ -25,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import seedu.address.commons.core.index.Index;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.visit.Visit;
 import seedu.address.model.visit.VisitBook;
 
@@ -109,6 +106,17 @@ public class TypicalVisits {
         return vb;
     }
 
+    /**
+     * Returns a {@code VisitBook} with some of the visits have the same location
+     */
+    public static VisitBook getNonUniqueLocationsVisitBook() {
+        VisitBook vb = new VisitBook();
+        for (Visit visit : getNonUniqueLocationVisits()) {
+            vb.addVisit(visit);
+        }
+        return vb;
+    }
+
     public static List<Visit> getTypicalVisits() {
         return new ArrayList<>(Arrays.asList(FIRST_VISIT, SECOND_VISIT, THIRD_VISIT, FOURTH_VISIT,
                 FIFTH_VISIT, SIXTH_VISIT, SEVENTH_VISIT, EIGHTH_VISIT, NINTH_VISIT));
@@ -131,8 +139,8 @@ public class TypicalVisits {
      * Returns a list of unique {@code LocationId} in the list of {@code Visit} provided
      * by {@code getVisitsForTest}
      */
-    public static List<Index> getLocationsIdsFromVisitsForTest() {
-        return new ArrayList<>(Arrays.asList(INDEX_FIRST, INDEX_SECOND, INDEX_FIFTH));
+    public static List<Id> getLocationsIdsFromVisitsForTest() {
+        return new ArrayList<>(Arrays.asList(new Id("L9"), new Id("L3"), new Id("L10")));
     }
 
     /**
@@ -162,5 +170,14 @@ public class TypicalVisits {
         // SECOND_VISIT and THIRD_VISIT has the same person while person of FIRST_VISIT is different
         // from the rest.
         return new ArrayList<>(Arrays.asList(FIRST_VISIT, SECOND_VISIT, FOURTH_VISIT));
+    }  
+      
+    /** 
+     * Returns a list of {@code Visit} where locations of visits are not unique
+     */
+    public static List<Visit> getNonUniqueLocationVisits() {
+        // SECOND_VISIT and THIRD_VISIT has the same location while location of FIRST_VISIT is different
+        // from the rest.
+        return new ArrayList<>(Arrays.asList(FIRST_VISIT, SECOND_VISIT, THIRD_VISIT));
     }
 }

@@ -23,11 +23,11 @@ The ***Architecture Diagram*** given above explains the high-level design of the
 
 <div markdown="span" class="alert alert-primary">
 
-:bulb: **Tip:** The `.puml` files used to create diagrams in this document can be found in the [diagrams](https://github.com/se-edu/addressbook-level3/tree/master/docs/diagrams/) folder. Refer to the [_PlantUML Tutorial_ at se-edu/guides](https://se-education.org/guides/tutorials/plantUml.html) to learn how to create and edit diagrams.
+:bulb: **Tip:** The `.puml` files used to create diagrams in this document can be found in the [diagrams](https://github.com/AY2021S1-CS2103T-T13-1/tp/tree/master/docs/diagrams) folder. Refer to the [_PlantUML Tutorial_ at se-edu/guides](https://se-education.org/guides/tutorials/plantUml.html) to learn how to create and edit diagrams.
 
 </div>
 
-**`Main`** has two classes called [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java). It is responsible for,
+**`Main`** has two classes called [`Main`](https://github.com/AY2021S1-CS2103T-T13-1/tp/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/AY2021S1-CS2103T-T13-1/tp/tree/master/src/main/java/seedu/address/MainApp.java). It is responsible for,
 * At app launch: Initializes the components in the correct sequence, and connects them up with each other.
 * At shut down: Shuts down the components and invokes cleanup methods where necessary.
 
@@ -62,11 +62,11 @@ The sections below give more details of each component.
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
 **API** :
-[`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+[`Ui.java`](https://github.com/AY2021S1-CS2103T-T13-1/tp/blob/master/src/main/java/seedu/address/ui/Ui.java)
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2021S1-CS2103T-T13-1/tp/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2021S1-CS2103T-T13-1/tp/tree/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -78,7 +78,7 @@ The `UI` component,
 ![Structure of the Logic Component](images/LogicClassDiagram.png)
 
 **API** :
-[`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+[`Logic.java`](https://github.com/AY2021S1-CS2103T-T13-1/tp/tree/master/src/main/java/seedu/address/logic/Logic.java)
 
 1. `Logic` uses the `AddressBookParser` class to parse the user command.
 1. This results in a `Command` object which is executed by the `LogicManager`.
@@ -95,16 +95,21 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 
 ### Model component
 
-![Structure of the Model Component](images/ModelClassDiagram.png)
+![Structure of the Model Component](images/ModelClassDiagramNew.png)
 
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2021S1-CS2103T-T13-1/tp/tree/master/src/main/java/seedu/address/model/Model.java)
 
 The `Model`,
 
 * stores a `UserPref` object that represents the user’s preferences.
-* stores the address book data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores a `PersonBook`, `LocationBook` and `VisitBook` for the three types of data.
+* exposes an unmodifiable `ObservableList` of each type which can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
+
+The `Person`, `Location` and `Visit` components are shown in more detail below.
+
+![Structure of Person and Location components](images/PersonLocationClassDiagram.png)
+![Structure of the Visit component](images/VisitClassDiagram.png)
 
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique `Tag`, instead of each `Person` needing their own `Tag` object.<br>
@@ -117,7 +122,7 @@ The `Model`,
 
 ![Structure of the Storage Component](images/StorageClassDiagram.png)
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2021S1-CS2103T-T13-1/tp/tree/master/src/main/java/seedu/address/storage/Storage.java)
 
 The `Storage` component,
 * can save `UserPref` objects in json format and read it back.
@@ -132,6 +137,178 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 ## **Implementation**
 
 This section describes some noteworthy details on how certain features are implemented.
+
+### Add person
+
+This is a placeholder section for the "Manage data using CSV files section." Please update the link in that section if the header of this
+section is changed.
+### Add location
+
+### Add visit
+
+### Manage data using CSV files (Siang Ern)
+
+Most data collected by the target user group are likely to be in the form of Excel documents. As such, it is necessary for VirusTracker to include features to import and export data in a way that is compatible with Excel.
+
+The features are facilitated by the `addFromCsv` and `exportToCsv` commands. They allow VirusTracker to manage data using **Comma-separated values** files which could also be handled by Excel.
+
+#### Importing data from a CSV file
+
+This feature essentially acts as a "bulk add" operation. The number of rows in the CSV file corresponds to the **maximum** number of objects that could be added to VirusTracker.
+
+**Format:** `addFromCsv FILEPATH l/LIST_TYPE`
+
+* `FILEPATH` refers to the absolute path that the file would be located at.
+* `LIST_TYPE` is the data type that the user is attempting to add. The `addFromCsv` command supports three list types:
+    1. [people](#add-person)
+    2. [locations](#add-location)
+    3. [visits](#add-visit)
+* Each row in the specified CSV file must follow the format for the add command of the respective type. To find out about the format, you may click the relevant list type above.
+
+An example of a CSV file that is used to add people is shown below. Notice that column G is not completely filled as the field is optional.
+
+![SamplePersonCsv](images/ExamplePersonCsv.png)
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The number of columns in the CSV file should correspond to the number of parameters required to create the related object. Information on additional columns **will be disregarded**.
+
+</div>
+
+#### Sequence diagram
+
+The sequence diagram below shows how the adding operation works. Certain utility classes have been omitted for readability.
+
+![AddFromCsvCommandSequenceDiagram](images/AddFromCsvSequenceDiagram.png)
+
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The above sequence diagram uses the `AddPersonsFromCsvCommand` to handle adding people from CSV files. For locations and visits, replace the command with `AddLocationsFromCsvCommand` and
+`AddVisitsFromCsvCommand` respectively. The behaviour of the three commands are the same as the above sequence diagram.
+
+</div>
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** Lifelines should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+
+</div>
+
+The following activity diagram summarizes what happens when a user executes the `addFromCsv` command.
+
+![AddFromCsvActivityDiagram](images/AddFromCsvActivityDiagram.png)
+
+
+#### Design considerations:
+
+The design considerations below highlight alternative ways the command could have been implemented, and provides reasons for the choice of implementation.
+
+##### Aspect: How are exceptions handled
+
+For this aspect, we make a distinction between fatal exceptions and non-fatal exceptions.
+
+* Fatal exceptions
+  * Exceptions that cause the command to be unable to execute further.
+  * These exceptions include but are not limited to: _missing parameters in CSV file_, _invalid file path, etc._    
+
+* Non-fatal exceptions
+  * The command could still continue executing even if this exception occured.
+  * For example, _duplicate objects in the CSV file._
+  * They tend to occur on a row by row basis in the CSV file.
+  
+* **Alternative 1:** Stop execution of command only for destructive exceptions.
+  * Pros: User does not need to rerun the command for every exception that occurs.
+  * Cons: Allowing certain exceptions to pass through may result in some bugs further down the line.
+
+* **Alternative 2:** Stop execution for every exception that occurs.
+  * Pros: Ensures correctness of the added objects.
+  * Cons: May lead to worse user experience having to constantly rerun the command.
+  
+**Implementation**
+ 
+Alternative 1 was chosen as the implementation with considerations from alternative 2.
+* Upon encountering:
+  * Fatal exception
+    * The command stops execution and informs the user of the error.
+  * Non-fatal exception
+    * The command continues executing.
+    * The rows where the exception occurs are recorded.
+    * Upon finishing execution, the user is informed of the success and notified of the erroneous rows.
+    
+**Rationale**
+
+As this command handles data from CSV files, it is likely the CSV files would be large (containing more than 10,000 rows).
+  * Time taken for the `addFromCsv` command to execute is significant.
+  
+As such, the above implementation helps to reduce the need to read the large file repeatedly. 
+  * User can fix the erroneous rows on a new CSV file.
+  * Execution of the command would be faster than if the same large file was executed again.
+
+This would minimise the impact to user experience as the user would spend less time fixing the errors.
+
+#### Aspect: Absolute file path
+
+The file path the command uses is the absolute path.
+* The absolute path provides the complete details to locate the CSV file.
+* Helps to avoid navigation errors that may result from using relative path names.
+
+By allowing the user to specify the path name, it also gives the user a choice on where to put his CSV files instead of enforcing a particular directory for
+him to store the files.
+
+#### Aspect: Reusing list types and the list prefix 'l/'
+
+**Concern**: The list types are used for the `list` command, which appear to be unrelated to the `addFromCsv` command.
+
+**Rationale**
+
+This command handles people, locations and visits which corresponded to the list types already implemented for use for the list command.
+
+By using a format similar to the `list` command, it avoids the need for implementing a possible **data type** parameter which would not have a
+significant difference from list type.
+
+Furthermore, it allows the user to use a format that they are already comfortable with.
+
+_{more aspects and alternatives to be added}_
+
+### List high risk locations of infection
+This feature allows the VirusTracker to display a list high risk location of infection. This list of high risk location 
+of infection is generated using data currently stored in VirusTracker. The data include the infection status of all 
+people, all visits that are made by infected people and all locations. 
+
+**Format:** `list l/high-risk-locations`
+
+#### Implementation
+This feature is one of the different `list` commands. It has the same command word as other `list` commands, which is 
+`list`. The `LIST_TYPE` of this command is `high-risk-location`.
+
+* Infected person is defined as person with infection status as `true`
+* Infected visit is defined as visit made by any infected person
+* Infected location is defined as location that has been visited by any infected person
+* Number of high risk location of infection is defined as:    
+    * If number of infected location is larger than 60% of number of total number of location, then the number of high risk 
+location is `40% * (number of total locations)`.  
+    * Else, number of high risk location is the number of infected location. 
+
+1. When this command is executed, a list of all infected people is obtained.
+2. A list of all visits made by all infected people is obtained using the list of infected people.
+3. Use a `HashMap` to store the location as the key and the number of visits made by any infected person to this 
+location as the value. Generate this `HashMap` from the list of visits in step 2.
+4. Sort the `HashMap` in Step 3 from most infected visits to least infected visits.
+5. Calculate the number of high risk locaiton `n`, using number of infected location and number of total location.
+6. Display the top `n` locations of the sorted infected location list as the list of high risk locations.
+
+#### Sequence diagram
+The sequence diagram below shows how the list operation works. Certain utility classes have been omitted for readability.
+![ListHighRiskLocationSequenceDiagram](images/ListHighRiskLocationSequenceDiagram.png)
+
+The following activity diagram summarizes what happens when a user executes the `list l/high-risk-locations` command.
+![ListHighRiskLocationActivityDiagram](images/ListHighRiskLocationActivityDiagram.png)
+#### Design consideration
+##### Aspect: Definition of number of high risk location of infection
+When displaying the list of high risk location of infection, the top few locations that has been most visited by any 
+infected people are wanted. 
+
+If number of infected location is larger than 60% of number of total number of location, then the number of high risk 
+location is `40% * (number of total locations)`.  The number `40%` is an appropriate number as not too many nor too few
+infected locations will be displayed.
+
+Else, number of high risk location is the number of infected location. Since less than 40% of total locations are 
+infected, all infected locations can be considered as high risk because they are the only few locations that are infected.
 
 ### \[Proposed\] Undo/redo feature
 
@@ -270,7 +447,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | user managing quarantined people | update people's quarantine status | be aware of a person's quarantine status |
 | `* * *`  | user worried about virus outbreaks | generate locations that infected people have been to | disinfect those locations |
 | `* * *`  | user worried about virus outbreaks | generate people that have been in contact with infected people | quarantine them for safety measures |
- 
+| `* * *`  | user with data stored in Excel files | import data from Excel files into VirusTracker | avoid typing out the data again |
+| `* * *`  | user | export data from VirusTracker into a portable format | use the same data on multiple devices |
+
 *{More to be added}*
 
 ### Use cases
@@ -596,7 +775,32 @@ Use case ends.
 * 2a. There is not enough information to produce a certain statistics.
     * 2a1. System flags that statistic as unavailable.
     * 2a2. For remaining valid statistics, go to 2. 
+    
+**UC13 - Add data from CSV file**
 
+**MSS**
+
+1. User requests to add data from a CSV file.
+2. System requests for information for adding.
+3. User enters the information required.
+4. System adds the items and informs the user.
+
+  Use case ends.
+
+**Extensions**
+
+* 3a. There is an error in the information entered.
+    * 3a1. System requests for correct information.
+    * 3a2. User enters new input.
+    
+    Steps 3a1 - 3a2 are repeated until the information entered is correct.  
+        Use case resumes at step 3.
+* 4a. The system is unable to add certain items in the file.
+    * 4a1. System records the errors and notifies the user.
+    
+    System may decide to continue adding items. In that case, return to step 4.
+    Otherwise, use case ends.
+    
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.

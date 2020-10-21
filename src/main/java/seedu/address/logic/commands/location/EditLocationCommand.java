@@ -15,9 +15,11 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.attribute.Address;
+import seedu.address.model.attribute.Id;
+import seedu.address.model.attribute.Name;
 import seedu.address.model.location.Location;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Name;
+
 
 /**
  * Edits the details of an existing location in the location book.
@@ -58,7 +60,7 @@ public class EditLocationCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Location> lastShownList = model.getFilteredLocationList();
+        List<Location> lastShownList = model.getSortedLocationList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_LOCATION_DISPLAYED_INDEX);
@@ -73,6 +75,9 @@ public class EditLocationCommand extends Command {
 
         model.setLocation(locationToEdit, editedLocation);
         model.updateFilteredLocationList(PREDICATE_SHOW_ALL_LOCATIONS);
+
+        model.updateVisitBookWithEditedLocation(editedLocation);
+
         return new CommandResult(String.format(MESSAGE_EDIT_LOCATION_SUCCESS, editedLocation), false, false,
                 CommandResult.SWITCH_TO_VIEW_LOCATIONS);
     }
@@ -87,9 +92,9 @@ public class EditLocationCommand extends Command {
 
         Name updatedName = editLocationDescriptor.getName().orElse(locationToEdit.getName());
         Address updatedAddress = editLocationDescriptor.getAddress().orElse(locationToEdit.getAddress());
-        Index updatedId = locationToEdit.getId();
+        Id updatedId = locationToEdit.getId();
 
-        return new Location(updatedName, updatedAddress, updatedId);
+        return new Location(updatedId, updatedName, updatedAddress);
     }
 
     @Override
@@ -117,7 +122,7 @@ public class EditLocationCommand extends Command {
     public static class EditLocationDescriptor {
         private Name name;
         private Address address;
-        private Index id;
+        private Id id;
 
         public EditLocationDescriptor() {}
 
@@ -153,11 +158,11 @@ public class EditLocationCommand extends Command {
             return Optional.ofNullable(address);
         }
 
-        public void setId(Index id) {
+        public void setId(Id id) {
             this.id = id;
         }
 
-        public Optional<Index> getId() {
+        public Optional<Id> getId() {
             return Optional.ofNullable(id);
         }
 
