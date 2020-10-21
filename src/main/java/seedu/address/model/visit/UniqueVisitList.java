@@ -8,7 +8,9 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.location.Location;
 import seedu.address.model.location.exceptions.DuplicateLocationException;
+import seedu.address.model.person.Person;
 import seedu.address.model.visit.exceptions.DuplicateVisitException;
 import seedu.address.model.visit.exceptions.VisitNotFoundException;
 
@@ -60,6 +62,24 @@ public class UniqueVisitList implements Iterable<Visit> {
     }
 
     /**
+     * Removes all Visits that contain the person as given in the argument
+     */
+    public void removeVisitsWithPerson(Person personToDelete) {
+        requireNonNull(personToDelete);
+
+        internalList.removeIf(visit -> visit.isSamePerson(personToDelete));
+    }
+
+    /**
+     * Removes all the visits that have the same location as given in the argument.
+     */
+    public void removeVisitsWithLocation(Location locationToDelete) {
+        requireNonNull(locationToDelete);
+
+        internalList.removeIf(visit -> visit.isSameLocation(locationToDelete));
+    }
+
+    /**
      * Replaces the Visit {@code target} in the list with {@code editedVisit}.
      * {@code target} must exist in the list.
      * The identities of {@code editedVisit} must not be the same as another existing visit in the list.
@@ -94,6 +114,18 @@ public class UniqueVisitList implements Iterable<Visit> {
         }
 
         internalList.setAll(visits);
+    }
+
+    /**
+     * Update the visits that have outdated location in this list with {@code editedLocation}
+     */
+    public void updateWithEditedLocation(Location editedLocation) {
+        for (Visit visit : internalList) {
+            if (visit.getLocation().getId().equals(editedLocation.getId())) {
+                Visit editedVisit = new Visit(visit.getPerson(), editedLocation, visit.getDate());
+                setVisit(visit, editedVisit);
+            }
+        }
     }
 
     /**

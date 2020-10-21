@@ -67,6 +67,9 @@ public class DeletePersonCommand extends Command {
         }
         requireNonNull(personToDelete);
         model.deletePerson(personToDelete);
+
+        model.deleteVisitsWithPerson(personToDelete);
+
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete), false, false,
                 CommandResult.SWITCH_TO_VIEW_PEOPLE);
     }

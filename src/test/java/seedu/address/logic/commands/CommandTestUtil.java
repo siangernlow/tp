@@ -23,10 +23,13 @@ import seedu.address.logic.commands.location.EditLocationCommand;
 import seedu.address.logic.commands.person.EditPersonCommand;
 import seedu.address.model.Model;
 import seedu.address.model.location.Location;
+import seedu.address.model.location.LocationBook;
 import seedu.address.model.location.LocationNameContainsKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonBook;
+import seedu.address.model.visit.Visit;
+import seedu.address.model.visit.VisitBook;
 import seedu.address.testutil.EditLocationDescriptorBuilder;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
@@ -160,11 +163,21 @@ public class CommandTestUtil {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
         PersonBook expectedPersonBook = new PersonBook(actualModel.getPersonBook());
-        List<Person> expectedFilteredList = new ArrayList<>(actualModel.getSortedPersonList());
+        List<Person> expectedFilteredPersonList = new ArrayList<>(actualModel.getSortedPersonList());
+
+        LocationBook expectedLocationBook = new LocationBook(actualModel.getLocationBook());
+        List<Location> expectedLocationFilteredList = new ArrayList<>(actualModel.getSortedLocationList());
+
+        VisitBook expectedVisitBook = new VisitBook(actualModel.getVisitBook());
+        List<Visit> expectedFilteredVisitList = new ArrayList<>(actualModel.getSortedVisitList());
 
         assertThrows(CommandException.class, expectedMessage, () -> command.execute(actualModel));
         assertEquals(expectedPersonBook, actualModel.getPersonBook());
-        assertEquals(expectedFilteredList, actualModel.getSortedPersonList());
+        assertEquals(expectedFilteredPersonList, actualModel.getSortedPersonList());
+        assertEquals(expectedLocationBook, actualModel.getLocationBook());
+        assertEquals(expectedLocationFilteredList, actualModel.getSortedLocationList());
+        assertEquals(expectedVisitBook, actualModel.getVisitBook());
+        assertEquals(expectedFilteredVisitList, actualModel.getSortedVisitList());
     }
 
     /**

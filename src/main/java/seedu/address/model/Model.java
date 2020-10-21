@@ -185,6 +185,11 @@ public interface Model {
     void setVisitBook(ReadOnlyVisitBook visitBook);
 
     /**
+     * Update visit book with {@code editedLocation}
+     */
+    void updateVisitBookWithEditedLocation(Location editedLocation);
+
+    /**
      * Returns true if a visit with the same identity as {@code visit} exists in the visit book.
      */
     boolean hasVisit(Visit visit);
@@ -200,6 +205,22 @@ public interface Model {
      * The visit must exist in the visit book.
      */
     void deleteVisit(Visit visit);
+
+    /**
+     * Deletes all visits that contain the person as given in the argument
+     */
+    void deleteVisitsWithPerson(Person personToDelete);
+
+    /**
+     * Deletes all visits that contains the location as given in the argument
+     */
+    void deleteVisitsWithLocation(Location locationToDelete);
+
+    /**
+     * Replaces the given visit {@code target} with {@code editedVisit}.
+     * {@code target} must exist in the visit book.
+     */
+    void setVisit(Visit target, Visit editedVisit);
 
     /** Returns an unmodifiable view of the filtered visit list */
     ObservableList<Visit> getSortedVisitList();

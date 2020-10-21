@@ -42,6 +42,7 @@ public class DeletePersonCommandTest {
         ModelManager expectedModel = new ModelManager(model.getPersonBook(), model.getLocationBook(),
                 model.getVisitBook(), new UserPrefs());
         expectedModel.deletePerson(personToDelete);
+        expectedModel.deleteVisitsWithPerson(personToDelete);
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
                 CommandResult.SWITCH_TO_VIEW_PEOPLE);
 
@@ -68,6 +69,7 @@ public class DeletePersonCommandTest {
         Model expectedModel = new ModelManager(model.getPersonBook(), model.getLocationBook(),
                 model.getVisitBook(), new UserPrefs());
         expectedModel.deletePerson(personToDelete);
+        expectedModel.deleteVisitsWithPerson(personToDelete);
         showNoPerson(expectedModel);
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
                 CommandResult.SWITCH_TO_VIEW_PEOPLE);
@@ -98,6 +100,7 @@ public class DeletePersonCommandTest {
         ModelManager expectedModel = new ModelManager(model.getPersonBook(), model.getLocationBook(),
                 model.getVisitBook(), new UserPrefs());
         expectedModel.deletePerson(personToDelete);
+        expectedModel.deleteVisitsWithPerson(personToDelete);
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
                 CommandResult.SWITCH_TO_VIEW_PEOPLE);
 
