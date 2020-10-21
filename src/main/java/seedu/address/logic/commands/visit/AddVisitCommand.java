@@ -3,10 +3,14 @@ package seedu.address.logic.commands.visit;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION_ID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
@@ -14,7 +18,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
+import seedu.address.model.location.exceptions.LocationNotFoundException;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.visit.Visit;
 
 /**
@@ -38,11 +44,17 @@ public class AddVisitCommand extends Command {
             + "The following person is infected and "
             + "is in quarantine. The Stay-Home Notice may have been violated.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add a new visit to the visits list "
-            + "using a person's index, location's index and date of visit. "
-            + "Updates the existing visits list.\n"
+            + "using a person's index, location's index and date of visit.\n"
             + "Indexes are based on the most recently viewed persons and locations list.\n"
+            + "Alternatively, a person's ID and a location's ID can be used. "
+            + "However, a combination of ID and index is not allowed.\n"
+            + "Updates the existing visits list.\n"
             + "Parameters: PERSON_INDEX LOCATION_INDEX d/DATE\n"
-            + "Example: " + COMMAND_WORD + " 1 " + " 2 " + PREFIX_DATE + " 2020-05-31 ";
+            + "Example: " + COMMAND_WORD + " 1 " + " 2 " + PREFIX_DATE + " 2020-05-31 \n"
+            + "Parameters: "
+            + PREFIX_PERSON_ID + "PERSON_INDEX "
+            + PREFIX_LOCATION_ID + "LOCATION_INDEX d/DATE\n"
+            + "Example: " + COMMAND_WORD + " idp/S11 " + " idl/L222 " + PREFIX_DATE + " 2020-05-31 ";
 
     private final Optional<Index> personIndex;
     private final Optional<Index> locationIndex;
@@ -93,8 +105,17 @@ public class AddVisitCommand extends Command {
     }
 
     private Visit getVisitToAdd(Id personId, Id locationId, Model model) throws CommandException {
-        Person person = model.getPersonFromId(personId);
-        Location location = model.getLocationFromId(locationId);
+        Person person;
+        Location location;
+        try {
+            person = model.getPersonFromId(personId);
+            location = model.getLocationFromId(locationId);
+        } catch (PersonNotFoundException e) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_ID);
+        } catch (LocationNotFoundException e) {
+            throw new CommandException(Messages.MESSAGE_INVALID_LOCATION_ID);
+        }
+
         Visit visit = new Visit(person, location, date);
         if (model.hasVisit(visit)) {
             throw new CommandException(MESSAGE_DUPLICATE_VISIT);
@@ -103,6 +124,14 @@ public class AddVisitCommand extends Command {
     }
 
     private Visit getVisitToAdd(Index personIndex, Index locationIndex, Model model) throws CommandException {
+        List<Person> lastShownPersonList = model.getSortedPersonList();
+        if (personIndex.getZeroBased() >= lastShownPersonList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+        List<Location> lastShownLocationList = model.getSortedLocationList();
+        if (locationIndex.getZeroBased() >= lastShownLocationList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_LOCATION_DISPLAYED_INDEX);
+        }
         Person person = model.getPersonFromIndex(personIndex);
         Location location = model.getLocationFromIndex(locationIndex);
         Visit visit = new Visit(person, location, date);

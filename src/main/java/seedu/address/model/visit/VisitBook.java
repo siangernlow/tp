@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
 
+
 /**
  * Wraps all data at the visit-book level
  * Duplicates are not allowed (by .equals comparison)
@@ -93,6 +94,15 @@ public class VisitBook implements ReadOnlyVisitBook {
         requireNonNull(editedVisit);
 
         visits.setVisit(target, editedVisit);
+    }
+
+    /**
+     * Update the visit book with edited person
+     */
+    public void updateWithEditedPerson(Person editedPerson) {
+        requireNonNull(editedPerson);
+
+        visits.updateWithEditedPerson(editedPerson);
     }
 
     /**

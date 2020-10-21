@@ -80,42 +80,57 @@ To add data to VirusTracker, there are various `add` commands that could be used
 
 Adds a person to VirusTracker.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS q/QUARANTINE_STATUS [t/TAG]…​`
+Format: `add idp/ID n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS q/QUARANTINE_STATUS [t/TAG]…​`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 A person can have any number of tags (including 0)
 </div>
 
+* `ID` of person must be unique. No other person in the VirusTracker may have the same ID.
+* `PERSON_ID` must belong to a person within VirusTracker.
+
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 q/true`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 q/false t/criminal`
+* `add idp/S123 n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 q/true`
+* `add idp/S234 n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 q/false t/criminal`
 
 #### Adding a visit
 
 Adds a visit by the person, location of visit and date of visit
 
-Format: `addVisit PERSON_INDEX LOCATION_INDEX d/DATE`
+Format: `addVisit PERSON_INDEX LOCATION_INDEX d/DATE` <br>
+Format: `addVisit idp/PERSON_ID idl/LOCATION_ID d/DATE`
 
+* Visits may be added by either using indexes or IDs to refer to the location and person. A mix of both is not allowed and will trigger a warning. 
 * Visits are used to track close contacts and to detect if infected/quarantined people visit locations they should not.
 * `PERSON_INDEX` refers to the index of the person as viewed from the most recently displayed people list.
 * `LOCATION_INDEX` refers to the index of the location as viewed from the most recently displayed location list.
-* The indexes **must be positive integers**: 1, 2, 3, …​
+* The indexes **must be positive integers**: 1, 2, 3, …​ and within the range of its shown list, otherwise exceptions would be thrown.
+* `PERSON_ID` must belong to a person within VirusTracker.
+* `LOCATION_ID` must belong to a location within VirusTracker.
 * `DATE` refers to the date when the person visited the location
+* Date format should follow "yyyy-MM-dd", otherwise exceptions would be thrown.
+
+Examples:
+* `addVisit 1 1 d/2020-09-12`
+* `addVisit 2 3 d/2020-09-10`
+* `addVisit idp/S123 idl/L123 d/2020-02-02`
 
 #### Adding a location
 
 Adds a location to VirusTracker.
 
-Format: `addLocation n/NAME a/ADDRESS`
+Format: `addLocation idl/ID n/NAME a/ADDRESS`
 
+* `ID` of location must be unique. No other location in the VirusTracker may have the same ID.
 * Locations have an address and a name.
 * The `NAME` of the location is defined by the user.
 * The `ADDRESS` of the location is the official Singaporean address of the location.
 * No duplicate locations will be allowed in the VirusTracker.
+* `LOCATION_ID` must belong to a location within VirusTracker.
 
 Examples:
-* `addLocation n/Vivocity a/John street, block 123, #01-01`
-* `addLocation n/Betsy Crowe's House a/Newgate Prison`
+* `addLocation idl/L123 n/Vivocity a/John street, block 123, #01-01`
+* `addLocation idl/L234 n/Betsy Crowe's House a/Newgate Prison`
 
 
 ### Deleting data: `delete`
@@ -125,39 +140,49 @@ To delete data from VirusTracker, there are various `delete` commands that could
 
 Deletes the specified person from the people list.
 
-Format: `delete PERSON_INDEX`
+Format: `delete PERSON_INDEX` <br>
+Format: `delete idp/PERSON_ID` 
 
-* Deletes the person at the specified `PERONS_INDEX`.
+* Deletes the person at the specified `PERONS_INDEX` or deletes the person with the specified `PERSON_ID`.
 * `PERSON_INDEX` refers to the index of the person as viewed from the most recently displayed people list.
 * The index **must be a positive integer** 1, 2, 3, …​
+* `PERSON_ID` must belong to a person within VirusTracker.
 
 Examples:
 * `list l/infected` followed by `delete 2` deletes the 2nd infected person in the displayed people list.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+* `delete idp/S123` deletes the person with the ID S123.
 
 #### Deleting a location 
 
 Deletes the specified location from the location list.
 
-Format: `deleteLocation LOCATION_INDEX`
+Format: `deleteLocation LOCATION_INDEX` <br>
+Format: `deleteLocation idl/LOCATION_ID` 
 
-* Deletes the location at the specified `LOCATION_INDEX`.
+* Deletes the location at the specified `LOCATION_INDEX` or deletes the location with the specified `LOCATION_ID`.
 * `LOCATION_INDEX` refers to the index of the location as viewed from the most recently displayed location list.
 * The index **must be a positive integer** 1, 2, 3, …​
+* `LOCATION_ID` must belong to a location within VirusTracker.
 
 Examples:
 * `list l/infected` followed by `deleteLocation 2` deletes the 2nd location in the displayed location list.
+* `delete idl/L123` deletes the location with the ID L123.
 
-#### Deleting visits by date
+#### Deleting visits using date 
 
-Deletes all visits before the date
+Deletes all visits before and including the date.
 
 Format: `deleteVisits d/DATE`
 
 * `DATE` refers to a valid date within the visits list.
 * A `DATE` is valid if **at least one** visit contains the specified date.
 * All the visits before and including the date will be removed from the visits list.
+* Date format should follow "yyyy-MM-dd", otherwise exceptions would be thrown.
 
+Examples:
+* `deleteVisits d/2020-09-12`
+* `deleteVisits d/2020-09-10`
 
 ### Editing data: `edit`
 To edit data in VirusTracker, there are various `edit` commands that could be used.
@@ -224,36 +249,6 @@ There are a variety of `list` commands that list different types of data.
 Format: `list l/people`
 
 * Displays the list of all people currently stored in VirusTracker.
-
-#### Adding a visit 
-Adds a visit by the personIndex, locationIndex and date of visit.
-
-Format: `addVisit INDEX INDEX d/DATE`
-
-* The visit is added to the visits list to track close contacts, especially for the infected people.
-* First index refers to the Index shown in the people list.
-* Second index refers to the Index shown in the location list.
-* Index should be the positive integers within the range of its shown list, otherwise exceptions would be thrown.
-* Date refers to the particular date the person has visited the location.
-* Date format should follow "yyyy-MM-dd", otherwise exceptions would be thrown.
-
-Examples:
-* `addVisit 1 1 d/2020-09-12`
-* `addVisit 2 3 d/2020-09-10`
-
-#### Deleting visits using date 
-
-Deletes all visits before and including the date.
-
-Format: `deleteVisits d/DATE`
-
-* Date format should follow "yyyy-MM-dd", otherwise exceptions would be thrown.
-* Date corresponds to the dates that exist in the visits list, otherwise it will be invalid.
-* All the visits before and including the date will be removed from the visits list.
-
-Examples:
-* `deleteVisits d/2020-09-12`
-* `deleteVisits d/2020-09-10`
 
 #### Listing all infected people 
 Format: `list l/infected`
@@ -341,16 +336,6 @@ Format: `generatePeople INDEX`
 * People listed were in contact with the infected person of the index given.
 * The result given is a filtered list of people who visited the same locations as that the infected person in the past 2 weeks.
 * This function can be used to identify people who need to be quarantined or issued Stay Home Notices.
-
-### Listing all locations visited by a person: `generateLocations`
-
-Shows a list of locations visited by an infected person in the past 2 weeks. 
-
-Format: `generateLocations INDEX`
-
-* Locations listed were visited by the infected person of the index given.
-* The result given is a filtered list of locations that the person visited in the past 2 weeks.
-* This function can be used to identify locations needing to be disinfected after being visited by an infected person.
 
 ### Clearing all entries : `clear`
 
