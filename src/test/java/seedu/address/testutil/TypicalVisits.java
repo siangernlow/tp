@@ -170,9 +170,8 @@ public class TypicalVisits {
         // SECOND_VISIT and THIRD_VISIT has the same person while person of FIRST_VISIT is different
         // from the rest.
         return new ArrayList<>(Arrays.asList(FIRST_VISIT, SECOND_VISIT, FOURTH_VISIT));
-    }  
-      
-    /** 
+    }
+    /**
      * Returns a list of {@code Visit} where locations of visits are not unique
      */
     public static List<Visit> getNonUniqueLocationVisits() {

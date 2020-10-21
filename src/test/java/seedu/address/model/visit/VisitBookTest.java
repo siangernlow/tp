@@ -9,8 +9,8 @@ import static seedu.address.testutil.TypicalLocations.AMY_LOCATION;
 import static seedu.address.testutil.TypicalLocations.BENSON_LOCATION;
 import static seedu.address.testutil.TypicalLocations.HOON_LOCATION;
 import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.AMY;
+import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalVisits.FIRST_VISIT;
 import static seedu.address.testutil.TypicalVisits.SECOND_VISIT;
 import static seedu.address.testutil.TypicalVisits.THIRD_VISIT;
@@ -63,7 +63,6 @@ public class VisitBookTest {
 
         assertEquals(expectedVisitBook, actualVisitBook);
     }
-      
     @Test
     public void deleteVisitsWithLocation_visitsContainDeletedLocation_success() {
         VisitBook expectedVisitBook = getTypicalVisitBook();

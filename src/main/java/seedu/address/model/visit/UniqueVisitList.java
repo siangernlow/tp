@@ -127,7 +127,6 @@ public class UniqueVisitList implements Iterable<Visit> {
             }
         }
     }
-  
     /**
      * Update the visits that have outdated location in this list with {@code editedLocation}
      */

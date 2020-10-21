@@ -224,12 +224,6 @@ public interface Model {
      */
     void deleteVisitsWithLocation(Location locationToDelete);
 
-    /**
-     * Replaces the given visit {@code target} with {@code editedVisit}.
-     * {@code target} must exist in the visit book.
-     */
-    void setVisit(Visit target, Visit editedVisit);
-
     /** Returns an unmodifiable view of the filtered visit list */
     ObservableList<Visit> getSortedVisitList();
 

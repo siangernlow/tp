@@ -325,11 +325,6 @@ public class ModelManager implements Model {
         visitBook.deleteVisitsWithLocation(locationToDelete);
     }
 
-    public void setVisit(Visit target, Visit editedVisit) {
-        requireAllNonNull(target, editedVisit);
-        visitBook.setVisit(target, editedVisit);
-    }
-
     /**
      * Returns an unmodifiable view of the list of {@code Visit} backed by the internal list of
      * {@code versionedVisitBook}
