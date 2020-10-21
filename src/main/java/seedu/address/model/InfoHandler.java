@@ -57,15 +57,15 @@ public class InfoHandler {
     //=========== List Accessors ==============================================================
 
     public ObservableList<Person> getPersonList() {
-        return model.getFilteredPersonList();
+        return model.getSortedPersonList();
     }
 
     public ObservableList<Location> getLocationList() {
-        return model.getFilteredLocationList();
+        return model.getSortedLocationList();
     }
 
     public ObservableList<Visit> getVisitList() {
-        return model.getFilteredVisitList();
+        return model.getSortedVisitList();
     }
 
     /**
@@ -190,7 +190,7 @@ public class InfoHandler {
      * @param visitBook List of visits.
      * @return List of location ids that are associated with the visits.
      */
-    public static List<Id> generateLocationIdsByVisitBook(VisitBook visitBook) {
+    public List<Id> generateLocationIdsByVisitBook(VisitBook visitBook) {
         List<Id> locationIds = new ArrayList<>();
         for (int i = 0; i < visitBook.getVisitList().size(); i++) {
             locationIds.add(visitBook.getVisitList().get(i).getLocation().getId());

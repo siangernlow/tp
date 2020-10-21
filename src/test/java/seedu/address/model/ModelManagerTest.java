@@ -10,10 +10,16 @@ import static seedu.address.testutil.TypicalLocations.AMY_LOCATION;
 import static seedu.address.testutil.TypicalLocations.BENSON_LOCATION;
 import static seedu.address.testutil.TypicalLocations.CARL_LOCATION;
 import static seedu.address.testutil.TypicalLocations.DANIEL_LOCATION;
+import static seedu.address.testutil.TypicalLocations.HOON_LOCATION;
 import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.CARL;
+import static seedu.address.testutil.TypicalPersons.HOON;
+import static seedu.address.testutil.TypicalPersons.IDA;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalVisits.FIFTH_VISIT;
 import static seedu.address.testutil.TypicalVisits.FIRST_VISIT;
 import static seedu.address.testutil.TypicalVisits.SECOND_VISIT;
 import static seedu.address.testutil.TypicalVisits.THIRD_VISIT;
@@ -112,7 +118,7 @@ public class ModelManagerTest {
 
     @Test
     public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
-        assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredPersonList().remove(0));
+        assertThrows(UnsupportedOperationException.class, () -> modelManager.getSortedPersonList().remove(0));
     }
 
     @Test
@@ -145,7 +151,7 @@ public class ModelManagerTest {
 
     @Test
     public void getFilteredLocationList_modifyList_throwsUnsupportedOperationException() {
-        assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredLocationList().remove(0));
+        assertThrows(UnsupportedOperationException.class, () -> modelManager.getSortedLocationList().remove(0));
     }
 
     @Test
@@ -178,6 +184,63 @@ public class ModelManagerTest {
                 .withLocation(ALICE_LOCATION).withDate("2020-02-09").build();
         modelManager.addVisit(sampleA);
         assertTrue(modelManager.hasVisit(sampleA));
+    }
+
+    @Test
+    public void deleteVisitsWithPerson_visitsContainDeletedPerson_success() {
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
+                getTypicalVisitBook(), new UserPrefs());
+        Model actualModel = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
+                getTypicalVisitBook(), new UserPrefs());
+
+        expectedModel.deleteVisit(SECOND_VISIT);
+        actualModel.deleteVisitsWithPerson(AMY);
+        assertEquals(expectedModel, actualModel);
+
+        expectedModel.deleteVisit(FIFTH_VISIT);
+        actualModel.deleteVisitsWithPerson(CARL);
+        assertEquals(expectedModel, actualModel);
+    }
+
+    @Test
+    public void deleteVisitsWithPerson_visitsDoNotContainDeletedPerson_success() {
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
+                getTypicalVisitBook(), new UserPrefs());
+        Model actualModel = new ModelManager(getTypicalAddressBook(), getTypicalLocationBook(),
+                getTypicalVisitBook(), new UserPrefs());
+
+        actualModel.deleteVisitsWithPerson(HOON);
+        assertEquals(expectedModel, actualModel);
+
+        actualModel.deleteVisitsWithPerson(IDA);
+        assertEquals(expectedModel, actualModel);
+    }
+
+    @Test
+    public void deleteVisitsWithLocation_visitsContainDeletedLocation_success() {
+        VisitBook expectedVisitBook = getTypicalVisitBook();
+        VisitBook actualVisitBook = getTypicalVisitBook();
+
+        expectedVisitBook.removeVisit(SECOND_VISIT);
+        expectedVisitBook.removeVisit(THIRD_VISIT);
+        actualVisitBook.deleteVisitsWithLocation(AMY_LOCATION);
+        assertEquals(expectedVisitBook, actualVisitBook);
+
+        expectedVisitBook.removeVisit(FIRST_VISIT);
+        actualVisitBook.deleteVisitsWithLocation(BENSON_LOCATION);
+        assertEquals(expectedVisitBook, actualVisitBook);
+    }
+
+    @Test
+    public void deleteVisitsWithLocation_visitsDoNotContainDeletedLocation_success() {
+        VisitBook expectedVisitBook = getTypicalVisitBook();
+        VisitBook actualVisitBook = getTypicalVisitBook();
+
+        actualVisitBook.deleteVisitsWithLocation(ALICE_LOCATION);
+        assertEquals(expectedVisitBook, actualVisitBook);
+
+        actualVisitBook.deleteVisitsWithLocation(HOON_LOCATION);
+        assertEquals(expectedVisitBook, actualVisitBook);
     }
 
     @Test

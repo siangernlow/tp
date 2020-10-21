@@ -62,6 +62,24 @@ public class UniqueVisitList implements Iterable<Visit> {
     }
 
     /**
+     * Removes all Visits that contain the person as given in the argument
+     */
+    public void removeVisitsWithPerson(Person personToDelete) {
+        requireNonNull(personToDelete);
+
+        internalList.removeIf(visit -> visit.isSamePerson(personToDelete));
+    }
+
+    /**
+     * Removes all the visits that have the same location as given in the argument.
+     */
+    public void removeVisitsWithLocation(Location locationToDelete) {
+        requireNonNull(locationToDelete);
+
+        internalList.removeIf(visit -> visit.isSameLocation(locationToDelete));
+    }
+
+    /**
      * Replaces the Visit {@code target} in the list with {@code editedVisit}.
      * {@code target} must exist in the list.
      * The identities of {@code editedVisit} must not be the same as another existing visit in the list.

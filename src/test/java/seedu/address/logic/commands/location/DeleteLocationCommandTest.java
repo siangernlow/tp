@@ -29,7 +29,7 @@ public class DeleteLocationCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
-        Location locationToDelete = model.getFilteredLocationList().get(INDEX_FIRST.getZeroBased());
+        Location locationToDelete = model.getSortedLocationList().get(INDEX_FIRST.getZeroBased());
         DeleteLocationCommand deleteLocationCommand = new DeleteLocationCommand(INDEX_FIRST);
 
         String expectedMessage = String.format(DeleteLocationCommand.MESSAGE_DELETE_LOCATION_SUCCESS, locationToDelete);
@@ -37,6 +37,7 @@ public class DeleteLocationCommandTest {
         ModelManager expectedModel = new ModelManager(model.getPersonBook(), model.getLocationBook(),
                 model.getVisitBook(), new UserPrefs());
         expectedModel.deleteLocation(locationToDelete);
+        expectedModel.deleteVisitsWithLocation(locationToDelete);
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
                 CommandResult.SWITCH_TO_VIEW_LOCATIONS);
 
@@ -45,7 +46,7 @@ public class DeleteLocationCommandTest {
 
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredLocationList().size() + 1);
+        Index outOfBoundIndex = Index.fromOneBased(model.getSortedLocationList().size() + 1);
         DeleteLocationCommand deleteLocationCommand = new DeleteLocationCommand(outOfBoundIndex);
 
         assertCommandFailure(deleteLocationCommand, model, Messages.MESSAGE_INVALID_LOCATION_DISPLAYED_INDEX);
@@ -55,7 +56,7 @@ public class DeleteLocationCommandTest {
     public void execute_validIndexFilteredList_success() {
         showLocationAtIndex(model, INDEX_FIRST);
 
-        Location locationToDelete = model.getFilteredLocationList().get(INDEX_FIRST.getZeroBased());
+        Location locationToDelete = model.getSortedLocationList().get(INDEX_FIRST.getZeroBased());
         DeleteLocationCommand deleteLocationCommand = new DeleteLocationCommand(INDEX_FIRST);
 
         String expectedMessage = String.format(DeleteLocationCommand.MESSAGE_DELETE_LOCATION_SUCCESS, locationToDelete);
@@ -63,6 +64,7 @@ public class DeleteLocationCommandTest {
         Model expectedModel = new ModelManager(model.getPersonBook(), model.getLocationBook(),
                 model.getVisitBook(), new UserPrefs());
         expectedModel.deleteLocation(locationToDelete);
+        expectedModel.deleteVisitsWithLocation(locationToDelete);
         showNoLocation(expectedModel);
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
                 CommandResult.SWITCH_TO_VIEW_LOCATIONS);
@@ -85,7 +87,7 @@ public class DeleteLocationCommandTest {
 
     @Test
     public void execute_validId_success() {
-        Location locationToDelete = model.getFilteredLocationList().get(INDEX_FIRST.getZeroBased());
+        Location locationToDelete = model.getSortedLocationList().get(INDEX_FIRST.getZeroBased());
         DeleteLocationCommand deleteLocationCommand = new DeleteLocationCommand(locationToDelete.getId());
 
         String expectedMessage = String.format(DeleteLocationCommand.MESSAGE_DELETE_LOCATION_SUCCESS, locationToDelete);
@@ -155,6 +157,6 @@ public class DeleteLocationCommandTest {
     private void showNoLocation(Model model) {
         model.updateFilteredLocationList(p -> false);
 
-        assertTrue(model.getFilteredLocationList().isEmpty());
+        assertTrue(model.getSortedLocationList().isEmpty());
     }
 }

@@ -96,7 +96,7 @@ public interface Model {
     void setPerson(Person target, Person editedPerson);
 
     /** Returns an unmodifiable view of the filtered person list */
-    ObservableList<Person> getFilteredPersonList();
+    ObservableList<Person> getSortedPersonList();
 
     /** Returns an unmodifiable view of the unfiltered person list */
     ObservableList<Person> getUnfilteredPersonList();
@@ -153,7 +153,7 @@ public interface Model {
     void setLocation(Location target, Location editedLocation);
 
     /** Returns an unmodifiable view of the filtered location list */
-    ObservableList<Location> getFilteredLocationList();
+    ObservableList<Location> getSortedLocationList();
 
     /** Returns an unmodifiable view of the unfiltered location list */
     ObservableList<Location> getUnfilteredLocationList();
@@ -215,13 +215,23 @@ public interface Model {
     void deleteVisit(Visit visit);
 
     /**
+     * Deletes all visits that contain the person as given in the argument
+     */
+    void deleteVisitsWithPerson(Person personToDelete);
+
+    /**
+     * Deletes all visits that contains the location as given in the argument
+     */
+    void deleteVisitsWithLocation(Location locationToDelete);
+
+    /**
      * Replaces the given visit {@code target} with {@code editedVisit}.
      * {@code target} must exist in the visit book.
      */
     void setVisit(Visit target, Visit editedVisit);
 
     /** Returns an unmodifiable view of the filtered visit list */
-    ObservableList<Visit> getFilteredVisitList();
+    ObservableList<Visit> getSortedVisitList();
 
     /**
      * Updates the filter of the filtered visit list to filter by the given {@code predicate}.

@@ -264,6 +264,52 @@ significant difference from list type.
 Furthermore, it allows the user to use a format that they are already comfortable with.
 
 _{more aspects and alternatives to be added}_
+
+### List high risk locations of infection
+This feature allows the VirusTracker to display a list high risk location of infection. This list of high risk location 
+of infection is generated using data currently stored in VirusTracker. The data include the infection status of all 
+people, all visits that are made by infected people and all locations. 
+
+**Format:** `list l/high-risk-locations`
+
+#### Implementation
+This feature is one of the different `list` commands. It has the same command word as other `list` commands, which is 
+`list`. The `LIST_TYPE` of this command is `high-risk-location`.
+
+* Infected person is defined as person with infection status as `true`
+* Infected visit is defined as visit made by any infected person
+* Infected location is defined as location that has been visited by any infected person
+* Number of high risk location of infection is defined as:    
+    * If number of infected location is larger than 60% of number of total number of location, then the number of high risk 
+location is `40% * (number of total locations)`.  
+    * Else, number of high risk location is the number of infected location. 
+
+1. When this command is executed, a list of all infected people is obtained.
+2. A list of all visits made by all infected people is obtained using the list of infected people.
+3. Use a `HashMap` to store the location as the key and the number of visits made by any infected person to this 
+location as the value. Generate this `HashMap` from the list of visits in step 2.
+4. Sort the `HashMap` in Step 3 from most infected visits to least infected visits.
+5. Calculate the number of high risk locaiton `n`, using number of infected location and number of total location.
+6. Display the top `n` locations of the sorted infected location list as the list of high risk locations.
+
+#### Sequence diagram
+The sequence diagram below shows how the list operation works. Certain utility classes have been omitted for readability.
+![ListHighRiskLocationSequenceDiagram](images/ListHighRiskLocationSequenceDiagram.png)
+
+The following activity diagram summarizes what happens when a user executes the `list l/high-risk-locations` command.
+![ListHighRiskLocationActivityDiagram](images/ListHighRiskLocationActivityDiagram.png)
+#### Design consideration
+##### Aspect: Definition of number of high risk location of infection
+When displaying the list of high risk location of infection, the top few locations that has been most visited by any 
+infected people are wanted. 
+
+If number of infected location is larger than 60% of number of total number of location, then the number of high risk 
+location is `40% * (number of total locations)`.  The number `40%` is an appropriate number as not too many nor too few
+infected locations will be displayed.
+
+Else, number of high risk location is the number of infected location. Since less than 40% of total locations are 
+infected, all infected locations can be considered as high risk because they are the only few locations that are infected.
+
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation

@@ -1,0 +1,50 @@
+@startuml
+start
+
+'Since the beta syntax does not support placing the condition outside the
+'diamond we place it as the true branch instead.
+
+repeat :User executes list high risk locations command;
+repeat while () is ([incorrect args])
+->[else];
+
+:VirusTracker parse command and arguments;
+
+:ListCommand with ListType "HIGH-RISK-LOCATIONS" is created;
+
+:execute command;
+
+:VirusTracker gets a list of infected people;
+note right
+    **Infected people** in this case refers
+    to people whose infection status is true
+endnote
+
+:VirusTracker gets a list of infected visits based on infected people;
+note right
+    **Infected visits** in this case refers to
+    visits that are made by infected people
+endnote
+
+:VirusTracker gets a list of infected locations based on infected visits;
+note right
+    **Infected locations** in this case refers to
+    locations that are visited by infected people
+endnote
+
+:VirusTracker sorts the list of infected locations from most visited by
+infected people ot least visited by infected people;
+
+:Let "n" be the number of high risk locations of infected;
+
+if () then ([number of infected locations > 60% * number of total location])
+    :n = 40% * number of total locations;
+else ([else])
+    :n = number of infected locations;
+endif
+
+:VirusTracker displays the top n locations of sorted infected locations list;
+
+stop
+
+@enduml

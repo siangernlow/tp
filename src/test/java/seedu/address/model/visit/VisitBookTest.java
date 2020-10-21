@@ -5,8 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalLocations.ALICE_LOCATION;
+import static seedu.address.testutil.TypicalLocations.AMY_LOCATION;
+import static seedu.address.testutil.TypicalLocations.BENSON_LOCATION;
+import static seedu.address.testutil.TypicalLocations.HOON_LOCATION;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.CARL;
+import static seedu.address.testutil.TypicalPersons.AMY;
+import static seedu.address.testutil.TypicalVisits.FIRST_VISIT;
+import static seedu.address.testutil.TypicalVisits.SECOND_VISIT;
+import static seedu.address.testutil.TypicalVisits.THIRD_VISIT;
 import static seedu.address.testutil.TypicalVisits.getNonUniqueLocationsVisitBook;
 import static seedu.address.testutil.TypicalVisits.getNonUniquePersonsVisitBook;
 import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
@@ -58,6 +65,33 @@ public class VisitBookTest {
     }
       
     @Test
+    public void deleteVisitsWithLocation_visitsContainDeletedLocation_success() {
+        VisitBook expectedVisitBook = getTypicalVisitBook();
+        VisitBook actualVisitBook = getTypicalVisitBook();
+
+        expectedVisitBook.removeVisit(SECOND_VISIT);
+        expectedVisitBook.removeVisit(THIRD_VISIT);
+        actualVisitBook.deleteVisitsWithLocation(AMY_LOCATION);
+        assertEquals(expectedVisitBook, actualVisitBook);
+
+        expectedVisitBook.removeVisit(FIRST_VISIT);
+        actualVisitBook.deleteVisitsWithLocation(BENSON_LOCATION);
+        assertEquals(expectedVisitBook, actualVisitBook);
+    }
+
+    @Test
+    public void deleteVisitsWithLocation_visitsDoNotContainDeletedLocation_success() {
+        VisitBook expectedVisitBook = getTypicalVisitBook();
+        VisitBook actualVisitBook = getTypicalVisitBook();
+
+        actualVisitBook.deleteVisitsWithLocation(ALICE_LOCATION);
+        assertEquals(expectedVisitBook, actualVisitBook);
+
+        actualVisitBook.deleteVisitsWithLocation(HOON_LOCATION);
+        assertEquals(expectedVisitBook, actualVisitBook);
+    }
+
+    @Test
     public void updateWithEditedLocation_success() {
         VisitBook expectedVisitBook = getNonUniqueLocationsVisitBook();
         VisitBook actualVisitBook = getNonUniqueLocationsVisitBook();
@@ -100,6 +134,20 @@ public class VisitBookTest {
         visitBook.addVisit(sample);
         Visit editedSample = new VisitBuilder(sample).withPerson(ALICE).build();
         assertTrue(visitBook.hasVisit(editedSample));
+    }
+
+    @Test
+    public void deleteVisitsWithPerson_success() {
+        VisitBook expectedVisitBook = getTypicalVisitBook();
+        VisitBook actualVisitBook = getTypicalVisitBook();
+
+        expectedVisitBook.removeVisit(SECOND_VISIT);
+        actualVisitBook.deleteVisitsWithPerson(AMY);
+        assertEquals(expectedVisitBook, actualVisitBook);
+
+        expectedVisitBook.removeVisit(THIRD_VISIT);
+        actualVisitBook.deleteVisitsWithPerson(ALICE);
+        assertEquals(expectedVisitBook, actualVisitBook);
     }
 
     @Test
