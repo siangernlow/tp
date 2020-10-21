@@ -5,8 +5,10 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
@@ -14,7 +16,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
+import seedu.address.model.location.exceptions.LocationNotFoundException;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.visit.Visit;
 
 /**
@@ -93,8 +97,17 @@ public class AddVisitCommand extends Command {
     }
 
     private Visit getVisitToAdd(Id personId, Id locationId, Model model) throws CommandException {
-        Person person = model.getPersonFromId(personId);
-        Location location = model.getLocationFromId(locationId);
+        Person person;
+        Location location;
+        try {
+            person = model.getPersonFromId(personId);
+            location = model.getLocationFromId(locationId);
+        } catch (PersonNotFoundException e) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_ID);
+        } catch (LocationNotFoundException e) {
+            throw new CommandException(Messages.MESSAGE_INVALID_LOCATION_ID);
+        }
+
         Visit visit = new Visit(person, location, date);
         if (model.hasVisit(visit)) {
             throw new CommandException(MESSAGE_DUPLICATE_VISIT);
@@ -103,6 +116,14 @@ public class AddVisitCommand extends Command {
     }
 
     private Visit getVisitToAdd(Index personIndex, Index locationIndex, Model model) throws CommandException {
+        List<Person> lastShownPersonList = model.getSortedPersonList();
+        if (personIndex.getZeroBased() >= lastShownPersonList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+        List<Location> lastShownLocationList = model.getSortedLocationList();
+        if (locationIndex.getZeroBased() >= lastShownLocationList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_LOCATION_DISPLAYED_INDEX);
+        }
         Person person = model.getPersonFromIndex(personIndex);
         Location location = model.getLocationFromIndex(locationIndex);
         Visit visit = new Visit(person, location, date);

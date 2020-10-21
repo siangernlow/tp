@@ -335,7 +335,7 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public Person getPersonFromId(Id id) {
+    public Person getPersonFromId(Id id) throws PersonNotFoundException {
         for (Person p : getUnfilteredPersonList()) {
             if (p.getId().equals(id)) {
                 return p;
@@ -345,7 +345,7 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public Location getLocationFromId(Id id) {
+    public Location getLocationFromId(Id id) throws LocationNotFoundException {
         for (Location l : getUnfilteredLocationList()) {
             if (l.getId().equals(id)) {
                 return l;
