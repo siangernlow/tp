@@ -3,6 +3,8 @@ package seedu.address.logic.commands.visit;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION_ID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -42,11 +44,17 @@ public class AddVisitCommand extends Command {
             + "The following person is infected and "
             + "is in quarantine. The Stay-Home Notice may have been violated.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add a new visit to the visits list "
-            + "using a person's index, location's index and date of visit. "
-            + "Updates the existing visits list.\n"
+            + "using a person's index, location's index and date of visit.\n"
             + "Indexes are based on the most recently viewed persons and locations list.\n"
+            + "Alternatively, a person's ID and a location's ID can be used. "
+            + "However, a combination of ID and index is not allowed.\n"
+            + "Updates the existing visits list.\n"
             + "Parameters: PERSON_INDEX LOCATION_INDEX d/DATE\n"
-            + "Example: " + COMMAND_WORD + " 1 " + " 2 " + PREFIX_DATE + " 2020-05-31 ";
+            + "Example: " + COMMAND_WORD + " 1 " + " 2 " + PREFIX_DATE + " 2020-05-31 \n"
+            + "Parameters: "
+            + PREFIX_PERSON_ID + "PERSON_INDEX "
+            + PREFIX_LOCATION_ID + "LOCATION_INDEX d/DATE\n"
+            + "Example: " + COMMAND_WORD + " idp/S11 " + " idl/L222 " + PREFIX_DATE + " 2020-05-31 ";
 
     private final Optional<Index> personIndex;
     private final Optional<Index> locationIndex;
