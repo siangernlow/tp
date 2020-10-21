@@ -68,8 +68,8 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public ObservableList<Person> getFilteredPersonList() {
-        return model.getFilteredPersonList();
+    public ObservableList<Person> getSortedPersonList() {
+        return model.getSortedPersonList();
     }
 
     @Override
@@ -85,8 +85,8 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public ObservableList<Location> getFilteredLocationList() {
-        return model.getFilteredLocationList();
+    public ObservableList<Location> getSortedLocationList() {
+        return model.getSortedLocationList();
     }
 
     @Override
@@ -102,8 +102,8 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public ObservableList<Visit> getFilteredVisitList() {
-        return model.getFilteredVisitList();
+    public ObservableList<Visit> getSortedVisitList() {
+        return model.getSortedVisitList();
     }
 
     @Override

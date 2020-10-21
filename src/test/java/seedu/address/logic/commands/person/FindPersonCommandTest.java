@@ -68,7 +68,7 @@ public class FindPersonCommandTest {
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
                 CommandResult.SWITCH_TO_VIEW_PEOPLE);
         assertCommandSuccess(command, model, expectedCommandResult, expectedModel);
-        assertEquals(Collections.emptyList(), model.getFilteredPersonList());
+        assertEquals(Collections.emptyList(), model.getSortedPersonList());
     }
 
     @Test
@@ -80,7 +80,7 @@ public class FindPersonCommandTest {
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
                 CommandResult.SWITCH_TO_VIEW_PEOPLE);
         assertCommandSuccess(command, model, expectedCommandResult, expectedModel);
-        assertEquals(Arrays.asList(CARL, ELLE, FIONA), model.getFilteredPersonList());
+        assertEquals(Arrays.asList(CARL, ELLE, FIONA), model.getSortedPersonList());
     }
 
     /**

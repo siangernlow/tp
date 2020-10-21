@@ -37,7 +37,7 @@ public interface Logic {
     ReadOnlyPersonBook getPersonBook();
 
     /** Returns an unmodifiable view of the filtered list of persons */
-    ObservableList<Person> getFilteredPersonList();
+    ObservableList<Person> getSortedPersonList();
 
     /**
      * Returns the user prefs' person book file path.
@@ -54,7 +54,7 @@ public interface Logic {
     ReadOnlyLocationBook getLocationBook();
 
     /** Returns an unmodifiable view of the filtered list of locations */
-    ObservableList<Location> getFilteredLocationList();
+    ObservableList<Location> getSortedLocationList();
 
     /**
      * Returns the user prefs' location book file path.
@@ -71,7 +71,7 @@ public interface Logic {
     ReadOnlyVisitBook getVisitBook();
 
     /** Returns an unmodifiable view of the filtered list of visits */
-    ObservableList<Visit> getFilteredVisitList();
+    ObservableList<Visit> getSortedVisitList();
 
     /**
      * Returns the user prefs' visit book file path.
