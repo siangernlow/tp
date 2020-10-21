@@ -97,6 +97,7 @@ public class UniqueVisitList implements Iterable<Visit> {
 
         internalList.set(index, editedVisit);
     }
+
     public void setVisits(UniqueVisitList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
@@ -115,6 +116,17 @@ public class UniqueVisitList implements Iterable<Visit> {
         internalList.setAll(visits);
     }
 
+    /**
+     * Update the visits that have outdated person in this list with {@code editedPerson}
+     */
+    public void updateWithEditedPerson(Person editedPerson) {
+        for (Visit visit : internalList) {
+            if (visit.getPerson().getId().equals(editedPerson.getId())) {
+                Visit editedVisit = new Visit(editedPerson, visit.getLocation(), visit.getDate());
+                setVisit(visit, editedVisit);
+            }
+        }
+    }
     /**
      * Update the visits that have outdated location in this list with {@code editedLocation}
      */
