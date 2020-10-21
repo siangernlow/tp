@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.commands.AddFromCsvCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.ExportToCsvCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.location.AddLocationCommand;
@@ -164,6 +165,14 @@ public class VirusTrackerParserTest {
         assertTrue(parser.parseCommand(commandAndPrefix + "people") instanceof AddPersonsFromCsvCommand);
         assertTrue(parser.parseCommand(commandAndPrefix + "locations") instanceof AddLocationsFromCsvCommand);
         assertTrue(parser.parseCommand(commandAndPrefix + "visits") instanceof AddVisitsFromCsvCommand);
+    }
+
+    @Test
+    public void parseCommand_exportToCsv() throws Exception {
+        String commandAndPrefix = ExportToCsvCommand.COMMAND_WORD + " " + EMPTY_CSV_FILE + " " + PREFIX_LIST;
+        assertTrue(parser.parseCommand(commandAndPrefix + "people") instanceof ExportToCsvCommand);
+        assertTrue(parser.parseCommand(commandAndPrefix + "locations") instanceof ExportToCsvCommand);
+        assertTrue(parser.parseCommand(commandAndPrefix + "visits") instanceof ExportToCsvCommand);
     }
 
     @Test

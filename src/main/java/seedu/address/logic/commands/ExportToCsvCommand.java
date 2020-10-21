@@ -3,25 +3,14 @@ package seedu.address.logic.commands;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_DATA_TYPE;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LIST;
-import static seedu.address.logic.parser.ListType.ALL_LOCATIONS;
-import static seedu.address.logic.parser.ListType.ALL_PEOPLE;
-import static seedu.address.logic.parser.ListType.ALL_VISITS;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.commands.location.AddLocationsFromCsvCommand;
-import seedu.address.logic.commands.person.AddPersonsFromCsvCommand;
-import seedu.address.logic.commands.visit.AddVisitsFromCsvCommand;
-import seedu.address.logic.parser.DataGenerator;
 import seedu.address.logic.parser.ListType;
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.InfoHandler;
 import seedu.address.model.Model;
-import seedu.address.model.location.Location;
-import seedu.address.model.person.Person;
 
 public class ExportToCsvCommand extends Command {
     public static final String COMMAND_WORD = "exportToCsv";
@@ -46,11 +35,14 @@ public class ExportToCsvCommand extends Command {
     public static final String MESSAGE_SUCCESS = "The %1$s attributes CSV file has been successfully created.\n";
 
     private final FileWriter fileWriter;
+    // Used for equality checks as FileWriter does not have an inbuilt equals method.
+    private final String filepath;
     private final ListType listType;
 
-    public ExportToCsvCommand(FileWriter fileWriter, ListType listType) {
-        requireAllNonNull(fileWriter, listType);
+    public ExportToCsvCommand(FileWriter fileWriter, String filepath, ListType listType) {
+        requireAllNonNull(fileWriter, filepath, listType);
         this.fileWriter = fileWriter;
+        this.filepath = filepath;
         this.listType = listType;
     }
 
@@ -65,7 +57,7 @@ public class ExportToCsvCommand extends Command {
                 if (personListAttributeString.isEmpty()) {
                     throw new CommandException(String.format(MESSAGE_NO_OBJECTS_TO_ADD, PERSONS));
                 }
-                System.out.println(personListAttributeString);
+
                 fileWriter.append(personListAttributeString);
                 fileWriter.close();
 
@@ -93,10 +85,29 @@ public class ExportToCsvCommand extends Command {
 
                 return new CommandResult(String.format(MESSAGE_SUCCESS, VISITS));
             default:
-                throw new CommandException(String.format(MESSAGE_INVALID_DATA_TYPE, AddFromCsvCommand.MESSAGE_USAGE));
+                throw new CommandException(String.format(MESSAGE_INVALID_DATA_TYPE, ExportToCsvCommand.MESSAGE_USAGE));
             }
         } catch (IOException e) {
             throw new CommandException(MESSAGE_UNABLE_TO_WRITE_TO_FILE);
         }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof ExportToCsvCommand)) {
+            return false;
+        }
+
+        // state check
+        ExportToCsvCommand e = (ExportToCsvCommand) other;
+        return filepath.equals(e.filepath)
+                && listType.equals(e.listType);
+
     }
 }
