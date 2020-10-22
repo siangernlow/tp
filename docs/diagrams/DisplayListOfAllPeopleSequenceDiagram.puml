@@ -1,0 +1,94 @@
+@startuml
+!include style.puml
+
+box Ui UI_COLOR_T1
+participant ":CommandBox" as CommandBox UI_COLOR
+participant ":MainWindow" as MainWindow UI_COLOR
+participant ":ResultDisplay" as ResultDisplay UI_COLOR
+end box
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":VirusTrackerParser" as VirusTrackerParser LOGIC_COLOR
+participant ":ListCommandParser" as ListCommandParser LOGIC_COLOR
+participant ":ListCommand" as ListCommand LOGIC_COLOR
+participant ":CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> CommandBox : "list l/people"
+activate CommandBox
+
+CommandBox -> CommandBox : HandleCommandEntered()
+
+CommandBox -> MainWindow : "list l/people"
+activate MainWindow
+deactivate CommandBox
+
+MainWindow -> LogicManager : execute("list l/people")
+activate LogicManager
+
+LogicManager -> VirusTrackerParser : parseCommand("list l/people")
+activate VirusTrackerParser
+
+create ListCommandParser
+VirusTrackerParser -> ListCommandParser
+activate ListCommandParser
+
+ListCommandParser --> VirusTrackerParser
+deactivate ListCommandParser
+
+VirusTrackerParser -> ListCommandParser : parse(arguments)
+activate ListCommandParser
+
+create ListCommand
+ListCommandParser -> ListCommand
+activate ListCommand
+
+ListCommand --> ListCommandParser
+deactivate ListCommand
+
+ListCommandParser --> VirusTrackerParser
+deactivate ListCommandParser
+ListCommandParser -[hidden]-> VirusTrackerParser
+destroy ListCommandParser
+
+VirusTrackerParser --> LogicManager
+deactivate VirusTrackerParser
+
+LogicManager -> ListCommand : execute()
+activate ListCommand
+
+ListCommand -> Model : updateFilteredLocationList(PREDICATE_SHOW_ALL_PERSONS)
+activate Model
+
+Model --> ListCommand
+deactivate Model
+
+create CommandResult
+ListCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> ListCommand
+deactivate CommandResult
+
+ListCommand --> LogicManager : result
+deactivate ListCommand
+
+LogicManager --> MainWindow : result
+deactivate LogicManager
+
+MainWindow -> ResultDisplay : result.getFeedbackToUser()
+activate ResultDisplay
+
+ResultDisplay -> ResultDisplay : setFeedbackToUser(feedbackToUser)
+
+ResultDisplay --> MainWindow
+deactivate ResultDisplay
+
+[<--MainWindow
+deactivate MainWindow
+@enduml

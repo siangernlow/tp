@@ -117,6 +117,11 @@ public class AddVisitCommand extends Command {
         }
 
         Visit visit = new Visit(person, location, date);
+
+        assert visit.getPerson() != null;
+        assert visit.getLocation() != null;
+        assert visit.getDate() != null;
+
         if (model.hasVisit(visit)) {
             throw new CommandException(MESSAGE_DUPLICATE_VISIT);
         }
