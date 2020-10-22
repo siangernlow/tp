@@ -2,6 +2,16 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INFECTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION_ID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_QUARANTINE_STATUS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_INFECTED;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_QUARANTINED;
@@ -323,6 +333,145 @@ public class InfoHandler {
             return numberOfInfectedLocations;
         }
     }
+
+    //=============== Exporting to CSV ============================================================
+
+    /**
+     * Converts the stored persons list in VirusTracker to a String of
+     * attributes in the format to be added to CSV files.
+     *
+     * @return A string representation of the persons list.
+     */
+    public String getPersonListAsString() {
+        List<Person> personList = getPersonList();
+        StringBuilder personListAsString = new StringBuilder();
+        for (Person person : personList) {
+            List<String> attributes = extractPersonAttributes(person);
+            personListAsString.append(convertListToCsvFormat(attributes));
+        }
+        return personListAsString.toString();
+    }
+
+    /**
+     * Converts the stored locations list in VirusTracker to a String of
+     * attributes in the format to be added to CSV files.
+     *
+     * @return A string representation of the locations list.
+     */
+    public String getLocationListAsString() {
+        List<Location> locationList = getLocationList();
+        StringBuilder locationListAsString = new StringBuilder();
+        for (Location location : locationList) {
+            List<String> attributes = extractLocationAttributes(location);
+            locationListAsString.append(convertListToCsvFormat(attributes));
+        }
+        return locationListAsString.toString();
+    }
+
+
+    /**
+     * Converts the stored visits list in VirusTracker to a String of
+     * attributes in the format to be added to CSV files.
+     *
+     * @return A string representation of the visits list.
+     */
+    public String getVisitListAsString() {
+        List<Visit> visitList = getVisitList();
+        StringBuilder visitListAsString = new StringBuilder();
+        for (Visit visit : visitList) {
+            List<String> attributes = extractVisitAttributes(visit);
+            visitListAsString.append(convertListToCsvFormat(attributes));
+        }
+        return visitListAsString.toString();
+    }
+
+    /**
+     * Converts the given list of attributes to a String representing a single row
+     * in the CSV file.
+     *
+     * @param attributes The list of attributes
+     * @return The string representing the list of attributes
+     */
+    private String convertListToCsvFormat(List<String> attributes) {
+        if (attributes.size() == 0) {
+            return "";
+        }
+
+        StringBuilder attributeString = new StringBuilder();
+
+        for (String attribute : attributes) {
+            // Possible empty strings
+            if (attribute.isEmpty()) {
+                continue;
+            }
+            // If the field contains commas, enclose the field with quotation marks
+            if (attribute.contains(",")) {
+                attributeString.append('"').append(attribute).append('"').append(",");
+            } else {
+                attributeString.append(attribute).append(",");
+            }
+        }
+        // To specify a new row in the CSV file
+        attributeString.append("\n");
+        // Remove trailing comma in last field
+        attributeString.deleteCharAt(attributeString.toString().length() - 2);
+
+        return attributeString.toString();
+    }
+
+    /**
+     * Converts a {@code Person} into a list of attributes.
+     *
+     * @param person The person to extract the attributes from.
+     * @return A list of attributes describing the person.
+     */
+    private List<String> extractPersonAttributes(Person person) {
+        List<String> attributes = new ArrayList<>();
+
+        attributes.add(PREFIX_PERSON_ID + person.getIdAsString());
+        attributes.add(PREFIX_NAME + person.getNameAsString());
+        attributes.add(PREFIX_PHONE + person.getPhoneAsString());
+        attributes.add(PREFIX_EMAIL + person.getEmailAsString());
+        attributes.add(PREFIX_ADDRESS + person.getAddressAsString());
+        attributes.add(PREFIX_QUARANTINE_STATUS + person.getQuarantineStatusAsString());
+        attributes.add(PREFIX_INFECTION + person.getInfectionStatusAsString());
+        attributes.add(PREFIX_TAG + person.getTagsAsString());
+
+        return attributes;
+    }
+
+    /**
+     * Converts a {@code Location} into a list of attributes.
+     *
+     * @param location The location to extract the attributes from.
+     * @return A list of attributes describing the location.
+     */
+    private List<String> extractLocationAttributes(Location location) {
+        List<String> attributes = new ArrayList<>();
+
+        attributes.add(PREFIX_LOCATION_ID + location.getIdAsString());
+        attributes.add(PREFIX_NAME + location.getNameAsString());
+        attributes.add(PREFIX_ADDRESS + location.getAddressAsString());
+
+        return attributes;
+    }
+
+    /**
+     * Converts a {@code Visit} into a list of attributes.
+     *
+     * @param visit The vist to extract the attributes from.
+     * @return A list of attributes describing the visit.
+     */
+    private List<String> extractVisitAttributes(Visit visit) {
+        List<String> attributes = new ArrayList<>();
+
+        attributes.add(PREFIX_PERSON_ID + visit.getPersonIdAsString());
+        attributes.add(PREFIX_LOCATION_ID + visit.getLocationIdAsString());
+        attributes.add(PREFIX_DATE + visit.getDateAsString());
+
+        return attributes;
+    }
+
 
     @Override
     public boolean equals(Object obj) {

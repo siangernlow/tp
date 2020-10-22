@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_DATA_TYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LIST;
 
 import java.util.List;
@@ -23,8 +24,6 @@ public class AddFromCsvCommandParser implements Parser<AddFromCsvCommand> {
     public static final String CSV_FILE_EXTENSION = ".csv";
     public static final String MESSAGE_INVALID_FILE_EXTENSION = "Invalid file extension."
             + " Ensure that the file has the extension '%1$s'";
-    public static final String MESSAGE_INVALID_DATA_TYPE = "That data type is not supported by this command."
-            + "\n%1$s";
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddFromCsvCommand
@@ -77,11 +76,10 @@ public class AddFromCsvCommandParser implements Parser<AddFromCsvCommand> {
     private boolean checkIfValidCsvExtension(String filepath) throws ParseException {
         int pathLength = filepath.length();
         int startIndex = pathLength - CSV_FILE_EXTENSION.length();
-        int endIndex = pathLength;
 
         if (startIndex < 0) {
             throw new ParseException(String.format(MESSAGE_INVALID_FILE_EXTENSION, CSV_FILE_EXTENSION));
         }
-        return filepath.substring(startIndex, endIndex).equals(CSV_FILE_EXTENSION);
+        return filepath.substring(startIndex, pathLength).equals(CSV_FILE_EXTENSION);
     }
 }

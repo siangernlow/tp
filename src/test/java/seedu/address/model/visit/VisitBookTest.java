@@ -10,10 +10,12 @@ import static seedu.address.testutil.TypicalLocations.BENSON_LOCATION;
 import static seedu.address.testutil.TypicalLocations.HOON_LOCATION;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.AMY;
+import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalVisits.FIRST_VISIT;
 import static seedu.address.testutil.TypicalVisits.SECOND_VISIT;
 import static seedu.address.testutil.TypicalVisits.THIRD_VISIT;
 import static seedu.address.testutil.TypicalVisits.getNonUniqueLocationsVisitBook;
+import static seedu.address.testutil.TypicalVisits.getNonUniquePersonsVisitBook;
 import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
 
 import java.util.Collections;
@@ -21,7 +23,9 @@ import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.model.location.Location;
+import seedu.address.model.person.Person;
 import seedu.address.testutil.LocationBuilder;
+import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.VisitBuilder;
 
 public class VisitBookTest {
@@ -44,6 +48,21 @@ public class VisitBookTest {
         assertEquals(newData, visitBook);
     }
 
+    @Test
+    public void updateWithEditedPerson_success() {
+        VisitBook expectedVisitBook = getNonUniquePersonsVisitBook();
+        VisitBook actualVisitBook = getNonUniquePersonsVisitBook();
+
+        Visit secondVisit = expectedVisitBook.getVisitList().get(1);
+        Person editedPerson = new PersonBuilder(secondVisit.getPerson())
+                .withName(CARL.getName().toString()).build();
+        expectedVisitBook.setVisit(secondVisit,
+                new Visit(editedPerson, secondVisit.getLocation(), secondVisit.getDate()));
+
+        actualVisitBook.updateWithEditedPerson(editedPerson);
+
+        assertEquals(expectedVisitBook, actualVisitBook);
+    }
     @Test
     public void deleteVisitsWithLocation_visitsContainDeletedLocation_success() {
         VisitBook expectedVisitBook = getTypicalVisitBook();

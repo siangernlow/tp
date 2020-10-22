@@ -106,6 +106,13 @@ public class TypicalPersons {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
 
+    /**
+     * @return A shorter list of persons meant for simple data entry.
+     */
+    public static List<Person> getShortenedTypicalPersons() {
+        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL));
+    }
+
     public static HashSet<Id> getIdsOfTypicalPersonsAsHashSet() {
         return ID_HASHSET_OF_TYPICAL_PERSONS;
     }

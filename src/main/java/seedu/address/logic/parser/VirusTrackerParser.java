@@ -10,6 +10,7 @@ import seedu.address.logic.commands.AddFromCsvCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.ExportToCsvCommand;
 import seedu.address.logic.commands.GenerateLocationsCommand;
 import seedu.address.logic.commands.GeneratePeopleCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -109,6 +110,9 @@ public class VirusTrackerParser {
 
         case AddFromCsvCommand.COMMAND_WORD:
             return new AddFromCsvCommandParser().parse(arguments);
+
+        case ExportToCsvCommand.COMMAND_WORD:
+            return new ExportToCsvCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

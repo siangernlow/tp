@@ -96,6 +96,17 @@ public class TypicalVisits {
     }
 
     /**
+     * Returns a {@code VisitBook} with some of the visits have the same person
+     */
+    public static VisitBook getNonUniquePersonsVisitBook() {
+        VisitBook vb = new VisitBook();
+        for (Visit visit : getNonUniquePersonVisits()) {
+            vb.addVisit(visit);
+        }
+        return vb;
+    }
+
+    /**
      * Returns a {@code VisitBook} with some of the visits have the same location
      */
     public static VisitBook getNonUniqueLocationsVisitBook() {
@@ -152,6 +163,14 @@ public class TypicalVisits {
                 FOURTH_VISIT, SEVENTH_VISIT, EIGHTH_VISIT));
     }
 
+    /**
+     * Returns a list of {@code Visit} where persons of visits are not unique
+     */
+    public static List<Visit> getNonUniquePersonVisits() {
+        // SECOND_VISIT and THIRD_VISIT has the same person while person of FIRST_VISIT is different
+        // from the rest.
+        return new ArrayList<>(Arrays.asList(FIRST_VISIT, SECOND_VISIT, FOURTH_VISIT));
+    }
     /**
      * Returns a list of {@code Visit} where locations of visits are not unique
      */

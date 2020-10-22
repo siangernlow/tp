@@ -18,5 +18,6 @@ public class Messages {
     public static final String MESSAGE_MISSING_DATA_FORMAT = "Line %d of the CSV file does not "
             + "specify enough parameters "
             + "for the specified data type. Please check the CSV file again.";
-
+    public static final String MESSAGE_INVALID_DATA_TYPE = "That data type is not supported by this command."
+            + "\n%1$s";
 }
