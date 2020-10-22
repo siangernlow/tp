@@ -1,0 +1,33 @@
+@startuml
+start
+
+'Since the beta syntax does not support placing the condition outside the
+'diamond we place it as the true branch instead.
+
+repeat :User inputs list high risk locations command;
+repeat while () is ([wrong command format])
+->[else];
+
+:MainWindow executes command;
+
+:VirusTracker parse command and arguments;
+
+:Create ListCommand with ListType "ALL_PEOPLE";
+
+:execute command;
+
+:VirusTracker gets a list of all people;
+
+:VirusTracker updates the list to be displayed to show all people;
+
+if () then ([GUI not displaying list of people])
+    :Switch to view list of people;
+else ([else])
+    :Update list of people displayed;
+endif
+
+:VirusTracker acknowledges user command by displaying a feedback message;
+
+stop
+
+@enduml
