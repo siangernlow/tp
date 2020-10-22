@@ -96,7 +96,8 @@ public class CommandTestUtil {
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_QUARANTINE_STATUS_DESC = " "
             + PREFIX_QUARANTINE_STATUS + "quarantined"; // only booleans allowed
-    public static final String INVALID_INFECTION_DESC = " " + PREFIX_INFECTION_STATUS + "nope"; // only true or false allowed
+    public static final String INVALID_INFECTION_DESC =
+            " " + PREFIX_INFECTION_STATUS + "nope"; // only true or false allowed
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_ID_LOCATION = " -1";
 
