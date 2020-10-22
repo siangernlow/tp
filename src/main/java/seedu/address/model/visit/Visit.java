@@ -16,7 +16,7 @@ import seedu.address.model.person.Person;
  */
 
 public class Visit {
-
+    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private final Person person;
     private final Location location;
     private final LocalDate date;
@@ -41,6 +41,20 @@ public class Visit {
 
     public LocalDate getDate() {
         return date;
+    }
+
+    //===================== For String conversions ============================
+
+    public String getPersonIdAsString() {
+        return getPerson().getId().toString();
+    }
+
+    public String getLocationIdAsString() {
+        return getLocation().getId().toString();
+    }
+
+    public String getDateAsString() {
+        return getDate().format(dateTimeFormatter);
     }
 
     /**
