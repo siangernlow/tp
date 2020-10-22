@@ -1,0 +1,32 @@
+@startuml
+start
+
+'Since the beta syntax does not support placing the condition outside the
+'diamond we place it as the true branch instead.
+
+repeat :User executes deleteVisits command;
+repeat while () is ([incorrect args])
+->[else];
+
+:VirusTracker parse command and arguments;
+
+:execute command;
+
+:VirusTracker reads the date arguments;
+
+if () then ( [date cannot be found in the visit records] )
+        :Alerts user with warning that
+        the date cannot be found;
+        stop
+    else ( [else] )
+        :Retrieve date with specified
+        unique identifier;
+    endif
+
+:VirusTracker removes the visit records before and up to the specific date;
+
+:VirusTracker displays the new visit records after the removal;
+
+stop
+
+@enduml

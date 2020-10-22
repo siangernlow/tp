@@ -79,6 +79,53 @@ public class Person {
         return id;
     }
 
+    //===================== For String conversions ============================
+
+    public String getIdAsString() {
+        return id.toString();
+    }
+
+    public String getNameAsString() {
+        return name.toString();
+    }
+
+    public String getPhoneAsString() {
+        return phone.toString();
+    }
+
+    public String getEmailAsString() {
+        return email.toString();
+    }
+
+    public String getAddressAsString() {
+        return address.toString();
+    }
+
+    public String getQuarantineStatusAsString() {
+        return quarantineStatus.toString();
+    }
+
+    public String getInfectionStatusAsString() {
+        return infectionStatus.toString();
+    }
+
+    public String getTagsAsString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Tag tag : tags) {
+            // toString() method of Tag adds '[' and ']', which is not needed here.
+            stringBuilder.append(tag.tagName).append(",");
+        }
+        String tagsString = stringBuilder.toString();
+
+        if (tagsString.isEmpty()) {
+            return tagsString;
+        }
+
+        // Remove trailing comma
+        tagsString = tagsString.substring(0, tagsString.length() - 1);
+        return tagsString;
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.

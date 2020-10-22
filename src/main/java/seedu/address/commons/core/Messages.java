@@ -20,5 +20,6 @@ public class Messages {
             + "for the specified data type. Please check the CSV file again.";
     public static final String MESSAGE_PREAMBLE_SHOULD_BE_EMPTY = "The preamble should be empty. Please check if "
             + "you have added prefixes to all required fields.";
-
+    public static final String MESSAGE_INVALID_DATA_TYPE = "That data type is not supported by this command."
+            + "\n%1$s";
 }

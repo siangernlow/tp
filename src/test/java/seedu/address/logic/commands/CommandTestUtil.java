@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INFECTION_STATUS;
@@ -13,9 +14,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_QUARANTINE_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.testutil.Assert.assertThrows;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -179,6 +183,41 @@ public class CommandTestUtil {
         assertEquals(expectedLocationFilteredList, actualModel.getSortedLocationList());
         assertEquals(expectedVisitBook, actualModel.getVisitBook());
         assertEquals(expectedFilteredVisitList, actualModel.getSortedVisitList());
+    }
+
+    /**
+     * Compares the two strings read from the provided CSV files.
+     * The CSV files are equal if the strings are equal.
+     *
+     * @param expectedCsv The first file to compare.
+     * @param actualCsv The second file to compare.
+     * @throws FileNotFoundException if the provided files are invalid.
+     */
+    public static void assertCsvFilesAreEqual(String expectedCsv, String actualCsv) {
+        try {
+            Scanner sc1 = new Scanner(new File(expectedCsv));
+            Scanner sc2 = new Scanner(new File(actualCsv));
+
+            assertTrue(sc1.hasNext());
+            assertTrue(sc2.hasNext());
+
+            while (sc1.hasNext()) {
+                // The files do not have equal number of lines
+                if (!sc2.hasNext()) {
+                    fail();
+                }
+                assertEquals(sc1.nextLine(), sc2.nextLine());
+            }
+
+            // Both files should not have any lines left
+            if (sc2.hasNext()) {
+                fail();
+            }
+        } catch (FileNotFoundException e) {
+            fail();
+        }
+
+
     }
 
     /**
