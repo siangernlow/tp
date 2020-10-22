@@ -435,7 +435,11 @@ public class InfoHandler {
         attributes.add(PREFIX_ADDRESS + person.getAddressAsString());
         attributes.add(PREFIX_QUARANTINE_STATUS + person.getQuarantineStatusAsString());
         attributes.add(PREFIX_INFECTION_STATUS + person.getInfectionStatusAsString());
-        attributes.add(PREFIX_TAG + person.getTagsAsString());
+
+        String tags = person.getTagsAsString();
+        if (!tags.isEmpty()) {
+            attributes.add(PREFIX_TAG + person.getTagsAsString());
+        }
 
         return attributes;
     }
