@@ -135,6 +135,20 @@ public class Person {
     }
 
     /**
+     * Returns true if person is infected.
+     */
+    public boolean isInfected() {
+        return infectionStatus.getStatusAsBoolean();
+    }
+
+    /**
+     * Returns true if person is quarantined.
+     */
+    public boolean isQuarantined() {
+        return quarantineStatus.getStatusAsBoolean();
+    }
+
+    /**
      * Returns true if both person have the same id.
      */
     public boolean isSameId(Person otherPerson) {
@@ -212,7 +226,7 @@ public class Person {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
-                .append(" Quarantine Status: ")
+                .append(" Quarantined: ")
                 .append(getQuarantineStatus())
                 .append(" Infected: ")
                 .append(getInfectionStatus())
