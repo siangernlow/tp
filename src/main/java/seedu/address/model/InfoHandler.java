@@ -327,6 +327,7 @@ public class InfoHandler {
         infected locations are considered to be high risk. This criterion needs further discussion
         and is subjected to change.
         */
+        assert numberOfInfectedLocations <= numberOfTotalLocations;
         if (numberOfInfectedLocations > numberOfTotalLocations * 0.6) {
             return (int) (numberOfTotalLocations * 0.4);
         } else {
