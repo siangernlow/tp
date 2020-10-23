@@ -253,6 +253,7 @@ public class ModelManagerTest {
         Location editedLocation = new LocationBuilder(BENSON_LOCATION).withName("benson location")
                 .build();
         Visit editedVisit = new VisitBuilder(FIRST_VISIT).withLocation(editedLocation).build();
+
         expectedModel.setVisit(FIRST_VISIT, editedVisit);
         actualModel.updateVisitBookWithEditedLocation(editedLocation);
         assertEquals(expectedModel, actualModel);
@@ -260,6 +261,7 @@ public class ModelManagerTest {
         Location editedSecondLocation = new LocationBuilder(AMY_LOCATION).withName("amy location").build();
         Visit editedSecondVisit = new VisitBuilder(SECOND_VISIT).withLocation(editedSecondLocation).build();
         Visit editedThirdVisit = new VisitBuilder(THIRD_VISIT).withLocation(editedSecondLocation).build();
+
         expectedModel.setVisit(SECOND_VISIT, editedSecondVisit);
         expectedModel.setVisit(THIRD_VISIT, editedThirdVisit);
         actualModel.updateVisitBookWithEditedLocation(editedSecondLocation);
