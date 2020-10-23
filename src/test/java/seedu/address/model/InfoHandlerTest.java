@@ -13,7 +13,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_INFECTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INFECTION_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
@@ -214,7 +214,7 @@ public class InfoHandlerTest {
             + PREFIX_EMAIL + VALID_EMAIL_AMY + ","
             + "\"" + PREFIX_ADDRESS + VALID_ADDRESS_AMY + "\","
             + PREFIX_QUARANTINE_STATUS + VALID_QUARANTINE_STATUS_AMY + ","
-            + PREFIX_INFECTION + VALID_INFECTION_STATUS_AMY + ","
+            + PREFIX_INFECTION_STATUS + VALID_INFECTION_STATUS_AMY + ","
             + PREFIX_TAG + VALID_TAG_FRIEND + "\n";
 
         assertEquals(expectedMessage, infoHandler.getPersonListAsString());

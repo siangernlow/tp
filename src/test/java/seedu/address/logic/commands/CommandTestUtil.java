@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_INFECTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INFECTION_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
@@ -87,8 +87,8 @@ public class CommandTestUtil {
             + VALID_QUARANTINE_STATUS_AMY;
     public static final String QUARANTINE_STATUS_DESC_BOB = " " + PREFIX_QUARANTINE_STATUS
             + VALID_QUARANTINE_STATUS_BOB;
-    public static final String INFECTION_DESC_AMY = " " + PREFIX_INFECTION + VALID_INFECTION_STATUS_AMY;
-    public static final String INFECTION_DESC_BOB = " " + PREFIX_INFECTION + VALID_INFECTION_STATUS_BOB;
+    public static final String INFECTION_DESC_AMY = " " + PREFIX_INFECTION_STATUS + VALID_INFECTION_STATUS_AMY;
+    public static final String INFECTION_DESC_BOB = " " + PREFIX_INFECTION_STATUS + VALID_INFECTION_STATUS_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
@@ -100,7 +100,8 @@ public class CommandTestUtil {
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_QUARANTINE_STATUS_DESC = " "
             + PREFIX_QUARANTINE_STATUS + "quarantined"; // only booleans allowed
-    public static final String INVALID_INFECTION_DESC = " " + PREFIX_INFECTION + "nope"; // only true or false allowed
+    public static final String INVALID_INFECTION_DESC =
+            " " + PREFIX_INFECTION_STATUS + "nope"; // only true or false allowed
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_ID_LOCATION = " -1";
 

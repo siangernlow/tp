@@ -1,10 +1,18 @@
 package seedu.address.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_FILE_PATH;
 import static seedu.address.commons.core.Messages.MESSAGE_MISSING_DATA_FORMAT;
+import static seedu.address.logic.parser.ArgumentTokenizer.arePrefixesPresent;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.DataGenerator.INVALID_ROW_FORMAT;
+import static seedu.address.logic.parser.DataGenerator.recoverDataFormat;
+import static seedu.address.logic.parser.DataGenerator.tokenizeData;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import java.nio.file.Path;
@@ -42,6 +50,12 @@ public class DataGeneratorTest {
             TEST_DATA_FOLDER.resolve("VisitsListInvalidDateSecondRow.csv").toString();
     private static final String VISITS_LIST_MISSING_DATE_FIRST_ROW =
             TEST_DATA_FOLDER.resolve("VisitsListMissingDateFirstRow.csv").toString();
+
+    private static final String TOKENIZABLE_STRING = "n/Name,a/Address,e/Email@email.com,d/2020-09-09";
+    private static final String TOKENIZABLE_STRING_AS_PREAMBLE = "n/Name, a/Address, e/Email@email.com, d/2020-09-09";
+    private static final Prefix[] PREFIXES = new Prefix[]{PREFIX_NAME, PREFIX_ADDRESS, PREFIX_EMAIL, PREFIX_DATE};
+    private static final String[] TOKENIZED_STRINGS =
+            new String[]{"Name,", "Address,", "Email@email.com,", "2020-09-09"};
 
     //======= Custom equality checks to avoid comparing id ==========
     private static final BiFunction<Person, Person, Boolean> personEqualityCheckWithoutId = (person, otherPerson) ->
@@ -82,6 +96,7 @@ public class DataGeneratorTest {
         String invalidPhone = "not a valid phone number";
 
         try {
+            // This test utilises an error in phone format, so we are creating that error here.
             ParserUtil.parsePhone(invalidPhone);
         } catch (ParseException pe) {
             String expectedErrorMessage = String.format(INVALID_ROW_FORMAT, 2, pe.getMessage());
@@ -172,5 +187,63 @@ public class DataGeneratorTest {
         String expectedErrorMessage = String.format(MESSAGE_MISSING_DATA_FORMAT, 1);
         assertThrows(ParseException.class, expectedErrorMessage, ()
             -> DataGenerator.generateVisitsList(VISITS_LIST_MISSING_DATE_FIRST_ROW));
+    }
+
+    // ================== Utility methods =======================================
+
+    @Test
+    public void tokenizeData_validString_returnsCorrectArgMultimap() {
+        assert PREFIXES.length == TOKENIZED_STRINGS.length;
+
+        ArgumentMultimap argumentMultimap = tokenizeData(TOKENIZABLE_STRING, PREFIXES);
+        assertTrue(arePrefixesPresent(argumentMultimap, PREFIXES));
+        assertTrue(argumentMultimap.getPreamble().isEmpty());
+
+        for (int i = 0; i < PREFIXES.length; i++) {
+            assertEquals(TOKENIZED_STRINGS[i], argumentMultimap.getValue(PREFIXES[i]).get());
+        }
+    }
+
+    @Test
+    public void tokenizeData_noPrefixes_returnsArgMultimapWithPreamble() {
+        ArgumentMultimap argumentMultimap = tokenizeData(TOKENIZABLE_STRING);
+        assertTrue(arePrefixesPresent(argumentMultimap));
+        assertFalse(argumentMultimap.getPreamble().isEmpty());
+
+        //Without parsing for prefixes, the string should be read as a single preamble.
+        assertEquals(TOKENIZABLE_STRING_AS_PREAMBLE, argumentMultimap.getPreamble());
+    }
+
+    @Test
+    public void tokenizeData_fieldsWithCommas_returnCorrectArgMultimap() {
+        // The original data will have quotes as part of CSV files' export format
+        String tokenizableAddressHasCommas = "\"a/address 1, address two, last address\"";
+        // Fields with commas have extra whitespace as a result of the tokenizing process
+        String expectedTokenizedAddress = "address 1,  address two,  last address";
+
+        ArgumentMultimap argumentMultimap = tokenizeData(tokenizableAddressHasCommas, PREFIX_ADDRESS);
+        assertTrue(arePrefixesPresent(argumentMultimap, PREFIX_ADDRESS));
+        assertTrue(argumentMultimap.getPreamble().isEmpty());
+        assertEquals(expectedTokenizedAddress, argumentMultimap.getValue(PREFIX_ADDRESS).get());
+    }
+
+    @Test
+    public void tokenizeData_nullData_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> tokenizeData(null));
+    }
+
+    @Test
+    public void recoverDataFormat_validFields_returnsCorrectFields() {
+        String nameWithTrailingComma = "Name,";
+        String expectedName = "Name";
+        String fieldWithCommas = "this field,  has multiple commas,  like so";
+        String expectedFieldWithCommas = "this field, has multiple commas, like so";
+
+        // No trailing comma -> unchanged
+        assertEquals(expectedName, recoverDataFormat(expectedName));
+        // Trailing comma removed
+        assertEquals(expectedName, recoverDataFormat(nameWithTrailingComma));
+        // Replaces double whitespace AFTER COMMAS ONLY with single whitespace
+        assertEquals(expectedFieldWithCommas, recoverDataFormat(fieldWithCommas));
     }
 }

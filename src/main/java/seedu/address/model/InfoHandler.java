@@ -5,7 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_INFECTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INFECTION_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
@@ -435,8 +435,12 @@ public class InfoHandler {
         attributes.add(PREFIX_EMAIL + person.getEmailAsString());
         attributes.add(PREFIX_ADDRESS + person.getAddressAsString());
         attributes.add(PREFIX_QUARANTINE_STATUS + person.getQuarantineStatusAsString());
-        attributes.add(PREFIX_INFECTION + person.getInfectionStatusAsString());
-        attributes.add(PREFIX_TAG + person.getTagsAsString());
+        attributes.add(PREFIX_INFECTION_STATUS + person.getInfectionStatusAsString());
+
+        String tags = person.getTagsAsString();
+        if (!tags.isEmpty()) {
+            attributes.add(PREFIX_TAG + person.getTagsAsString());
+        }
 
         return attributes;
     }

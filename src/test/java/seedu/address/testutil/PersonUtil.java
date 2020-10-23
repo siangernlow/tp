@@ -2,7 +2,7 @@ package seedu.address.testutil;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_INFECTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INFECTION_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -39,7 +39,7 @@ public class PersonUtil {
         sb.append(PREFIX_EMAIL + person.getEmail().value + " ");
         sb.append(PREFIX_ADDRESS + person.getAddress().value + " ");
         sb.append(PREFIX_QUARANTINE_STATUS + person.getQuarantineStatus().value + " ");
-        sb.append(PREFIX_INFECTION + person.getInfectionStatus().getStatusAsString() + " ");
+        sb.append(PREFIX_INFECTION_STATUS + person.getInfectionStatus().getStatusAsString() + " ");
         person.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );
@@ -58,7 +58,7 @@ public class PersonUtil {
         descriptor.getQuarantineStatus().ifPresent(quarantineStatus ->
                 sb.append(PREFIX_QUARANTINE_STATUS).append(quarantineStatus.value).append(" "));
         descriptor.getInfectionStatus().ifPresent(infectionStatus ->
-                sb.append(PREFIX_INFECTION).append(infectionStatus.getStatusAsString()).append(" "));
+                sb.append(PREFIX_INFECTION_STATUS).append(infectionStatus.getStatusAsString()).append(" "));
         if (descriptor.getTags().isPresent()) {
             Set<Tag> tags = descriptor.getTags().get();
             if (tags.isEmpty()) {
