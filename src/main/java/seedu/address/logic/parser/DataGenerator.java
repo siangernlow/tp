@@ -25,6 +25,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -46,13 +48,10 @@ public class DataGenerator {
     public static final String DEFAULT_SEPARATOR = ",";
     public static final String DEFAULT_QUOTE = "\"";
 
-    // Minimum number of parameters required to create the object
-    public static final int MIN_PERSON_PARAMETERS = 7;
-    public static final int MIN_LOCATION_PARAMETERS = 3;
-    public static final int MIN_VISIT_PARAMETERS = 3;
-
     public static final String INVALID_ROW_FORMAT =
             "Invalid format detected on line %d. %s";
+    // For logging purposes
+    private static final Logger logger = Logger.getLogger(DataGenerator.class.getName());
 
     // Prevent instantiation
     private DataGenerator() {};
@@ -89,6 +88,7 @@ public class DataGenerator {
 
     /**
      * Generates a {@code Person} from the given parameters.
+     * The assertion ensures that the correct prefixes are called in other methods calling this method.
      *
      * @param argMultimap An {@code ArgumentMultimap} containing fields to create a {@code Person}.
      * @param lineNumber The current line number of the CSV that we are on. Used for error handling.
@@ -161,6 +161,7 @@ public class DataGenerator {
 
     /**
      * Generates a {@code Location} from the given parameters.
+     * The assertion ensures that the correct prefixes are called in other methods calling this method.
      *
      * @param argMultimap An {@code ArgumentMultimap} containing fields to create a {@code Location}.
      * @param lineNumber The current line number of the CSV that we are on. Used for error handling.
@@ -225,6 +226,7 @@ public class DataGenerator {
 
     /**
      * Generates a {@code VisitParametersContainer} from the given parameters.
+     * The assertion ensures that the correct prefixes are called in other methods calling this method.
      *
      * @param argMultimap An {@code ArgumentMultimap} containing fields to create a {@code VisitParameterContainer}.
      * @param lineNumber The current line number of the CSV that we are on. Used for error handling.
@@ -306,6 +308,8 @@ public class DataGenerator {
      */
     private static Scanner readFile(String filepath) throws ParseException {
         try {
+            logger.log(Level.INFO, "Reading from " + filepath);
+
             Scanner scanner = new Scanner(new File(filepath));
             return scanner;
         } catch (FileNotFoundException e) {
