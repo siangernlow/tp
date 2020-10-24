@@ -42,8 +42,8 @@ public class AddVisitsFromCsvCommand extends AddFromCsvCommand {
         for (int i = 0; i < visitParametersContainersToAdd.size(); i++) {
             DataGenerator.VisitParametersContainer vpc = visitParametersContainersToAdd.get(i);
 
-            Person person = model.getPersonFromId(vpc.getPersonIndex());
-            Location location = model.getLocationFromId(vpc.getLocationIndex());
+            Person person = model.getPersonById(vpc.getPersonIndex());
+            Location location = model.getLocationById(vpc.getLocationIndex());
             Visit visit = new Visit(person, location, vpc.getDate());
 
             // Duplicate visit found

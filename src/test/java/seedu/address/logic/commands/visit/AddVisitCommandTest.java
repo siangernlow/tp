@@ -338,12 +338,12 @@ public class AddVisitCommandTest {
         }
 
         @Override
-        public Location getLocationFromId(Id id) {
+        public Location getLocationById(Id id) {
             return DEFAULT_LOCATION;
         }
 
         @Override
-        public Person getPersonFromId(Id id) {
+        public Person getPersonById(Id id) {
             return DEFAULT_PERSON;
         }
 

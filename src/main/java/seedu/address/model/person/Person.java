@@ -17,16 +17,18 @@ import seedu.address.model.attribute.QuarantineStatus;
 import seedu.address.model.attribute.Tag;
 
 /**
- * Represents a Person in the person book.
+ * Represents a Person in the VirusTracker.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Person {
+
+    // Unique Identifier
+    private final Id id;
 
     // Identity fields
     private final Name name;
     private final Phone phone;
     private final Email email;
-    private final Id id;
 
     // Data fields
     private final Address address;
@@ -35,11 +37,11 @@ public class Person {
     private final Set<Tag> tags = new HashSet<>();
 
     /**
-     * Every field must be present and not null.
+     * Every field must be present and not null. Id must be unique.
      */
     public Person(Id id, Name name, Phone phone, Email email, Address address, QuarantineStatus quarantineStatus,
                   InfectionStatus infectionStatus, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, quarantineStatus, infectionStatus, id, tags);
+        requireAllNonNull(id, name, phone, email, address, quarantineStatus, infectionStatus, tags);
 
         this.name = name;
         this.phone = phone;
@@ -73,6 +75,14 @@ public class Person {
 
     public InfectionStatus getInfectionStatus() {
         return infectionStatus;
+    }
+
+    /**
+     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Set<Tag> getTags() {
+        return Collections.unmodifiableSet(tags);
     }
 
     public Id getId() {
@@ -127,14 +137,6 @@ public class Person {
     }
 
     /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
-     */
-    public Set<Tag> getTags() {
-        return Collections.unmodifiableSet(tags);
-    }
-
-    /**
      * Returns true if person is infected.
      */
     public boolean isInfected() {
@@ -149,7 +151,7 @@ public class Person {
     }
 
     /**
-     * Returns true if both person have the same id.
+     * Returns true if both person have the same Id.
      */
     public boolean isSameId(Person otherPerson) {
         if (otherPerson == this) {
@@ -171,22 +173,11 @@ public class Person {
 
         return otherPerson != null
                 && otherPerson.getName().equals(getName())
-                && (otherPerson.getPhone().equals(getPhone()) || otherPerson.getEmail().equals(getEmail()))
-                && otherPerson.getId().equals(getId());
+                && (otherPerson.getPhone().equals(getPhone()) || otherPerson.getEmail().equals(getEmail()));
     }
 
     /**
-     * Returns true if both persons are of the same identity expect id
-     */
-    public boolean isSameIdentityExceptIdPerson(Person otherPerson) {
-        return otherPerson != null
-                && otherPerson.getName().equals(getName())
-                && otherPerson.getPhone().equals(getPhone())
-                && otherPerson.getEmail().equals(getEmail());
-    }
-
-    /**
-     * Returns true if both persons have the same identity and data fields.
+     * Returns true if both persons have the same Id, identity and data fields.
      * This defines a stronger notion of equality between two persons.
      */
     @Override
@@ -213,13 +204,15 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, quarantineStatus, infectionStatus, tags, id);
+        return Objects.hash(id, name, phone, email, address, quarantineStatus, infectionStatus, tags);
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
+                .append(" ID: ")
+                .append(getId())
                 .append(" Phone: ")
                 .append(getPhone())
                 .append(" Email: ")
@@ -234,5 +227,4 @@ public class Person {
         getTags().forEach(builder::append);
         return builder.toString();
     }
-
 }

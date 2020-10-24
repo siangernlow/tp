@@ -29,9 +29,9 @@ import seedu.address.model.Model;
 import seedu.address.model.location.Location;
 import seedu.address.model.location.LocationBook;
 import seedu.address.model.location.LocationNameContainsKeywordsPredicate;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonBook;
+import seedu.address.model.person.PersonNameContainsKeywordsPredicate;
 import seedu.address.model.visit.Visit;
 import seedu.address.model.visit.VisitBook;
 import seedu.address.testutil.EditLocationDescriptorBuilder;
@@ -229,7 +229,7 @@ public class CommandTestUtil {
 
         Person person = model.getSortedPersonList().get(targetIndex.getZeroBased());
         final String[] splitName = person.getName().fullName.split("\\s+");
-        model.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+        model.updateFilteredPersonList(new PersonNameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
         assertEquals(1, model.getSortedPersonList().size());
     }

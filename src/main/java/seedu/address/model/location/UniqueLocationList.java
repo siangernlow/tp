@@ -5,16 +5,18 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.location.exceptions.DuplicateLocationException;
 import seedu.address.model.location.exceptions.LocationNotFoundException;
 import seedu.address.model.location.exceptions.LocationNotIdentifiableException;
 
 /**
  * A list of locations that enforces uniqueness between its elements and does not allow nulls.
- * This list also enforces that all elements have unique ids.
+ * This list also enforces that all elements have unique Ids.
  * A location is considered unique by comparing using {@code Location#isSameLocation(Location)}. As such, adding and
  * updating of locations uses Location#isSameLocation(Location) for equality so as to ensure that the location being
  * added or updated is unique in terms of identity in the UniqueLocationList. However, the removal of a location uses
@@ -32,7 +34,6 @@ public class UniqueLocationList implements Iterable<Location> {
 
     /**
      * Returns true if the list contains an equivalent location as the given argument.
-     * or if the location shares the same id as a location in the list.
      */
     public boolean contains(Location toCheck) {
         requireNonNull(toCheck);
@@ -40,24 +41,38 @@ public class UniqueLocationList implements Iterable<Location> {
     }
 
     /**
-     * Returns true if the list contains a location with the same id as the given argument.
+     * Returns true if the list contains a location with the given Id.
      */
-    public boolean containsSameIdLocation(Location toCheck) {
-        requireNonNull(toCheck);
-        return internalList.stream().anyMatch(toCheck::isSameId);
+    public boolean containsLocationId(Id id) {
+        requireNonNull(id);
+        return internalList.stream().anyMatch(l -> l.getId().equals(id));
+    }
+
+    /**
+     * Returns a location within the list that has the given Id.
+     * The Id must belong to a location within the list.
+     */
+    public Location getLocationById(Id id) {
+        requireNonNull(id);
+        Optional<Location> location = internalList.stream().filter(l -> l.getId().equals(id)).findAny();
+        if (location.isEmpty()) {
+            throw new LocationNotFoundException();
+        } else {
+            return location.get();
+        }
     }
 
     /**
      * Adds a location to the list.
      * The location must not already exist in the list.
-     * The location must not have same id as another location in the list.
+     * The location must not have same Id as another location in the list.
      */
     public void add(Location toAdd) {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
             throw new DuplicateLocationException();
         }
-        if (containsSameIdLocation(toAdd)) {
+        if (containsLocationId(toAdd.getId())) {
             throw new LocationNotIdentifiableException();
         }
         internalList.add(toAdd);
@@ -79,7 +94,10 @@ public class UniqueLocationList implements Iterable<Location> {
         if (!target.isSameLocation(editedLocation) && contains(editedLocation)) {
             throw new DuplicateLocationException();
         }
-        assert(target.isSameId(editedLocation));
+
+        if (!target.isSameId(editedLocation) && containsLocationId(editedLocation.getId())) {
+            throw new LocationNotIdentifiableException();
+        }
 
         internalList.set(index, editedLocation);
     }
@@ -102,18 +120,31 @@ public class UniqueLocationList implements Iterable<Location> {
 
     /**
      * Replaces the contents of this list with {@code locations}.
-     * {@code locations} must not contain duplicate locations.
+     * {@code locations} must not contain duplicate locations nor duplicate Ids.
      */
     public void setLocations(List<Location> locations) {
         requireAllNonNull(locations);
-        if (!locationsAreUnique(locations)) {
-            throw new DuplicateLocationException();
-        }
-        if (!locationsAreIdentifiable(locations)) {
-            throw new LocationNotIdentifiableException();
-        }
+        checkLocations(locations);
 
         internalList.setAll(locations);
+    }
+
+    /**
+     * Checks if {@code locations} contains only locations with unique identities and Ids.
+     * @throws DuplicateLocationException if there are locations with duplicate identities.
+     * @throws LocationNotIdentifiableException if there are locations with duplicate Ids.
+     */
+    private void checkLocations(List<Location> locations) {
+        for (int i = 0; i < locations.size() - 1; i++) {
+            for (int j = i + 1; j < locations.size(); j++) {
+                if (locations.get(i).isSameLocation(locations.get(j))) {
+                    throw new DuplicateLocationException();
+                }
+                if (locations.get(i).isSameId(locations.get(j))) {
+                    throw new LocationNotIdentifiableException();
+                }
+            }
+        }
     }
 
     /**
@@ -138,34 +169,5 @@ public class UniqueLocationList implements Iterable<Location> {
     @Override
     public int hashCode() {
         return internalList.hashCode();
-    }
-
-    /**
-     * Returns true if {@code locations} contains only unique locations.
-     */
-    private boolean locationsAreUnique(List<Location> locations) {
-        for (int i = 0; i < locations.size() - 1; i++) {
-            for (int j = i + 1; j < locations.size(); j++) {
-                if (locations.get(i).isSameLocation(locations.get(j))) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Returns true if {@code locations} contains identifiable locations.
-     * This is true if all locations have different ids.
-     */
-    private boolean locationsAreIdentifiable(List<Location> locations) {
-        for (int i = 0; i < locations.size() - 1; i++) {
-            for (int j = i + 1; j < locations.size(); j++) {
-                if (locations.get(i).isSameId(locations.get(j))) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 }

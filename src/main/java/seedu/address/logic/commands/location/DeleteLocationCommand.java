@@ -69,18 +69,12 @@ public class DeleteLocationCommand extends Command {
     }
 
     private CommandResult deleteLocation(Id id, Model model) throws CommandException {
-        List<Location> lastShownList = model.getUnfilteredLocationList();
-        Optional<Location> locationToDelete = Optional.empty();
-        for (Location p : lastShownList) {
-            if (p.getId().equals(id)) {
-                locationToDelete = Optional.of(p);
-            }
-        }
-        if (locationToDelete.isEmpty()) {
+        if (!model.hasLocationId(id)) {
             throw new CommandException(Messages.MESSAGE_INVALID_LOCATION_ID);
         }
-        model.deleteLocation(locationToDelete.get());
-        return new CommandResult(String.format(MESSAGE_DELETE_LOCATION_SUCCESS, locationToDelete.get()), false, false,
+        Location locationToDelete = model.getLocationById(id);
+        model.deleteLocation(locationToDelete);
+        return new CommandResult(String.format(MESSAGE_DELETE_LOCATION_SUCCESS, locationToDelete), false, false,
                 CommandResult.SWITCH_TO_VIEW_LOCATIONS);
     }
 

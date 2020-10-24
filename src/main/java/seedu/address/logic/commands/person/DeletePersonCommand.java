@@ -75,17 +75,10 @@ public class DeletePersonCommand extends Command {
     }
 
     private Person getPersonToDelete(Id id, Model model) throws CommandException {
-        List<Person> lastShownList = model.getUnfilteredPersonList();
-        Optional<Person> personToDelete = Optional.empty();
-        for (Person p : lastShownList) {
-            if (p.getId().equals(id)) {
-                personToDelete = Optional.of(p);
-            }
-        }
-        if (personToDelete.isEmpty()) {
+        if (!model.hasPersonId(id)) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_ID);
         }
-        return personToDelete.get();
+        return model.getPersonById(id);
     }
 
     private Person getPersonToDelete(Index index, Model model) throws CommandException {

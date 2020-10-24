@@ -108,8 +108,8 @@ public class AddVisitCommand extends Command {
         Person person;
         Location location;
         try {
-            person = model.getPersonFromId(personId);
-            location = model.getLocationFromId(locationId);
+            person = model.getPersonById(personId);
+            location = model.getLocationById(locationId);
         } catch (PersonNotFoundException e) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_ID);
         } catch (LocationNotFoundException e) {

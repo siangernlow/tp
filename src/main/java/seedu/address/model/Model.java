@@ -67,14 +67,20 @@ public interface Model {
     boolean hasPerson(Person person);
 
     /**
-     * Returns true if a person with the same id as {@code person} exists in the person book.
+     * Returns true if a person with the given {@code id} exists in the person book.
      */
-    boolean hasSameIdPerson(Person person);
+    boolean hasPersonId(Id id);
 
     /**
-     * Returns true if a person with the same identity except id as {@code person} exists in the person book.
+     * Returns a Person with the given Id from the person book.
      */
-    boolean hasSameIdentityExceptId(Person person);
+    Person getPersonById(Id id);
+
+    /**
+     * Gets a person using the index.
+     * {@code index} must be in range of the person book.
+     */
+    Person getPersonFromIndex(Index index);
 
     /**
      * Adds the given person.
@@ -92,14 +98,12 @@ public interface Model {
      * Replaces the given person {@code target} with {@code editedPerson}.
      * {@code target} must exist in the person book.
      * The person identity of {@code editedPerson} must not be the same as another existing person in the person book.
+     * The {@code editedPerson} must not have the same Id as another person in the person book.
      */
     void setPerson(Person target, Person editedPerson);
 
-    /** Returns an unmodifiable view of the filtered person list */
+    /** Returns an unmodifiable view of the filtered and sorted person list */
     ObservableList<Person> getSortedPersonList();
-
-    /** Returns an unmodifiable view of the unfiltered person list */
-    ObservableList<Person> getUnfilteredPersonList();
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
@@ -128,9 +132,25 @@ public interface Model {
     void setLocationBook(ReadOnlyLocationBook locationBook);
 
     /**
-     * Returns true if a location with the same identity as {@code location} exists in the virus tracker.
+     * Returns true if a location with the same identity as {@code location} exists in the location book.
      */
     boolean hasLocation(Location location);
+
+    /**
+     * Returns true if a location with the given {@code id} exists in the location book.
+     */
+    boolean hasLocationId(Id id);
+
+    /**
+     * Returns a Location with the given Id from the location book.
+     */
+    Location getLocationById(Id id);
+
+    /**
+     * Gets a location using the index.
+     * {@code index} must be in range of the location book.
+     */
+    Location getLocationFromIndex(Index index);
 
     /**
      * Adds the given location.
@@ -149,14 +169,12 @@ public interface Model {
      * {@code target} must exist in the location book.
      * The location identity of {@code editedPerson} must not be the same as another existing location in the
      * location book.
+     * The {@code editedLocation} must not have the same Id as another location in the location book.
      */
     void setLocation(Location target, Location editedLocation);
 
-    /** Returns an unmodifiable view of the filtered location list */
+    /** Returns an unmodifiable view of the filtered and sorted location list */
     ObservableList<Location> getSortedLocationList();
-
-    /** Returns an unmodifiable view of the unfiltered location list */
-    ObservableList<Location> getUnfilteredLocationList();
 
     /**
      * Updates the filter of the filtered location list to filter by the given {@code predicate}.
@@ -185,22 +203,9 @@ public interface Model {
     void setVisitBook(ReadOnlyVisitBook visitBook);
 
     /**
-     * Update visit book with {@code editedLocation}
-     */
-    void updateVisitBookWithEditedPerson(Person editedPerson);
-
-    void updateVisitBookWithEditedLocation(Location editedLocation);
-
-    /**
      * Returns true if a visit with the same identity as {@code visit} exists in the visit book.
      */
     boolean hasVisit(Visit visit);
-
-    /**
-     * Replaces the given visit {@code target} with {@code editedVisit}.
-     * {@code target} must exist in the visit book.
-     */
-    void setVisit(Visit target, Visit editedVisit);
 
     /**
      * Adds the given visit.
@@ -215,7 +220,7 @@ public interface Model {
     void deleteVisit(Visit visit);
 
     /**
-     * Deletes all visits that contain the person as given in the argument
+     * Deletes all visits that contains the person as given in the argument
      */
     void deleteVisitsWithPerson(Person personToDelete);
 
@@ -224,7 +229,20 @@ public interface Model {
      */
     void deleteVisitsWithLocation(Location locationToDelete);
 
-    /** Returns an unmodifiable view of the filtered visit list */
+    /**
+     * Replaces the given visit {@code target} with {@code editedVisit}.
+     * {@code target} must exist in the visit book.
+     */
+    void setVisit(Visit target, Visit editedVisit);
+
+    /**
+     * Update visit book with {@code editedLocation}
+     */
+    void updateVisitBookWithEditedPerson(Person editedPerson);
+
+    void updateVisitBookWithEditedLocation(Location editedLocation);
+
+    /** Returns an unmodifiable view of the filtered and sorted visit list */
     ObservableList<Visit> getSortedVisitList();
 
     /**
@@ -239,27 +257,4 @@ public interface Model {
      */
     InfoHandler getInfoHandler();
 
-    /**
-     * Gets the given person using the id.
-     * {@code id} must already exist in the person book.
-     */
-    Person getPersonFromId(Id id);
-
-    /**
-     * Gets the given location using the id.
-     * {@code id} must already exist in the location book.
-     */
-    Location getLocationFromId(Id id);
-
-    /**
-     * Gets the given person using the index.
-     * {@code index} must already exist in the person book.
-     */
-    Person getPersonFromIndex(Index index);
-
-    /**
-     * Gets the given location using the index.
-     * {@code index} must already exist in the location book.
-     */
-    Location getLocationFromIndex(Index index);
 }

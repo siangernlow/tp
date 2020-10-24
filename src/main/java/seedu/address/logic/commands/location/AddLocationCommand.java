@@ -31,6 +31,8 @@ public class AddLocationCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "New location added: %1$s";
     public static final String MESSAGE_DUPLICATE_LOCATION = "This location already exists in the virus tracker.";
+    public static final String MESSAGE_DUPLICATE_LOCATION_ID =
+            "A location with this Id already exists in the VirusTracker.";
 
     private final Location toAdd;
 
@@ -48,6 +50,10 @@ public class AddLocationCommand extends Command {
 
         if (model.hasLocation(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_LOCATION);
+        }
+
+        if (model.hasLocationId(toAdd.getId())) {
+            throw new CommandException(MESSAGE_DUPLICATE_LOCATION_ID);
         }
 
         model.addLocation(toAdd);

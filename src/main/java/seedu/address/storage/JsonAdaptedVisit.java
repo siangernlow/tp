@@ -83,8 +83,8 @@ public class JsonAdaptedVisit {
         phone = source.getPerson().getPhone().value;
         email = source.getPerson().getEmail().value;
         addressPerson = source.getPerson().getAddress().value;
-        quarantineStatus = source.getPerson().getQuarantineStatus().value;
-        infectionStatus = source.getPerson().getInfectionStatus().getStatusAsString();
+        quarantineStatus = source.getPerson().getQuarantineStatus().toString();
+        infectionStatus = source.getPerson().getInfectionStatus().toString();
         idPerson = source.getPerson().getId().value;
         tagged.addAll(source.getPerson().getTags().stream()
                 .map(JsonAdaptedTag::new)

@@ -9,23 +9,23 @@ import seedu.address.model.attribute.Id;
 import seedu.address.model.attribute.Name;
 
 /**
- * Represents a Location in the location book.
+ * Represents a Location in the VirusTracker.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Location {
 
+    // Unique Identifier
+    private final Id id;
+
     // Identity fields
     private final Name name;
-
-    // Data fields
     private final Address address;
-    private final Id id;
 
     /**
      * Every field must be present and not null. Id must be unique.
      */
     public Location(Id id, Name name, Address address) {
-        requireAllNonNull(name, address, id);
+        requireAllNonNull(id, name, address);
 
         this.name = name;
         this.address = address;
@@ -59,20 +59,7 @@ public class Location {
     }
 
     /**
-     * Returns true if both locations have the same name.
-     * This defines a weaker notion of equality between two locations.
-     */
-    public boolean isSameLocation(Location otherLocation) {
-        if (otherLocation == this) {
-            return true;
-        }
-
-        return otherLocation != null
-                && otherLocation.getName().equals(getName());
-    }
-
-    /**
-     * Returns true if both locations have the same id.
+     * Returns true if both locations have the same Id.
      */
     public boolean isSameId(Location otherLocation) {
         if (otherLocation == this) {
@@ -83,7 +70,21 @@ public class Location {
     }
 
     /**
-     * Returns true if both locations have the same identity and data fields.
+     * Returns true if both locations have the same name and address.
+     * This defines a weaker notion of equality between two locations.
+     */
+    public boolean isSameLocation(Location otherLocation) {
+        if (otherLocation == this) {
+            return true;
+        }
+
+        return otherLocation != null
+                && otherLocation.getName().equals(getName())
+                && otherLocation.getAddress().equals(getAddress());
+    }
+
+    /**
+     * Returns true if both locations have the same identity and Id.
      * This defines a stronger notion of equality between two locations.
      */
     @Override
@@ -105,13 +106,15 @@ public class Location {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, address, id);
+        return Objects.hash(id, name, address);
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
+                .append(" ID: ")
+                .append(getId())
                 .append(" Address: ")
                 .append(getAddress());
         return builder.toString();

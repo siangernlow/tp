@@ -67,12 +67,7 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public boolean hasSameIdPerson(Person person) {
-        throw new AssertionError("This method should not be called.");
-    }
-
-    @Override
-    public boolean hasSameIdentityExceptId(Person person) {
+    public boolean hasPersonId(Id id) {
         throw new AssertionError("This method should not be called.");
     }
 
@@ -93,11 +88,6 @@ public class ModelStub implements Model {
 
     @Override
     public ObservableList<Person> getSortedPersonList() {
-        throw new AssertionError("This method should not be called.");
-    }
-
-    @Override
-    public ObservableList<Person> getUnfilteredPersonList() {
         throw new AssertionError("This method should not be called.");
     }
 
@@ -134,6 +124,11 @@ public class ModelStub implements Model {
     }
 
     @Override
+    public boolean hasLocationId(Id id) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
     public void addLocation(Location location) {
         throw new AssertionError("This method should not be called.");
     }
@@ -150,11 +145,6 @@ public class ModelStub implements Model {
 
     @Override
     public ObservableList<Location> getSortedLocationList() {
-        throw new AssertionError("This method should not be called.");
-    }
-
-    @Override
-    public ObservableList<Location> getUnfilteredLocationList() {
         throw new AssertionError("This method should not be called.");
     }
 
@@ -243,12 +233,12 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public Person getPersonFromId(Id id) {
+    public Person getPersonById(Id id) {
         throw new AssertionError("This method should not be called.");
     }
 
     @Override
-    public Location getLocationFromId(Id id) {
+    public Location getLocationById(Id id) {
         throw new AssertionError("This method should not be called.");
     }
 
