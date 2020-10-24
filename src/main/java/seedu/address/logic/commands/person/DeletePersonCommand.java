@@ -87,7 +87,7 @@ public class DeletePersonCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        return lastShownList.get(index.getZeroBased());
+        return model.getPersonFromIndex(index);
     }
 
     @Override

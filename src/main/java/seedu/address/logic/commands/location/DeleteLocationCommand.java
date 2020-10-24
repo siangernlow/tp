@@ -84,7 +84,7 @@ public class DeleteLocationCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_LOCATION_DISPLAYED_INDEX);
         }
 
-        Location locationToDelete = lastShownList.get(index.getZeroBased());
+        Location locationToDelete = model.getLocationFromIndex(index);
         model.deleteLocation(locationToDelete);
 
         model.deleteVisitsWithLocation(locationToDelete);

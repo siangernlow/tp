@@ -18,9 +18,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
-import seedu.address.model.location.exceptions.LocationNotFoundException;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.visit.Visit;
 
 /**
@@ -107,12 +105,16 @@ public class AddVisitCommand extends Command {
     private Visit getVisitToAdd(Id personId, Id locationId, Model model) throws CommandException {
         Person person;
         Location location;
-        try {
+
+        if (model.hasPersonId(personId)) {
             person = model.getPersonById(personId);
-            location = model.getLocationById(locationId);
-        } catch (PersonNotFoundException e) {
+        } else {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_ID);
-        } catch (LocationNotFoundException e) {
+        }
+
+        if (model.hasLocationId(locationId)) {
+            location = model.getLocationById(locationId);
+        } else {
             throw new CommandException(Messages.MESSAGE_INVALID_LOCATION_ID);
         }
 
