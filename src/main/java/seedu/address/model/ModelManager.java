@@ -40,7 +40,6 @@ public class ModelManager implements Model {
     private final LocationBook locationBook;
     private final VisitBook visitBook;
     private final UserPrefs userPrefs;
-    private final InfoHandler infoHandler;
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Location> filteredLocations;
     private final FilteredList<Visit> filteredVisits;
@@ -62,7 +61,6 @@ public class ModelManager implements Model {
         this.personBook = new PersonBook(personBook);
         this.locationBook = new LocationBook(locationBook);
         this.visitBook = new VisitBook(visitBook);
-        this.infoHandler = new InfoHandler(this);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.personBook.getPersonList());
         filteredLocations = new FilteredList<>(this.locationBook.getLocationList());
@@ -348,11 +346,6 @@ public class ModelManager implements Model {
     }
 
     //=========== InfoHandler ====================================================================================
-
-    @Override
-    public InfoHandler getInfoHandler() {
-        return infoHandler;
-    }
 
     @Override
     public boolean equals(Object obj) {

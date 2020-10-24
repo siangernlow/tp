@@ -228,11 +228,6 @@ public class ModelStub implements Model {
     //=========== Info Handler ========================================================================================
 
     @Override
-    public InfoHandler getInfoHandler() {
-        throw new AssertionError("This method should not be called.");
-    }
-
-    @Override
     public Person getPersonById(Id id) {
         throw new AssertionError("This method should not be called.");
     }

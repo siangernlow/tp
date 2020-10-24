@@ -54,7 +54,7 @@ public class ExportToCsvCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
-        InfoHandler infoHandler = model.getInfoHandler();
+        InfoHandler infoHandler = new InfoHandler(model);
         try {
             switch (listType) {
             case ALL_PEOPLE:

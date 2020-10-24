@@ -270,11 +270,6 @@ public class ExportToCsvCommandTest {
         }
 
         @Override
-        public InfoHandler getInfoHandler() {
-            return infoHandler;
-        }
-
-        @Override
         public boolean equals(Object obj) {
             // short circuit if same object
             if (obj == this) {
