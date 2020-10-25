@@ -55,7 +55,7 @@ public class IndexIdPair {
     /**
      * Checks that {@code ArgumentMultimap} does not contain both Id and Index strings.
      */
-    public boolean checkIndexOrIdOnly(ArgumentMultimap argMultimap, Prefix prefix) {
+    public static boolean checkIndexOrIdOnly(ArgumentMultimap argMultimap, Prefix prefix) {
         return argMultimap.getValue(prefix).isPresent() && !argMultimap.getPreamble().isEmpty();
     }
 

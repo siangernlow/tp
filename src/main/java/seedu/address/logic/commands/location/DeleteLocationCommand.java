@@ -3,16 +3,11 @@ package seedu.address.logic.commands.location;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION_ID;
 
-import java.util.List;
-import java.util.Optional;
-
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.IndexIdPair;
 import seedu.address.model.Model;
-import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
 
 /**
@@ -33,71 +28,32 @@ public class DeleteLocationCommand extends Command {
 
     public static final String MESSAGE_DELETE_LOCATION_SUCCESS = "Deleted Location: %1$s";
 
-    private final Optional<Index> targetIndex;
-    private final Optional<Id> targetId;
+    private final IndexIdPair pair;
 
     /**
-     * @param targetIndex index of the location to be deleted
+     * @param pair contains the index or Id of the location to be deleted.
      */
-    public DeleteLocationCommand(Index targetIndex) {
-        requireNonNull(targetIndex);
-        this.targetIndex = Optional.of(targetIndex);
-        this.targetId = Optional.empty();
-    }
-
-    /**
-     * @param targetId id of the location to be deleted
-     */
-    public DeleteLocationCommand(Id targetId) {
-        requireNonNull(targetId);
-        this.targetIndex = Optional.empty();
-        this.targetId = Optional.of(targetId);
+    public DeleteLocationCommand(IndexIdPair pair) {
+        requireNonNull(pair);
+        this.pair = pair;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        if (targetId.isPresent()) {
-            return deleteLocation(targetId.get(), model);
-        } else if (targetIndex.isPresent()) {
-            return deleteLocation(targetIndex.get(), model);
-        } else {
-            assert false : "Delete location command should have either non empty id or index.";
-            return null;
-        }
-    }
-
-    private CommandResult deleteLocation(Id id, Model model) throws CommandException {
-        if (!model.hasLocationId(id)) {
-            throw new CommandException(Messages.MESSAGE_INVALID_LOCATION_ID);
-        }
-        Location locationToDelete = model.getLocationById(id);
+        Location locationToDelete = pair.getLocationFromPair(model);
         model.deleteLocation(locationToDelete);
-        return new CommandResult(String.format(MESSAGE_DELETE_LOCATION_SUCCESS, locationToDelete), false, false,
-                CommandResult.SWITCH_TO_VIEW_LOCATIONS);
-    }
-
-    private CommandResult deleteLocation(Index index, Model model) throws CommandException {
-        List<Location> lastShownList = model.getSortedLocationList();
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_LOCATION_DISPLAYED_INDEX);
-        }
-
-        Location locationToDelete = model.getLocationFromIndex(index);
-        model.deleteLocation(locationToDelete);
-
         model.deleteVisitsWithLocation(locationToDelete);
 
-        return new CommandResult(String.format(MESSAGE_DELETE_LOCATION_SUCCESS, locationToDelete),
-                false, false, CommandResult.SWITCH_TO_VIEW_LOCATIONS);
+        return new CommandResult(String.format(MESSAGE_DELETE_LOCATION_SUCCESS, locationToDelete), false, false,
+                CommandResult.SWITCH_TO_VIEW_LOCATIONS);
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof DeleteLocationCommand // instanceof handles nulls
-                && targetIndex.equals(((DeleteLocationCommand) other).targetIndex)
-                && targetId.equals(((DeleteLocationCommand) other).targetId)); // state check
+                && pair.equals(((DeleteLocationCommand) other).pair)); // state check
     }
 }

@@ -12,16 +12,14 @@ import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.IndexIdPair;
 import seedu.address.model.Model;
 import seedu.address.model.attribute.Address;
 import seedu.address.model.attribute.Email;
@@ -59,31 +57,26 @@ public class EditPersonCommand extends Command {
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
-    private final Index index;
+    private final IndexIdPair pair;
     private final EditPersonDescriptor editPersonDescriptor;
 
     /**
-     * @param index of the person in the filtered person list to edit
+     * @param pair contains the index or Id of the person in the VirusTracker to edit
      * @param editPersonDescriptor details to edit the person with
      */
-    public EditPersonCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
-        requireNonNull(index);
+    public EditPersonCommand(IndexIdPair pair, EditPersonDescriptor editPersonDescriptor) {
+        requireNonNull(pair);
         requireNonNull(editPersonDescriptor);
 
-        this.index = index;
+        this.pair = pair;
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Person> lastShownList = model.getSortedPersonList();
 
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        Person personToEdit = model.getPersonFromIndex(index);
+        Person personToEdit = pair.getPersonFromPair(model);
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
@@ -92,7 +85,6 @@ public class EditPersonCommand extends Command {
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-
         model.updateVisitBookWithEditedPerson(editedPerson);
 
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson), false, false,
@@ -135,7 +127,7 @@ public class EditPersonCommand extends Command {
 
         // state check
         EditPersonCommand e = (EditPersonCommand) other;
-        return index.equals(e.index)
+        return pair.equals(e.pair)
                 && editPersonDescriptor.equals(e.editPersonDescriptor);
     }
 
@@ -166,7 +158,6 @@ public class EditPersonCommand extends Command {
             setAddress(toCopy.address);
             setQuarantineStatus(toCopy.quarantineStatus);
             setInfectionStatus(toCopy.infectionStatus);
-            setId(toCopy.id);
             setTags(toCopy.tags);
         }
 
@@ -223,14 +214,6 @@ public class EditPersonCommand extends Command {
 
         public Optional<InfectionStatus> getInfectionStatus() {
             return Optional.ofNullable(infectionStatus);
-        }
-
-        public void setId(Id id) {
-            this.id = id;
-        }
-
-        public Optional<Id> getId() {
-            return Optional.ofNullable(id);
         }
 
         /**

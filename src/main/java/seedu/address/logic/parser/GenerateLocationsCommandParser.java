@@ -1,8 +1,10 @@
 package seedu.address.logic.parser;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
+import static seedu.address.logic.parser.IndexIdPair.checkIndexOrIdOnly;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.GenerateLocationsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -17,13 +19,16 @@ public class GenerateLocationsCommandParser implements Parser<GenerateLocationsC
      * @throws ParseException if the user input does not conform the expected format
      */
     public GenerateLocationsCommand parse(String args) throws ParseException {
-        try {
-            Index index = ParserUtil.parseIndex(args);
-            return new GenerateLocationsCommand(index);
-        } catch (ParseException pe) {
+        requireNonNull(args);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_PERSON_ID);
+
+        if (checkIndexOrIdOnly(argMultimap, PREFIX_PERSON_ID)) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, GenerateLocationsCommand.MESSAGE_USAGE), pe);
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, GenerateLocationsCommand.MESSAGE_USAGE));
         }
+
+        IndexIdPair pair = new IndexIdPair(argMultimap, PREFIX_PERSON_ID);
+        return new GenerateLocationsCommand(pair);
     }
 
 }

@@ -3,16 +3,11 @@ package seedu.address.logic.commands.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
 
-import java.util.List;
-import java.util.Optional;
-
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.IndexIdPair;
 import seedu.address.model.Model;
-import seedu.address.model.attribute.Id;
 import seedu.address.model.person.Person;
 
 /**
@@ -34,67 +29,32 @@ public class DeletePersonCommand extends Command {
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
 
-    private final Optional<Index> targetIndex;
-    private final Optional<Id> targetId;
+    private final IndexIdPair pair;
 
     /**
-     * @param targetIndex index of the person to be deleted
+     * @param pair contains the index or Id of the person to be deleted.
      */
-    public DeletePersonCommand(Index targetIndex) {
-        requireNonNull(targetIndex);
-        this.targetIndex = Optional.of(targetIndex);
-        this.targetId = Optional.empty();
-    }
-
-    /**
-     * @param targetId id of the person to be deleted
-     */
-    public DeletePersonCommand(Id targetId) {
-        requireNonNull(targetId);
-        this.targetIndex = Optional.empty();
-        this.targetId = Optional.of(targetId);
+    public DeletePersonCommand(IndexIdPair pair) {
+        requireNonNull(pair);
+        this.pair = pair;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        Person personToDelete = null;
-        if (targetId.isPresent()) {
-            personToDelete = getPersonToDelete(targetId.get(), model);
-        } else if (targetIndex.isPresent()) {
-            personToDelete = getPersonToDelete(targetIndex.get(), model);
-        }
-        requireNonNull(personToDelete);
+        Person personToDelete = pair.getPersonFromPair(model);
         model.deletePerson(personToDelete);
-
         model.deleteVisitsWithPerson(personToDelete);
 
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete), false, false,
                 CommandResult.SWITCH_TO_VIEW_PEOPLE);
     }
 
-    private Person getPersonToDelete(Id id, Model model) throws CommandException {
-        if (!model.hasPersonId(id)) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_ID);
-        }
-        return model.getPersonById(id);
-    }
-
-    private Person getPersonToDelete(Index index, Model model) throws CommandException {
-        List<Person> lastShownList = model.getSortedPersonList();
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        return model.getPersonFromIndex(index);
-    }
-
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof DeletePersonCommand // instanceof handles nulls
-                && targetIndex.equals(((DeletePersonCommand) other).targetIndex)
-                && targetId.equals(((DeletePersonCommand) other).targetId)); // state check
+                && pair.equals(((DeletePersonCommand) other).pair)); // state check
     }
 }

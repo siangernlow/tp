@@ -94,6 +94,10 @@ public class AddVisitCommand extends Command {
         } else if (personIndex.isPresent() && locationIndex.isPresent()) {
             visit = getVisitToAdd(personIndex.get(), locationIndex.get(), model);
         }
+
+        if (model.hasVisit(visit)) {
+            throw new CommandException(MESSAGE_DUPLICATE_VISIT);
+        }
         requireNonNull(visit);
 
         model.addVisit(visit);
@@ -118,16 +122,7 @@ public class AddVisitCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_LOCATION_ID);
         }
 
-        Visit visit = new Visit(person, location, date);
-
-        assert visit.getPerson() != null;
-        assert visit.getLocation() != null;
-        assert visit.getDate() != null;
-
-        if (model.hasVisit(visit)) {
-            throw new CommandException(MESSAGE_DUPLICATE_VISIT);
-        }
-        return visit;
+        return new Visit(person, location, date);
     }
 
     private Visit getVisitToAdd(Index personIndex, Index locationIndex, Model model) throws CommandException {
@@ -141,11 +136,7 @@ public class AddVisitCommand extends Command {
         }
         Person person = model.getPersonFromIndex(personIndex);
         Location location = model.getLocationFromIndex(locationIndex);
-        Visit visit = new Visit(person, location, date);
-        if (model.hasVisit(visit)) {
-            throw new CommandException(MESSAGE_DUPLICATE_VISIT);
-        }
-        return visit;
+        return new Visit(person, location, date);
     }
 
     /**
