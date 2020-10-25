@@ -2,25 +2,29 @@
 layout: page
 title: User Guide
 ---
+* Table of Contents
+{:toc}
+---
 
-VirusTracker is a **desktop app for generating statistics for Covid-19, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI).
-VirusTracker can help you generate various statistics on the pandemic quickly and easily with a few simple commands.
+**VirusTracker** is a **desktop app for generating statistics for Covid-19, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI).
+It is mainly targeted towards healthcare officials who are handling large amounts of data due to the pandemic.
+VirusTracker aims to provide a faster and quicker alternative to common data entry programs.
 
-## **Table of Contents**
-* Quick Start
-* Features
-    1. Adding data: `add`
-    2. Deleting data: `delete`
-    3. Editing data: `edit`
-    4. Finding data: `find`
-    5. Listing data: `list`
-    6. Generating people in contact with an infected person: `generatePeople`
-    7. Generating locations an infected person has been to: `generateLocations`
-    8. Clearing the current list: `clear`
-    9. Viewing help: `help`
-    10. Exiting the program: `exit`
-* Command Summary
 --------------------------------------------------------------------------------------------------------------------
+## Preface
+
+Welcome to the user guide on VirusTracker.
+
+This guide will guide you through the different features that VirusTracker has to offer.
+VirusTracker works with three main entities:
+* People
+* Locations
+* Visits
+
+The recommended way for you to use VirusTracker is to first store the information of all the people and locations you wish to track.
+Then, whenever a person visits a location, the corresponding `visit` is added.
+
+VirusTracker would be able to generate useful information based off the data that is input into the system.
 
 ## Quick start
 
@@ -39,7 +43,7 @@ VirusTracker can help you generate various statistics on the pandemic quickly an
 
    * **`list l/people`** : Lists all people.
 
-   * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a person named `John Doe` to the VirusTracker.
+   * **`add`**`idp/1 n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a person named `John Doe` to the VirusTracker.
 
    * **`delete`**`3` : Deletes the 3rd element shown in the current list.
 
@@ -72,9 +76,9 @@ VirusTracker can help you generate various statistics on the pandemic quickly an
 * **Data** refers collectively to people, locations and visits unless stated otherwise.
 </div>
 
-### Adding data: `add`
+### Adding data
 
-To add data to VirusTracker, there are various `add` commands that could be used.
+To add data to VirusTracker, there are `add` commands for each entity.
 
 #### Adding a person
 
@@ -132,6 +136,139 @@ Examples:
 * `addLocation idl/L123 n/Vivocity a/John street, block 123, #01-01`
 * `addLocation idl/L234 n/Betsy Crowe's House a/Newgate Prison`
 
+#### Adding data from CSV files
+
+As you may have pre-existing data stored in the Excel file format, VirusTracker provides a way to import data directly from
+files in the CSV format. Excel provides an option to save existing _.xlsx_ extension files as _.csv_ files.
+
+<div markdown="span" class="alert alert-primary">:bulb: **Note:**
+If you are importing data from a pre-existing Excel file, you may have to first format it to a format that is readable by VirusTracker.
+</div>
+
+You may read more about it [here](#format-for-csv-files).
+
+<div markdown="span" class="alert alert-primary">:bulb: **Note:**
+As visits rely on people and locations, it is recommended that person and location data csv files be added before visits so
+as to ensure that the referenced people and locations in the visits data csv file exist.
+</div>
+
+
+Format: `addFromCsv FILE_PATH l/LIST_TYPE`
+
+* `FILE_PATH` refers to the absolute file path where the CSV file resides.
+  * For example, if you wish to import data from `personList.csv` located in your desktop, the absolute file path could look
+  something like this: `C:/Users/user/Desktop/personList.csv` _(for Windows)_, `/Users/admin/Documents/personList.csv` _(for MacOS)_,
+  `/home/user/docs/personList.csv` _(for Linux)_
+  * You may **find the absolute file path** as follows
+    1. Right-click your file `E.g. personList.csv`
+    2. Select 'Properties'
+    3. Take note of the path specified in the 'Location' field. `E.g. C:/Users/user/Desktop`
+    4. The absolute file path is the path found in Step 3 along with your file name. `C:/Users/user/Desktop/personList.csv`
+* `LIST_TYPE` refers to 'people', 'locations' or 'visits'.
+  * The prefix `l/` is also used for [listing data](#listing-data-list)
+* The CSV file should have its data in [VirusTracker readable format](#format-for-csv-files).
+  * For visits data, the format used references the id of the people and locations. The format using
+  list indexing is not supported.
+* If you do not specify an absolute path, VirusTracker **may not be able to find your file!**
+
+Examples:
+* `addFromCsv C:/Users/alice/Desktop/peopleToAdd.csv l/people`
+* `addFromCsv D:/visits on Dec 20.csv l/visits`
+
+#### Exporting data to CSV files
+
+Often, you may not only work on a single device. 
+
+VirusTracker enables you to export the current data stored into a CSV file 
+which could then be read by the VirusTracker application on another device.
+
+Format: `exportToCsv FILE_PATH l/LIST_TYPE`
+
+* `FILE_PATH` refers to the absolute file path where the CSV file should reside.
+  * Refer to the [Adding data from CSV files](#adding-data-from-csv-files) section to find out the absolute path of a file.
+  * If the CSV file does not exist at the specified location, VirusTracker will create it for you.
+* `LIST_TYPE` refers to 'people', 'locations' or 'visits'.
+  * The prefix `l/` is also used for [listing data](#listing-data-list)
+* The CSV file will have its data in [VirusTracker readable format](#format-for-csv-files).
+* If you do not specify an absolute path, the file may be **created at an unexpected place!**
+
+Examples:
+* `exportToCsv C:/Users/alice/Desktop/peopleToAdd.csv l/people` creates a people data CSV file named `peopleToAdd.csv`
+* `exportToCsv D:/visits on Dec 20.csv l/visits` creates a visit data CSV file named `visits on Dec 20.csv`
+
+### Format for CSV files
+
+As data can be formatting differently from file to file, VirusTracker specifies a certain format for CSV files to be imported.
+
+* Depending on the entity, the format for each row will follow its relevant `add` command.
+  * For example, for a CSV file adding locations, each row will correspond to an individual [addLocation](#adding-a-location) command format.
+  ![Example Location CSV](images/ExampleCSVLocations.png)
+  * As you can see from the figure above, each row is a valid `addLocation` command, with the command word omitted. 
+  * Each column corresponds to a field in `addLocation` format.
+  * As with the commands themselves, the order of the arguments do not matter.
+  * You **MAY NOT** have data of different formats in the same CSV file. (i.e. adding people from rows 1 to 4, then locations from 5 to 8, etc.)
+
+The conversion of pre-existing data to the required CSV format may require a bit of effort. Below are some tips to guide you along.
+* It is recommended to create a new CSV file for importing instead of using the pre-existing data file to prevent data loss.
+* Copy the rows of relevant data (name, addresses, dates, etc) into the new file.
+* Using Excel functions, you can prepend the required prefixes to each data field.
+* CSV files exported by VirusTracker already have this format and do not need to be reformatted.
+
+#### Using Excel to add prefixes
+
+The data present may be in a different format than what VirusTracker requires. Hence, below is a step by step guide to convert the common 
+types of data fields to their required format.
+
+The diagram below shows possible data columns pre-formatting. Column A represents a `PERSON_ID` and Column B represents `DATE` in this case.
+
+![Format CSV 1](images/FormatCSV/FormatCsv1.png)
+
+Find an empty column, and type the function in the diagram shown below.
+
+![Format CSV 2](images/FormatCSV/FormatCsv2.png)
+
+Upon pressing enter, you should see that the prefix has been prepended to the first item in column A as shown below.
+
+![Format CSV 3](images/FormatCSV/FormatCsv3.png)
+
+You may then click the bottom right corner of the formatted cell, C1 in this case, and drag downwards to fill the remaining cells.
+Alternatively, you could also choose `Fill` -> `Down` from the menu bar.
+ 
+ You should see a result similar to below.
+
+![Format CSV 4](images/FormatCSV/FormatCsv4.png)
+
+For date fields, the format of the function is slightly different. The date has to be formatted to the correct date format in addition
+to being prepended with the date prefix.
+
+The below function in the diagram **only works if the field is a date.**
+
+![Format CSV 5](images/FormatCSV/FormatCsv5.png)
+
+You may then similarly fill the cells as shown in the two diagrams below.
+
+![Format CSV 6](images/FormatCSV/FormatCsv6.png)
+
+![Format CSV 7](images/FormatCSV/FormatCsv7.png)
+
+#### Replacing the data
+
+After creating the formatted data, you may be tempted to directly copy the new data into the column containing the preformatted data.
+
+However, this would result in an error as the formatted data is currently referencing the old data. To fix this, we should paste the values using
+`Paste Special`.
+
+For example, if you wished to copy formatted data from column C to column A, right click on A as shown below.
+
+![Format CSV 8](images/FormatCSV/FormatCsv8.png)
+
+Select `Paste Special` -> `Values` as shown below.
+
+![Format CSV 9](images/FormatCSV/FormatCsv9.png)
+
+Column A now has the formatted data and column C can be deleted.
+
+![Format CSV 10](images/FormatCSV/FormatCsv10.png)
 
 ### Deleting data: `delete`
 To delete data from VirusTracker, there are various `delete` commands that could be used.
@@ -375,6 +512,13 @@ _{explain the feature here}_
 
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
+
+--------------------------------------------------------------------------------------------------------------------
+## Glossary
+Term | Meaning
+--------|------------------
+Entity | Refers to people, locations or visits
+
 
 --------------------------------------------------------------------------------------------------------------------
 
