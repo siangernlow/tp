@@ -7,6 +7,7 @@ import java.util.List;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.InfoHandler;
 import seedu.address.model.Model;
 import seedu.address.model.ModelPredicate;
 import seedu.address.model.attribute.Id;
@@ -38,6 +39,8 @@ public class GenerateLocationsCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        InfoHandler infoHandler = new InfoHandler(model);
+
         if (personId.getZeroBased() >= model.getSortedPersonList().size()) {
             throw new CommandException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
@@ -47,11 +50,11 @@ public class GenerateLocationsCommand extends Command {
             throw new CommandException(MESSAGE_PERSON_IS_NOT_INFECTED);
         }
         Id personIdFromBook = infectedPerson.getId();
-        VisitBook visitsByPerson = model.getInfoHandler().generateVisitsByPerson(personIdFromBook);
+        VisitBook visitsByPerson = infoHandler.generateVisitsByPerson(personIdFromBook);
         if (visitsByPerson.getVisitList().isEmpty()) {
             throw new CommandException(MESSAGE_PERSON_HAS_NO_VISITS);
         }
-        List<Id> locationIds = model.getInfoHandler().generateLocationIdsByVisitBook(visitsByPerson);
+        List<Id> locationIds = infoHandler.generateLocationIdsByVisitBook(visitsByPerson);
         model.updateFilteredLocationList(ModelPredicate.getPredicateShowLocationsById(locationIds));
         return new CommandResult(
                 "Generated locations for: " + infectedPerson.getName(),

@@ -211,7 +211,7 @@ public class AddVisitsFromCsvCommandTest {
         }
 
         @Override
-        public Person getPersonFromId(Id id) {
+        public Person getPersonById(Id id) {
             for (Person person : personListToCheck) {
                 if (person.getId().equals(id)) {
                     return person;
@@ -221,7 +221,7 @@ public class AddVisitsFromCsvCommandTest {
         }
 
         @Override
-        public Location getLocationFromId(Id id) {
+        public Location getLocationById(Id id) {
             for (Location location : locationListToCheck) {
                 if (location.getId().equals(id)) {
                     return location;

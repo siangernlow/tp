@@ -4,14 +4,15 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents an Id that uniquely identifies a person or a location.
+ * Represents an Id that uniquely identifies either a {@code #Person} or {@code Location}.
  * Guarantees: immutable; is valid as declared in {@link #isValidId(String)}
  */
 public class Id {
-    public static final String MESSAGE_CONSTRAINTS = "Ids can take any values, and it should not be blank";
+
+    public static final String MESSAGE_CONSTRAINTS = "Ids can take any values, and it should not be blank.";
 
     /*
-     * The first character of the id must not be a whitespace,
+     * The first character of the Id must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String VALIDATION_REGEX = "[^\\s].*";
@@ -21,7 +22,7 @@ public class Id {
     /**
      * Constructs an {@code Id}.
      *
-     * @param id A valid id.
+     * @param id A valid Id.
      */
     public Id(String id) {
         requireNonNull(id);
@@ -30,7 +31,7 @@ public class Id {
     }
 
     /**
-     * Returns true if a given string is a valid id.
+     * Returns true if a given string is a valid Id.
      */
     public static boolean isValidId(String test) {
         return test.matches(VALIDATION_REGEX);

@@ -44,19 +44,18 @@ public class UniqueLocationListTest {
     @Test
     public void contains_locationWithSameIdentityFieldsInList_returnsTrue() {
         uniqueLocationList.add(ALICE_LOCATION);
-        Location editedAlice = new LocationBuilder(ALICE_LOCATION).withAddress(VALID_ADDRESS_BOB)
-                .withId(VALID_ID_BOB_LOCATION).build();
+        Location editedAlice = new LocationBuilder(ALICE_LOCATION).withId(VALID_ID_BOB_LOCATION).build();
         assertTrue(uniqueLocationList.contains(editedAlice));
     }
 
     @Test
     public void containsSameIdLocation_nullLocation_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> uniqueLocationList.containsSameIdLocation(null));
+        assertThrows(NullPointerException.class, () -> uniqueLocationList.containsLocationId(null));
     }
 
     @Test
     public void containsSameIdLocation_locationNotInList_returnsFalse() {
-        assertFalse(uniqueLocationList.containsSameIdLocation(ALICE_LOCATION));
+        assertFalse(uniqueLocationList.containsLocationId(ALICE_LOCATION.getId()));
     }
 
     @Test
@@ -64,14 +63,14 @@ public class UniqueLocationListTest {
         uniqueLocationList.add(ALICE_LOCATION);
         Location editedAlice = new LocationBuilder(ALICE_LOCATION).withAddress(VALID_ADDRESS_BOB)
                 .withName(VALID_NAME_BOB).build();
-        assertTrue(uniqueLocationList.containsSameIdLocation(editedAlice));
+        assertTrue(uniqueLocationList.containsLocationId(editedAlice.getId()));
     }
 
     @Test
     public void containsSameIdLocation_sameIdentityDifferentId_returnsFalse() {
         uniqueLocationList.add(ALICE_LOCATION);
         Location editedAlice = new LocationBuilder(ALICE_LOCATION).withId(VALID_ID_BOB_LOCATION).build();
-        assertFalse(uniqueLocationList.containsSameIdLocation(editedAlice));
+        assertFalse(uniqueLocationList.containsLocationId(editedAlice.getId()));
     }
 
     @Test

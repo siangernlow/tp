@@ -81,11 +81,11 @@ public class PersonTest {
         editedAlice = new PersonBuilder(ALICE).withName(VALID_NAME_BOB).build();
         assertTrue(ALICE.isSameId(editedAlice));
 
-        // different id, same name, same phone, different attributes -> returns false
+        // different id, same name, same phone, different attributes -> returns true
         editedAlice = new PersonBuilder(ALICE).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withQuarantineStatus(VALID_QUARANTINE_STATUS_BOB).withTags(VALID_TAG_HUSBAND)
                 .withInfectionStatus(VALID_INFECTION_STATUS_BOB).withId(VALID_ID_BOB).build();
-        assertFalse(ALICE.isSamePerson(editedAlice));
+        assertTrue(ALICE.isSamePerson(editedAlice));
 
         // same id, same name, same email, different attributes -> returns true
         editedAlice = new PersonBuilder(ALICE).withPhone(VALID_PHONE_BOB).withAddress(VALID_ADDRESS_BOB)

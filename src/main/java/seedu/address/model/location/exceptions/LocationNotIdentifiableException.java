@@ -6,6 +6,6 @@ package seedu.address.model.location.exceptions;
  */
 public class LocationNotIdentifiableException extends RuntimeException {
     public LocationNotIdentifiableException() {
-        super("Operation would result in unidentifiable locations");
+        super("Operation would result in locations with the same Id values.");
     }
 }
