@@ -318,6 +318,16 @@ public class AddVisitCommandTest {
         }
 
         @Override
+        public boolean hasPersonId(Id id) {
+            return true;
+        }
+
+        @Override
+        public boolean hasLocationId(Id id) {
+            return true;
+        }
+
+        @Override
         public Person getPersonFromIndex(Index index) {
             if (index.equals(DEFAULT_PERSON_INDEX)) {
                 return DEFAULT_PERSON;
@@ -338,12 +348,12 @@ public class AddVisitCommandTest {
         }
 
         @Override
-        public Location getLocationFromId(Id id) {
+        public Location getLocationById(Id id) {
             return DEFAULT_LOCATION;
         }
 
         @Override
-        public Person getPersonFromId(Id id) {
+        public Person getPersonById(Id id) {
             return DEFAULT_PERSON;
         }
 

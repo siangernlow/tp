@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ModelStub;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
 import seedu.address.model.location.LocationBook;
 import seedu.address.model.location.ReadOnlyLocationBook;
@@ -100,6 +101,12 @@ public class AddLocationCommandTest {
         public boolean hasLocation(Location location) {
             requireNonNull(location);
             return locationsAdded.stream().anyMatch(location::isSameLocation);
+        }
+
+        @Override
+        public boolean hasLocationId(Id id) {
+            requireNonNull(id);
+            return locationsAdded.stream().anyMatch(l -> l.getId().equals(id));
         }
 
         @Override

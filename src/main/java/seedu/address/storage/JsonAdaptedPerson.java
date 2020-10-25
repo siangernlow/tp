@@ -66,8 +66,8 @@ class JsonAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
-        quarantineStatus = source.getQuarantineStatus().value;
-        infectionStatus = source.getInfectionStatus().getStatusAsString();
+        quarantineStatus = source.getQuarantineStatus().toString();
+        infectionStatus = source.getInfectionStatus().toString();
         id = source.getId().toString();
         tagged.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)

@@ -12,10 +12,10 @@ import seedu.address.model.person.Person;
 import seedu.address.model.visit.Visit;
 
 /**
- * Contains predicates used by the model to filter
- * the relevant lists.
+ * Contains predicates used by the model to filter the relevant lists.
  */
 public class ModelPredicate {
+
     /** {@code Predicate} that always evaluate to true */
     // Code duplications in the three lines below; future refactoring should take note of this.
     public static final Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
@@ -23,10 +23,8 @@ public class ModelPredicate {
     public static final Predicate<Visit> PREDICATE_SHOW_ALL_VISITS = unused -> true;
 
     /** {@code Predicate} to handle person list */
-    public static final Predicate<Person> PREDICATE_SHOW_ALL_INFECTED =
-        person -> person.getInfectionStatus().getStatusAsBoolean();
-    public static final Predicate<Person> PREDICATE_SHOW_ALL_QUARANTINED =
-        person -> person.getQuarantineStatus().getStatusAsBoolean();
+    public static final Predicate<Person> PREDICATE_SHOW_ALL_INFECTED = Person::isInfected;
+    public static final Predicate<Person> PREDICATE_SHOW_ALL_QUARANTINED = Person::isQuarantined;
 
     /** {@code Predicate} for filtering out the infected visits from all visits */
     public static Predicate<Visit> getPredicateForInfectedVisits(HashSet<Id> infectedIds) {
