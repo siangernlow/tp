@@ -57,26 +57,26 @@ public class UniquePersonListTest {
 
     @Test
     public void containsSameIdPerson_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> uniquePersonList.containsSameIdPerson(null));
+        assertThrows(NullPointerException.class, () -> uniquePersonList.containsPersonId(null));
     }
 
     @Test
     public void containsSameIdPerson_personNotInList_returnsFalse() {
-        assertFalse(uniquePersonList.containsSameIdPerson(ALICE));
+        assertFalse(uniquePersonList.containsPersonId(ALICE.getId()));
     }
 
     @Test
     public void containsSameIdPerson_sameIdInList_returnsTrue() {
         uniquePersonList.add(ALICE);
         Person editedPerson = new PersonBuilder(ALICE).build();
-        assertTrue(uniquePersonList.containsSameIdPerson(editedPerson));
+        assertTrue(uniquePersonList.containsPersonId(editedPerson.getId()));
     }
 
     @Test
     public void containsSameIdPerson_differentId_returnsFalse() {
         uniquePersonList.add(ALICE);
         Person editedPerson = new PersonBuilder(ALICE).withId(VALID_ID_BOB).build();
-        assertFalse(uniquePersonList.containsSameIdPerson(editedPerson));
+        assertFalse(uniquePersonList.containsPersonId(editedPerson.getId()));
     }
 
     @Test
@@ -84,7 +84,7 @@ public class UniquePersonListTest {
         uniquePersonList.add(ALICE);
         Person editedPerson = new PersonBuilder(ALICE).withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .build();
-        assertTrue(uniquePersonList.containsSameIdPerson(editedPerson));
+        assertTrue(uniquePersonList.containsPersonId(editedPerson.getId()));
     }
 
     @Test

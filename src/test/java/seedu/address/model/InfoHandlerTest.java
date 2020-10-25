@@ -205,7 +205,7 @@ public class InfoHandlerTest {
         onePersonList.add(AMY);
         ModelStubListsWithOneObject model =
                 new ModelStubListsWithOneObject(onePersonList, null, null);
-        InfoHandler infoHandler = model.getInfoHandler();
+        InfoHandler infoHandler = new InfoHandler(model);
 
         String expectedMessage =
             PREFIX_PERSON_ID + VALID_ID_AMY + ","
@@ -226,7 +226,7 @@ public class InfoHandlerTest {
         oneLocationList.add(AMY_LOCATION);
         ModelStubListsWithOneObject model =
                 new ModelStubListsWithOneObject(null, oneLocationList, null);
-        InfoHandler infoHandler = model.getInfoHandler();
+        InfoHandler infoHandler = new InfoHandler(model);
 
         String expectedMessage =
             PREFIX_LOCATION_ID + VALID_ID_AMY_LOCATION + ","
@@ -242,7 +242,7 @@ public class InfoHandlerTest {
         oneVisitList.add(SECOND_VISIT);
         ModelStubListsWithOneObject model =
                 new ModelStubListsWithOneObject(null, null, oneVisitList);
-        InfoHandler infoHandler = model.getInfoHandler();
+        InfoHandler infoHandler = new InfoHandler(model);
 
         String expectedMessage =
             PREFIX_PERSON_ID + VALID_ID_AMY + ","
@@ -289,11 +289,6 @@ public class InfoHandlerTest {
         @Override
         public ObservableList<Visit> getSortedVisitList() {
             return visitsList;
-        }
-
-        @Override
-        public InfoHandler getInfoHandler() {
-            return infoHandler;
         }
 
         @Override

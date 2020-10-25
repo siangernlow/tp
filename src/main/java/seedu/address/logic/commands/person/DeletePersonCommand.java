@@ -20,7 +20,7 @@ import seedu.address.model.person.Person;
  */
 public class DeletePersonCommand extends Command {
 
-    public static final String COMMAND_WORD = "delete";
+    public static final String COMMAND_WORD = "deletePerson";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the person identified by the index number used in the displayed person list.\n"
@@ -75,17 +75,10 @@ public class DeletePersonCommand extends Command {
     }
 
     private Person getPersonToDelete(Id id, Model model) throws CommandException {
-        List<Person> lastShownList = model.getUnfilteredPersonList();
-        Optional<Person> personToDelete = Optional.empty();
-        for (Person p : lastShownList) {
-            if (p.getId().equals(id)) {
-                personToDelete = Optional.of(p);
-            }
-        }
-        if (personToDelete.isEmpty()) {
+        if (!model.hasPersonId(id)) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_ID);
         }
-        return personToDelete.get();
+        return model.getPersonById(id);
     }
 
     private Person getPersonToDelete(Index index, Model model) throws CommandException {
@@ -94,7 +87,7 @@ public class DeletePersonCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        return lastShownList.get(index.getZeroBased());
+        return model.getPersonFromIndex(index);
     }
 
     @Override

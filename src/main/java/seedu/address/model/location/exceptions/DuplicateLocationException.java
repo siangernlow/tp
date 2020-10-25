@@ -6,6 +6,6 @@ package seedu.address.model.location.exceptions;
  */
 public class DuplicateLocationException extends RuntimeException {
     public DuplicateLocationException() {
-        super("Operation would result in duplicate locations");
+        super("Operation would result in duplicate locations.");
     }
 }

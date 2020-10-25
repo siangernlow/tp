@@ -49,7 +49,7 @@ public class QuarantineStatusTest {
         assertTrue(quarantineStatus.equals(quarantineStatus));
 
         // same values -> returns true
-        QuarantineStatus quarantineStatusCopy = new QuarantineStatus(quarantineStatus.value);
+        QuarantineStatus quarantineStatusCopy = new QuarantineStatus(quarantineStatus.toString());
         assertTrue(quarantineStatus.equals(quarantineStatusCopy));
 
         // different types -> returns false

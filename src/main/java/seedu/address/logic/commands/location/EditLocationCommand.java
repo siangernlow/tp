@@ -66,7 +66,7 @@ public class EditLocationCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_LOCATION_DISPLAYED_INDEX);
         }
 
-        Location locationToEdit = lastShownList.get(index.getZeroBased());
+        Location locationToEdit = model.getLocationFromIndex(index);
         Location editedLocation = createEditedLocation(locationToEdit, editLocationDescriptor);
 
         if (!locationToEdit.isSameLocation(editedLocation) && model.hasLocation(editedLocation)) {

@@ -61,7 +61,7 @@ public class PersonCard extends UiPart<Region> {
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
         quarantineStatus.setText("Quarantine Status: " + person.getQuarantineStatus().toString());
-        infectionStatus.setText("Infected: " + person.getInfectionStatus().getStatusAsString());
+        infectionStatus.setText("Infected: " + person.getInfectionStatus().toString());
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
