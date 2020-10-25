@@ -147,11 +147,18 @@ If you are importing data from a pre-existing Excel file, you may have to first 
 
 You may read more about it [here](#format-for-csv-files).
 
+<div markdown="span" class="alert alert-primary">:bulb: **Note:**
+As visits rely on people and locations, it is recommended that person and location data csv files be added before visits so
+as to ensure that the referenced people and locations in the visits data csv file exist.
+</div>
+
+
 Format: `addFromCsv FILE_PATH l/LIST_TYPE`
 
 * `FILE_PATH` refers to the absolute file path where the CSV file resides.
   * For example, if you wish to import data from `personList.csv` located in your desktop, the absolute file path could look
-  something like this: `C:/Users/user/Desktop/personList.csv` _(for Windows)_
+  something like this: `C:/Users/user/Desktop/personList.csv` _(for Windows)_, `/Users/admin/Documents/personList.csv` _(for MacOS)_,
+  `/home/user/docs/personList.csv` _(for Linux)_
   * You may **find the absolute file path** as follows
     1. Right-click your file `E.g. personList.csv`
     2. Select 'Properties'
@@ -160,6 +167,8 @@ Format: `addFromCsv FILE_PATH l/LIST_TYPE`
 * `LIST_TYPE` refers to 'people', 'locations' or 'visits'.
   * The prefix `l/` is also used for [listing data](#listing-data-list)
 * The CSV file should have its data in [VirusTracker readable format](#format-for-csv-files).
+  * For visits data, the format used references the id of the people and locations. The format using
+  list indexing is not supported.
 * If you do not specify an absolute path, VirusTracker **may not be able to find your file!**
 
 Examples:
@@ -185,7 +194,7 @@ Format: `exportToCsv FILE_PATH l/LIST_TYPE`
 
 Examples:
 * `exportToCsv C:/Users/alice/Desktop/peopleToAdd.csv l/people` creates a people data CSV file named `peopleToAdd.csv`
-* `addFromCsv D:/visits on Dec 20.csv l/visits` creates a visit data CSV file named `visits on Dec 20.csv`
+* `exportToCsv D:/visits on Dec 20.csv l/visits` creates a visit data CSV file named `visits on Dec 20.csv`
 
 ### Format for CSV files
 
