@@ -284,6 +284,7 @@ Format: `delete idp/PERSON_ID`
 * `PERSON_INDEX` refers to the index of the person as viewed from the most recently displayed people list.
 * The index **must be a positive integer** 1, 2, 3, …​
 * `PERSON_ID` must belong to a person within VirusTracker.
+* All visits made by the specified person would also be deleted.
 
 Examples:
 * `list l/infected` followed by `delete 2` deletes the 2nd infected person in the displayed people list.
@@ -301,6 +302,7 @@ Format: `deleteLocation idl/LOCATION_ID`
 * `LOCATION_INDEX` refers to the index of the location as viewed from the most recently displayed location list.
 * The index **must be a positive integer** 1, 2, 3, …​
 * `LOCATION_ID` must belong to a location within VirusTracker.
+* All visits that contains the specified locations would also be deleted.
 
 Examples:
 * `list l/infected` followed by `deleteLocation 2` deletes the 2nd location in the displayed location list.
@@ -415,26 +417,6 @@ Examples:
 * `addLocation n/Vivocity a/John street, block 123, #01-01`
 * `addLocation n/Betsy Crowe's House a/Newgate Prison`
 
-### Generating all locations visited by a person: `generateLocations`
-
-Shows a list of locations visited by an infected person in the past 2 weeks. 
-
-Format: `listAllLocationsVisited LOCATION_INDEX`
-
-* Locations listed were visited by the infected person of the index given.
-* The result given is a filtered list of locations that the person visited in the past 2 weeks.
-* This function can be used to identify locations needing to be disinfected after being visited by an infected person.
-
-### Generating all people in contact with an infected person: `generatePeople`
-
-Shows a list of people who were in contact with an infected person in the past 2 weeks. 
-
-Format `listAllPersonsInContact PERSON_INDEX`
-
-* People listed were in contact with the infected person of the index given.
-* The result given is a filtered list of people who visited the same locations as that the infected person in the past 2 weeks.
-* This function can be used to identify people who need to be quarantined or issued Stay Home Notices.
-
 #### Listing high risk locations
 
 Lists the locations with high risk of Covid infection.
@@ -464,11 +446,21 @@ Format: `list l/stats`
     3. Percentage of people infected/quarantined
 * The above provides a brief summary of the pandemic and is subject to extension.
 
+### Generating all locations visited by a person: `generateLocations`
+
+Shows a list of locations visited by an infected person in the past 2 weeks. 
+
+Format: `listAllLocationsVisited LOCATION_INDEX`
+
+* Locations listed were visited by the infected person of the index given.
+* The result given is a filtered list of locations that the person visited in the past 2 weeks.
+* This function can be used to identify locations needing to be disinfected after being visited by an infected person.
+
 ### Generating all people in contact with an infected person: `generatePeople`
 
-Shows a list of people who where in contact with an infected person in the past 2 weeks. 
+Shows a list of people who were in contact with an infected person in the past 2 weeks. 
 
-Format: `generatePeople INDEX`
+Format `listAllPersonsInContact PERSON_INDEX`
 
 * People listed were in contact with the infected person of the index given.
 * The result given is a filtered list of people who visited the same locations as that the infected person in the past 2 weeks.
