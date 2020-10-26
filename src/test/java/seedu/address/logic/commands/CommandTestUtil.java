@@ -117,19 +117,19 @@ public class CommandTestUtil {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
                 .withQuarantineStatus(VALID_QUARANTINE_STATUS_AMY).withInfectionStatus(VALID_INFECTION_STATUS_AMY)
-                .withId(VALID_ID_AMY).withTags(VALID_TAG_FRIEND).build();
+                .withTags(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withQuarantineStatus(VALID_QUARANTINE_STATUS_BOB).withInfectionStatus(VALID_INFECTION_STATUS_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
-                .withId(VALID_ID_BOB).build();
+                .build();
     }
 
     static {
         DESC_NUS = new EditLocationDescriptorBuilder().withName(VALID_NAME_NUS)
-                .withAddress(VALID_ADDRESS_NUS).withId(VALID_ID_NUS).build();
+                .withAddress(VALID_ADDRESS_NUS).build();
         DESC_VIVOCITY = new EditLocationDescriptorBuilder().withName(VALID_NAME_VIVOCITY)
-                .withAddress(VALID_ADDRESS_VIVOCITY).withId(VALID_ID_VIVOCITY).build();
+                .withAddress(VALID_ADDRESS_VIVOCITY).build();
     }
 
     /**
