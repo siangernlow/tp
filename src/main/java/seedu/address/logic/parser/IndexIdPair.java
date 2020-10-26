@@ -25,6 +25,7 @@ public class IndexIdPair extends ReadOnlyIndexIdPair {
 
     public static final String MESSAGE_INVALID_PERSON_COMMAND_USE = "This pair refers to a location, not a person.";
     public static final String MESSAGE_INVALID_LOCATION_COMMAND_USE = "This pair refers to a person, not a location.";
+    public static final String MESSAGE_NO_ID_NOR_INDEX = "User input has neither Id nor index.";
 
     private Prefix prefix;
 
@@ -43,10 +44,12 @@ public class IndexIdPair extends ReadOnlyIndexIdPair {
             Id id = ParserUtil.parseId(argMultimap.getValue(prefix).get());
             indexOpt = Optional.empty();
             idOpt = Optional.of(id);
-        } else {
+        } else if (!argMultimap.getPreamble().isBlank()) {
             Index index = ParserUtil.parseIndex(argMultimap.getPreamble());
             indexOpt = Optional.of(index);
             idOpt = Optional.empty();
+        } else {
+            throw new ParseException(MESSAGE_NO_ID_NOR_INDEX);
         }
     }
 
@@ -62,7 +65,6 @@ public class IndexIdPair extends ReadOnlyIndexIdPair {
      */
     public static boolean checkIndexOrIdOnly(ArgumentMultimap argMultimap, Prefix prefix) {
         boolean hasId = argMultimap.getValue(prefix).isPresent();
-        String s = argMultimap.getPreamble();
         boolean hasIndex = !argMultimap.getPreamble().isBlank();
         return (hasId && !hasIndex) || (!hasId && hasIndex);
     }
@@ -123,13 +125,5 @@ public class IndexIdPair extends ReadOnlyIndexIdPair {
 
             return model.getLocationById(idOpt.get());
         }
-    }
-
-    /**
-     * Get the prefix used.
-     * Use this method to identify the object that this Pair is referring to.
-     */
-    public Prefix getPrefix() {
-        return prefix;
     }
 }
