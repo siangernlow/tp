@@ -25,6 +25,7 @@ public class IndexIdPair extends ReadOnlyIndexIdPair {
 
     public static final String MESSAGE_INVALID_PERSON_COMMAND_USE = "This pair refers to a location, not a person.";
     public static final String MESSAGE_INVALID_LOCATION_COMMAND_USE = "This pair refers to a person, not a location.";
+    public static final String MESSAGE_PREFIX_NOT_SUPPORTED = "This prefix is not supported.";
     public static final String MESSAGE_NO_ID_NOR_INDEX = "User input has neither Id nor index.";
 
     private Prefix prefix;
@@ -38,7 +39,11 @@ public class IndexIdPair extends ReadOnlyIndexIdPair {
      */
     public IndexIdPair(ArgumentMultimap argMultimap, Prefix prefix) throws ParseException {
         requireAllNonNull(argMultimap, prefix);
-        this.prefix = prefix;
+        if (prefix.equals(PREFIX_LOCATION_ID) || prefix.equals(PREFIX_PERSON_ID)) {
+            this.prefix = prefix;
+        } else {
+            throw new ParseException(MESSAGE_PREFIX_NOT_SUPPORTED);
+        }
 
         if (argMultimap.getValue(prefix).isPresent()) {
             Id id = ParserUtil.parseId(argMultimap.getValue(prefix).get());

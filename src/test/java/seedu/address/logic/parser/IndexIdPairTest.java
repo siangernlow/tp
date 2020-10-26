@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_QUARANTINE_STATUS;
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
@@ -105,6 +106,13 @@ public class IndexIdPairTest {
         } catch (ParseException pe) {
             throw new IllegalArgumentException("Invalid userInput.", pe);
         }
+    }
+
+    @Test
+    public void constructor_invalidPrefix_throwParseException() {
+        argMultimap = ArgumentTokenizer.tokenize(personIdString, PREFIX_PERSON_ID);
+        assertThrows(ParseException.class, IndexIdPair.MESSAGE_PREFIX_NOT_SUPPORTED, () ->
+                new IndexIdPair(argMultimap, PREFIX_QUARANTINE_STATUS));
     }
 
     @Test

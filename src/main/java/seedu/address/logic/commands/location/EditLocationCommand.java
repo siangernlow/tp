@@ -39,7 +39,7 @@ public class EditLocationCommand extends Command {
             + PREFIX_ADDRESS + "21 Lower Kent Ridge Rd, Singapore 119077\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_NAME + "National University of Singapore "
-            + PREFIX_ADDRESS + "21 Lower Kent Ridge Rd, Singapore 119077";;
+            + PREFIX_ADDRESS + "21 Lower Kent Ridge Rd, Singapore 119077";
 
     public static final String MESSAGE_EDIT_LOCATION_SUCCESS = "Edited Location: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
