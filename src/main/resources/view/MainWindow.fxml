@@ -7,11 +7,15 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.stage.Stage?>
 
-<fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-         title="VirusTracker" minWidth="450" minHeight="600" onCloseRequest="#handleExit">
+<fx:root minHeight="600" minWidth="450" onCloseRequest="#handleExit" title="VirusTracker" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <icons>
     <Image url="@/images/virus_32.png" />
   </icons>
@@ -22,35 +26,144 @@
         <URL value="@Extensions.css" />
       </stylesheets>
 
-      <VBox>
-        <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
-          <Menu mnemonicParsing="false" text="File">
-            <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
-          </Menu>
-        </MenuBar>
+      <VBox alignment="CENTER_LEFT">
+            <HBox prefHeight="42.0" prefWidth="1020.0" styleClass="menu-bar-custom">
+               <children>
+                  <HBox prefHeight="43.0" prefWidth="19.0" />
+                  <ImageView fitHeight="43.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true" styleClass="menu-item-custom">
+                     <image>
+                        <Image url="@../images/virus_32.png" />
+                     </image>
+                  </ImageView>
+                  <HBox prefHeight="43.0" prefWidth="161.0" styleClass="menu-item-custom">
+                     <children>
+                        <Text fill="#15b1bd" strokeType="OUTSIDE" strokeWidth="0.0" text="Virus">
+                           <font>
+                              <Font name="Segoe UI Bold" size="25.0" />
+                           </font>
+                        </Text>
+                        <Text fill="#424242" strokeType="OUTSIDE" strokeWidth="0.0" text="Tracker">
+                           <font>
+                              <Font name="Segoe UI Bold" size="25.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </HBox>
+              <MenuBar fx:id="menuBar" prefHeight="39.0" prefWidth="133.0" styleClass="menu-item-custom">
+                <Menu mnemonicParsing="false" text="File">
+                  <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
+                </Menu>
+              </MenuBar>
+               </children>
+            </HBox>
 
-        <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
+        <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
           <padding>
-            <Insets top="5" right="10" bottom="5" left="10" />
+            <Insets bottom="5" left="10" right="10" top="5" />
           </padding>
         </StackPane>
 
-        <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
-                   minHeight="100" prefHeight="100" maxHeight="100">
+        <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" styleClass="pane-with-border" VBox.vgrow="NEVER">
           <padding>
-            <Insets top="5" right="10" bottom="5" left="10" />
+            <Insets bottom="5" left="10" right="10" top="5" />
           </padding>
         </StackPane>
 
-        <VBox fx:id="list" styleClass="pane-with-border" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS">
-          <padding>
-            <Insets top="10" right="10" bottom="10" left="10" />
-          </padding>
-          <StackPane fx:id="listPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-        </VBox>
+        <HBox prefHeight="100.0" prefWidth="200.0" styleClass="list-panel-area" VBox.vgrow="ALWAYS">
+          <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <HBox prefHeight="78.0" prefWidth="340.0" styleClass="list-panel-title">
+                           <children>
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Persons" wrappingWidth="80.287109375">
+                                 <font>
+                                    <Font name="Segoe UI Bold" size="22.0" />
+                                 </font>
+                              </Text>
+                              <HBox alignment="CENTER_RIGHT" prefHeight="34.0" prefWidth="239.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/person-icon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                  <VBox fx:id="list" minWidth="340" prefWidth="340" styleClass="pane-with-border">
+                    <padding>
+                      <Insets bottom="10" left="10" right="10" top="10" />
+                    </padding>
+                    <StackPane fx:id="personListPanelPlaceholder" styleClass="pane-with-border" VBox.vgrow="ALWAYS" />
+                  </VBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <HBox prefHeight="78.0" prefWidth="340.0" styleClass="list-panel-title">
+                           <children>
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Locations" wrappingWidth="106.6871337890625">
+                                 <font>
+                                    <Font name="Segoe UI Bold" size="22.0" />
+                                 </font>
+                              </Text>
+                              <HBox alignment="CENTER_RIGHT" prefHeight="34.0" prefWidth="311.0">
+                                 <children>
+                                    <ImageView fitHeight="33.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/location-icon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                  <VBox fx:id="list1" minWidth="340" prefWidth="340" styleClass="pane-with-border">
+                    <padding>
+                      <Insets bottom="10" left="10" right="10" top="10" />
+                    </padding>
+                    <children>
+                      <StackPane fx:id="locationListPanelPlaceholder" styleClass="pane-with-border" VBox.vgrow="ALWAYS" />
+                    </children>
+                  </VBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <HBox prefHeight="78.0" prefWidth="340.0" styleClass="list-panel-title">
+                           <children>
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Visits" wrappingWidth="106.6871337890625">
+                                 <font>
+                                    <Font name="Segoe UI Bold" size="22.0" />
+                                 </font>
+                              </Text>
+                              <HBox alignment="CENTER_RIGHT" prefHeight="34.0" prefWidth="311.0">
+                                 <children>
+                                    <ImageView fitHeight="33.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/visit-icon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                  <VBox fx:id="list2" minWidth="340" prefWidth="340" styleClass="pane-with-border">
+                    <padding>
+                      <Insets bottom="10" left="10" right="10" top="10" />
+                    </padding>
+                    <children>
+                      <StackPane fx:id="visitListPanelPlaceholder" styleClass="pane-with-border" VBox.vgrow="ALWAYS" />
+                    </children>
+                  </VBox>
+                     </children>
+                  </VBox>
+          </children>
+        </HBox>
 
         <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
       </VBox>

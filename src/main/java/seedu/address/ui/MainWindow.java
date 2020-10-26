@@ -47,7 +47,13 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane listPanelPlaceholder;
+    private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane locationListPanelPlaceholder;
+
+    @FXML
+    private StackPane visitListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -116,10 +122,13 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
         personListPanel = new PersonListPanel(logic.getSortedPersonList());
-        listPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         locationListPanel = new LocationListPanel(logic.getSortedLocationList());
+        locationListPanelPlaceholder.getChildren().add(locationListPanel.getRoot());
+
         visitListPanel = new VisitListPanel(logic.getSortedVisitList());
+        visitListPanelPlaceholder.getChildren().add(visitListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -195,18 +204,18 @@ public class MainWindow extends UiPart<Stage> {
             }
 
             if (commandResult.getSwitchState().equals(CommandResult.SWITCH_TO_VIEW_PEOPLE)) {
-                listPanelPlaceholder.getChildren().clear();
-                listPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+                personListPanelPlaceholder.getChildren().clear();
+                personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
             }
 
             if (commandResult.getSwitchState().equals(CommandResult.SWITCH_TO_VIEW_LOCATIONS)) {
-                listPanelPlaceholder.getChildren().clear();
-                listPanelPlaceholder.getChildren().add(locationListPanel.getRoot());
+                locationListPanelPlaceholder.getChildren().clear();
+                locationListPanelPlaceholder.getChildren().add(locationListPanel.getRoot());
             }
 
             if (commandResult.getSwitchState().equals(CommandResult.SWITCH_TO_VIEW_VISITS)) {
-                listPanelPlaceholder.getChildren().clear();
-                listPanelPlaceholder.getChildren().add(visitListPanel.getRoot());
+                visitListPanelPlaceholder.getChildren().clear();
+                visitListPanelPlaceholder.getChildren().add(visitListPanel.getRoot());
             }
 
             return commandResult;
