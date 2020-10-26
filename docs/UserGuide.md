@@ -2,25 +2,29 @@
 layout: page
 title: User Guide
 ---
+* Table of Contents
+{:toc}
+---
 
-VirusTracker is a **desktop app for generating statistics for Covid-19, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI).
-VirusTracker can help you generate various statistics on the pandemic quickly and easily with a few simple commands.
+**VirusTracker** is a **desktop app for generating statistics for Covid-19, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI).
+It is mainly targeted towards healthcare officials who are handling large amounts of data due to the pandemic.
+VirusTracker aims to provide a faster and quicker alternative to common data entry programs.
 
-## **Table of Contents**
-* Quick Start
-* Features
-    1. Adding data: `add`
-    2. Deleting data: `delete`
-    3. Editing data: `edit`
-    4. Finding data: `find`
-    5. Listing data: `list`
-    6. Generating people in contact with an infected person: `generatePeople`
-    7. Generating locations an infected person has been to: `generateLocations`
-    8. Clearing the current list: `clear`
-    9. Viewing help: `help`
-    10. Exiting the program: `exit`
-* Command Summary
 --------------------------------------------------------------------------------------------------------------------
+## Preface
+
+Welcome to the user guide on VirusTracker.
+
+This guide will guide you through the different features that VirusTracker has to offer.
+VirusTracker works with three main entities:
+* People
+* Locations
+* Visits
+
+The recommended way for you to use VirusTracker is to first store the information of all the people and locations you wish to track.
+Then, whenever a person visits a location, the corresponding `visit` is added.
+
+VirusTracker would be able to generate useful information based off the data that is input into the system.
 
 ## Quick start
 
@@ -39,7 +43,7 @@ VirusTracker can help you generate various statistics on the pandemic quickly an
 
    * **`list l/people`** : Lists all people.
 
-   * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a person named `John Doe` to the VirusTracker.
+   * **`add`**`idp/1 n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a person named `John Doe` to the VirusTracker.
 
    * **`delete`**`3` : Deletes the 3rd element shown in the current list.
 
@@ -72,39 +76,51 @@ VirusTracker can help you generate various statistics on the pandemic quickly an
 * **Data** refers collectively to people, locations and visits unless stated otherwise.
 </div>
 
-### Adding data: `add`
+### Adding data
 
-To add data to VirusTracker, there are various `add` commands that could be used.
+To add data to VirusTracker, there are `add` commands for each entity.
 
-#### Adding a person
+#### Adding a person `addPerson`
 
 Adds a person to VirusTracker.
 
-Format: `add idp/ID n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS q/QUARANTINE_STATUS [t/TAG]…​`
+Format: `addPerson idp/ID n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS q/QUARANTINE_STATUS i/INFECTED_STATUS [t/TAG]…​` 
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 A person can have any number of tags (including 0)
 </div>
 
 * `ID` of person must be unique. No other person in the VirusTracker may have the same ID.
-* `PERSON_ID` must belong to a person within VirusTracker.
+* `QUARANTINE_STATUS` and `INFECTED_STATUS` only accept true or false.
 
 Examples:
-* `add idp/S123 n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 q/true`
-* `add idp/S234 n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 q/false t/criminal`
+* `addPerson idp/S123 n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 q/true i/false`
+* `addPerson idp/S234 n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 q/false i/true t/criminal`
 
-#### Adding a visit
+#### Adding a location `addLocation`
+
+Adds a location to VirusTracker.
+
+Format: `addLocation idl/ID n/NAME a/ADDRESS`
+
+* `ID` of location must be unique. No other location in the VirusTracker may have the same ID.
+
+Examples:
+* `addLocation idl/L123 n/Vivocity a/John street, block 123, #01-01`
+* `addLocation idl/L234 n/Betsy Crowe's House a/Newgate Prison`
+
+#### Adding a visit `addVisit`
 
 Adds a visit by the person, location of visit and date of visit
 
 Format: `addVisit PERSON_INDEX LOCATION_INDEX d/DATE` <br>
 Format: `addVisit idp/PERSON_ID idl/LOCATION_ID d/DATE`
 
-* Visits may be added by either using indexes or IDs to refer to the location and person. A mix of both is not allowed and will trigger a warning. 
 * Visits are used to track close contacts and to detect if infected/quarantined people visit locations they should not.
+* Visits may be added by either using indexes or IDs to refer to the location and person. A mix of both is not allowed and will trigger a warning. 
 * `PERSON_INDEX` refers to the index of the person as viewed from the most recently displayed people list.
 * `LOCATION_INDEX` refers to the index of the location as viewed from the most recently displayed location list.
-* The indexes **must be positive integers**: 1, 2, 3, …​ and within the range of its shown list, otherwise exceptions would be thrown.
+* The indexes **must be positive integers**: 1, 2, 3, …​ and within the range of its shown list, otherwise warnings will be triggered.
 * `PERSON_ID` must belong to a person within VirusTracker.
 * `LOCATION_ID` must belong to a location within VirusTracker.
 * `DATE` refers to the date when the person visited the location
@@ -112,48 +128,164 @@ Format: `addVisit idp/PERSON_ID idl/LOCATION_ID d/DATE`
 
 Examples:
 * `addVisit 1 1 d/2020-09-12`
-* `addVisit 2 3 d/2020-09-10`
 * `addVisit idp/S123 idl/L123 d/2020-02-02`
 
-#### Adding a location
+#### Adding data from CSV files
 
-Adds a location to VirusTracker.
+As you may have pre-existing data stored in the Excel file format, VirusTracker provides a way to import data directly from
+files in the CSV format. Excel provides an option to save existing _.xlsx_ extension files as _.csv_ files.
 
-Format: `addLocation idl/ID n/NAME a/ADDRESS`
+<div markdown="span" class="alert alert-primary">:bulb: **Note:**
+If you are importing data from a pre-existing Excel file, you may have to first format it to a format that is readable by VirusTracker.
+</div>
 
-* `ID` of location must be unique. No other location in the VirusTracker may have the same ID.
-* Locations have an address and a name.
-* The `NAME` of the location is defined by the user.
-* The `ADDRESS` of the location is the official Singaporean address of the location.
-* No duplicate locations will be allowed in the VirusTracker.
-* `LOCATION_ID` must belong to a location within VirusTracker.
+You may read more about it [here](#format-for-csv-files).
+
+<div markdown="span" class="alert alert-primary">:bulb: **Note:**
+As visits rely on people and locations, it is recommended that person and location data csv files be added before visits so
+as to ensure that the referenced people and locations in the visits data csv file exist.
+</div>
+
+
+Format: `addFromCsv FILE_PATH l/LIST_TYPE`
+
+* `FILE_PATH` refers to the absolute file path where the CSV file resides.
+  * For example, if you wish to import data from `personList.csv` located in your desktop, the absolute file path could look
+  something like this: `C:/Users/user/Desktop/personList.csv` _(for Windows)_, `/Users/admin/Documents/personList.csv` _(for MacOS)_,
+  `/home/user/docs/personList.csv` _(for Linux)_
+  * You may **find the absolute file path** as follows
+    1. Right-click your file `E.g. personList.csv`
+    2. Select 'Properties'
+    3. Take note of the path specified in the 'Location' field. `E.g. C:/Users/user/Desktop`
+    4. The absolute file path is the path found in Step 3 along with your file name. `C:/Users/user/Desktop/personList.csv`
+* `LIST_TYPE` refers to 'people', 'locations' or 'visits'.
+  * The prefix `l/` is also used for [listing data](#listing-data-list)
+* The CSV file should have its data in [VirusTracker readable format](#format-for-csv-files).
+  * For visits data, the format used references the id of the people and locations. The format using
+  list indexing is not supported.
+* If you do not specify an absolute path, VirusTracker **may not be able to find your file!**
 
 Examples:
-* `addLocation idl/L123 n/Vivocity a/John street, block 123, #01-01`
-* `addLocation idl/L234 n/Betsy Crowe's House a/Newgate Prison`
+* `addFromCsv C:/Users/alice/Desktop/peopleToAdd.csv l/people`
+* `addFromCsv D:/visits on Dec 20.csv l/visits`
 
+#### Exporting data to CSV files
 
-### Deleting data: `delete`
+Often, you may not only work on a single device. 
+
+VirusTracker enables you to export the current data stored into a CSV file 
+which could then be read by the VirusTracker application on another device.
+
+Format: `exportToCsv FILE_PATH l/LIST_TYPE`
+
+* `FILE_PATH` refers to the absolute file path where the CSV file should reside.
+  * Refer to the [Adding data from CSV files](#adding-data-from-csv-files) section to find out the absolute path of a file.
+  * If the CSV file does not exist at the specified location, VirusTracker will create it for you.
+* `LIST_TYPE` refers to 'people', 'locations' or 'visits'.
+  * The prefix `l/` is also used for [listing data](#listing-data-list)
+* The CSV file will have its data in [VirusTracker readable format](#format-for-csv-files).
+* If you do not specify an absolute path, the file may be **created at an unexpected place!**
+
+Examples:
+* `exportToCsv C:/Users/alice/Desktop/peopleToAdd.csv l/people` creates a people data CSV file named `peopleToAdd.csv`
+* `exportToCsv D:/visits on Dec 20.csv l/visits` creates a visit data CSV file named `visits on Dec 20.csv`
+
+### Format for CSV files
+
+As data can be formatting differently from file to file, VirusTracker specifies a certain format for CSV files to be imported.
+
+* Depending on the entity, the format for each row will follow its relevant `add` command.
+  * For example, for a CSV file adding locations, each row will correspond to an individual [addLocation](#adding-a-location) command format.
+  ![Example Location CSV](images/ExampleCSVLocations.png)
+  * As you can see from the figure above, each row is a valid `addLocation` command, with the command word omitted. 
+  * Each column corresponds to a field in `addLocation` format.
+  * As with the commands themselves, the order of the arguments do not matter.
+  * You **MAY NOT** have data of different formats in the same CSV file. (i.e. adding people from rows 1 to 4, then locations from 5 to 8, etc.)
+
+The conversion of pre-existing data to the required CSV format may require a bit of effort. Below are some tips to guide you along.
+* It is recommended to create a new CSV file for importing instead of using the pre-existing data file to prevent data loss.
+* Copy the rows of relevant data (name, addresses, dates, etc) into the new file.
+* Using Excel functions, you can prepend the required prefixes to each data field.
+* CSV files exported by VirusTracker already have this format and do not need to be reformatted.
+
+#### Using Excel to add prefixes
+
+The data present may be in a different format than what VirusTracker requires. Hence, below is a step by step guide to convert the common 
+types of data fields to their required format.
+
+The diagram below shows possible data columns pre-formatting. Column A represents a `PERSON_ID` and Column B represents `DATE` in this case.
+
+![Format CSV 1](images/FormatCSV/FormatCsv1.png)
+
+Find an empty column, and type the function in the diagram shown below.
+
+![Format CSV 2](images/FormatCSV/FormatCsv2.png)
+
+Upon pressing enter, you should see that the prefix has been prepended to the first item in column A as shown below.
+
+![Format CSV 3](images/FormatCSV/FormatCsv3.png)
+
+You may then click the bottom right corner of the formatted cell, C1 in this case, and drag downwards to fill the remaining cells.
+Alternatively, you could also choose `Fill` -> `Down` from the menu bar.
+ 
+ You should see a result similar to below.
+
+![Format CSV 4](images/FormatCSV/FormatCsv4.png)
+
+For date fields, the format of the function is slightly different. The date has to be formatted to the correct date format in addition
+to being prepended with the date prefix.
+
+The below function in the diagram **only works if the field is a date.**
+
+![Format CSV 5](images/FormatCSV/FormatCsv5.png)
+
+You may then similarly fill the cells as shown in the two diagrams below.
+
+![Format CSV 6](images/FormatCSV/FormatCsv6.png)
+
+![Format CSV 7](images/FormatCSV/FormatCsv7.png)
+
+#### Replacing the data
+
+After creating the formatted data, you may be tempted to directly copy the new data into the column containing the preformatted data.
+
+However, this would result in an error as the formatted data is currently referencing the old data. To fix this, we should paste the values using
+`Paste Special`.
+
+For example, if you wished to copy formatted data from column C to column A, right click on A as shown below.
+
+![Format CSV 8](images/FormatCSV/FormatCsv8.png)
+
+Select `Paste Special` -> `Values` as shown below.
+
+![Format CSV 9](images/FormatCSV/FormatCsv9.png)
+
+Column A now has the formatted data and column C can be deleted.
+
+![Format CSV 10](images/FormatCSV/FormatCsv10.png)
+
+### Deleting data: 
 To delete data from VirusTracker, there are various `delete` commands that could be used.
 
-#### Deleting a person
+#### Deleting a person `deletePerson`
 
 Deletes the specified person from the people list.
 
 Format: `delete PERSON_INDEX` <br>
 Format: `delete idp/PERSON_ID` 
 
-* Deletes the person at the specified `PERONS_INDEX` or deletes the person with the specified `PERSON_ID`.
+* Deletes the person at the specified `PERSONS_INDEX` or deletes the person with the specified `PERSON_ID`.
 * `PERSON_INDEX` refers to the index of the person as viewed from the most recently displayed people list.
 * The index **must be a positive integer** 1, 2, 3, …​
 * `PERSON_ID` must belong to a person within VirusTracker.
+* All visits made by the specified person would also be deleted.
 
 Examples:
 * `list l/infected` followed by `delete 2` deletes the 2nd infected person in the displayed people list.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 * `delete idp/S123` deletes the person with the ID S123.
 
-#### Deleting a location 
+#### Deleting a location `deleteLocation`
 
 Deletes the specified location from the location list.
 
@@ -164,12 +296,13 @@ Format: `deleteLocation idl/LOCATION_ID`
 * `LOCATION_INDEX` refers to the index of the location as viewed from the most recently displayed location list.
 * The index **must be a positive integer** 1, 2, 3, …​
 * `LOCATION_ID` must belong to a location within VirusTracker.
+* All visits that contains the specified locations would also be deleted.
 
 Examples:
-* `list l/infected` followed by `deleteLocation 2` deletes the 2nd location in the displayed location list.
+* `list l/locations` followed by `deleteLocation 2` deletes the 2nd location in the displayed location list.
 * `delete idl/L123` deletes the location with the ID L123.
 
-#### Deleting visits using date 
+#### Deleting visits using date `deleteVisits`
 
 Deletes all visits before and including the date.
 
@@ -182,20 +315,22 @@ Format: `deleteVisits d/DATE`
 
 Examples:
 * `deleteVisits d/2020-09-12`
-* `deleteVisits d/2020-09-10`
 
-### Editing data: `edit`
+### Editing data: 
 To edit data in VirusTracker, there are various `edit` commands that could be used.
 
-#### Editing a person
+#### Editing a person `editPerson`
 
 Edits an existing person in VirusTracker.
 
-Format: `edit PERSON_INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [q/QUARANTINE_STATUS] [t/TAG]…​`
+Format: `edit PERSON_INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [q/QUARANTINE_STATUS] [t/TAG]…​` <br>
+Format: `edit idp/PERSON_ID [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [q/QUARANTINE_STATUS] [t/TAG]…​` 
 
-* Edits the person at the specified `PERSON_INDEX`.
+* A person's ID cannot be edited.
+* Edits the person at the specified `PERSON_INDEX` or the person with the specified `PERSON_ID`.
 * `PERSON_INDEX` refers to the index of the person as viewed from the most recently displayed person list.
 * The index **must be a positive integer** 1, 2, 3, …​
+* `PERSON_ID` must belong to a person within VirusTracker.
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
@@ -203,26 +338,29 @@ Format: `edit PERSON_INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [q/QUARANTIN
     specifying any tags after it.
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+*  `editPerson 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+*  `editPerson idp/S123A n/Betsy Crower t/` Edits the name of the person with ID S123 to be `Betsy Crower` and clears all existing tags.
 
-#### Editing a location
+#### Editing a location `editLocation`
 
 Edits an existing location in VirusTracker.
 
-Format: `editLocation LOCATION_INDEX [n/NAME] [a/ADDRESS]`
+Format: `editLocation LOCATION_INDEX [n/NAME] [a/ADDRESS]` <br>
+Format: `editLocation idl/LOCATION_ID [n/NAME] [a/ADDRESS]`
 
-* Edits the location at the specified `LOCATION_INDEX`.
+* A location's ID cannot be edited.
+* Edits the location at the specified `LOCATION_INDEX` or the location with the specified `LOCATION_ID`.
 * `LOCATION_INDEX` refers to the index of the location as viewed from the most recently displayed location list.
 * The index **must be a positive integer** 1, 2, 3, …​
+* `LOCATION_ID` must belong to a location within VirusTracker.
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 
 Examples:
 *  `editLocation 1 n/NTU a/Bugis street` Edits the name and address of the 1st location to be `NTU` and `Bugis Street` respectively.
-*  `editLocation 2 n/NUS` Edits the name of the 2nd location to be `NUS`.
+*  `editLocation idl/L123A n/NUS` Edits the name of the location with ID L123A to be `NUS`.
 
-### Finding persons by name: `find`
+### Finding persons by name: `findPerson`
 
 Finds persons whose names contain any of the given keywords.
 
@@ -270,34 +408,6 @@ Format: `list l/visits`
 
 * Displays the list of all visits currently stored in VirusTracker.
 
-* Locations have an address and a name.
-* Locations are identified by their name.
-* No duplicate locations are allowed in the VirusTracker.
-
-Examples:
-* `addLocation n/Vivocity a/John street, block 123, #01-01`
-* `addLocation n/Betsy Crowe's House a/Newgate Prison`
-
-### Generating all locations visited by a person: `generateLocations`
-
-Shows a list of locations visited by an infected person in the past 2 weeks. 
-
-Format: `listAllLocationsVisited LOCATION_INDEX`
-
-* Locations listed were visited by the infected person of the index given.
-* The result given is a filtered list of locations that the person visited in the past 2 weeks.
-* This function can be used to identify locations needing to be disinfected after being visited by an infected person.
-
-### Generating all people in contact with an infected person: `generatePeople`
-
-Shows a list of people who were in contact with an infected person in the past 2 weeks. 
-
-Format `listAllPersonsInContact PERSON_INDEX`
-
-* People listed were in contact with the infected person of the index given.
-* The result given is a filtered list of people who visited the same locations as that the infected person in the past 2 weeks.
-* This function can be used to identify people who need to be quarantined or issued Stay Home Notices.
-
 #### Listing high risk locations
 
 Lists the locations with high risk of Covid infection.
@@ -327,11 +437,21 @@ Format: `list l/stats`
     3. Percentage of people infected/quarantined
 * The above provides a brief summary of the pandemic and is subject to extension.
 
+### Generating all locations visited by a person: `generateLocations`
+
+Shows a list of locations visited by an infected person in the past 2 weeks. 
+
+Format: `listAllLocationsVisited LOCATION_INDEX`
+
+* Locations listed were visited by the infected person of the index given.
+* The result given is a filtered list of locations that the person visited in the past 2 weeks.
+* This function can be used to identify locations needing to be disinfected after being visited by an infected person.
+
 ### Generating all people in contact with an infected person: `generatePeople`
 
-Shows a list of people who where in contact with an infected person in the past 2 weeks. 
+Shows a list of people who were in contact with an infected person in the past 2 weeks. 
 
-Format: `generatePeople INDEX`
+Format `listAllPersonsInContact PERSON_INDEX`
 
 * People listed were in contact with the infected person of the index given.
 * The result given is a filtered list of people who visited the same locations as that the infected person in the past 2 weeks.
@@ -375,6 +495,13 @@ _{explain the feature here}_
 
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
+
+--------------------------------------------------------------------------------------------------------------------
+## Glossary
+Term | Meaning
+--------|------------------
+Entity | Refers to people, locations or visits
+
 
 --------------------------------------------------------------------------------------------------------------------
 
