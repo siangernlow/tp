@@ -88,24 +88,16 @@ public class IndexIdPairTest {
     }
 
     @Test
-    public void constructor_validArgs_success() {
+    public void constructor_validArgs_success() throws Exception {
         // person Id
         argMultimap = ArgumentTokenizer.tokenize(personIdString, PREFIX_PERSON_ID);
         IndexIdPair expectedPersonPair = new IndexIdPair(null, personId, PREFIX_PERSON_ID);
-        try {
-            assertEquals(new IndexIdPair(argMultimap, PREFIX_PERSON_ID), expectedPersonPair);
-        } catch (ParseException pe) {
-            throw new IllegalArgumentException("Invalid userInput.", pe);
-        }
+        assertEquals(new IndexIdPair(argMultimap, PREFIX_PERSON_ID), expectedPersonPair);
 
         // location index
         argMultimap = ArgumentTokenizer.tokenize(indexString, PREFIX_LOCATION_ID);
         IndexIdPair expectedLocationPair = new IndexIdPair(INDEX_FIRST, null, PREFIX_LOCATION_ID);
-        try {
-            assertEquals(new IndexIdPair(argMultimap, PREFIX_LOCATION_ID), expectedLocationPair);
-        } catch (ParseException pe) {
-            throw new IllegalArgumentException("Invalid userInput.", pe);
-        }
+        assertEquals(new IndexIdPair(argMultimap, PREFIX_LOCATION_ID), expectedLocationPair);
     }
 
     @Test
@@ -137,121 +129,83 @@ public class IndexIdPairTest {
     }
 
     @Test
-    public void getPersonFromPair_success() {
+    public void getPersonFromPair_success() throws Exception {
         // using Id
         argMultimap = ArgumentTokenizer.tokenize(personIdString, PREFIX_PERSON_ID);
-        try {
-            indexIdPair = new IndexIdPair(argMultimap, PREFIX_PERSON_ID);
-            Person person = indexIdPair.getPersonFromPair(modelStub);
-            assertEquals(person, DEFAULT_PERSON);
-        } catch (Exception e) {
-            assert false : "Test failed!";
-        }
+        indexIdPair = new IndexIdPair(argMultimap, PREFIX_PERSON_ID);
+        Person person = indexIdPair.getPersonFromPair(modelStub);
+        assertEquals(person, DEFAULT_PERSON);
 
         // using index
         argMultimap = ArgumentTokenizer.tokenize(indexString, PREFIX_PERSON_ID);
-        try {
-            indexIdPair = new IndexIdPair(argMultimap, PREFIX_PERSON_ID);
-            Person person = indexIdPair.getPersonFromPair(modelStub);
-            assertEquals(person, DEFAULT_PERSON);
-        } catch (Exception e) {
-            assert false : "Test failed!";
-        }
+        indexIdPair = new IndexIdPair(argMultimap, PREFIX_PERSON_ID);
+        person = indexIdPair.getPersonFromPair(modelStub);
+        assertEquals(person, DEFAULT_PERSON);
     }
 
     @Test
-    public void getPersonFromPair_invalidUse_throwCommandException() {
+    public void getPersonFromPair_invalidUse_throwCommandException() throws Exception {
         argMultimap = ArgumentTokenizer.tokenize(personIdString, PREFIX_PERSON_ID);
-        try {
-            indexIdPair = new IndexIdPair(argMultimap, PREFIX_PERSON_ID);
-            assertThrows(CommandException.class, IndexIdPair.MESSAGE_INVALID_LOCATION_COMMAND_USE, () ->
-                    indexIdPair.getLocationFromPair(modelStub));
-        } catch (ParseException e) {
-            assert false : "Test failed!";
-        }
+        indexIdPair = new IndexIdPair(argMultimap, PREFIX_PERSON_ID);
+        assertThrows(CommandException.class, IndexIdPair.MESSAGE_INVALID_LOCATION_COMMAND_USE, () ->
+                indexIdPair.getLocationFromPair(modelStub));
     }
 
     @Test
-    public void getPersonFromPair_outOfBoundIndex_throwCommandException() {
+    public void getPersonFromPair_outOfBoundIndex_throwCommandException() throws Exception {
         argMultimap = ArgumentTokenizer.tokenize(outOfBoundIndex, PREFIX_PERSON_ID);
-        try {
-            indexIdPair = new IndexIdPair(argMultimap, PREFIX_PERSON_ID);
-            assertThrows(CommandException.class, Messages.MESSAGE_INVALID_PERSON_INDEX, () ->
-                    indexIdPair.getPersonFromPair(modelStub));
-        } catch (ParseException e) {
-            assert false : "Test failed!";
-        }
+        indexIdPair = new IndexIdPair(argMultimap, PREFIX_PERSON_ID);
+        assertThrows(CommandException.class, Messages.MESSAGE_INVALID_PERSON_INDEX, () ->
+                indexIdPair.getPersonFromPair(modelStub));
     }
 
     @Test
-    public void getPersonFromPair_invalidId_throwCommandException() {
+    public void getPersonFromPair_invalidId_throwCommandException() throws Exception {
         argMultimap = ArgumentTokenizer.tokenize(personIdNotExistString, PREFIX_PERSON_ID);
-        try {
-            indexIdPair = new IndexIdPair(argMultimap, PREFIX_PERSON_ID);
-            assertThrows(CommandException.class, Messages.MESSAGE_INVALID_PERSON_ID, () ->
-                    indexIdPair.getPersonFromPair(modelStub));
-        } catch (ParseException e) {
-            assert false : "Test failed!";
-        }
+        indexIdPair = new IndexIdPair(argMultimap, PREFIX_PERSON_ID);
+        assertThrows(CommandException.class, Messages.MESSAGE_INVALID_PERSON_ID, () ->
+                indexIdPair.getPersonFromPair(modelStub));
     }
 
     @Test
-    public void getLocationFromPair_success() {
+    public void getLocationFromPair_success() throws Exception {
         // using Id
         argMultimap = ArgumentTokenizer.tokenize(locationIdString, PREFIX_LOCATION_ID);
-        try {
-            indexIdPair = new IndexIdPair(argMultimap, PREFIX_LOCATION_ID);
-            Location location = indexIdPair.getLocationFromPair(modelStub);
-            assertEquals(location, DEFAULT_LOCATION);
-        } catch (Exception e) {
-            assert false : "Test failed!";
-        }
+        indexIdPair = new IndexIdPair(argMultimap, PREFIX_LOCATION_ID);
+        Location location = indexIdPair.getLocationFromPair(modelStub);
+        assertEquals(location, DEFAULT_LOCATION);
 
         // using index
         argMultimap = ArgumentTokenizer.tokenize(indexString, PREFIX_LOCATION_ID);
-        try {
-            indexIdPair = new IndexIdPair(argMultimap, PREFIX_LOCATION_ID);
-            Location location = indexIdPair.getLocationFromPair(modelStub);
-            assertEquals(location, DEFAULT_LOCATION);
-        } catch (Exception e) {
-            assert false : "Test failed!";
-        }
+        indexIdPair = new IndexIdPair(argMultimap, PREFIX_LOCATION_ID);
+        location = indexIdPair.getLocationFromPair(modelStub);
+        assertEquals(location, DEFAULT_LOCATION);
+
     }
 
     @Test
-    public void getLocationFromPair_invalidUse_throwCommandException() {
+    public void getLocationFromPair_invalidUse_throwCommandException() throws Exception {
         argMultimap = ArgumentTokenizer.tokenize(locationIdString, PREFIX_LOCATION_ID);
-        try {
-            indexIdPair = new IndexIdPair(argMultimap, PREFIX_LOCATION_ID);
-            assertThrows(CommandException.class, IndexIdPair.MESSAGE_INVALID_PERSON_COMMAND_USE, () ->
-                    indexIdPair.getPersonFromPair(modelStub));
-        } catch (ParseException e) {
-            assert false : "Test failed!";
-        }
+        indexIdPair = new IndexIdPair(argMultimap, PREFIX_LOCATION_ID);
+        assertThrows(CommandException.class, IndexIdPair.MESSAGE_INVALID_PERSON_COMMAND_USE, () ->
+                indexIdPair.getPersonFromPair(modelStub));
+
     }
 
     @Test
-    public void getLocationFromPair_outOfBoundIndex_throwCommandException() {
+    public void getLocationFromPair_outOfBoundIndex_throwCommandException() throws Exception {
         argMultimap = ArgumentTokenizer.tokenize(outOfBoundIndex, PREFIX_LOCATION_ID);
-        try {
-            indexIdPair = new IndexIdPair(argMultimap, PREFIX_LOCATION_ID);
-            assertThrows(CommandException.class, Messages.MESSAGE_INVALID_LOCATION_INDEX, () ->
-                    indexIdPair.getLocationFromPair(modelStub));
-        } catch (ParseException e) {
-            assert false : "Test failed!";
-        }
+        indexIdPair = new IndexIdPair(argMultimap, PREFIX_LOCATION_ID);
+        assertThrows(CommandException.class, Messages.MESSAGE_INVALID_LOCATION_INDEX, () ->
+                indexIdPair.getLocationFromPair(modelStub));
     }
 
     @Test
-    public void getLocationFromPair_invalidId_throwCommandException() {
+    public void getLocationFromPair_invalidId_throwCommandException() throws Exception {
         argMultimap = ArgumentTokenizer.tokenize(locationIdNotExistString, PREFIX_LOCATION_ID);
-        try {
-            indexIdPair = new IndexIdPair(argMultimap, PREFIX_LOCATION_ID);
-            assertThrows(CommandException.class, Messages.MESSAGE_INVALID_LOCATION_ID, () ->
-                    indexIdPair.getLocationFromPair(modelStub));
-        } catch (ParseException e) {
-            assert false : "Test failed!";
-        }
+        indexIdPair = new IndexIdPair(argMultimap, PREFIX_LOCATION_ID);
+        assertThrows(CommandException.class, Messages.MESSAGE_INVALID_LOCATION_ID, () ->
+                indexIdPair.getLocationFromPair(modelStub));
     }
 
     /**
