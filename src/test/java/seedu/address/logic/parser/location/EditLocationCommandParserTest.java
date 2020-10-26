@@ -13,6 +13,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_NUS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_VIVOCITY;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 
@@ -21,6 +22,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.location.EditLocationCommand;
 import seedu.address.logic.commands.location.EditLocationCommand.EditLocationDescriptor;
+import seedu.address.logic.parser.IndexIdPairStub;
 import seedu.address.model.attribute.Address;
 import seedu.address.model.attribute.Name;
 import seedu.address.testutil.EditLocationDescriptorBuilder;
@@ -35,7 +37,7 @@ class EditLocationCommandParserTest {
     @Test
     public void parse_missingParts_failure() {
         // no index specified
-        assertParseFailure(parser, VALID_NAME_NUS, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, VALID_NAME_NUS, MESSAGE_INVALID_INDEX);
 
         // no field specified
         assertParseFailure(parser, "1", EditLocationCommand.MESSAGE_NOT_EDITED);
@@ -47,16 +49,16 @@ class EditLocationCommandParserTest {
     @Test
     public void parse_invalidPreamble_failure() {
         // negative index
-        assertParseFailure(parser, "-5" + NAME_DESC_NUS, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "-5" + NAME_DESC_NUS, MESSAGE_INVALID_INDEX);
 
         // zero index
-        assertParseFailure(parser, "0" + NAME_DESC_NUS, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "0" + NAME_DESC_NUS, MESSAGE_INVALID_INDEX);
 
         // invalid arguments being parsed as preamble
-        assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_INDEX);
 
         // invalid prefix being parsed as preamble
-        assertParseFailure(parser, "1 X/ string", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "1 X/ string", MESSAGE_INVALID_INDEX);
     }
 
     @Test
@@ -82,7 +84,8 @@ class EditLocationCommandParserTest {
         EditLocationDescriptor descriptor = new EditLocationDescriptorBuilder().withName(VALID_NAME_NUS)
                 .withAddress(VALID_ADDRESS_NUS).build();
 
-        EditLocationCommand expectedCommand = new EditLocationCommand(targetIndex, descriptor);
+        EditLocationCommand expectedCommand = new EditLocationCommand(
+                new IndexIdPairStub(targetIndex, null), descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
     }
@@ -92,13 +95,14 @@ class EditLocationCommandParserTest {
         Index targetIndex = INDEX_FIRST;
         String userInput = targetIndex.getOneBased() + NAME_DESC_NUS;
         EditLocationDescriptor descriptor = new EditLocationDescriptorBuilder().withName(VALID_NAME_NUS).build();
-        EditLocationCommand expectedCommand = new EditLocationCommand(targetIndex, descriptor);
+        EditLocationCommand expectedCommand = new EditLocationCommand(
+                new IndexIdPairStub(targetIndex, null), descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // address
         userInput = targetIndex.getOneBased() + ADDRESS_DESC_NUS;
         descriptor = new EditLocationDescriptorBuilder().withAddress(VALID_ADDRESS_NUS).build();
-        expectedCommand = new EditLocationCommand(targetIndex, descriptor);
+        expectedCommand = new EditLocationCommand(new IndexIdPairStub(targetIndex, null), descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
@@ -110,7 +114,8 @@ class EditLocationCommandParserTest {
         EditLocationDescriptor descriptor = new EditLocationDescriptorBuilder()
                 .withAddress(VALID_ADDRESS_VIVOCITY).build();
 
-        EditLocationCommand expectedCommand = new EditLocationCommand(targetIndex, descriptor);
+        EditLocationCommand expectedCommand = new EditLocationCommand(
+                new IndexIdPairStub(targetIndex, null), descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
     }
@@ -121,14 +126,15 @@ class EditLocationCommandParserTest {
         Index targetIndex = INDEX_FIRST;
         String userInput = targetIndex.getOneBased() + INVALID_NAME_DESC + NAME_DESC_VIVOCITY;
         EditLocationDescriptor descriptor = new EditLocationDescriptorBuilder().withName(VALID_NAME_VIVOCITY).build();
-        EditLocationCommand expectedCommand = new EditLocationCommand(targetIndex, descriptor);
+        EditLocationCommand expectedCommand = new EditLocationCommand(
+                new IndexIdPairStub(targetIndex, null), descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // other valid values specified
         userInput = targetIndex.getOneBased() + INVALID_NAME_DESC + ADDRESS_DESC_VIVOCITY + NAME_DESC_VIVOCITY;
         descriptor = new EditLocationDescriptorBuilder().withAddress(VALID_ADDRESS_VIVOCITY)
                 .withName(VALID_NAME_VIVOCITY).build();
-        expectedCommand = new EditLocationCommand(targetIndex, descriptor);
+        expectedCommand = new EditLocationCommand(new IndexIdPairStub(targetIndex, null), descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 }

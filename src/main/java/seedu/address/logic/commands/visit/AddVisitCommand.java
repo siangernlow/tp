@@ -128,11 +128,11 @@ public class AddVisitCommand extends Command {
     private Visit getVisitToAdd(Index personIndex, Index locationIndex, Model model) throws CommandException {
         List<Person> lastShownPersonList = model.getSortedPersonList();
         if (personIndex.getZeroBased() >= lastShownPersonList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_INDEX);
         }
         List<Location> lastShownLocationList = model.getSortedLocationList();
         if (locationIndex.getZeroBased() >= lastShownLocationList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_LOCATION_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_LOCATION_INDEX);
         }
         Person person = model.getPersonFromIndex(personIndex);
         Location location = model.getLocationFromIndex(locationIndex);

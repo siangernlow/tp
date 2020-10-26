@@ -6,7 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.IndexIdPair;
+import seedu.address.logic.parser.ReadOnlyIndexIdPair;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 
@@ -29,12 +29,12 @@ public class DeletePersonCommand extends Command {
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
 
-    private final IndexIdPair pair;
+    private final ReadOnlyIndexIdPair pair;
 
     /**
      * @param pair contains the index or Id of the person to be deleted.
      */
-    public DeletePersonCommand(IndexIdPair pair) {
+    public DeletePersonCommand(ReadOnlyIndexIdPair pair) {
         requireNonNull(pair);
         this.pair = pair;
     }

@@ -5,7 +5,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.IndexIdPair;
+import seedu.address.logic.parser.ReadOnlyIndexIdPair;
 import seedu.address.model.InfoHandler;
 import seedu.address.model.Model;
 import seedu.address.model.ModelPredicate;
@@ -32,9 +32,9 @@ public class GeneratePeopleCommand extends Command {
     public static final String MESSAGE_PERSON_HAS_NO_VISITS = "This person is not associated with any visits";
     public static final String MESSAGE_PERSON_IS_NOT_INFECTED = "This person is not infected";
 
-    private final IndexIdPair pair;
+    private final ReadOnlyIndexIdPair pair;
 
-    public GeneratePeopleCommand(IndexIdPair pair) {
+    public GeneratePeopleCommand(ReadOnlyIndexIdPair pair) {
         this.pair = pair;
     }
 

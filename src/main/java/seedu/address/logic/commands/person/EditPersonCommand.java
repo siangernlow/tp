@@ -19,7 +19,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.IndexIdPair;
+import seedu.address.logic.parser.ReadOnlyIndexIdPair;
 import seedu.address.model.Model;
 import seedu.address.model.attribute.Address;
 import seedu.address.model.attribute.Email;
@@ -57,14 +57,14 @@ public class EditPersonCommand extends Command {
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
-    private final IndexIdPair pair;
+    private final ReadOnlyIndexIdPair pair;
     private final EditPersonDescriptor editPersonDescriptor;
 
     /**
      * @param pair contains the index or Id of the person in the VirusTracker to edit
      * @param editPersonDescriptor details to edit the person with
      */
-    public EditPersonCommand(IndexIdPair pair, EditPersonDescriptor editPersonDescriptor) {
+    public EditPersonCommand(ReadOnlyIndexIdPair pair, EditPersonDescriptor editPersonDescriptor) {
         requireNonNull(pair);
         requireNonNull(editPersonDescriptor);
 

@@ -11,7 +11,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.IndexIdPair;
+import seedu.address.logic.parser.ReadOnlyIndexIdPair;
 import seedu.address.model.Model;
 import seedu.address.model.attribute.Address;
 import seedu.address.model.attribute.Id;
@@ -39,14 +39,14 @@ public class EditLocationCommand extends Command {
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_LOCATION = "This location already exists in the location book.";
 
-    private final IndexIdPair pair;
+    private final ReadOnlyIndexIdPair pair;
     private final EditLocationDescriptor editLocationDescriptor;
 
     /**
      * @param pair contains the index or Id of the location in the VirusTracker to edit
      * @param editLocationDescriptor details to edit the location with
      */
-    public EditLocationCommand(IndexIdPair pair, EditLocationDescriptor editLocationDescriptor) {
+    public EditLocationCommand(ReadOnlyIndexIdPair pair, EditLocationDescriptor editLocationDescriptor) {
         requireNonNull(pair);
         requireNonNull(editLocationDescriptor);
 

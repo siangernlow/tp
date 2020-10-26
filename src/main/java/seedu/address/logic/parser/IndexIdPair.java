@@ -21,13 +21,11 @@ import seedu.address.model.person.Person;
  * This represents an identifier that can identify a Person or a Location.
  * The identifier may be using either an Id or an index from user input.
  */
-public class IndexIdPair implements ReadOnlyIndexIdPair {
+public class IndexIdPair extends ReadOnlyIndexIdPair {
 
     public static final String MESSAGE_INVALID_PERSON_COMMAND_USE = "This pair refers to a location, not a person.";
     public static final String MESSAGE_INVALID_LOCATION_COMMAND_USE = "This pair refers to a person, not a location.";
 
-    private Optional<Index> indexOpt;
-    private Optional<Id> idOpt;
     private Prefix prefix;
 
     /**
@@ -45,18 +43,28 @@ public class IndexIdPair implements ReadOnlyIndexIdPair {
             Id id = ParserUtil.parseId(argMultimap.getValue(prefix).get());
             indexOpt = Optional.empty();
             idOpt = Optional.of(id);
+        } else {
+            Index index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            indexOpt = Optional.of(index);
+            idOpt = Optional.empty();
         }
+    }
 
-        Index index = ParserUtil.parseIndex(argMultimap.getPreamble());
-        indexOpt = Optional.of(index);
-        idOpt = Optional.empty();
+    /** Used for testing purposes only */
+    public IndexIdPair(Index index, Id id, Prefix prefix) {
+        indexOpt = Optional.ofNullable(index);
+        idOpt = Optional.ofNullable(id);
+        this.prefix = prefix;
     }
 
     /**
-     * Checks that {@code ArgumentMultimap} does not contain both Id and Index strings.
+     * Checks that {@code ArgumentMultimap} contains only one of Id and Index strings.
      */
     public static boolean checkIndexOrIdOnly(ArgumentMultimap argMultimap, Prefix prefix) {
-        return !(argMultimap.getValue(prefix).isPresent() && !argMultimap.getPreamble().isEmpty());
+        boolean hasId = argMultimap.getValue(prefix).isPresent();
+        String s = argMultimap.getPreamble();
+        boolean hasIndex = !argMultimap.getPreamble().isBlank();
+        return (hasId && !hasIndex) || (!hasId && hasIndex);
     }
 
     /**
@@ -74,7 +82,7 @@ public class IndexIdPair implements ReadOnlyIndexIdPair {
         if (idOpt.isEmpty()) {
             List<Person> lastShownList = model.getSortedPersonList();
             if (indexOpt.get().getZeroBased() >= lastShownList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_INDEX);
             }
 
             return model.getPersonFromIndex(indexOpt.get());
@@ -103,7 +111,7 @@ public class IndexIdPair implements ReadOnlyIndexIdPair {
         if (idOpt.isEmpty()) {
             List<Location> lastShownList = model.getSortedLocationList();
             if (indexOpt.get().getZeroBased() >= lastShownList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_LOCATION_DISPLAYED_INDEX);
+                throw new CommandException(Messages.MESSAGE_INVALID_LOCATION_INDEX);
             }
 
             return model.getLocationFromIndex(indexOpt.get());
