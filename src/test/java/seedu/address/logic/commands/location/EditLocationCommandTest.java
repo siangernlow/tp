@@ -21,6 +21,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.location.EditLocationCommand.EditLocationDescriptor;
+import seedu.address.logic.parser.IndexIdPairStub;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -42,7 +43,8 @@ class EditLocationCommandTest {
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
         Location editedLocation = new LocationBuilder().build();
         EditLocationDescriptor descriptor = new EditLocationDescriptorBuilder(editedLocation).build();
-        EditLocationCommand editLocationCommand = new EditLocationCommand(INDEX_FIRST, descriptor);
+        EditLocationCommand editLocationCommand = new EditLocationCommand(
+                new IndexIdPairStub(INDEX_FIRST, null), descriptor);
 
         String expectedMessage = String.format(EditLocationCommand.MESSAGE_EDIT_LOCATION_SUCCESS, editedLocation);
 
@@ -66,7 +68,8 @@ class EditLocationCommandTest {
         Location editedLocation = locationInList.withName(VALID_NAME_NUS).build();
 
         EditLocationDescriptor descriptor = new EditLocationDescriptorBuilder().withName(VALID_NAME_NUS).build();
-        EditLocationCommand editLocationCommand = new EditLocationCommand(indexLastLocation, descriptor);
+        EditLocationCommand editLocationCommand = new EditLocationCommand(
+                new IndexIdPairStub(indexLastLocation, null), descriptor);
 
         String expectedMessage = String.format(EditLocationCommand.MESSAGE_EDIT_LOCATION_SUCCESS, editedLocation);
 
@@ -82,7 +85,7 @@ class EditLocationCommandTest {
 
     @Test
     public void execute_noFieldSpecifiedUnfilteredList_success() {
-        EditLocationCommand editLocationCommand = new EditLocationCommand(INDEX_FIRST,
+        EditLocationCommand editLocationCommand = new EditLocationCommand(new IndexIdPairStub(INDEX_FIRST, null),
                 new EditLocationCommand.EditLocationDescriptor());
         Location editedLocation = model.getSortedLocationList().get(INDEX_FIRST.getZeroBased());
 
@@ -103,7 +106,7 @@ class EditLocationCommandTest {
 
         Location locationInFilteredList = model.getSortedLocationList().get(INDEX_FIRST.getZeroBased());
         Location editedLocation = new LocationBuilder(locationInFilteredList).withName(VALID_NAME_NUS).build();
-        EditLocationCommand editLocationCommand = new EditLocationCommand(INDEX_FIRST,
+        EditLocationCommand editLocationCommand = new EditLocationCommand(new IndexIdPairStub(INDEX_FIRST, null),
                 new EditLocationDescriptorBuilder().withName(VALID_NAME_NUS).build());
 
         String expectedMessage = String.format(EditLocationCommand.MESSAGE_EDIT_LOCATION_SUCCESS, editedLocation);
@@ -124,7 +127,8 @@ class EditLocationCommandTest {
     public void execute_duplicateLocationUnfilteredList_failure() {
         Location firstLocation = model.getSortedLocationList().get(INDEX_FIRST.getZeroBased());
         EditLocationDescriptor descriptor = new EditLocationDescriptorBuilder(firstLocation).build();
-        EditLocationCommand editLocationCommand = new EditLocationCommand(INDEX_SECOND, descriptor);
+        EditLocationCommand editLocationCommand = new EditLocationCommand(
+                new IndexIdPairStub(INDEX_SECOND, null), descriptor);
 
         assertCommandFailure(editLocationCommand, model, EditLocationCommand.MESSAGE_DUPLICATE_LOCATION);
     }
@@ -135,7 +139,7 @@ class EditLocationCommandTest {
 
         // edit location in filtered list into a duplicate in address book
         Location locationInList = model.getLocationBook().getLocationList().get(INDEX_SECOND.getZeroBased());
-        EditLocationCommand editLocationCommand = new EditLocationCommand(INDEX_FIRST,
+        EditLocationCommand editLocationCommand = new EditLocationCommand(new IndexIdPairStub(INDEX_FIRST, null),
                 new EditLocationDescriptorBuilder(locationInList).build());
 
         assertCommandFailure(editLocationCommand, model, EditLocationCommand.MESSAGE_DUPLICATE_LOCATION);
@@ -146,9 +150,10 @@ class EditLocationCommandTest {
         Index outOfBoundIndex = Index.fromOneBased(model.getSortedLocationList().size() + 1);
         EditLocationCommand.EditLocationDescriptor descriptor = new EditLocationDescriptorBuilder()
                 .withName(VALID_NAME_NUS).build();
-        EditLocationCommand editLocationCommand = new EditLocationCommand(outOfBoundIndex, descriptor);
+        EditLocationCommand editLocationCommand = new EditLocationCommand(
+                new IndexIdPairStub(outOfBoundIndex, null), descriptor);
 
-        assertCommandFailure(editLocationCommand, model, Messages.MESSAGE_INVALID_LOCATION_DISPLAYED_INDEX);
+        assertCommandFailure(editLocationCommand, model, Messages.MESSAGE_INVALID_LOCATION_INDEX);
     }
 
     /**
@@ -162,19 +167,21 @@ class EditLocationCommandTest {
         // ensures that outOfBoundIndex is still in bounds of location book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getLocationBook().getLocationList().size());
 
-        EditLocationCommand editLocationCommand = new EditLocationCommand(outOfBoundIndex,
+        EditLocationCommand editLocationCommand = new EditLocationCommand(new IndexIdPairStub(outOfBoundIndex, null),
                 new EditLocationDescriptorBuilder().withName(VALID_NAME_NUS).build());
 
-        assertCommandFailure(editLocationCommand, model, Messages.MESSAGE_INVALID_LOCATION_DISPLAYED_INDEX);
+        assertCommandFailure(editLocationCommand, model, Messages.MESSAGE_INVALID_LOCATION_INDEX);
     }
 
     @Test
     public void equals() {
-        final EditLocationCommand standardCommand = new EditLocationCommand(INDEX_FIRST, DESC_NUS);
+        final EditLocationCommand standardCommand = new EditLocationCommand(
+                new IndexIdPairStub(INDEX_FIRST, null), DESC_NUS);
 
         // same values -> returns true
         EditLocationDescriptor copyDescriptor = new EditLocationCommand.EditLocationDescriptor(DESC_NUS);
-        EditLocationCommand commandWithSameValues = new EditLocationCommand(INDEX_FIRST, copyDescriptor);
+        EditLocationCommand commandWithSameValues = new EditLocationCommand(
+                new IndexIdPairStub(INDEX_FIRST, null), copyDescriptor);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -187,9 +194,11 @@ class EditLocationCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new EditLocationCommand(INDEX_SECOND, DESC_NUS)));
+        assertFalse(standardCommand.equals(new EditLocationCommand(
+                new IndexIdPairStub(INDEX_SECOND, null), DESC_NUS)));
 
         // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new EditLocationCommand(INDEX_FIRST, DESC_VIVOCITY)));
+        assertFalse(standardCommand.equals(new EditLocationCommand(
+                new IndexIdPairStub(INDEX_FIRST, null), DESC_VIVOCITY)));
     }
 }

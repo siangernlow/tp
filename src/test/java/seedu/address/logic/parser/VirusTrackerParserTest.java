@@ -95,14 +95,14 @@ public class VirusTrackerParserTest {
     public void parseCommand_delete() throws Exception {
         DeletePersonCommand command = (DeletePersonCommand) parser.parseCommand(
                 DeletePersonCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased());
-        assertEquals(new DeletePersonCommand(INDEX_FIRST), command);
+        assertEquals(new DeletePersonCommand(new IndexIdPairStub(INDEX_FIRST, null)), command);
     }
 
     @Test
     public void parseCommand_deleteLocation() throws Exception {
         DeleteLocationCommand command = (DeleteLocationCommand) parser.parseCommand(
                 DeleteLocationCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased());
-        assertEquals(new DeleteLocationCommand(INDEX_FIRST), command);
+        assertEquals(new DeleteLocationCommand(new IndexIdPairStub(INDEX_FIRST, null)), command);
     }
 
     @Test
@@ -119,7 +119,7 @@ public class VirusTrackerParserTest {
         EditPersonCommand.EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
         EditPersonCommand command = (EditPersonCommand) parser.parseCommand(EditPersonCommand.COMMAND_WORD + " "
                 + INDEX_FIRST.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
-        assertEquals(new EditPersonCommand(INDEX_FIRST, descriptor), command);
+        assertEquals(new EditPersonCommand(new IndexIdPairStub(INDEX_FIRST, null), descriptor), command);
     }
 
     @Test
@@ -128,7 +128,7 @@ public class VirusTrackerParserTest {
         EditLocationDescriptor descriptor = new EditLocationDescriptorBuilder(location).build();
         EditLocationCommand command = (EditLocationCommand) parser.parseCommand(EditLocationCommand.COMMAND_WORD + " "
                 + INDEX_FIRST.getOneBased() + " " + LocationUtil.getEditLocationDescriptorDetails(descriptor));
-        assertEquals(new EditLocationCommand(INDEX_FIRST, descriptor), command);
+        assertEquals(new EditLocationCommand(new IndexIdPairStub(INDEX_FIRST, null), descriptor), command);
     }
 
     @Test

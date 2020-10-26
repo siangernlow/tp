@@ -1,12 +1,12 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
 
 import java.util.List;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.ReadOnlyIndexIdPair;
 import seedu.address.model.InfoHandler;
 import seedu.address.model.Model;
 import seedu.address.model.ModelPredicate;
@@ -23,30 +23,29 @@ public class GeneratePeopleCommand extends Command {
     public static final String COMMAND_WORD = "generatePeople";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all people which a person of the specified"
-            + "id (case-insensitive) have been in contact with and displays them as a list of locations.\n"
-            + "Parameters: PERSONID\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "Id (case-insensitive) or index have been in contact with and displays them as a list of locations.\n"
+            + "Parameters: PERSON_INDEX or "
+            + PREFIX_PERSON_ID + "PERSON_ID\n"
+            + "Example: " + COMMAND_WORD + " 1\n"
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_PERSON_ID + "S123A";
 
     public static final String MESSAGE_NO_PEOPLE_FOUND = "There were no people in contact with the given person";
     public static final String MESSAGE_PERSON_HAS_NO_VISITS = "This person is not associated with any visits";
     public static final String MESSAGE_PERSON_IS_NOT_INFECTED = "This person is not infected";
 
-    private final Index personId;
+    private final ReadOnlyIndexIdPair pair;
 
-    public GeneratePeopleCommand(Index personId) {
-        this.personId = personId;
+    public GeneratePeopleCommand(ReadOnlyIndexIdPair pair) {
+        this.pair = pair;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         InfoHandler infoHandler = new InfoHandler(model);
+        Person infectedPerson = pair.getPersonFromPair(model);
 
-        if (personId.getZeroBased() >= model.getSortedPersonList().size()) {
-            throw new CommandException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        Person infectedPerson = model.getPersonFromIndex(personId);
         if (!infectedPerson.isInfected()) {
             throw new CommandException(MESSAGE_PERSON_IS_NOT_INFECTED);
         }
@@ -71,6 +70,6 @@ public class GeneratePeopleCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof GeneratePeopleCommand // instanceof handles nulls
-                && personId.equals(((GeneratePeopleCommand) other).personId)); // state check
+                && pair.equals(((GeneratePeopleCommand) other).pair)); // state check
     }
 }
