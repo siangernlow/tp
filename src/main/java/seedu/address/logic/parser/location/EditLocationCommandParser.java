@@ -3,13 +3,15 @@ package seedu.address.logic.parser.location;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.IndexIdPair.checkIndexOrIdOnly;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.location.EditLocationCommand;
 import seedu.address.logic.commands.location.EditLocationCommand.EditLocationDescriptor;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
+import seedu.address.logic.parser.IndexIdPair;
 import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -27,16 +29,14 @@ public class EditLocationCommandParser implements Parser<EditLocationCommand> {
     @Override
     public EditLocationCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_ADDRESS);
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_LOCATION_ID, PREFIX_NAME, PREFIX_ADDRESS);
 
-        Index index;
-
-        try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
-        } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditLocationCommand.MESSAGE_USAGE),
-                    pe);
+        if (!checkIndexOrIdOnly(argMultimap, PREFIX_LOCATION_ID)) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditLocationCommand.MESSAGE_USAGE));
         }
+        IndexIdPair pair = new IndexIdPair(argMultimap, PREFIX_LOCATION_ID);
 
         EditLocationDescriptor editLocationDescriptor = new EditLocationDescriptor();
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
@@ -49,6 +49,6 @@ public class EditLocationCommandParser implements Parser<EditLocationCommand> {
             throw new ParseException(EditLocationCommand.MESSAGE_NOT_EDITED);
         }
 
-        return new EditLocationCommand(index, editLocationDescriptor);
+        return new EditLocationCommand(pair, editLocationDescriptor);
     }
 }

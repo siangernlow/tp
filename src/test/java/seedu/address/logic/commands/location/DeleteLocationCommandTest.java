@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showLocationAtIndex;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION_ID;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 import static seedu.address.testutil.TypicalLocations.ID_NOT_IN_TYPICAL_LOCATIONS;
@@ -17,6 +18,8 @@ import org.junit.jupiter.api.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.parser.IndexIdPair;
+import seedu.address.logic.parser.IndexIdPairStub;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -30,7 +33,7 @@ public class DeleteLocationCommandTest {
     @Test
     public void execute_validIndexUnfilteredList_success() {
         Location locationToDelete = model.getSortedLocationList().get(INDEX_FIRST.getZeroBased());
-        DeleteLocationCommand deleteLocationCommand = new DeleteLocationCommand(INDEX_FIRST);
+        DeleteLocationCommand deleteLocationCommand = new DeleteLocationCommand(new IndexIdPairStub(INDEX_FIRST, null));
 
         String expectedMessage = String.format(DeleteLocationCommand.MESSAGE_DELETE_LOCATION_SUCCESS, locationToDelete);
 
@@ -47,9 +50,10 @@ public class DeleteLocationCommandTest {
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() {
         Index outOfBoundIndex = Index.fromOneBased(model.getSortedLocationList().size() + 1);
-        DeleteLocationCommand deleteLocationCommand = new DeleteLocationCommand(outOfBoundIndex);
+        DeleteLocationCommand deleteLocationCommand = new DeleteLocationCommand(
+                new IndexIdPairStub(outOfBoundIndex, null));
 
-        assertCommandFailure(deleteLocationCommand, model, Messages.MESSAGE_INVALID_LOCATION_DISPLAYED_INDEX);
+        assertCommandFailure(deleteLocationCommand, model, Messages.MESSAGE_INVALID_LOCATION_INDEX);
     }
 
     @Test
@@ -57,7 +61,7 @@ public class DeleteLocationCommandTest {
         showLocationAtIndex(model, INDEX_FIRST);
 
         Location locationToDelete = model.getSortedLocationList().get(INDEX_FIRST.getZeroBased());
-        DeleteLocationCommand deleteLocationCommand = new DeleteLocationCommand(INDEX_FIRST);
+        DeleteLocationCommand deleteLocationCommand = new DeleteLocationCommand(new IndexIdPairStub(INDEX_FIRST, null));
 
         String expectedMessage = String.format(DeleteLocationCommand.MESSAGE_DELETE_LOCATION_SUCCESS, locationToDelete);
 
@@ -80,15 +84,17 @@ public class DeleteLocationCommandTest {
         // ensures that outOfBoundIndex is still in bounds of location book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getLocationBook().getLocationList().size());
 
-        DeleteLocationCommand deleteLocationCommand = new DeleteLocationCommand(outOfBoundIndex);
+        DeleteLocationCommand deleteLocationCommand = new DeleteLocationCommand(
+                new IndexIdPairStub(outOfBoundIndex, null));
 
-        assertCommandFailure(deleteLocationCommand, model, Messages.MESSAGE_INVALID_LOCATION_DISPLAYED_INDEX);
+        assertCommandFailure(deleteLocationCommand, model, Messages.MESSAGE_INVALID_LOCATION_INDEX);
     }
 
     @Test
     public void execute_validId_success() {
         Location locationToDelete = model.getSortedLocationList().get(INDEX_FIRST.getZeroBased());
-        DeleteLocationCommand deleteLocationCommand = new DeleteLocationCommand(locationToDelete.getId());
+        DeleteLocationCommand deleteLocationCommand = new DeleteLocationCommand(
+                new IndexIdPairStub(null, locationToDelete.getId()));
 
         String expectedMessage = String.format(DeleteLocationCommand.MESSAGE_DELETE_LOCATION_SUCCESS, locationToDelete);
 
@@ -103,20 +109,24 @@ public class DeleteLocationCommandTest {
 
     @Test
     public void execute_invalidId_throwsCommandException() {
-        DeleteLocationCommand deleteLocationCommand = new DeleteLocationCommand(ID_NOT_IN_TYPICAL_LOCATIONS);
+        DeleteLocationCommand deleteLocationCommand = new DeleteLocationCommand(
+                new IndexIdPair(null, ID_NOT_IN_TYPICAL_LOCATIONS, PREFIX_LOCATION_ID));
         assertCommandFailure(deleteLocationCommand, model, Messages.MESSAGE_INVALID_LOCATION_ID);
     }
 
     @Test
     public void equals() {
-        DeleteLocationCommand deleteFirstIndexCommand = new DeleteLocationCommand(INDEX_FIRST);
-        DeleteLocationCommand deleteSecondIndexCommand = new DeleteLocationCommand(INDEX_SECOND);
+        DeleteLocationCommand deleteFirstIndexCommand = new DeleteLocationCommand(
+                new IndexIdPairStub(INDEX_FIRST, null));
+        DeleteLocationCommand deleteSecondIndexCommand = new DeleteLocationCommand(
+                new IndexIdPairStub(INDEX_SECOND, null));
 
         // same object -> returns true
         assertTrue(deleteFirstIndexCommand.equals(deleteFirstIndexCommand));
 
         // same values -> returns true
-        DeleteLocationCommand deleteFirstIndexCommandCopy = new DeleteLocationCommand(INDEX_FIRST);
+        DeleteLocationCommand deleteFirstIndexCommandCopy = new DeleteLocationCommand(
+                new IndexIdPairStub(INDEX_FIRST, null));
         assertTrue(deleteFirstIndexCommand.equals(deleteFirstIndexCommandCopy));
 
         // different types -> returns false
@@ -128,14 +138,17 @@ public class DeleteLocationCommandTest {
         // different index -> returns false
         assertFalse(deleteFirstIndexCommand.equals(deleteSecondIndexCommand));
 
-        DeleteLocationCommand deleteFirstIdCommand = new DeleteLocationCommand(new Id("L1"));
-        DeleteLocationCommand deleteSecondIdCommand = new DeleteLocationCommand(new Id("L2"));
+        DeleteLocationCommand deleteFirstIdCommand = new DeleteLocationCommand(
+                new IndexIdPairStub(null, new Id("L1")));
+        DeleteLocationCommand deleteSecondIdCommand = new DeleteLocationCommand(
+                new IndexIdPairStub(null, new Id("L2")));
 
         // same object -> returns true
         assertTrue(deleteFirstIdCommand.equals(deleteFirstIdCommand));
 
         // same values -> returns true
-        DeleteLocationCommand deleteFirstIdCommandCopy = new DeleteLocationCommand(new Id("L1"));
+        DeleteLocationCommand deleteFirstIdCommandCopy = new DeleteLocationCommand(
+                new IndexIdPairStub(null, new Id("L1")));
         assertTrue(deleteFirstIdCommand.equals(deleteFirstIdCommandCopy));
 
         // different types -> returns false

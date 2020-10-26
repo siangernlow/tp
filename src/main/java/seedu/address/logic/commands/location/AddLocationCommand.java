@@ -18,14 +18,14 @@ public class AddLocationCommand extends Command {
 
     public static final String COMMAND_WORD = "addLocation";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a location to the virus tracker."
-            + "Location must have a unique identifier."
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a location to the virus tracker. "
+            + "Location must have a unique identifier.\n"
             + "Parameters: "
             + PREFIX_LOCATION_ID + "ID "
             + PREFIX_NAME + "NAME "
             + PREFIX_ADDRESS + "ADDRESS\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_LOCATION_ID + "S234F "
+            + PREFIX_LOCATION_ID + "L234F "
             + PREFIX_NAME + "School of Computing "
             + PREFIX_ADDRESS + "NUS School of Computing COM1 13 Computing Dr, 117417 ";
 

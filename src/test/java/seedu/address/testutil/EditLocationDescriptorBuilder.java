@@ -2,7 +2,6 @@ package seedu.address.testutil;
 
 import seedu.address.logic.commands.location.EditLocationCommand.EditLocationDescriptor;
 import seedu.address.model.attribute.Address;
-import seedu.address.model.attribute.Id;
 import seedu.address.model.attribute.Name;
 import seedu.address.model.location.Location;
 
@@ -29,7 +28,6 @@ public class EditLocationDescriptorBuilder {
         descriptor = new EditLocationDescriptor();
         descriptor.setName(location.getName());
         descriptor.setAddress(location.getAddress());
-        descriptor.setId(location.getId());
     }
 
     /**
@@ -45,14 +43,6 @@ public class EditLocationDescriptorBuilder {
      */
     public EditLocationDescriptorBuilder withAddress(String address) {
         descriptor.setAddress(new Address(address));
-        return this;
-    }
-
-    /**
-     * Sets the {@code id} of the {@code EditLocationDescriptor} that we are building.
-     */
-    public EditLocationDescriptorBuilder withId(String id) {
-        descriptor.setId(new Id(id));
         return this;
     }
 

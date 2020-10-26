@@ -3,15 +3,14 @@ package seedu.address.logic.parser.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
+import static seedu.address.logic.parser.IndexIdPair.checkIndexOrIdOnly;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.person.DeletePersonCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
+import seedu.address.logic.parser.IndexIdPair;
 import seedu.address.logic.parser.Parser;
-import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.attribute.Id;
 
 /**
  * Parses input arguments and creates a new DeletePersonCommand object
@@ -27,23 +26,12 @@ public class DeletePersonCommandParser implements Parser<DeletePersonCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_PERSON_ID);
 
-        if (argMultimap.getValue(PREFIX_PERSON_ID).isPresent() && !argMultimap.getPreamble().isEmpty()) {
+        if (!checkIndexOrIdOnly(argMultimap, PREFIX_PERSON_ID)) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeletePersonCommand.MESSAGE_USAGE));
         }
 
-        if (argMultimap.getValue(PREFIX_PERSON_ID).isPresent()) {
-            Id id = ParserUtil.parseId(argMultimap.getValue(PREFIX_PERSON_ID).get());
-            return new DeletePersonCommand(id);
-        }
-
-        try {
-            Index index = ParserUtil.parseIndex(args);
-            return new DeletePersonCommand(index);
-        } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeletePersonCommand.MESSAGE_USAGE),
-                    pe);
-        }
+        IndexIdPair pair = new IndexIdPair(argMultimap, PREFIX_PERSON_ID);
+        return new DeletePersonCommand(pair);
     }
-
 }

@@ -36,7 +36,7 @@ public interface Logic {
      */
     ReadOnlyPersonBook getPersonBook();
 
-    /** Returns an unmodifiable view of the filtered list of persons */
+    /** Returns an unmodifiable view of the filtered and sorted list of persons */
     ObservableList<Person> getSortedPersonList();
 
     /**
@@ -53,7 +53,7 @@ public interface Logic {
      */
     ReadOnlyLocationBook getLocationBook();
 
-    /** Returns an unmodifiable view of the filtered list of locations */
+    /** Returns an unmodifiable view of the filtered and sorted list of locations */
     ObservableList<Location> getSortedLocationList();
 
     /**
@@ -70,7 +70,7 @@ public interface Logic {
      */
     ReadOnlyVisitBook getVisitBook();
 
-    /** Returns an unmodifiable view of the filtered list of visits */
+    /** Returns an unmodifiable view of the filtered and sorted list of visits */
     ObservableList<Visit> getSortedVisitList();
 
     /**

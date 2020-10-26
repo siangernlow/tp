@@ -1,8 +1,10 @@
 package seedu.address.logic.parser;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
+import static seedu.address.logic.parser.IndexIdPair.checkIndexOrIdOnly;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.GeneratePeopleCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -17,13 +19,15 @@ public class GeneratePeopleCommandParser implements Parser<GeneratePeopleCommand
      * @throws ParseException if the user input does not conform the expected format
      */
     public GeneratePeopleCommand parse(String args) throws ParseException {
-        try {
-            Index index = ParserUtil.parseIndex(args);
-            return new GeneratePeopleCommand(index);
-        } catch (ParseException pe) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, GeneratePeopleCommand.MESSAGE_USAGE), pe);
-        }
-    }
+        requireNonNull(args);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_PERSON_ID);
 
+        if (!checkIndexOrIdOnly(argMultimap, PREFIX_PERSON_ID)) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, GeneratePeopleCommand.MESSAGE_USAGE));
+        }
+
+        IndexIdPair pair = new IndexIdPair(argMultimap, PREFIX_PERSON_ID);
+        return new GeneratePeopleCommand(pair);
+    }
 }

@@ -3,13 +3,15 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_INDEX;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.GeneratePeopleCommand.MESSAGE_NO_PEOPLE_FOUND;
 import static seedu.address.logic.commands.GeneratePeopleCommand.MESSAGE_PERSON_HAS_NO_VISITS;
 import static seedu.address.logic.commands.GeneratePeopleCommand.MESSAGE_PERSON_IS_NOT_INFECTED;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_INFECTED;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_QUARANTINED;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 import static seedu.address.testutil.TypicalLocations.DANIEL_LOCATION;
 import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -22,6 +24,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.IndexIdPairStub;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -41,17 +44,17 @@ public class GeneratePeopleCommandTest {
 
     @Test
     public void equals() {
-        Index firstIndex = Index.fromOneBased(1);
-        Index secondIndex = Index.fromOneBased(2);
-
-        GeneratePeopleCommand firstGeneratePeopleCommand = new GeneratePeopleCommand(firstIndex);
-        GeneratePeopleCommand secondGeneratePeopleCommand = new GeneratePeopleCommand(secondIndex);
+        GeneratePeopleCommand firstGeneratePeopleCommand = new GeneratePeopleCommand(
+                new IndexIdPairStub(INDEX_FIRST, null));
+        GeneratePeopleCommand secondGeneratePeopleCommand = new GeneratePeopleCommand(
+                new IndexIdPairStub(INDEX_SECOND, null));
 
         // same object -> returns true
         assertTrue(firstGeneratePeopleCommand.equals(firstGeneratePeopleCommand));
 
         // same values -> returns true
-        GeneratePeopleCommand copyOfGeneratePeopleCommand = new GeneratePeopleCommand(firstIndex);
+        GeneratePeopleCommand copyOfGeneratePeopleCommand = new GeneratePeopleCommand(
+                new IndexIdPairStub(INDEX_FIRST, null));
         assertTrue(firstGeneratePeopleCommand.equals(copyOfGeneratePeopleCommand));
 
         // different types -> returns false
@@ -66,9 +69,9 @@ public class GeneratePeopleCommandTest {
 
     @Test
     public void execute_indexOutOfBounds_throwCommandException() {
-        String expectedMessage = MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+        String expectedMessage = MESSAGE_INVALID_PERSON_INDEX;
         Index index = Index.fromOneBased(100);
-        GeneratePeopleCommand command = new GeneratePeopleCommand(index);
+        GeneratePeopleCommand command = new GeneratePeopleCommand(new IndexIdPairStub(index, null));
         assertThrows(CommandException.class, () -> command.execute(model));
         try {
             command.execute(model);
@@ -80,8 +83,7 @@ public class GeneratePeopleCommandTest {
     @Test
     public void execute_personAtIndexNotInfected_throwCommandException() {
         String expectedMessage = MESSAGE_PERSON_IS_NOT_INFECTED;
-        Index index = Index.fromOneBased(1);
-        GeneratePeopleCommand command = new GeneratePeopleCommand(index);
+        GeneratePeopleCommand command = new GeneratePeopleCommand(new IndexIdPairStub(INDEX_FIRST, null));
         assertThrows(CommandException.class, () -> command.execute(model));
         try {
             command.execute(model);
@@ -95,7 +97,7 @@ public class GeneratePeopleCommandTest {
         String expectedMessage = MESSAGE_PERSON_HAS_NO_VISITS;
         model.deleteVisit(model.getVisitBook().getVisitList().get(6));
         Index index = Index.fromOneBased(5);
-        GeneratePeopleCommand command = new GeneratePeopleCommand(index);
+        GeneratePeopleCommand command = new GeneratePeopleCommand(new IndexIdPairStub(index, null));
         assertThrows(CommandException.class, () -> command.execute(model));
         try {
             command.execute(model);
@@ -108,7 +110,7 @@ public class GeneratePeopleCommandTest {
     public void execute_noPeopleFound_throwCommandException() {
         String expectedMessage = MESSAGE_NO_PEOPLE_FOUND;
         Index index = Index.fromOneBased(5);
-        GeneratePeopleCommand command = new GeneratePeopleCommand(index);
+        GeneratePeopleCommand command = new GeneratePeopleCommand(new IndexIdPairStub(index, null));
         assertThrows(CommandException.class, () -> command.execute(model));
         try {
             command.execute(model);
@@ -128,7 +130,7 @@ public class GeneratePeopleCommandTest {
         Predicate<Person> personPredicate = person -> person.getId().equals("S8910H");
         expectedModelForGenerate.updateFilteredPersonList(personPredicate);
         Index index = Index.fromOneBased(4);
-        GeneratePeopleCommand command = new GeneratePeopleCommand(index);
+        GeneratePeopleCommand command = new GeneratePeopleCommand(new IndexIdPairStub(index, null));
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
                 CommandResult.SWITCH_TO_VIEW_PEOPLE);
         assertCommandSuccess(command, model, expectedCommandResult, expectedModelForGenerate);
@@ -139,8 +141,7 @@ public class GeneratePeopleCommandTest {
         String expectedMessage = MESSAGE_NO_PEOPLE_FOUND;
         Model modelForAllInfected = model;
         modelForAllInfected.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
-        Index index = Index.fromOneBased(1);
-        GeneratePeopleCommand command = new GeneratePeopleCommand(index);
+        GeneratePeopleCommand command = new GeneratePeopleCommand(new IndexIdPairStub(INDEX_FIRST, null));
         assertThrows(CommandException.class, () -> command.execute(model));
         try {
             command.execute(model);
@@ -153,8 +154,7 @@ public class GeneratePeopleCommandTest {
     public void execute_invalidInputFromViewingAllQuarantined_throwCommandException() {
         Model modelForAllQuarantined = model;
         modelForAllQuarantined.updateFilteredPersonList(PREDICATE_SHOW_ALL_QUARANTINED);
-        Index index = Index.fromOneBased(1);
-        GeneratePeopleCommand command = new GeneratePeopleCommand(index);
+        GeneratePeopleCommand command = new GeneratePeopleCommand(new IndexIdPairStub(INDEX_FIRST, null));
         assertThrows(CommandException.class, () -> command.execute(modelForAllQuarantined));
     }
 }
