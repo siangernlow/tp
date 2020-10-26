@@ -10,3 +10,12 @@ Copyright by Jan Jan Kovařík - http://glyphicons.com/
 
 Copyright by GraphicHost - https://pngtree.com/
 - virus_32.png
+
+Copyright by icons8 - https://icons8.com
+- person-icon.png
+
+Copyright by Kryston Schwarze - https://www.figma.com/community/file/800815864899415771/coolicons-%7C-Free-Iconset
+- location-icon.png
+
+Copyright by icons8 - https://icons8.com
+- visit-icon.png
