@@ -12,7 +12,7 @@ import seedu.address.model.attribute.Name;
  * Represents a Location in the VirusTracker.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Location {
+public class Location implements Comparable<Location> {
 
     // Unique Identifier
     private final Id id;
@@ -118,5 +118,10 @@ public class Location {
                 .append(" Address: ")
                 .append(getAddress());
         return builder.toString();
+    }
+
+    @Override
+    public int compareTo(Location location) {
+        return getName().compareTo(location.getName());
     }
 }

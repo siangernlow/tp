@@ -20,7 +20,7 @@ import seedu.address.model.attribute.Tag;
  * Represents a Person in the VirusTracker.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Person {
+public class Person implements Comparable<Person> {
 
     // Unique Identifier
     private final Id id;
@@ -226,5 +226,10 @@ public class Person {
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
+    }
+
+    @Override
+    public int compareTo(Person person) {
+        return getName().compareTo(person.getName());
     }
 }
