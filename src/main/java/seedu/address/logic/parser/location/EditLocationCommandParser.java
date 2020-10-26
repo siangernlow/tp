@@ -32,7 +32,7 @@ public class EditLocationCommandParser implements Parser<EditLocationCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_LOCATION_ID, PREFIX_NAME, PREFIX_ADDRESS);
 
-        if (checkIndexOrIdOnly(argMultimap, PREFIX_LOCATION_ID)) {
+        if (!checkIndexOrIdOnly(argMultimap, PREFIX_LOCATION_ID)) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditLocationCommand.MESSAGE_USAGE));
         }

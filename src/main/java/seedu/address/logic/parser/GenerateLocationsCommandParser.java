@@ -22,7 +22,7 @@ public class GenerateLocationsCommandParser implements Parser<GenerateLocationsC
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_PERSON_ID);
 
-        if (checkIndexOrIdOnly(argMultimap, PREFIX_PERSON_ID)) {
+        if (!checkIndexOrIdOnly(argMultimap, PREFIX_PERSON_ID)) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, GenerateLocationsCommand.MESSAGE_USAGE));
         }

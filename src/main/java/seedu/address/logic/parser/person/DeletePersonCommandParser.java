@@ -26,7 +26,7 @@ public class DeletePersonCommandParser implements Parser<DeletePersonCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_PERSON_ID);
 
-        if (checkIndexOrIdOnly(argMultimap, PREFIX_PERSON_ID)) {
+        if (!checkIndexOrIdOnly(argMultimap, PREFIX_PERSON_ID)) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeletePersonCommand.MESSAGE_USAGE));
         }

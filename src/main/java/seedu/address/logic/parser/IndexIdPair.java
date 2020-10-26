@@ -21,7 +21,7 @@ import seedu.address.model.person.Person;
  * This represents an identifier that can identify a Person or a Location.
  * The identifier may be using either an Id or an index from user input.
  */
-public class IndexIdPair {
+public class IndexIdPair implements ReadOnlyIndexIdPair {
 
     public static final String MESSAGE_INVALID_PERSON_COMMAND_USE = "This pair refers to a location, not a person.";
     public static final String MESSAGE_INVALID_LOCATION_COMMAND_USE = "This pair refers to a person, not a location.";
@@ -56,7 +56,7 @@ public class IndexIdPair {
      * Checks that {@code ArgumentMultimap} does not contain both Id and Index strings.
      */
     public static boolean checkIndexOrIdOnly(ArgumentMultimap argMultimap, Prefix prefix) {
-        return argMultimap.getValue(prefix).isPresent() && !argMultimap.getPreamble().isEmpty();
+        return !(argMultimap.getValue(prefix).isPresent() && !argMultimap.getPreamble().isEmpty());
     }
 
     /**
@@ -64,6 +64,7 @@ public class IndexIdPair {
      * @throws CommandException if the person cannot be found from the model
      *                          or if this pair is referring to a location.
      */
+    @Override
     public Person getPersonFromPair(Model model) throws CommandException {
         requireNonNull(model);
         if (!prefix.equals(PREFIX_PERSON_ID)) {
@@ -92,6 +93,7 @@ public class IndexIdPair {
      * @throws CommandException if the location cannot be found from the model
      *                          or if this pair is referring to a person.
      */
+    @Override
     public Location getLocationFromPair(Model model) throws CommandException {
         requireNonNull(model);
         if (!prefix.equals(PREFIX_LOCATION_ID)) {

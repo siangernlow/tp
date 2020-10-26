@@ -27,7 +27,7 @@ public class DeleteLocationCommandParser implements Parser<DeleteLocationCommand
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_LOCATION_ID);
 
-        if (checkIndexOrIdOnly(argMultimap, PREFIX_LOCATION_ID)) {
+        if (!checkIndexOrIdOnly(argMultimap, PREFIX_LOCATION_ID)) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteLocationCommand.MESSAGE_USAGE));
         }

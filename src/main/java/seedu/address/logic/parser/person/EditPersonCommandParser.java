@@ -43,7 +43,7 @@ public class EditPersonCommandParser implements Parser<EditPersonCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_PERSON_ID, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
                         PREFIX_ADDRESS, PREFIX_QUARANTINE_STATUS, PREFIX_INFECTION_STATUS, PREFIX_TAG);
 
-        if (checkIndexOrIdOnly(argMultimap, PREFIX_PERSON_ID)) {
+        if (!checkIndexOrIdOnly(argMultimap, PREFIX_PERSON_ID)) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditPersonCommand.MESSAGE_USAGE));
         }
