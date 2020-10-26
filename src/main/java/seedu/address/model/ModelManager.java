@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.ListComparator.SORT_ASCENDING_LOCATION_NAME;
 import static seedu.address.model.ListComparator.SORT_ASCENDING_PERSON_NAME;
-import static seedu.address.model.ListComparator.SORT_DESCENDING_VISIT_DATE;
+import static seedu.address.model.ListComparator.SORT_VISITS;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_LOCATIONS;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_VISITS;
@@ -73,7 +73,7 @@ public class ModelManager implements Model {
         sortedLocations.setComparator(SORT_ASCENDING_LOCATION_NAME);
 
         sortedVisits = new SortedList<>(filteredVisits);
-        sortedVisits.setComparator(SORT_DESCENDING_VISIT_DATE);
+        sortedVisits.setComparator(SORT_VISITS);
     }
 
     public ModelManager() {

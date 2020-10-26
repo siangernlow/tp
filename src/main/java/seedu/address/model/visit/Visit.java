@@ -31,16 +31,18 @@ public class Visit {
         this.date = date;
     }
 
+    //===================== For comparing =====================================
+
+    public LocalDate getDate() {
+        return date;
+    }
+
     public Person getPerson() {
         return person;
     }
 
     public Location getLocation() {
         return location;
-    }
-
-    public LocalDate getDate() {
-        return date;
     }
 
     //===================== For String conversions ============================
