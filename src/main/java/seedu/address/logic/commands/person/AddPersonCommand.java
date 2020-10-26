@@ -24,7 +24,7 @@ public class AddPersonCommand extends Command {
     public static final String COMMAND_WORD = "addPerson";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
-            + "Person must have a unique identifier."
+            + "Person must have a unique identifier.\n"
             + "Parameters: "
             + PREFIX_PERSON_ID + "ID "
             + PREFIX_NAME + "NAME "

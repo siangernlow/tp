@@ -2,6 +2,7 @@ package seedu.address.logic.commands.location;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_LOCATIONS;
 
@@ -26,14 +27,19 @@ public class EditLocationCommand extends Command {
     public static final String COMMAND_WORD = "editLocation";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the location identified "
-            + "by the index number used in the displayed location list. "
+            + "by Id or the index number used in the displayed location list. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+            + "Parameters: INDEX (must be a positive integer) or "
+            + PREFIX_LOCATION_ID + "ID "
             + "[" + PREFIX_NAME + "NAME] "
-            + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_ADDRESS + "ADDRESS] \n"
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_LOCATION_ID + "L123A "
+            + PREFIX_NAME + "National University of Singapore "
+            + PREFIX_ADDRESS + "21 Lower Kent Ridge Rd, Singapore 119077\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_NAME + "National University of Singapore "
-            + PREFIX_ADDRESS + "21 Lower Kent Ridge Rd, Singapore 119077";
+            + PREFIX_ADDRESS + "21 Lower Kent Ridge Rd, Singapore 119077";;
 
     public static final String MESSAGE_EDIT_LOCATION_SUCCESS = "Edited Location: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";

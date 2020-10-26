@@ -42,17 +42,18 @@ public class AddVisitCommand extends Command {
             + "The following person is infected and "
             + "is in quarantine. The Stay-Home Notice may have been violated.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add a new visit to the visits list "
-            + "using a person's index, location's index and date of visit.\n"
+            + "using a person, location and date of visit.\n"
+            + "You may identify a person and location by index or Id. Mixing of the index and Id is not allowed.\n"
             + "Indexes are based on the most recently viewed persons and locations list.\n"
-            + "Alternatively, a person's ID and a location's ID can be used. "
-            + "However, a combination of ID and index is not allowed.\n"
-            + "Updates the existing visits list.\n"
-            + "Parameters: PERSON_INDEX LOCATION_INDEX d/DATE\n"
-            + "Example: " + COMMAND_WORD + " 1 " + " 2 " + PREFIX_DATE + " 2020-05-31 \n"
-            + "Parameters: "
-            + PREFIX_PERSON_ID + "PERSON_INDEX "
-            + PREFIX_LOCATION_ID + "LOCATION_INDEX d/DATE\n"
-            + "Example: " + COMMAND_WORD + " idp/S11 " + " idl/L222 " + PREFIX_DATE + " 2020-05-31 ";
+            + "Parameters: (PERSON_INDEX LOCATION_INDEX) or ("
+            + PREFIX_PERSON_ID + "S123A "
+            + PREFIX_LOCATION_ID + "L123A) "
+            + PREFIX_DATE + "DATE\n"
+            + "Example: " + COMMAND_WORD + " 1 " + " 2 " + PREFIX_DATE + "2020-05-31 \n"
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_PERSON_ID + "S123A "
+            + PREFIX_LOCATION_ID + "L123A "
+            + PREFIX_DATE + "2020-05-31 ";
 
     private final Optional<Index> personIndex;
     private final Optional<Index> locationIndex;

@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
 
 import java.util.List;
 
@@ -22,11 +23,12 @@ public class GenerateLocationsCommand extends Command {
     public static final String COMMAND_WORD = "generateLocations";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all locations which a person of "
-            + "the specified id (case-insensitive) visited and displays them as a list of locations.\n"
-            + "Parameters: PERSON_INDEX\n"
+            + "the specified Id (case-insensitive) or index visited and displays them as a list of locations.\n"
+            + "Parameters: PERSON_INDEX or "
+            + PREFIX_PERSON_ID + "PERSON_ID\n"
             + "Example: " + COMMAND_WORD + " 1\n"
-            + "Parameters: idp/PERSON_ID\n"
-            + "Example: " + COMMAND_WORD + " idp/S123A";
+            + "Example: " + COMMAND_WORD
+            + PREFIX_PERSON_ID + "S123A";
 
     public static final String MESSAGE_PERSON_HAS_NO_VISITS = "This person is not associated with any visits";
     public static final String MESSAGE_PERSON_IS_NOT_INFECTED = "This person is not infected";
@@ -47,7 +49,7 @@ public class GenerateLocationsCommand extends Command {
         InfoHandler infoHandler = new InfoHandler(model);
         Person infectedPerson = pair.getPersonFromPair(model);
 
-        if (!infectedPerson.getInfectionStatus().getStatusAsBoolean()) {
+        if (!infectedPerson.isInfected()) {
             throw new CommandException(MESSAGE_PERSON_IS_NOT_INFECTED);
         }
         Id personIdFromBook = infectedPerson.getId();

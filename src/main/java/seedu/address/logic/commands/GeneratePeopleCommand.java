@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
 
 import java.util.List;
 
@@ -22,11 +23,12 @@ public class GeneratePeopleCommand extends Command {
     public static final String COMMAND_WORD = "generatePeople";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all people which a person of the specified"
-            + "id (case-insensitive) have been in contact with and displays them as a list of locations.\n"
-            + "Parameters: PERSON_INDEX\n"
+            + "Id (case-insensitive) or index have been in contact with and displays them as a list of locations.\n"
+            + "Parameters: PERSON_INDEX or "
+            + PREFIX_PERSON_ID + "PERSON_ID\n"
             + "Example: " + COMMAND_WORD + " 1\n"
-            + "Parameters: idp/PERSON_ID\n"
-            + "Example: " + COMMAND_WORD + " idp/S123A";
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_PERSON_ID + "S123A";
 
     public static final String MESSAGE_NO_PEOPLE_FOUND = "There were no people in contact with the given person";
     public static final String MESSAGE_PERSON_HAS_NO_VISITS = "This person is not associated with any visits";

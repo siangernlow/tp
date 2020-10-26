@@ -18,12 +18,10 @@ public class DeletePersonCommand extends Command {
     public static final String COMMAND_WORD = "deletePerson";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the person identified by the index number used in the displayed person list.\n"
-            + "Alternatively, user may identify the person by ID.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
+            + ": Deletes the person identified by Id or the index number used in the displayed person list.\n"
+            + "Parameters: INDEX (must be a positive integer) or "
+            + PREFIX_PERSON_ID + "ID \n"
             + "Example: " + COMMAND_WORD + " 1\n"
-            + "Parameters: "
-            + PREFIX_PERSON_ID + "ID "
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_PERSON_ID + "T123A ";
 

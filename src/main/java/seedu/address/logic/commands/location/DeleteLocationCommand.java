@@ -17,12 +17,10 @@ public class DeleteLocationCommand extends Command {
     public static final String COMMAND_WORD = "deleteLocation";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the location identified by the index number used in the displayed location list.\n"
-            + "Alternatively, user may identify the location by ID.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
+            + ": Deletes the location identified by Id or the index number used in the displayed location list.\n"
+            + "Parameters: INDEX (must be a positive integer) or "
+            + PREFIX_LOCATION_ID + "ID \n"
             + "Example: " + COMMAND_WORD + " 1\n"
-            + "Parameters: "
-            + PREFIX_LOCATION_ID + "ID "
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_LOCATION_ID + "L123A ";
 
