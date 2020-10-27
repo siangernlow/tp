@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.commands.AddFromCsvCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.ExportToCsvCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.location.AddLocationCommand;
@@ -43,8 +44,8 @@ import seedu.address.logic.commands.visit.AddVisitsFromCsvCommand;
 import seedu.address.logic.commands.visit.DeleteVisitsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.location.Location;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonNameContainsKeywordsPredicate;
 import seedu.address.testutil.EditLocationDescriptorBuilder;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.LocationBuilder;
@@ -94,14 +95,14 @@ public class VirusTrackerParserTest {
     public void parseCommand_delete() throws Exception {
         DeletePersonCommand command = (DeletePersonCommand) parser.parseCommand(
                 DeletePersonCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased());
-        assertEquals(new DeletePersonCommand(INDEX_FIRST), command);
+        assertEquals(new DeletePersonCommand(new IndexIdPairStub(INDEX_FIRST, null)), command);
     }
 
     @Test
     public void parseCommand_deleteLocation() throws Exception {
         DeleteLocationCommand command = (DeleteLocationCommand) parser.parseCommand(
                 DeleteLocationCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased());
-        assertEquals(new DeleteLocationCommand(INDEX_FIRST), command);
+        assertEquals(new DeleteLocationCommand(new IndexIdPairStub(INDEX_FIRST, null)), command);
     }
 
     @Test
@@ -118,7 +119,7 @@ public class VirusTrackerParserTest {
         EditPersonCommand.EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
         EditPersonCommand command = (EditPersonCommand) parser.parseCommand(EditPersonCommand.COMMAND_WORD + " "
                 + INDEX_FIRST.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
-        assertEquals(new EditPersonCommand(INDEX_FIRST, descriptor), command);
+        assertEquals(new EditPersonCommand(new IndexIdPairStub(INDEX_FIRST, null), descriptor), command);
     }
 
     @Test
@@ -127,7 +128,7 @@ public class VirusTrackerParserTest {
         EditLocationDescriptor descriptor = new EditLocationDescriptorBuilder(location).build();
         EditLocationCommand command = (EditLocationCommand) parser.parseCommand(EditLocationCommand.COMMAND_WORD + " "
                 + INDEX_FIRST.getOneBased() + " " + LocationUtil.getEditLocationDescriptorDetails(descriptor));
-        assertEquals(new EditLocationCommand(INDEX_FIRST, descriptor), command);
+        assertEquals(new EditLocationCommand(new IndexIdPairStub(INDEX_FIRST, null), descriptor), command);
     }
 
     @Test
@@ -141,7 +142,7 @@ public class VirusTrackerParserTest {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         FindPersonCommand command = (FindPersonCommand) parser.parseCommand(
                 FindPersonCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindPersonCommand(new NameContainsKeywordsPredicate(keywords)), command);
+        assertEquals(new FindPersonCommand(new PersonNameContainsKeywordsPredicate(keywords)), command);
     }
 
     @Test
@@ -164,6 +165,14 @@ public class VirusTrackerParserTest {
         assertTrue(parser.parseCommand(commandAndPrefix + "people") instanceof AddPersonsFromCsvCommand);
         assertTrue(parser.parseCommand(commandAndPrefix + "locations") instanceof AddLocationsFromCsvCommand);
         assertTrue(parser.parseCommand(commandAndPrefix + "visits") instanceof AddVisitsFromCsvCommand);
+    }
+
+    @Test
+    public void parseCommand_exportToCsv() throws Exception {
+        String commandAndPrefix = ExportToCsvCommand.COMMAND_WORD + " " + EMPTY_CSV_FILE + " " + PREFIX_LIST;
+        assertTrue(parser.parseCommand(commandAndPrefix + "people") instanceof ExportToCsvCommand);
+        assertTrue(parser.parseCommand(commandAndPrefix + "locations") instanceof ExportToCsvCommand);
+        assertTrue(parser.parseCommand(commandAndPrefix + "visits") instanceof ExportToCsvCommand);
     }
 
     @Test

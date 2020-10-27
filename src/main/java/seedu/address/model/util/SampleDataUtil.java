@@ -50,7 +50,7 @@ public class SampleDataUtil {
                     new QuarantineStatus("false"), new InfectionStatus("true"), getTagSet("classmates")),
             new Person(new Id("S678F"), new Name("Roy Balakrishnan"), new Phone("92624417"),
                     new Email("royb@example.com"), new Address("Blk 45 Aljunied Street 85, #11-31"),
-                    new QuarantineStatus("false"), new InfectionStatus("true"), getTagSet("colleagues"))
+                    new QuarantineStatus("true"), new InfectionStatus("true"), getTagSet("colleagues"))
         };
     }
 
@@ -67,7 +67,7 @@ public class SampleDataUtil {
             new Location(new Id("L567E"), new Name("Plaza Singapura"),
                     new Address("68 Orchard Rd, Singapore 238839")),
             new Location(new Id("L678F"), new Name("Singapore Zoo"),
-                    new Address("80 Mandai Lake Rd, 729826")),
+                    new Address("80 Mandai Lake Rd, 729826"))
         };
     }
 
@@ -80,11 +80,12 @@ public class SampleDataUtil {
                 visits.add(new Visit(p, l, date));
                 date = date.minusDays(1);
             }
+            date = date.plusDays(5);
         }
         return visits;
     }
 
-    public static ReadOnlyPersonBook getSampleAddressBook() {
+    public static ReadOnlyPersonBook getSamplePersonBook() {
         PersonBook samplePb = new PersonBook();
         for (Person samplePerson : getSamplePersons()) {
             samplePb.addPerson(samplePerson);
@@ -107,6 +108,7 @@ public class SampleDataUtil {
         }
         return sampleVb;
     }
+
     /**
      * Returns a tag set containing the list of strings given.
      */

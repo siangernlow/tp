@@ -5,10 +5,11 @@ import static java.util.Objects.requireNonNull;
 import java.util.List;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.attribute.Id;
 
 /**
  * Wraps all data at the person-book level
- * Duplicates are not allowed (by .isSamePerson comparison)
+ * Duplicates are not allowed (by .isSamePerson and .isSameId comparison)
  */
 public class PersonBook implements ReadOnlyPersonBook {
 
@@ -57,7 +58,7 @@ public class PersonBook implements ReadOnlyPersonBook {
     //// person-level operations
 
     /**
-     * Returns true if a person with the same identity as {@code person} exists in the address book.
+     * Returns true if a person with the same identity as {@code person} exists in the person book.
      */
     public boolean hasPerson(Person person) {
         requireNonNull(person);
@@ -65,24 +66,23 @@ public class PersonBook implements ReadOnlyPersonBook {
     }
 
     /**
-     * Returns true if a person with the same id as {@code person} exists in the address book.
+     * Returns true if a person with the given {@code id} exists in the person book.
      */
-    public boolean hasSameIdPerson(Person person) {
-        requireNonNull(person);
-        return persons.containsSameIdPerson(person);
+    public boolean hasPersonId(Id id) {
+        requireNonNull(id);
+        return persons.containsPersonId(id);
     }
 
     /**
-     * Returns true if a person with the same identity except id as {@code person} exists in the address book.
+     * Returns a Person with the given Id from the person book.
      */
-    public boolean hasSameIdentityExceptId(Person person) {
-        requireNonNull(person);
-        return persons.containsSameIdentityExpectIdPerson(person);
+    public Person getPersonById(Id id) {
+        return persons.getPersonById(id);
     }
 
     /**
-     * Adds a person to the address book.
-     * The person must not already exist in the address book.
+     * Adds a person to the person book.
+     * The person must not already exist in the person book.
      */
     public void addPerson(Person p) {
         persons.add(p);
@@ -90,8 +90,9 @@ public class PersonBook implements ReadOnlyPersonBook {
 
     /**
      * Replaces the given person {@code target} in the list with {@code editedPerson}.
-     * {@code target} must exist in the address book.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
+     * {@code target} must exist in the person book.
+     * The person identity of {@code editedPerson} must not be the same as another existing person in the person book.
+     * The {@code editedPerson} must not have the same Id as another person in the person book.
      */
     public void setPerson(Person target, Person editedPerson) {
         requireNonNull(editedPerson);
@@ -101,7 +102,7 @@ public class PersonBook implements ReadOnlyPersonBook {
 
     /**
      * Removes {@code key} from this {@code PersonBook}.
-     * {@code key} must exist in the address book.
+     * {@code key} must exist in the person book.
      */
     public void removePerson(Person key) {
         persons.remove(key);

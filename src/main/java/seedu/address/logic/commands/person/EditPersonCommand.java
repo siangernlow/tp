@@ -3,8 +3,9 @@ package seedu.address.logic.commands.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_INFECTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INFECTION_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_QUARANTINE_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -12,16 +13,14 @@ import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.ReadOnlyIndexIdPair;
 import seedu.address.model.Model;
 import seedu.address.model.attribute.Address;
 import seedu.address.model.attribute.Email;
@@ -38,20 +37,25 @@ import seedu.address.model.person.Person;
  */
 public class EditPersonCommand extends Command {
 
-    public static final String COMMAND_WORD = "edit";
+    public static final String COMMAND_WORD = "editPerson";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
-            + "by the index number used in the displayed person list. "
+            + "by Id or the index number used in the displayed person list. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+            + "Parameters: INDEX (must be a positive integer) or "
+            + PREFIX_PERSON_ID + "ID "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_QUARANTINE_STATUS + "QUARANTINE STATUS] "
-            + "[" + PREFIX_INFECTION + "INFECTION STATUS] "
+            + "[" + PREFIX_INFECTION_STATUS + "INFECTION STATUS] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
+            + PREFIX_PHONE + "91234567 "
+            + PREFIX_EMAIL + "johndoe@example.com\n"
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_PERSON_ID + "S123A "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
 
@@ -59,40 +63,34 @@ public class EditPersonCommand extends Command {
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
-    private final Index index;
+    private final ReadOnlyIndexIdPair pair;
     private final EditPersonDescriptor editPersonDescriptor;
 
     /**
-     * @param index of the person in the filtered person list to edit
+     * @param pair contains the index or Id of the person in the VirusTracker to edit
      * @param editPersonDescriptor details to edit the person with
      */
-    public EditPersonCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
-        requireNonNull(index);
+    public EditPersonCommand(ReadOnlyIndexIdPair pair, EditPersonDescriptor editPersonDescriptor) {
+        requireNonNull(pair);
         requireNonNull(editPersonDescriptor);
 
-        this.index = index;
+        this.pair = pair;
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Person> lastShownList = model.getSortedPersonList();
 
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        Person personToEdit = lastShownList.get(index.getZeroBased());
+        Person personToEdit = pair.getPersonFromPair(model);
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
-        if (!personToEdit.isSamePerson(editedPerson) && model.hasSameIdentityExceptId(editedPerson)) {
+        if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-
         model.updateVisitBookWithEditedPerson(editedPerson);
 
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson), false, false,
@@ -135,7 +133,7 @@ public class EditPersonCommand extends Command {
 
         // state check
         EditPersonCommand e = (EditPersonCommand) other;
-        return index.equals(e.index)
+        return pair.equals(e.pair)
                 && editPersonDescriptor.equals(e.editPersonDescriptor);
     }
 
@@ -166,7 +164,6 @@ public class EditPersonCommand extends Command {
             setAddress(toCopy.address);
             setQuarantineStatus(toCopy.quarantineStatus);
             setInfectionStatus(toCopy.infectionStatus);
-            setId(toCopy.id);
             setTags(toCopy.tags);
         }
 
@@ -223,14 +220,6 @@ public class EditPersonCommand extends Command {
 
         public Optional<InfectionStatus> getInfectionStatus() {
             return Optional.ofNullable(infectionStatus);
-        }
-
-        public void setId(Id id) {
-            this.id = id;
-        }
-
-        public Optional<Id> getId() {
-            return Optional.ofNullable(id);
         }
 
         /**

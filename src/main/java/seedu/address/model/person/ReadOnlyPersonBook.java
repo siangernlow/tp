@@ -9,7 +9,7 @@ public interface ReadOnlyPersonBook {
 
     /**
      * Returns an unmodifiable view of the persons list.
-     * This list will not contain any duplicate persons.
+     * This list will not contain any duplicate persons nor persons with duplicate Ids.
      */
     ObservableList<Person> getPersonList();
 

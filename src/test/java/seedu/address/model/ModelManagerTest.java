@@ -34,8 +34,8 @@ import org.junit.jupiter.api.Test;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.location.Location;
 import seedu.address.model.location.LocationBook;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.PersonBook;
+import seedu.address.model.person.PersonNameContainsKeywordsPredicate;
 import seedu.address.model.visit.Visit;
 import seedu.address.model.visit.VisitBook;
 import seedu.address.testutil.AddressBookBuilder;
@@ -253,6 +253,7 @@ public class ModelManagerTest {
         Location editedLocation = new LocationBuilder(BENSON_LOCATION).withName("benson location")
                 .build();
         Visit editedVisit = new VisitBuilder(FIRST_VISIT).withLocation(editedLocation).build();
+
         expectedModel.setVisit(FIRST_VISIT, editedVisit);
         actualModel.updateVisitBookWithEditedLocation(editedLocation);
         assertEquals(expectedModel, actualModel);
@@ -260,6 +261,7 @@ public class ModelManagerTest {
         Location editedSecondLocation = new LocationBuilder(AMY_LOCATION).withName("amy location").build();
         Visit editedSecondVisit = new VisitBuilder(SECOND_VISIT).withLocation(editedSecondLocation).build();
         Visit editedThirdVisit = new VisitBuilder(THIRD_VISIT).withLocation(editedSecondLocation).build();
+
         expectedModel.setVisit(SECOND_VISIT, editedSecondVisit);
         expectedModel.setVisit(THIRD_VISIT, editedThirdVisit);
         actualModel.updateVisitBookWithEditedLocation(editedSecondLocation);
@@ -302,7 +304,7 @@ public class ModelManagerTest {
 
         // different filteredList -> returns false
         String[] keywords = ALICE.getName().fullName.split("\\s+");
-        modelManager.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
+        modelManager.updateFilteredPersonList(new PersonNameContainsKeywordsPredicate(Arrays.asList(keywords)));
         assertFalse(modelManager.equals(new ModelManager(personBook, locationBook, visitBook, userPrefs)));
 
         // resets modelManager to initial state for upcoming tests

@@ -18,9 +18,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
-import seedu.address.model.location.exceptions.LocationNotFoundException;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.visit.Visit;
 
 /**
@@ -44,17 +42,18 @@ public class AddVisitCommand extends Command {
             + "The following person is infected and "
             + "is in quarantine. The Stay-Home Notice may have been violated.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add a new visit to the visits list "
-            + "using a person's index, location's index and date of visit.\n"
+            + "using a person, location and date of visit.\n"
+            + "You may identify a person and location by index or Id. Mixing of the index and Id is not allowed.\n"
             + "Indexes are based on the most recently viewed persons and locations list.\n"
-            + "Alternatively, a person's ID and a location's ID can be used. "
-            + "However, a combination of ID and index is not allowed.\n"
-            + "Updates the existing visits list.\n"
-            + "Parameters: PERSON_INDEX LOCATION_INDEX d/DATE\n"
-            + "Example: " + COMMAND_WORD + " 1 " + " 2 " + PREFIX_DATE + " 2020-05-31 \n"
-            + "Parameters: "
-            + PREFIX_PERSON_ID + "PERSON_INDEX "
-            + PREFIX_LOCATION_ID + "LOCATION_INDEX d/DATE\n"
-            + "Example: " + COMMAND_WORD + " idp/S11 " + " idl/L222 " + PREFIX_DATE + " 2020-05-31 ";
+            + "Parameters: (PERSON_INDEX LOCATION_INDEX) or ("
+            + PREFIX_PERSON_ID + "S123A "
+            + PREFIX_LOCATION_ID + "L123A) "
+            + PREFIX_DATE + "DATE\n"
+            + "Example: " + COMMAND_WORD + " 1 " + " 2 " + PREFIX_DATE + "2020-05-31 \n"
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_PERSON_ID + "S123A "
+            + PREFIX_LOCATION_ID + "L123A "
+            + PREFIX_DATE + "2020-05-31 ";
 
     private final Optional<Index> personIndex;
     private final Optional<Index> locationIndex;
@@ -96,6 +95,10 @@ public class AddVisitCommand extends Command {
         } else if (personIndex.isPresent() && locationIndex.isPresent()) {
             visit = getVisitToAdd(personIndex.get(), locationIndex.get(), model);
         }
+
+        if (model.hasVisit(visit)) {
+            throw new CommandException(MESSAGE_DUPLICATE_VISIT);
+        }
         requireNonNull(visit);
 
         model.addVisit(visit);
@@ -107,43 +110,34 @@ public class AddVisitCommand extends Command {
     private Visit getVisitToAdd(Id personId, Id locationId, Model model) throws CommandException {
         Person person;
         Location location;
-        try {
-            person = model.getPersonFromId(personId);
-            location = model.getLocationFromId(locationId);
-        } catch (PersonNotFoundException e) {
+
+        if (model.hasPersonId(personId)) {
+            person = model.getPersonById(personId);
+        } else {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_ID);
-        } catch (LocationNotFoundException e) {
+        }
+
+        if (model.hasLocationId(locationId)) {
+            location = model.getLocationById(locationId);
+        } else {
             throw new CommandException(Messages.MESSAGE_INVALID_LOCATION_ID);
         }
 
-        Visit visit = new Visit(person, location, date);
-
-        assert visit.getPerson() != null;
-        assert visit.getLocation() != null;
-        assert visit.getDate() != null;
-
-        if (model.hasVisit(visit)) {
-            throw new CommandException(MESSAGE_DUPLICATE_VISIT);
-        }
-        return visit;
+        return new Visit(person, location, date);
     }
 
     private Visit getVisitToAdd(Index personIndex, Index locationIndex, Model model) throws CommandException {
         List<Person> lastShownPersonList = model.getSortedPersonList();
         if (personIndex.getZeroBased() >= lastShownPersonList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_INDEX);
         }
         List<Location> lastShownLocationList = model.getSortedLocationList();
         if (locationIndex.getZeroBased() >= lastShownLocationList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_LOCATION_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_LOCATION_INDEX);
         }
         Person person = model.getPersonFromIndex(personIndex);
         Location location = model.getLocationFromIndex(locationIndex);
-        Visit visit = new Visit(person, location, date);
-        if (model.hasVisit(visit)) {
-            throw new CommandException(MESSAGE_DUPLICATE_VISIT);
-        }
-        return visit;
+        return new Visit(person, location, date);
     }
 
     /**

@@ -74,6 +74,13 @@ public class TypicalLocations {
                 ELLE_LOCATION, FIONA_LOCATION, GEORGE_LOCATION));
     }
 
+    /**
+     * @return A shorter list of locations meant for simple data entry.
+     */
+    public static List<Location> getShortenedTypicalLocations() {
+        return new ArrayList<>(Arrays.asList(ALICE_LOCATION, BENSON_LOCATION, CARL_LOCATION));
+    }
+
     public static List<Location> getUnorderedTypicalLocations() {
         return new ArrayList<>(Arrays.asList(IDA_LOCATION, BENSON_LOCATION, CARL_LOCATION, DANIEL_LOCATION,
                 ELLE_LOCATION, FIONA_LOCATION, GEORGE_LOCATION));

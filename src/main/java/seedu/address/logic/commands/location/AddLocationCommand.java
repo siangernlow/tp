@@ -18,19 +18,21 @@ public class AddLocationCommand extends Command {
 
     public static final String COMMAND_WORD = "addLocation";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a location to the virus tracker."
-            + "Location must have a unique identifier."
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a location to the virus tracker. "
+            + "Location must have a unique identifier.\n"
             + "Parameters: "
             + PREFIX_LOCATION_ID + "ID "
             + PREFIX_NAME + "NAME "
             + PREFIX_ADDRESS + "ADDRESS\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_LOCATION_ID + "S234F "
+            + PREFIX_LOCATION_ID + "L234F "
             + PREFIX_NAME + "School of Computing "
             + PREFIX_ADDRESS + "NUS School of Computing COM1 13 Computing Dr, 117417 ";
 
     public static final String MESSAGE_SUCCESS = "New location added: %1$s";
     public static final String MESSAGE_DUPLICATE_LOCATION = "This location already exists in the virus tracker.";
+    public static final String MESSAGE_DUPLICATE_LOCATION_ID =
+            "A location with this Id already exists in the VirusTracker.";
 
     private final Location toAdd;
 
@@ -48,6 +50,10 @@ public class AddLocationCommand extends Command {
 
         if (model.hasLocation(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_LOCATION);
+        }
+
+        if (model.hasLocationId(toAdd.getId())) {
+            throw new CommandException(MESSAGE_DUPLICATE_LOCATION_ID);
         }
 
         model.addLocation(toAdd);

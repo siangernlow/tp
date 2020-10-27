@@ -55,13 +55,13 @@ public class PersonCard extends UiPart<Region> {
         super(FXML);
         this.person = person;
         index.setText(displayedIndex + ". ");
-        id.setText(person.getId().value);
+        id.setText("Person ID: " + person.getId().value);
         personName.setText(person.getName().fullName);
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
         quarantineStatus.setText("Quarantine Status: " + person.getQuarantineStatus().toString());
-        infectionStatus.setText("Infected: " + person.getInfectionStatus().getStatusAsString());
+        infectionStatus.setText("Infected: " + person.getInfectionStatus().toString());
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));

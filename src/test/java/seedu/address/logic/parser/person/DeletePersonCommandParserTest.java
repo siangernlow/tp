@@ -1,13 +1,16 @@
 package seedu.address.logic.parser.person;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.person.DeletePersonCommand;
+import seedu.address.logic.parser.IndexIdPair;
+import seedu.address.logic.parser.IndexIdPairStub;
 import seedu.address.model.attribute.Id;
 
 /**
@@ -23,23 +26,21 @@ public class DeletePersonCommandParserTest {
 
     @Test
     public void parse_validIndex_returnsDeleteCommand() {
-        assertParseSuccess(parser, "1", new DeletePersonCommand(INDEX_FIRST));
+        assertParseSuccess(parser, "1", new DeletePersonCommand(new IndexIdPair(INDEX_FIRST, null, PREFIX_PERSON_ID)));
     }
 
     @Test
     public void parse_invalidIndex_throwsParseException() {
-        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                DeletePersonCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "a", MESSAGE_INVALID_INDEX);
     }
 
     @Test
     public void parse_validId_returnsDeletePersonCommand() {
-        assertParseSuccess(parser, " idp/1", new DeletePersonCommand(new Id("1")));
+        assertParseSuccess(parser, " idp/1", new DeletePersonCommand(new IndexIdPairStub(null, new Id("1"))));
     }
 
     @Test
     public void parse_invalidId_throwsParseException() {
-        assertParseFailure(parser, "idp/  ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                DeletePersonCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, " idp/  ", Id.MESSAGE_CONSTRAINTS);
     }
 }

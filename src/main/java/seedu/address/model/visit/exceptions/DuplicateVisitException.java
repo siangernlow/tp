@@ -6,6 +6,6 @@ package seedu.address.model.visit.exceptions;
  */
 public class DuplicateVisitException extends RuntimeException {
     public DuplicateVisitException() {
-        super("Operation would result in duplicate visits");
+        super("Operation would result in duplicate visits.");
     }
 }

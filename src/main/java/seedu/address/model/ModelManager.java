@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.ListComparator.SORT_ASCENDING_LOCATION_NAME;
 import static seedu.address.model.ListComparator.SORT_ASCENDING_PERSON_NAME;
-import static seedu.address.model.ListComparator.SORT_DESCENDING_VISIT_DATE;
+import static seedu.address.model.ListComparator.SORT_VISITS;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_LOCATIONS;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_VISITS;
@@ -23,11 +23,9 @@ import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
 import seedu.address.model.location.LocationBook;
 import seedu.address.model.location.ReadOnlyLocationBook;
-import seedu.address.model.location.exceptions.LocationNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonBook;
 import seedu.address.model.person.ReadOnlyPersonBook;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.visit.ReadOnlyVisitBook;
 import seedu.address.model.visit.Visit;
 import seedu.address.model.visit.VisitBook;
@@ -42,7 +40,6 @@ public class ModelManager implements Model {
     private final LocationBook locationBook;
     private final VisitBook visitBook;
     private final UserPrefs userPrefs;
-    private final InfoHandler infoHandler;
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Location> filteredLocations;
     private final FilteredList<Visit> filteredVisits;
@@ -58,13 +55,12 @@ public class ModelManager implements Model {
         super();
         requireAllNonNull(personBook, locationBook, visitBook, userPrefs);
 
-        logger.fine("Initializing with person book: " + personBook + " and user prefs " + userPrefs
-                + " and location book: " + locationBook + " and visit book: " + visitBook);
+        logger.fine("Initializing with person book: " + personBook + " and location book: " + locationBook
+                + " and visit book: " + visitBook + " and user prefs " + userPrefs);
 
         this.personBook = new PersonBook(personBook);
         this.locationBook = new LocationBook(locationBook);
         this.visitBook = new VisitBook(visitBook);
-        this.infoHandler = new InfoHandler(this);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.personBook.getPersonList());
         filteredLocations = new FilteredList<>(this.locationBook.getLocationList());
@@ -77,7 +73,7 @@ public class ModelManager implements Model {
         sortedLocations.setComparator(SORT_ASCENDING_LOCATION_NAME);
 
         sortedVisits = new SortedList<>(filteredVisits);
-        sortedVisits.setComparator(SORT_DESCENDING_VISIT_DATE);
+        sortedVisits.setComparator(SORT_VISITS);
     }
 
     public ModelManager() {
@@ -87,14 +83,14 @@ public class ModelManager implements Model {
     //=========== Settings ========================================================================================
 
     @Override
-    public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
-        requireNonNull(userPrefs);
-        this.userPrefs.resetData(userPrefs);
+    public ReadOnlyUserPrefs getUserPrefs() {
+        return userPrefs;
     }
 
     @Override
-    public ReadOnlyUserPrefs getUserPrefs() {
-        return userPrefs;
+    public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
+        requireNonNull(userPrefs);
+        this.userPrefs.resetData(userPrefs);
     }
 
     @Override
@@ -128,6 +124,7 @@ public class ModelManager implements Model {
 
     @Override
     public void setPersonBook(ReadOnlyPersonBook personBook) {
+        requireNonNull(personBook);
         this.personBook.resetData(personBook);
     }
 
@@ -138,15 +135,19 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public boolean hasSameIdPerson(Person person) {
-        requireNonNull(person);
-        return personBook.hasSameIdPerson(person);
+    public boolean hasPersonId(Id id) {
+        requireNonNull(id);
+        return personBook.hasPersonId(id);
     }
 
     @Override
-    public boolean hasSameIdentityExceptId(Person person) {
-        requireNonNull(person);
-        return personBook.hasSameIdentityExceptId(person);
+    public Person getPersonById(Id id) {
+        return personBook.getPersonById(id);
+    }
+
+    @Override
+    public Person getPersonFromIndex(Index index) {
+        return getSortedPersonList().get(index.getZeroBased());
     }
 
     @Override
@@ -163,22 +164,15 @@ public class ModelManager implements Model {
     @Override
     public void setPerson(Person target, Person editedPerson) {
         requireAllNonNull(target, editedPerson);
-
         personBook.setPerson(target, editedPerson);
     }
 
     /**
-     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
-     * {@code versionedAddressBook}
+     * Returns an unmodifiable view of the list of {@code Person}.
      */
     @Override
     public ObservableList<Person> getSortedPersonList() {
         return sortedPersons;
-    }
-
-    @Override
-    public ObservableList<Person> getUnfilteredPersonList() {
-        return personBook.getPersonList();
     }
 
     @Override
@@ -187,7 +181,7 @@ public class ModelManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
-    //=========== LocationBook ====================================================================================
+    //=========== Location Book ===================================================================================
 
     @Override
     public Path getLocationBookFilePath() {
@@ -207,6 +201,7 @@ public class ModelManager implements Model {
 
     @Override
     public void setLocationBook(ReadOnlyLocationBook locationBook) {
+        requireNonNull(locationBook);
         this.locationBook.resetData(locationBook);
     }
 
@@ -214,6 +209,22 @@ public class ModelManager implements Model {
     public boolean hasLocation(Location location) {
         requireNonNull(location);
         return locationBook.hasLocation(location);
+    }
+
+    @Override
+    public boolean hasLocationId(Id id) {
+        requireNonNull(id);
+        return locationBook.hasLocationId(id);
+    }
+
+    @Override
+    public Location getLocationById(Id id) {
+        return locationBook.getLocationById(id);
+    }
+
+    @Override
+    public Location getLocationFromIndex(Index index) {
+        return getSortedLocationList().get(index.getZeroBased());
     }
 
     @Override
@@ -234,17 +245,11 @@ public class ModelManager implements Model {
     }
 
     /**
-     * Returns an unmodifiable view of the list of {@code Visit} backed by the internal list of
-     * {@code versionedVisitBook}
+     * Returns an unmodifiable view of the list of {@code Location}.
      */
     @Override
     public ObservableList<Location> getSortedLocationList() {
         return sortedLocations;
-    }
-
-    @Override
-    public ObservableList<Location> getUnfilteredLocationList() {
-        return locationBook.getLocationList();
     }
 
     @Override
@@ -253,7 +258,7 @@ public class ModelManager implements Model {
         filteredLocations.setPredicate(predicate);
     }
 
-    //=========== VisitBook =======================================================================================
+    //=========== Visit Book ======================================================================================
 
     @Override
     public Path getVisitBookFilePath() {
@@ -277,31 +282,9 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void updateVisitBookWithEditedLocation(Location editedLocation) {
-        this.visitBook.updateWithEditedLocation(editedLocation);
-    }
-
-    @Override
     public boolean hasVisit(Visit visit) {
         requireNonNull(visit);
         return visitBook.hasVisit(visit);
-    }
-
-    @Override
-    public void updateVisitBookWithEditedPerson(Person editedPerson) {
-        this.visitBook.updateWithEditedPerson(editedPerson);
-    }
-
-    /**
-     * Replaces the given visit {@code target} in the list with {@code editedVisit}.
-     * {@code target} must exist in the visit book.
-     * The identities of {@code editedVisit} must not be the same as another existing
-     * visit in the visit book.
-     */
-    @Override
-    public void setVisit(Visit target, Visit editedVisit) {
-        requireNonNull(editedVisit);
-        visitBook.setVisit(target, editedVisit);
     }
 
     @Override
@@ -321,13 +304,35 @@ public class ModelManager implements Model {
         visitBook.deleteVisitsWithPerson(personToDelete);
     }
 
+    @Override
     public void deleteVisitsWithLocation(Location locationToDelete) {
         visitBook.deleteVisitsWithLocation(locationToDelete);
     }
 
     /**
-     * Returns an unmodifiable view of the list of {@code Visit} backed by the internal list of
-     * {@code versionedVisitBook}
+     * Replaces the given visit {@code target} in the list with {@code editedVisit}.
+     * {@code target} must exist in the visit book.
+     * The identities of {@code editedVisit} must not be the same as another existing
+     * visit in the visit book.
+     */
+    @Override
+    public void setVisit(Visit target, Visit editedVisit) {
+        requireNonNull(editedVisit);
+        visitBook.setVisit(target, editedVisit);
+    }
+
+    @Override
+    public void updateVisitBookWithEditedPerson(Person editedPerson) {
+        visitBook.updateWithEditedPerson(editedPerson);
+    }
+
+    @Override
+    public void updateVisitBookWithEditedLocation(Location editedLocation) {
+        visitBook.updateWithEditedLocation(editedLocation);
+    }
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Visit}.
      */
     @Override
     public ObservableList<Visit> getSortedVisitList() {
@@ -341,40 +346,6 @@ public class ModelManager implements Model {
     }
 
     //=========== InfoHandler ====================================================================================
-    @Override
-    public InfoHandler getInfoHandler() {
-        return infoHandler;
-    }
-
-    @Override
-    public Person getPersonFromId(Id id) throws PersonNotFoundException {
-        for (Person p : getUnfilteredPersonList()) {
-            if (p.getId().equals(id)) {
-                return p;
-            }
-        }
-        throw new PersonNotFoundException();
-    }
-
-    @Override
-    public Location getLocationFromId(Id id) throws LocationNotFoundException {
-        for (Location l : getUnfilteredLocationList()) {
-            if (l.getId().equals(id)) {
-                return l;
-            }
-        }
-        throw new LocationNotFoundException();
-    }
-
-    @Override
-    public Person getPersonFromIndex(Index index) {
-        return getSortedPersonList().get(index.getZeroBased());
-    }
-
-    @Override
-    public Location getLocationFromIndex(Index index) {
-        return getSortedLocationList().get(index.getZeroBased());
-    }
 
     @Override
     public boolean equals(Object obj) {
@@ -394,6 +365,7 @@ public class ModelManager implements Model {
                 && locationBook.equals(other.locationBook)
                 && visitBook.equals(other.visitBook)
                 && userPrefs.equals(other.userPrefs)
-                && filteredPersons.equals(other.filteredPersons);
+                && filteredPersons.equals(other.filteredPersons)
+                && sortedPersons.equals(other.sortedPersons);
     }
 }

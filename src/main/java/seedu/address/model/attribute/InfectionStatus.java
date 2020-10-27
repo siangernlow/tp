@@ -3,15 +3,14 @@ package seedu.address.model.attribute;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-import java.util.regex.Pattern;
-
 /**
  * Represents a Person's infection status in the tracker.
- * Guarantees: is valid as declared in {@link #isValidInfectionStatus(String)}
+ * Guarantees: immutable; is valid as declared in {@link #isValidInfectionStatus(String)}
  */
 public class InfectionStatus {
 
-    public static final String MESSAGE_CONSTRAINTS = "The infection status of a person can only be true or false.";
+    public static final String MESSAGE_CONSTRAINTS =
+            "Infection status should either be true or false, and it should not be blank.";
 
     /*
      * The infection status can only be specified as
@@ -19,7 +18,7 @@ public class InfectionStatus {
      */
     public static final String VALIDATION_REGEX = "(?i)(true|false)";
 
-    private boolean isInfected;
+    private final boolean isInfected;
 
     /**
      * Constructs an {@code InfectionStatus}.
@@ -36,7 +35,7 @@ public class InfectionStatus {
      * Returns true if a given string is a valid infection status.
      */
     public static boolean isValidInfectionStatus(String test) {
-        return Pattern.matches(VALIDATION_REGEX, test);
+        return test.matches(VALIDATION_REGEX);
     }
 
     /**
@@ -45,15 +44,6 @@ public class InfectionStatus {
      */
     public boolean getStatusAsBoolean() {
         return isInfected;
-    }
-
-    /**
-     * Returns the String format of the infection status
-     *
-     * @return A String either containing true or false.
-     */
-    public String getStatusAsString() {
-        return String.valueOf(isInfected);
     }
 
     @Override

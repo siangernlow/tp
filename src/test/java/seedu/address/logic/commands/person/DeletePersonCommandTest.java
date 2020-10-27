@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
@@ -17,6 +18,8 @@ import org.junit.jupiter.api.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.parser.IndexIdPair;
+import seedu.address.logic.parser.IndexIdPairStub;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -35,7 +38,7 @@ public class DeletePersonCommandTest {
     @Test
     public void execute_validIndexUnfilteredList_success() {
         Person personToDelete = model.getSortedPersonList().get(INDEX_FIRST.getZeroBased());
-        DeletePersonCommand deletePersonCommand = new DeletePersonCommand(INDEX_FIRST);
+        DeletePersonCommand deletePersonCommand = new DeletePersonCommand(new IndexIdPairStub(INDEX_FIRST, null));
 
         String expectedMessage = String.format(DeletePersonCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
 
@@ -52,9 +55,9 @@ public class DeletePersonCommandTest {
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() {
         Index outOfBoundIndex = Index.fromOneBased(model.getSortedPersonList().size() + 1);
-        DeletePersonCommand deletePersonCommand = new DeletePersonCommand(outOfBoundIndex);
+        DeletePersonCommand deletePersonCommand = new DeletePersonCommand(new IndexIdPairStub(outOfBoundIndex, null));
 
-        assertCommandFailure(deletePersonCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(deletePersonCommand, model, Messages.MESSAGE_INVALID_PERSON_INDEX);
     }
 
     @Test
@@ -62,7 +65,7 @@ public class DeletePersonCommandTest {
         showPersonAtIndex(model, INDEX_FIRST);
 
         Person personToDelete = model.getSortedPersonList().get(INDEX_FIRST.getZeroBased());
-        DeletePersonCommand deletePersonCommand = new DeletePersonCommand(INDEX_FIRST);
+        DeletePersonCommand deletePersonCommand = new DeletePersonCommand(new IndexIdPairStub(INDEX_FIRST, null));
 
         String expectedMessage = String.format(DeletePersonCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
 
@@ -85,15 +88,16 @@ public class DeletePersonCommandTest {
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getPersonBook().getPersonList().size());
 
-        DeletePersonCommand deletePersonCommand = new DeletePersonCommand(outOfBoundIndex);
+        DeletePersonCommand deletePersonCommand = new DeletePersonCommand(new IndexIdPairStub(outOfBoundIndex, null));
 
-        assertCommandFailure(deletePersonCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(deletePersonCommand, model, Messages.MESSAGE_INVALID_PERSON_INDEX);
     }
 
     @Test
     public void execute_validId_success() {
         Person personToDelete = model.getSortedPersonList().get(INDEX_FIRST.getZeroBased());
-        DeletePersonCommand deletePersonCommand = new DeletePersonCommand(personToDelete.getId());
+        DeletePersonCommand deletePersonCommand = new DeletePersonCommand(
+                new IndexIdPairStub(null, personToDelete.getId()));
 
         String expectedMessage = String.format(DeletePersonCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
 
@@ -109,21 +113,23 @@ public class DeletePersonCommandTest {
 
     @Test
     public void execute_invalidId_throwsCommandException() {
-        DeletePersonCommand deletePersonCommand = new DeletePersonCommand(ID_NOT_IN_TYPICAL_PERSON);
+        DeletePersonCommand deletePersonCommand = new DeletePersonCommand(
+                new IndexIdPair(null, ID_NOT_IN_TYPICAL_PERSON, PREFIX_PERSON_ID));
 
         assertCommandFailure(deletePersonCommand, model, Messages.MESSAGE_INVALID_PERSON_ID);
     }
 
     @Test
     public void equals() {
-        DeletePersonCommand deleteFirstIndexCommand = new DeletePersonCommand(INDEX_FIRST);
-        DeletePersonCommand deleteSecondIndexCommand = new DeletePersonCommand(INDEX_SECOND);
+        DeletePersonCommand deleteFirstIndexCommand = new DeletePersonCommand(new IndexIdPairStub(INDEX_FIRST, null));
+        DeletePersonCommand deleteSecondIndexCommand = new DeletePersonCommand(new IndexIdPairStub(INDEX_SECOND, null));
 
         // same object -> returns true
         assertTrue(deleteFirstIndexCommand.equals(deleteFirstIndexCommand));
 
         // same values -> returns true
-        DeletePersonCommand deleteFirstIndexCommandCopy = new DeletePersonCommand(INDEX_FIRST);
+        DeletePersonCommand deleteFirstIndexCommandCopy = new DeletePersonCommand(
+                new IndexIdPairStub(INDEX_FIRST, null));
         assertTrue(deleteFirstIndexCommand.equals(deleteFirstIndexCommandCopy));
 
         // different types -> returns false
@@ -135,14 +141,17 @@ public class DeletePersonCommandTest {
         // different index -> returns false
         assertFalse(deleteFirstIndexCommand.equals(deleteSecondIndexCommand));
 
-        DeletePersonCommand deleteFirstIdCommand = new DeletePersonCommand(new Id("S1"));
-        DeletePersonCommand deleteSecondIdCommand = new DeletePersonCommand(new Id("S2"));
+        DeletePersonCommand deleteFirstIdCommand = new DeletePersonCommand(
+                new IndexIdPairStub(null, new Id("S1")));
+        DeletePersonCommand deleteSecondIdCommand = new DeletePersonCommand(
+                new IndexIdPairStub(null, new Id("S2")));
 
         // same object -> returns true
         assertTrue(deleteFirstIdCommand.equals(deleteFirstIdCommand));
 
         // same values -> returns true
-        DeletePersonCommand deleteFirstIdCommandCopy = new DeletePersonCommand(new Id("S1"));
+        DeletePersonCommand deleteFirstIdCommandCopy = new DeletePersonCommand(
+                new IndexIdPairStub(null, new Id("S1")));
         assertTrue(deleteFirstIdCommand.equals(deleteFirstIdCommandCopy));
 
         // different types -> returns false

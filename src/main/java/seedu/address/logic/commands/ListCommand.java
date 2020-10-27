@@ -11,6 +11,7 @@ import java.util.function.Predicate;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.ListType;
+import seedu.address.model.InfoHandler;
 import seedu.address.model.Model;
 import seedu.address.model.ModelPredicate;
 import seedu.address.model.location.Location;
@@ -69,7 +70,8 @@ public class ListCommand extends Command {
             return new CommandResult(MESSAGE_SUCCESS_ALL_QUARANTINED, false, false,
                     CommandResult.SWITCH_TO_VIEW_PEOPLE);
         case STATISTICS:
-            String stats = model.getInfoHandler().getStatistics();
+            InfoHandler infoHandler = new InfoHandler(model);
+            String stats = infoHandler.getStatistics();
             return new CommandResult(MESSAGE_SUCCESS_STATISTICS + "\n" + stats);
         case HIGH_RISK_LOCATIONS:
             Predicate<Location> predicateForHighRiskLocations =

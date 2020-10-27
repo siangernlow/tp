@@ -2,24 +2,22 @@ package seedu.address.logic.commands.location;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_LOCATIONS;
 
-import java.util.List;
 import java.util.Optional;
 
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.ReadOnlyIndexIdPair;
 import seedu.address.model.Model;
 import seedu.address.model.attribute.Address;
 import seedu.address.model.attribute.Id;
 import seedu.address.model.attribute.Name;
 import seedu.address.model.location.Location;
-
 
 /**
  * Edits the details of an existing location in the location book.
@@ -29,11 +27,16 @@ public class EditLocationCommand extends Command {
     public static final String COMMAND_WORD = "editLocation";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the location identified "
-            + "by the index number used in the displayed location list. "
+            + "by Id or the index number used in the displayed location list. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+            + "Parameters: INDEX (must be a positive integer) or "
+            + PREFIX_LOCATION_ID + "ID "
             + "[" + PREFIX_NAME + "NAME] "
-            + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_ADDRESS + "ADDRESS] \n"
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_LOCATION_ID + "L123A "
+            + PREFIX_NAME + "National University of Singapore "
+            + PREFIX_ADDRESS + "21 Lower Kent Ridge Rd, Singapore 119077\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_NAME + "National University of Singapore "
             + PREFIX_ADDRESS + "21 Lower Kent Ridge Rd, Singapore 119077";
@@ -42,31 +45,25 @@ public class EditLocationCommand extends Command {
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_LOCATION = "This location already exists in the location book.";
 
-    private final Index index;
+    private final ReadOnlyIndexIdPair pair;
     private final EditLocationDescriptor editLocationDescriptor;
 
     /**
-     * @param index of the location in the filtered location list to edit
+     * @param pair contains the index or Id of the location in the VirusTracker to edit
      * @param editLocationDescriptor details to edit the location with
      */
-    public EditLocationCommand(Index index, EditLocationDescriptor editLocationDescriptor) {
-        requireNonNull(index);
+    public EditLocationCommand(ReadOnlyIndexIdPair pair, EditLocationDescriptor editLocationDescriptor) {
+        requireNonNull(pair);
         requireNonNull(editLocationDescriptor);
 
-        this.index = index;
+        this.pair = pair;
         this.editLocationDescriptor = new EditLocationDescriptor(editLocationDescriptor);
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Location> lastShownList = model.getSortedLocationList();
-
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_LOCATION_DISPLAYED_INDEX);
-        }
-
-        Location locationToEdit = lastShownList.get(index.getZeroBased());
+        Location locationToEdit = pair.getLocationFromPair(model);
         Location editedLocation = createEditedLocation(locationToEdit, editLocationDescriptor);
 
         if (!locationToEdit.isSameLocation(editedLocation) && model.hasLocation(editedLocation)) {
@@ -111,7 +108,7 @@ public class EditLocationCommand extends Command {
 
         // state check
         EditLocationCommand e = (EditLocationCommand) other;
-        return index.equals(e.index)
+        return pair.equals(e.pair)
                 && editLocationDescriptor.equals(e.editLocationDescriptor);
     }
 
@@ -122,7 +119,6 @@ public class EditLocationCommand extends Command {
     public static class EditLocationDescriptor {
         private Name name;
         private Address address;
-        private Id id;
 
         public EditLocationDescriptor() {}
 
@@ -132,7 +128,6 @@ public class EditLocationCommand extends Command {
         public EditLocationDescriptor(EditLocationDescriptor toCopy) {
             setName(toCopy.name);
             setAddress(toCopy.address);
-            setId(toCopy.id);
         }
 
         /**
@@ -156,14 +151,6 @@ public class EditLocationCommand extends Command {
 
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
-        }
-
-        public void setId(Id id) {
-            this.id = id;
-        }
-
-        public Optional<Id> getId() {
-            return Optional.ofNullable(id);
         }
 
         @Override

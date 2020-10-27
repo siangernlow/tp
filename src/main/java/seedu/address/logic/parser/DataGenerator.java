@@ -3,17 +3,31 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_FILE_PATH;
 import static seedu.address.commons.core.Messages.MESSAGE_MISSING_DATA_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_PREAMBLE_SHOULD_BE_EMPTY;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.parser.ArgumentTokenizer.arePrefixesPresent;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INFECTION_STATUS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION_ID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_QUARANTINE_STATUS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.attribute.Address;
@@ -31,16 +45,13 @@ import seedu.address.model.person.Person;
  * Generates objects using data provided in CSV files.
  */
 public class DataGenerator {
-    public static final Character DEFAULT_SEPARATOR = ',';
-    public static final Character DEFAULT_QUOTE = '"';
-
-    // Minimum number of parameters required to create the object
-    public static final int MIN_PERSON_PARAMETERS = 7;
-    public static final int MIN_LOCATION_PARAMETERS = 3;
-    public static final int MIN_VISIT_PARAMETERS = 3;
+    public static final String DEFAULT_SEPARATOR = ",";
+    public static final String DEFAULT_QUOTE = "\"";
 
     public static final String INVALID_ROW_FORMAT =
             "Invalid format detected on line %d. %s";
+    // For logging purposes
+    private static final Logger logger = Logger.getLogger(DataGenerator.class.getName());
 
     // Prevent instantiation
     private DataGenerator() {};
@@ -59,9 +70,15 @@ public class DataGenerator {
         // Used to detect which line had an error
         int lineNumber = 1;
 
+        // The prefixes of the fields required to build a person
+        Prefix[] prefixes = new Prefix[]{PREFIX_PERSON_ID, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
+            PREFIX_QUARANTINE_STATUS, PREFIX_INFECTION_STATUS, PREFIX_TAG};
+
         while (scanner.hasNext()) {
-            List<String> dataValues = generateDataValues(scanner.nextLine());
-            Person person = generatePerson(dataValues, lineNumber);
+            ArgumentMultimap dataValues = tokenizeData(scanner.nextLine(), prefixes);
+            // Leave out prefix tag as it is not compulsory
+            Person person = generatePerson(dataValues, lineNumber,
+                    Arrays.copyOfRange(prefixes, 0, prefixes.length - 1));
             personsList.add(person);
             lineNumber++;
         }
@@ -71,42 +88,49 @@ public class DataGenerator {
 
     /**
      * Generates a {@code Person} from the given parameters.
+     * The assertion ensures that the correct prefixes are called in other methods calling this method.
      *
-     * @param dataValues A list containing fields to create a {@code Person}.
+     * @param argMultimap An {@code ArgumentMultimap} containing fields to create a {@code Person}.
      * @param lineNumber The current line number of the CSV that we are on. Used for error handling.
-     * @return A person with the given parameters.
+     * @param compulsoryPrefixes The prefixes of the values that are compulsory
+     * @return A Person with the given parameters.
      * @throws ParseException if there are not enough parameters to create a person.
      */
-    private static Person generatePerson(List<String> dataValues, int lineNumber) throws ParseException {
-        assert MIN_PERSON_PARAMETERS >= 6;
+    private static Person generatePerson(ArgumentMultimap argMultimap, int lineNumber, Prefix... compulsoryPrefixes)
+            throws ParseException {
+        // Defensive code
+        assert Arrays.equals(compulsoryPrefixes, new Prefix[]{PREFIX_PERSON_ID, PREFIX_NAME,
+            PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
+            PREFIX_QUARANTINE_STATUS, PREFIX_INFECTION_STATUS});
 
-        // Check if enough parameters; 6 compulsory parameters required for adding a Person
-        if (dataValues.size() < MIN_PERSON_PARAMETERS) {
+        if (!arePrefixesPresent(argMultimap, compulsoryPrefixes)) {
             throw new ParseException(String.format(MESSAGE_MISSING_DATA_FORMAT, lineNumber));
         }
 
-        try {
-            Id id = ParserUtil.parseId(dataValues.get(0));
-            Name name = ParserUtil.parseName(dataValues.get(1));
-            Phone phone = ParserUtil.parsePhone(dataValues.get(2));
-            Email email = ParserUtil.parseEmail(dataValues.get(3));
-            Address address = ParserUtil.parseAddress(dataValues.get(4));
-            QuarantineStatus quarantineStatus = ParserUtil.parseQuarantineStatus(dataValues.get(5));
-            InfectionStatus infectionStatus = ParserUtil.parseInfectionStatus(dataValues.get(6));
+        if (!argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(MESSAGE_PREAMBLE_SHOULD_BE_EMPTY);
+        }
 
-            Set<String> tags = new HashSet<>();
-            if (dataValues.size() > MIN_PERSON_PARAMETERS) {
-                String[] tagsAsString = dataValues.get(7).split(",");
-                tags.addAll(Arrays.asList(tagsAsString));
-            }
+        try {
+            Id personId = ParserUtil.parseId(recoverDataFormat(argMultimap.getValue(PREFIX_PERSON_ID).get()));
+            Name name = ParserUtil.parseName(recoverDataFormat(argMultimap.getValue(PREFIX_NAME).get()));
+            Phone phone = ParserUtil.parsePhone(recoverDataFormat(argMultimap.getValue(PREFIX_PHONE).get()));
+            Email email = ParserUtil.parseEmail(recoverDataFormat(argMultimap.getValue(PREFIX_EMAIL).get()));
+            Address address = ParserUtil.parseAddress(recoverDataFormat(argMultimap.getValue(PREFIX_ADDRESS).get()));
+            QuarantineStatus quarantineStatus = ParserUtil.parseQuarantineStatus(
+                    recoverDataFormat(argMultimap.getValue(PREFIX_QUARANTINE_STATUS).get()));
+            InfectionStatus infectionStatus = ParserUtil.parseInfectionStatus(
+                    recoverDataFormat(argMultimap.getValue(PREFIX_INFECTION_STATUS).get()));
+
+            List<String> tags = argMultimap.getAllValues(PREFIX_TAG);
+            tags = tags.stream().map(DataGenerator::recoverDataFormat).collect(Collectors.toList());
             Set<Tag> tagList = ParserUtil.parseTags(tags);
 
-            return new Person(id, name, phone, email, address, quarantineStatus, infectionStatus, tagList);
+            return new Person(personId, name, phone, email, address, quarantineStatus, infectionStatus, tagList);
         } catch (ParseException pe) {
             throw new ParseException(String.format(INVALID_ROW_FORMAT, lineNumber, pe.getMessage()));
         }
     }
-
 
     /**
      * Generates a list of {@code Location} from the given CSV file.
@@ -122,9 +146,12 @@ public class DataGenerator {
         // Used to detect which line had an error
         int lineNumber = 1;
 
+        // The prefixes of the fields required to build a location
+        Prefix[] prefixes = new Prefix[]{PREFIX_LOCATION_ID, PREFIX_NAME, PREFIX_ADDRESS};
+
         while (scanner.hasNext()) {
-            List<String> dataValues = generateDataValues(scanner.nextLine());
-            Location location = generateLocation(dataValues, lineNumber);
+            ArgumentMultimap dataValues = tokenizeData(scanner.nextLine(), prefixes);
+            Location location = generateLocation(dataValues, lineNumber, prefixes);
             locationsList.add(location);
             lineNumber++;
         }
@@ -134,26 +161,33 @@ public class DataGenerator {
 
     /**
      * Generates a {@code Location} from the given parameters.
+     * The assertion ensures that the correct prefixes are called in other methods calling this method.
      *
-     * @param dataValues A list containing fields to create a {@code Location}.
+     * @param argMultimap An {@code ArgumentMultimap} containing fields to create a {@code Location}.
      * @param lineNumber The current line number of the CSV that we are on. Used for error handling.
-     * @return A location with the given parameters.
+     * @param prefixes The prefixes of the fields required to build the location.
+     * @return A Location with the given parameters.
      * @throws ParseException if there are not enough parameters to create a location.
      */
-    private static Location generateLocation(List<String> dataValues, int lineNumber) throws ParseException {
-        assert MIN_LOCATION_PARAMETERS >= 2;
+    private static Location generateLocation(ArgumentMultimap argMultimap, int lineNumber, Prefix... prefixes)
+            throws ParseException {
+        // Defensive code
+        assert Arrays.equals(prefixes, new Prefix[]{PREFIX_LOCATION_ID, PREFIX_NAME, PREFIX_ADDRESS});
 
-        // Check if enough parameters; 2 compulsory parameters required for adding a Location
-        if (dataValues.size() < MIN_LOCATION_PARAMETERS) {
+        if (!arePrefixesPresent(argMultimap, prefixes)) {
             throw new ParseException(String.format(MESSAGE_MISSING_DATA_FORMAT, lineNumber));
         }
 
-        try {
-            Id id = ParserUtil.parseId(dataValues.get(0));
-            Name name = ParserUtil.parseName(dataValues.get(1));
-            Address address = ParserUtil.parseAddress(dataValues.get(2));
+        if (!argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(MESSAGE_PREAMBLE_SHOULD_BE_EMPTY);
+        }
 
-            return new Location(id, name, address);
+        try {
+            Id locationId = ParserUtil.parseId(recoverDataFormat(argMultimap.getValue(PREFIX_LOCATION_ID).get()));
+            Name name = ParserUtil.parseName(recoverDataFormat(argMultimap.getValue(PREFIX_NAME).get()));
+            Address address = ParserUtil.parseAddress(recoverDataFormat(argMultimap.getValue(PREFIX_ADDRESS).get()));
+
+            return new Location(locationId, name, address);
         } catch (ParseException pe) {
             throw new ParseException(String.format(INVALID_ROW_FORMAT, lineNumber, pe.getMessage()));
         }
@@ -177,10 +211,13 @@ public class DataGenerator {
         // Used to detect which line had an error
         int lineNumber = 1;
 
+        // The prefixes of the fields required to build a vpc
+        Prefix[] prefixes = new Prefix[]{PREFIX_PERSON_ID, PREFIX_LOCATION_ID, PREFIX_DATE};
+
         while (scanner.hasNext()) {
-            List<String> dataValues = generateDataValues(scanner.nextLine());
-            VisitParametersContainer visitParameters = generateVisitParametersContainer(dataValues, lineNumber);
-            visitParametersList.add(visitParameters);
+            ArgumentMultimap dataValues = tokenizeData(scanner.nextLine(), prefixes);
+            VisitParametersContainer vpc = generateVisitParametersContainer(dataValues, lineNumber, prefixes);
+            visitParametersList.add(vpc);
             lineNumber++;
         }
 
@@ -189,74 +226,77 @@ public class DataGenerator {
 
     /**
      * Generates a {@code VisitParametersContainer} from the given parameters.
+     * The assertion ensures that the correct prefixes are called in other methods calling this method.
      *
-     * @param dataValues A list containing fields to create a {@code VisitParametersContainer}.
+     * @param argMultimap An {@code ArgumentMultimap} containing fields to create a {@code VisitParameterContainer}.
      * @param lineNumber The current line number of the CSV that we are on. Used for error handling.
+     * @param prefixes The prefixes of the fields required to build the vpc.
      * @return A VisitParametersContainer storing the given parameters.
      * @throws ParseException if there are not enough parameters to create a VisitParametersContainer.
      */
-    private static VisitParametersContainer generateVisitParametersContainer(List<String> dataValues, int lineNumber)
+    private static VisitParametersContainer generateVisitParametersContainer(ArgumentMultimap argMultimap,
+                                                                             int lineNumber, Prefix... prefixes)
             throws ParseException {
-        assert MIN_VISIT_PARAMETERS >= 3;
+        // Defensive code
+        assert Arrays.equals(prefixes, new Prefix[]{PREFIX_PERSON_ID, PREFIX_LOCATION_ID, PREFIX_DATE});
 
-        // Check if enough parameters; 3 compulsory parameters required for adding a Visit
-        if (dataValues.size() < MIN_VISIT_PARAMETERS) {
+        if (!arePrefixesPresent(argMultimap, prefixes)) {
             throw new ParseException(String.format(MESSAGE_MISSING_DATA_FORMAT, lineNumber));
         }
-        try {
-            Id personIndex = ParserUtil.parseId(dataValues.get(0));
-            Id locationIndex = ParserUtil.parseId(dataValues.get(1));
-            LocalDate date = ParserUtil.parseDate(dataValues.get(2));
 
-            return new VisitParametersContainer(personIndex, locationIndex, date);
+        if (!argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(MESSAGE_PREAMBLE_SHOULD_BE_EMPTY);
+        }
+
+        try {
+            Id personId = ParserUtil.parseId(recoverDataFormat(argMultimap.getValue(PREFIX_PERSON_ID).get()));
+            Id locationId = ParserUtil.parseId(recoverDataFormat(argMultimap.getValue(PREFIX_LOCATION_ID).get()));
+            LocalDate date = ParserUtil.parseDate(recoverDataFormat(argMultimap.getValue(PREFIX_DATE).get()));
+
+            return new VisitParametersContainer(personId, locationId, date);
         } catch (ParseException pe) {
             throw new ParseException(String.format(INVALID_ROW_FORMAT, lineNumber, pe.getMessage()));
         }
     }
 
     /**
-     * Generates data values given by the data, delimited by commas.
-     * Accurately generates fields which have commas in them.
+     * Tokenizes the given CSV data string to a
+     * (if the prefixes are present).
      *
-     * @param data A string representation of the object's data.
-     * @return A list with String fields which would be used to create the required object.
+     * @param data A string taken from a line of a CSV file.
+     * @return An {@code ArgumentMultimap} containing the tokenized data fields.
      */
-    private static List<String> generateDataValues(String data) {
+    public static ArgumentMultimap tokenizeData(String data, Prefix... prefixes) {
         requireNonNull(data);
         assert !data.isEmpty();
-        List<String> dataValues = new ArrayList<>();
-        // As certain fields may contain commas, we cannot simply split the string using a comma separator.
-        char[] chars = data.toCharArray();
 
-        // If true, then any DEFAULT_SEPARATOR is to be treated as a normal character and not a delimiter.
-        boolean isInQuotes = false;
-        StringBuilder currentValue = new StringBuilder();
+        // Remove any quotes since the data is delimited by their prefixes.
+        String processedData = data.replace(DEFAULT_QUOTE, "");
 
-        for (Character c : chars) {
-            // Reached a delimiter, add the currentValue and reset.
-            if (c.equals(DEFAULT_SEPARATOR) && !isInQuotes) {
-                dataValues.add(currentValue.toString());
-                currentValue = new StringBuilder();
-                continue;
-            }
+        // Add spaces behind each separator to allow the data to be tokenized.
+        processedData = processedData.replace(DEFAULT_SEPARATOR, DEFAULT_SEPARATOR + " ");
 
-            // Start of a DEFAULT_QUOTE, set flag to ignore any DEFAULT_DELIMITER encountered.
-            if (c.equals(DEFAULT_QUOTE) && !isInQuotes) {
-                isInQuotes = true;
-                continue;
-            } else if (c.equals(DEFAULT_QUOTE) && isInQuotes) { // End of DEFAULT_QUOTE
-                isInQuotes = false;
-                continue;
-            }
-            currentValue.append(c);
+        // Finally, add a space at the start of the string so that the first prefix can be tokenized.
+        processedData = " " + processedData;
+
+        return ArgumentTokenizer.tokenize(processedData, prefixes);
+    }
+
+    /**
+     * Removes the formatting done on the data during the
+     * tokenizing stage.
+     * @param data The data to be reformatted.
+     * @return The reformatted data.
+     */
+    public static String recoverDataFormat(String data) {
+        // Remove the double whitespaces inserted from tokenizing.
+        String reformattedData = data.replace(",  ", ", ");
+
+        // Remove trailing comma if it exists
+        if (reformattedData.endsWith(",")) {
+            reformattedData = reformattedData.substring(0, reformattedData.length() - 1);
         }
-
-        // Adding the last field
-        if (currentValue.length() > 0) {
-            dataValues.add(currentValue.toString());
-        }
-
-        return dataValues;
+        return reformattedData;
     }
 
     /**
@@ -268,6 +308,8 @@ public class DataGenerator {
      */
     private static Scanner readFile(String filepath) throws ParseException {
         try {
+            logger.log(Level.INFO, "Reading from " + filepath);
+
             Scanner scanner = new Scanner(new File(filepath));
             return scanner;
         } catch (FileNotFoundException e) {
