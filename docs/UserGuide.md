@@ -364,7 +364,7 @@ Examples:
 
 Finds persons whose names contain any of the given keywords.
 
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `findPerson KEYWORD [MORE_KEYWORDS]`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
@@ -374,8 +374,8 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
+* `findPerson John` returns `john` and `John Doe`
+* `findPerson alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
 
@@ -441,7 +441,7 @@ Format: `list l/stats`
 
 Shows a list of locations visited by an infected person in the past 2 weeks. 
 
-Format: `listAllLocationsVisited LOCATION_INDEX`
+Format: `generateLocations PERSON_INDEX`
 
 * Locations listed were visited by the infected person of the index given.
 * The result given is a filtered list of locations that the person visited in the past 2 weeks.
@@ -451,7 +451,7 @@ Format: `listAllLocationsVisited LOCATION_INDEX`
 
 Shows a list of people who were in contact with an infected person in the past 2 weeks. 
 
-Format `listAllPersonsInContact PERSON_INDEX`
+Format `generatePeople PERSON_INDEX`
 
 * People listed were in contact with the infected person of the index given.
 * The result given is a filtered list of people who visited the same locations as that the infected person in the past 2 weeks.
