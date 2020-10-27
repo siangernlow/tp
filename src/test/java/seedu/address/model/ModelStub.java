@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -92,10 +93,14 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public void updateFilteredPersonList(Predicate<Person> predicate) {
+    public void updateFilteredPersonList(Predicate<? super Person> predicate) {
         throw new AssertionError("This method should not be called.");
     }
 
+    @Override
+    public Optional<Predicate<? super Person>> getPersonPredicate() {
+        throw new AssertionError("This method should not be called.");
+    }
     //=========== Location Book ========================================================================================
 
     @Override
@@ -221,10 +226,14 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public void updateFilteredVisitList(Predicate<Visit> predicate) {
+    public void updateFilteredVisitList(Predicate<? super Visit> predicate) {
         throw new AssertionError("This method should not be called.");
     }
 
+    @Override
+    public Optional<Predicate<? super Visit>> getVisitPredicate() {
+        throw new AssertionError("This method should not be called.");
+    }
     //=========== Info Handler ========================================================================================
 
     @Override
