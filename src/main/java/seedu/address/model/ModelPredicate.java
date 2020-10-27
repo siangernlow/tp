@@ -3,6 +3,7 @@ package seedu.address.model;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -33,6 +34,8 @@ public class ModelPredicate {
 
     /** {@code Predicate} for filtering high risk locations */
     public static Predicate<Location> getPredicateForHighRiskLocations(Model model) {
+        Optional<Predicate<? super Person>> lastUsedPersonPredicate = model.getPersonPredicate();
+        Optional<Predicate<? super Visit>> lastUsedVisitPredicate = model.getVisitPredicate();
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
         ObservableList<Person> allInfectedPersons = model.getSortedPersonList();
 
@@ -45,12 +48,15 @@ public class ModelPredicate {
 
         model.updateFilteredLocationList(PREDICATE_SHOW_ALL_LOCATIONS);
         int numberOfTotalLocations = model.getSortedLocationList().size();
-
         int numberOfHighRiskLocations = InfoHandler.getNumberOfHighRiskLocations(
                 infectedLocationIds.size(), numberOfTotalLocations);
 
         ArrayList<Id> highRiskLocationIds =
                 new ArrayList<>(infectedLocationIds.subList(0, numberOfHighRiskLocations));
+
+        // Restore back the filterPersonList predicate and filterVisitList predicate
+        model.updateFilteredPersonList(lastUsedPersonPredicate.orElse(PREDICATE_SHOW_ALL_PERSONS));
+        model.updateFilteredVisitList(lastUsedVisitPredicate.orElse(PREDICATE_SHOW_ALL_VISITS));
 
         return location -> highRiskLocationIds.contains(location.getId());
     }

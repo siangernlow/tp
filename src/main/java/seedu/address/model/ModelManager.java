@@ -10,6 +10,7 @@ import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_VISITS;
 
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -176,9 +177,14 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void updateFilteredPersonList(Predicate<Person> predicate) {
+    public void updateFilteredPersonList(Predicate<? super Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    @Override
+    public Optional<Predicate<? super Person>> getPersonPredicate() {
+        return Optional.ofNullable(filteredPersons.getPredicate());
     }
 
     //=========== Location Book ===================================================================================
@@ -340,9 +346,14 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void updateFilteredVisitList(Predicate<Visit> predicate) {
+    public void updateFilteredVisitList(Predicate<? super Visit> predicate) {
         requireNonNull(predicate);
         filteredVisits.setPredicate(predicate);
+    }
+
+    @Override
+    public Optional<Predicate<? super Visit>> getVisitPredicate() {
+        return Optional.ofNullable(filteredVisits.getPredicate());
     }
 
     //=========== InfoHandler ====================================================================================
