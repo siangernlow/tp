@@ -36,11 +36,20 @@ public class AddVisitCommandParserTest {
     public void parse_compulsoryFieldMissing_failure() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddVisitCommand.MESSAGE_USAGE);
 
-        // missing location id and date
+        // missing all fields
+        assertParseFailure(parser, "", expectedMessage);
+
+        // missing location index and date
         assertParseFailure(parser, " 1 ", expectedMessage);
+
+        // missing location index
+        assertParseFailure(parser, " 1 " + " d/ 2020-09-12", expectedMessage);
 
         // missing date
         assertParseFailure(parser, " 1 " + " 2 ", expectedMessage);
+
+        // missing indexes
+        assertParseFailure(parser, " d/ 2020-09-12", expectedMessage);
     }
 
     @Test

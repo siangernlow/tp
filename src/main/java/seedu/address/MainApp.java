@@ -58,7 +58,6 @@ public class MainApp extends Application {
     public void init() throws Exception {
         logger.info("=============================[ Initializing VirusTracker ]===========================");
         super.init();
-
         AppParameters appParameters = AppParameters.parse(getParameters());
         config = initConfig(appParameters.getConfigPath());
 
