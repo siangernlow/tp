@@ -13,11 +13,15 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.location.AddLocationCommand;
+import seedu.address.logic.commands.location.AddLocationCommandTest;
 import seedu.address.model.ModelStub;
 import seedu.address.model.attribute.Id;
+import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonBook;
 import seedu.address.model.person.ReadOnlyPersonBook;
+import seedu.address.testutil.LocationBuilder;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddPersonCommandTest {
@@ -45,6 +49,18 @@ public class AddPersonCommandTest {
         ModelStub modelStub = new ModelStubWithPerson(validPerson);
 
         assertThrows(CommandException.class, AddPersonCommand.MESSAGE_DUPLICATE_PERSON, () ->
+                addPersonCommand.execute(modelStub));
+    }
+
+    @Test
+    public void execute_duplicateLocationId_throwsCommandException() {
+        Person validPerson = new PersonBuilder().build();
+        AddPersonCommand addPersonCommand = new AddPersonCommand(validPerson);
+        Person validPersonSameId =
+                new PersonBuilder().withId(PersonBuilder.DEFAULT_ID).withName("another name").build();
+        ModelStub modelStub = new AddPersonCommandTest.ModelStubWithPerson(validPersonSameId);
+
+        assertThrows(CommandException.class, AddPersonCommand.MESSAGE_DUPLICATE_PERSON_ID, () ->
                 addPersonCommand.execute(modelStub));
     }
 
@@ -87,6 +103,12 @@ public class AddPersonCommandTest {
         public boolean hasPerson(Person person) {
             requireNonNull(person);
             return this.person.isSamePerson(person);
+        }
+
+        @Override
+        public boolean hasPersonId(Id id) {
+            requireNonNull(id);
+            return person.getId().equals(id);
         }
     }
 
