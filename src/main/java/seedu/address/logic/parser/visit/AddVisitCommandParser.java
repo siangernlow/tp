@@ -36,6 +36,13 @@ public class AddVisitCommandParser implements Parser<AddVisitCommand> {
         if (!arePrefixesPresent(argMultimap, PREFIX_DATE)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddVisitCommand.MESSAGE_USAGE));
         }
+
+        if ((!arePrefixesPresent(argMultimap, PREFIX_LOCATION_ID)
+                && !arePrefixesPresent(argMultimap, PREFIX_PERSON_ID)
+                && argMultimap.getPreamble().isEmpty())) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddVisitCommand.MESSAGE_USAGE));
+        }
+
         if ((arePrefixesPresent(argMultimap, PREFIX_LOCATION_ID) || arePrefixesPresent(argMultimap, PREFIX_PERSON_ID))
                 && !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddVisitCommand.MESSAGE_USAGE));
@@ -58,6 +65,11 @@ public class AddVisitCommandParser implements Parser<AddVisitCommand> {
         try {
             personId = ParserUtil.parseId(argMultimap.getValue(PREFIX_PERSON_ID).get());
             locationId = ParserUtil.parseId(argMultimap.getValue(PREFIX_LOCATION_ID).get());
+        } catch (ParseException pe) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddVisitCommand.MESSAGE_USAGE), pe);
+        }
+
+        try {
             date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
         } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_DATE_FORMAT, AddVisitCommand.MESSAGE_USAGE), pe);
@@ -68,6 +80,10 @@ public class AddVisitCommandParser implements Parser<AddVisitCommand> {
 
     private AddVisitCommand parseIndex(ArgumentMultimap argMultimap) throws ParseException {
         String[] indexes = argMultimap.getPreamble().split("\\s+");
+
+        if (indexes.length != 2) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddVisitCommand.MESSAGE_USAGE));
+        }
 
         Index personIndex;
         Index locationIndex;
