@@ -43,9 +43,9 @@ VirusTracker would be able to generate useful information based off the data tha
 
    * **`list l/people`** : Lists all people.
 
-   * **`add`**`idp/1 n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a person named `John Doe` to the VirusTracker.
+   * **`addPerson`**`idp/1 n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 q/false i/false` : Adds a person named `John Doe` to the VirusTracker.
 
-   * **`delete`**`3` : Deletes the 3rd element shown in the current list.
+   * **`deletePerson`**`3` : Deletes the 3rd person shown in the current list.
 
    * **`clear`** : Deletes all entries from VirusTracker.
 
@@ -73,6 +73,13 @@ VirusTracker would be able to generate useful information based off the data tha
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
+* In the case of repeating parameters, the last parameter is taken.<br>
+  e.g. if the command specifies `n/NAME p/PHONE_NUMBER_1 p/PHONE_NUMBER_2`, `p/PHONE_NUMBER_2` is taken and `PHONE_NUMBER_1` is ignored.
+
+* In commands where the user would like to refer to a person or a location, the user has two options. <br>
+  The user may either refer using the index of the person/location in the list or use the Id of the person/location.<br>
+  e.g. `deleteLocation 3` deletes the 3rd location shown in the location list while `deleteLocation idl/L123` deletes the location with Id `L123`.
+
 * **Data** refers collectively to people, locations and visits unless stated otherwise.
 </div>
 
@@ -80,7 +87,7 @@ VirusTracker would be able to generate useful information based off the data tha
 
 To add data to VirusTracker, there are `add` commands for each entity.
 
-#### Adding a person `addPerson`
+#### Adding a person
 
 Adds a person to VirusTracker.
 
@@ -97,7 +104,7 @@ Examples:
 * `addPerson idp/S123 n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 q/true i/false`
 * `addPerson idp/S234 n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 q/false i/true t/criminal`
 
-#### Adding a location `addLocation`
+#### Adding a location
 
 Adds a location to VirusTracker.
 
@@ -109,7 +116,7 @@ Examples:
 * `addLocation idl/L123 n/Vivocity a/John street, block 123, #01-01`
 * `addLocation idl/L234 n/Betsy Crowe's House a/Newgate Prison`
 
-#### Adding a visit `addVisit`
+#### Adding a visit
 
 Adds a visit by the person, location of visit and date of visit
 
@@ -267,7 +274,7 @@ Column A now has the formatted data and column C can be deleted.
 ### Deleting data: 
 To delete data from VirusTracker, there are various `delete` commands that could be used.
 
-#### Deleting a person `deletePerson`
+#### Deleting a person
 
 Deletes the specified person from the people list.
 
@@ -285,7 +292,7 @@ Examples:
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 * `delete idp/S123` deletes the person with the ID S123.
 
-#### Deleting a location `deleteLocation`
+#### Deleting a location
 
 Deletes the specified location from the location list.
 
@@ -302,7 +309,7 @@ Examples:
 * `list l/locations` followed by `deleteLocation 2` deletes the 2nd location in the displayed location list.
 * `delete idl/L123` deletes the location with the ID L123.
 
-#### Deleting visits using date `deleteVisits`
+#### Deleting visits using date
 
 Deletes all visits before and including the date.
 
@@ -319,7 +326,7 @@ Examples:
 ### Editing data: 
 To edit data in VirusTracker, there are various `edit` commands that could be used.
 
-#### Editing a person `editPerson`
+#### Editing a person
 
 Edits an existing person in VirusTracker.
 
@@ -341,7 +348,7 @@ Examples:
 *  `editPerson 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `editPerson idp/S123A n/Betsy Crower t/` Edits the name of the person with ID S123 to be `Betsy Crower` and clears all existing tags.
 
-#### Editing a location `editLocation`
+#### Editing a location
 
 Edits an existing location in VirusTracker.
 
@@ -360,11 +367,11 @@ Examples:
 *  `editLocation 1 n/NTU a/Bugis street` Edits the name and address of the 1st location to be `NTU` and `Bugis Street` respectively.
 *  `editLocation idl/L123A n/NUS` Edits the name of the location with ID L123A to be `NUS`.
 
-### Finding persons by name: `findPerson`
+### Finding persons by name:
 
 Finds persons whose names contain any of the given keywords.
 
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `findPerson KEYWORD [MORE_KEYWORDS]`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
@@ -379,7 +386,7 @@ Examples:
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
 
-### Listing data: `list`
+### Listing data:
 
 There are a variety of `list` commands that list different types of data.
 
