@@ -65,6 +65,11 @@ public class AddVisitCommandParser implements Parser<AddVisitCommand> {
         try {
             personId = ParserUtil.parseId(argMultimap.getValue(PREFIX_PERSON_ID).get());
             locationId = ParserUtil.parseId(argMultimap.getValue(PREFIX_LOCATION_ID).get());
+        } catch (ParseException pe) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddVisitCommand.MESSAGE_USAGE), pe);
+        }
+
+        try {
             date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
         } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_DATE_FORMAT, AddVisitCommand.MESSAGE_USAGE), pe);
