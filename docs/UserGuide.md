@@ -444,21 +444,21 @@ Format: `list l/stats`
     3. Percentage of people infected/quarantined
 * The above provides a brief summary of the pandemic and is subject to extension.
 
-### Generating all locations visited by a person: `generateLocations`
+### Generating all locations visited by a person:
 
 Shows a list of locations visited by an infected person in the past 2 weeks. 
 
-Format: `listAllLocationsVisited LOCATION_INDEX`
+Format: `generateLocations LOCATION_INDEX`
 
 * Locations listed were visited by the infected person of the index given.
 * The result given is a filtered list of locations that the person visited in the past 2 weeks.
 * This function can be used to identify locations needing to be disinfected after being visited by an infected person.
 
-### Generating all people in contact with an infected person: `generatePeople`
+### Generating all people in contact with an infected person:
 
 Shows a list of people who were in contact with an infected person in the past 2 weeks. 
 
-Format `listAllPersonsInContact PERSON_INDEX`
+Format `generatePeople PERSON_INDEX`
 
 * People listed were in contact with the infected person of the index given.
 * The result given is a filtered list of people who visited the same locations as that the infected person in the past 2 weeks.
