@@ -184,7 +184,7 @@ public class ExportToCsvCommandTest {
     }
 
     @Test
-    public void parse_invalidListType_throwsCommandException() {
+    public void execute_invalidListType_throwsCommandException() {
         try {
             fileWriter = new FileWriter(OUTPUT_CSV_FILE);
         } catch (IOException e) {
