@@ -43,7 +43,7 @@ public class InfoHandler {
     private static final double INVALID_RATIO = -1.0;
     private static final String COUNT_FORMAT = "%d";
     private static final String PERCENTAGE_FORMAT = "%.2f";
-    private static final String INVALID_PERCENTAGE_STRING = "-%%";
+    private static final String INVALID_PERCENTAGE_STRING = "-";
     // Headers for summary display
     private static final String TOTAL_PEOPLE_HEADER = "Total number of people:";
     private static final String TOTAL_LOCATIONS_HEADER = "Total number of locations:";
