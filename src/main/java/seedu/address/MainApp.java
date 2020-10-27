@@ -93,43 +93,31 @@ public class MainApp extends Application {
 
         try {
             personBookOptional = storage.readAddressBook();
-            if (personBookOptional.isEmpty()) {
-                logger.info("Data file not found. Will be starting with a sample PersonBook");
-            }
-            initialPersonData = personBookOptional.orElseGet(SampleDataUtil::getSamplePersonBook);
-        } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty PersonBook");
-            initialPersonData = new PersonBook();
-        } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty PersonBook");
-            initialPersonData = new PersonBook();
-        }
-
-        try {
             locationBookOptional = storage.readLocationBook();
-            if (locationBookOptional.isEmpty()) {
-                logger.info("Data file not found. Will be starting with a sample LocationBook");
-            }
-            initialLocationData = locationBookOptional.orElseGet(SampleDataUtil::getSampleLocationBook);
-        } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty LocationBook");
-            initialLocationData = new LocationBook();
-        } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty LocationBook");
-            initialLocationData = new LocationBook();
-        }
-
-        try {
             visitBookOptional = storage.readVisitBook();
-            if (visitBookOptional.isEmpty()) {
-                logger.info("Data file not found. Will be starting with a sample VisitBook");
+
+            if (personBookOptional.isEmpty() || locationBookOptional.isEmpty() || visitBookOptional.isEmpty()) {
+                logger.info("Data file not found. Will be starting with "
+                        + "a sample PersonBook, LocationBook and VisitBook");
+                initialPersonData = SampleDataUtil.getSamplePersonBook();
+                initialLocationData = SampleDataUtil.getSampleLocationBook();
+                initialVisitData = SampleDataUtil.getSampleVisitBook();
+            } else {
+                initialPersonData = personBookOptional.get();
+                initialLocationData = locationBookOptional.get();
+                initialVisitData = visitBookOptional.get();
             }
-            initialVisitData = visitBookOptional.orElseGet(SampleDataUtil::getSampleVisitBook);
         } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty VisitBook");
+            logger.warning("Data file not in the correct format. Will be starting with "
+                    + "an empty PersonBook, LocationBook and VisitBook");
+            initialPersonData = new PersonBook();
+            initialLocationData = new LocationBook();
             initialVisitData = new VisitBook();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty VisitBook");
+            logger.warning("Problem while reading from the file. Will be starting with "
+                    + "an empty PersonBook, LocationBook and VisitBook");
+            initialPersonData = new PersonBook();
+            initialLocationData = new LocationBook();
             initialVisitData = new VisitBook();
         }
 
