@@ -18,7 +18,7 @@ import seedu.address.commons.core.LogsCenter;
 public class HelpWindow extends UiPart<Stage> {
 
     public static final String USERGUIDE_URL =
-            "https://github.com/AY2021S1-CS2103T-T13-1/tp/blob/master/docs/UserGuide.md";
+            "https://ay2021s1-cs2103t-t13-1.github.io/tp/UserGuide.html";
     public static final String HELP_MESSAGE = "Virus Tracker is a desktop app specially designed to facilitate "
             + "contact tracing and data generations.\n"
             + "For more information on how to use this app, you may refer to the following link for user guide.\n"
