@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+// The INVALID enum is used for testing purposes only.
 public enum ListType {
     ALL_PEOPLE,
     ALL_LOCATIONS,
@@ -7,5 +8,6 @@ public enum ListType {
     ALL_INFECTED,
     ALL_QUARANTINED,
     STATISTICS,
-    HIGH_RISK_LOCATIONS
+    HIGH_RISK_LOCATIONS,
+    INVALID
 }
