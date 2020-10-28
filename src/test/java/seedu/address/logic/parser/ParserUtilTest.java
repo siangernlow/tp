@@ -268,6 +268,34 @@ public class ParserUtilTest {
     }
 
     @Test
+    public void parseListType_infectedList_returnsInfectedEnum() throws Exception {
+        ListType expectedListType = ListType.ALL_INFECTED;
+        ListType actualListType = ParserUtil.parseListType("infected");
+        assertEquals(expectedListType, actualListType);
+    }
+
+    @Test
+    public void parseListType_quarantinedList_returnsQuarantinedEnum() throws Exception {
+        ListType expectedListType = ListType.ALL_QUARANTINED;
+        ListType actualListType = ParserUtil.parseListType("quarantined");
+        assertEquals(expectedListType, actualListType);
+    }
+
+    @Test
+    public void parseListType_statsList_returnsStatsEnum() throws Exception {
+        ListType expectedListType = ListType.STATISTICS;
+        ListType actualListType = ParserUtil.parseListType("stats");
+        assertEquals(expectedListType, actualListType);
+    }
+
+    @Test
+    public void parseListType_highRiskList_returnsHighRiskEnum() throws Exception {
+        ListType expectedListType = ListType.HIGH_RISK_LOCATIONS;
+        ListType actualListType = ParserUtil.parseListType("high-risk-locations");
+        assertEquals(expectedListType, actualListType);
+    }
+
+    @Test
     public void parseListType_invalidListType_throwsParseException() {
         assertThrows(ParseException.class, () -> ParserUtil.parseListType("invalid keyword"));
     }
