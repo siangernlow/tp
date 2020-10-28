@@ -43,9 +43,9 @@ VirusTracker would be able to generate useful information based off the data tha
 
    * **`list l/people`** : Lists all people.
 
-   * **`add`**`idp/1 n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a person named `John Doe` to the VirusTracker.
+   * **`addPerson`**`idp/1 n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 q/false i/false` : Adds a person named `John Doe` to the VirusTracker.
 
-   * **`delete`**`3` : Deletes the 3rd element shown in the current list.
+   * **`deletePerson`**`3` : Deletes the 3rd person shown in the current list.
 
    * **`clear`** : Deletes all entries from VirusTracker.
 
@@ -73,6 +73,13 @@ VirusTracker would be able to generate useful information based off the data tha
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
+* In the case of repeating parameters, the last parameter is taken.<br>
+  e.g. if the command specifies `n/NAME p/PHONE_NUMBER_1 p/PHONE_NUMBER_2`, `p/PHONE_NUMBER_2` is taken and `PHONE_NUMBER_1` is ignored.
+
+* In commands where the user would like to refer to a person or a location, the user has two options. <br>
+  The user may either refer using the index of the person/location in the list or use the Id of the person/location.<br>
+  e.g. `deleteLocation 3` deletes the 3rd location shown in the location list while `deleteLocation idl/L123` deletes the location with Id `L123`.
+
 * **Data** refers collectively to people, locations and visits unless stated otherwise.
 </div>
 
@@ -80,7 +87,7 @@ VirusTracker would be able to generate useful information based off the data tha
 
 To add data to VirusTracker, there are `add` commands for each entity.
 
-#### Adding a person `addPerson`
+#### Adding a person
 
 Adds a person to VirusTracker.
 
@@ -97,7 +104,7 @@ Examples:
 * `addPerson idp/S123 n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 q/true i/false`
 * `addPerson idp/S234 n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 q/false i/true t/criminal`
 
-#### Adding a location `addLocation`
+#### Adding a location
 
 Adds a location to VirusTracker.
 
@@ -109,7 +116,7 @@ Examples:
 * `addLocation idl/L123 n/Vivocity a/John street, block 123, #01-01`
 * `addLocation idl/L234 n/Betsy Crowe's House a/Newgate Prison`
 
-#### Adding a visit `addVisit`
+#### Adding a visit
 
 Adds a visit by the person, location of visit and date of visit
 
@@ -267,12 +274,12 @@ Column A now has the formatted data and column C can be deleted.
 ### Deleting data: 
 To delete data from VirusTracker, there are various `delete` commands that could be used.
 
-#### Deleting a person `deletePerson`
+#### Deleting a person
 
 Deletes the specified person from the people list.
 
-Format: `delete PERSON_INDEX` <br>
-Format: `delete idp/PERSON_ID` 
+Format: `deletePerson PERSON_INDEX` <br>
+Format: `deletePerson idp/PERSON_ID` 
 
 * Deletes the person at the specified `PERSONS_INDEX` or deletes the person with the specified `PERSON_ID`.
 * `PERSON_INDEX` refers to the index of the person as viewed from the most recently displayed people list.
@@ -283,9 +290,9 @@ Format: `delete idp/PERSON_ID`
 Examples:
 * `list l/infected` followed by `delete 2` deletes the 2nd infected person in the displayed people list.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
-* `delete idp/S123` deletes the person with the ID S123.
+* `deletePerson idp/S123` deletes the person with the ID S123.
 
-#### Deleting a location `deleteLocation`
+#### Deleting a location
 
 Deletes the specified location from the location list.
 
@@ -300,9 +307,9 @@ Format: `deleteLocation idl/LOCATION_ID`
 
 Examples:
 * `list l/locations` followed by `deleteLocation 2` deletes the 2nd location in the displayed location list.
-* `delete idl/L123` deletes the location with the ID L123.
+* `deleteLocation idl/L123` deletes the location with the ID L123.
 
-#### Deleting visits using date `deleteVisits`
+#### Deleting visits using date
 
 Deletes all visits before and including the date.
 
@@ -319,12 +326,12 @@ Examples:
 ### Editing data: 
 To edit data in VirusTracker, there are various `edit` commands that could be used.
 
-#### Editing a person `editPerson`
+#### Editing a person
 
 Edits an existing person in VirusTracker.
 
-Format: `edit PERSON_INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [q/QUARANTINE_STATUS] [t/TAG]…​` <br>
-Format: `edit idp/PERSON_ID [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [q/QUARANTINE_STATUS] [t/TAG]…​` 
+Format: `editPerson PERSON_INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [q/QUARANTINE_STATUS] [t/TAG]…​` <br>
+Format: `editPerson idp/PERSON_ID [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [q/QUARANTINE_STATUS] [t/TAG]…​` 
 
 * A person's ID cannot be edited.
 * Edits the person at the specified `PERSON_INDEX` or the person with the specified `PERSON_ID`.
@@ -341,7 +348,7 @@ Examples:
 *  `editPerson 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `editPerson idp/S123A n/Betsy Crower t/` Edits the name of the person with ID S123 to be `Betsy Crower` and clears all existing tags.
 
-#### Editing a location `editLocation`
+#### Editing a location
 
 Edits an existing location in VirusTracker.
 
@@ -360,11 +367,11 @@ Examples:
 *  `editLocation 1 n/NTU a/Bugis street` Edits the name and address of the 1st location to be `NTU` and `Bugis Street` respectively.
 *  `editLocation idl/L123A n/NUS` Edits the name of the location with ID L123A to be `NUS`.
 
-### Finding persons by name: `findPerson`
+### Finding persons by name:
 
 Finds persons whose names contain any of the given keywords.
 
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `findPerson KEYWORD [MORE_KEYWORDS]`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
@@ -374,12 +381,12 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
+* `findPerson John` returns `john` and `John Doe`
+* `findPerson alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
 
-### Listing data: `list`
+### Listing data:
 
 There are a variety of `list` commands that list different types of data.
 
@@ -437,21 +444,21 @@ Format: `list l/stats`
     3. Percentage of people infected/quarantined
 * The above provides a brief summary of the pandemic and is subject to extension.
 
-### Generating all locations visited by a person: `generateLocations`
+### Generating all locations visited by a person:
 
 Shows a list of locations visited by an infected person in the past 2 weeks. 
 
-Format: `listAllLocationsVisited LOCATION_INDEX`
+Format: `generateLocations PERSON_INDEX`
 
 * Locations listed were visited by the infected person of the index given.
 * The result given is a filtered list of locations that the person visited in the past 2 weeks.
 * This function can be used to identify locations needing to be disinfected after being visited by an infected person.
 
-### Generating all people in contact with an infected person: `generatePeople`
+### Generating all people in contact with an infected person:
 
 Shows a list of people who were in contact with an infected person in the past 2 weeks. 
 
-Format `listAllPersonsInContact PERSON_INDEX`
+Format `generatePeople PERSON_INDEX`
 
 * People listed were in contact with the infected person of the index given.
 * The result given is a filtered list of people who visited the same locations as that the infected person in the past 2 weeks.
@@ -504,15 +511,3 @@ Entity | Refers to people, locations or visits
 
 
 --------------------------------------------------------------------------------------------------------------------
-
-## Command summary
-
-Action | Format, Examples
---------|------------------
-**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS q/QUARANTINE_STATUS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-**Clear** | `clear`
-**Delete** | `delete PERSON_INDEX`<br> e.g., `delete 3`
-**Edit** | `edit PERSON_INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [q/QUARANTINE_STATUS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**List** | `list l/KEYWORD` <br> e.g., `list l/people`, `list l/stats`
-**Help** | `help`
