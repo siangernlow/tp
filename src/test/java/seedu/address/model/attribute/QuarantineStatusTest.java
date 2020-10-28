@@ -1,5 +1,6 @@
-package seedu.address.model.person;
+package seedu.address.model.attribute;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
@@ -61,5 +62,11 @@ public class QuarantineStatusTest {
         // different remark -> returns false
         QuarantineStatus differentQuarantineStatus = new QuarantineStatus("false");
         assertFalse(quarantineStatus.equals(differentQuarantineStatus));
+    }
+
+    @Test
+    public void hashCode_success() {
+        QuarantineStatus quarantineStatus = new QuarantineStatus("true");
+        assertEquals(Boolean.valueOf(true).hashCode(), quarantineStatus.hashCode());
     }
 }
