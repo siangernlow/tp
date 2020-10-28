@@ -188,6 +188,6 @@ public class ListCommandTest {
         }
 
         @Override
-        public void updateFilteredPersonList(Predicate<Person> predicate) {}
+        public void updateFilteredPersonList(Predicate<? super Person> predicate) {}
     }
 }
