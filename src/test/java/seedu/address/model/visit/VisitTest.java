@@ -2,16 +2,29 @@ package seedu.address.model.visit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.TypicalLocations.BOB_LOCATION;
 import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalVisits.FIRST_VISIT;
 import static seedu.address.testutil.TypicalVisits.SECOND_VISIT;
+import static seedu.address.testutil.VisitBuilder.DEFAULT_LOCATION;
+
+import java.time.LocalDate;
+import java.util.Objects;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.model.location.Location;
 import seedu.address.testutil.VisitBuilder;
 
 public class VisitTest {
+
+    @Test
+    public void isSameDate() {
+        LocalDate date = LocalDate.of(2020, 9, 9);
+        Visit visit = new VisitBuilder().withDate("2020-09-09").build();
+        assertTrue(visit.isSameDate(date));
+    }
 
     @Test
     public void equals() {
@@ -26,7 +39,7 @@ public class VisitTest {
         assertNotEquals(null, FIRST_VISIT);
 
         // different type -> returns false
-        assertNotEquals(5, FIRST_VISIT);
+        assertNotEquals(FIRST_VISIT, 5);
 
         // different visit -> returns false
         assertNotEquals(FIRST_VISIT, SECOND_VISIT);
@@ -42,5 +55,17 @@ public class VisitTest {
         // different date -> returns false
         Visit editedVisitDate = new VisitBuilder(FIRST_VISIT).withDate("2020-08-08").build();
         assertNotEquals(FIRST_VISIT, editedVisitDate);
+    }
+
+    @Test
+    public void hashCode_success() {
+        Visit visit = FIRST_VISIT;
+        int hashCode = Objects.hash(
+                visit.getPerson(),
+                visit.getLocation(),
+                visit.getDate()
+        );
+
+        assertEquals(hashCode, visit.hashCode());
     }
 }
