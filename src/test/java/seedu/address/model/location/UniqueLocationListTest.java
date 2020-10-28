@@ -17,6 +17,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import javafx.collections.ObservableList;
 import seedu.address.model.location.exceptions.DuplicateLocationException;
 import seedu.address.model.location.exceptions.LocationNotFoundException;
 import seedu.address.model.location.exceptions.LocationNotIdentifiableException;
@@ -71,6 +72,17 @@ public class UniqueLocationListTest {
         uniqueLocationList.add(ALICE_LOCATION);
         Location editedAlice = new LocationBuilder(ALICE_LOCATION).withId(VALID_ID_BOB_LOCATION).build();
         assertFalse(uniqueLocationList.containsLocationId(editedAlice.getId()));
+    }
+
+    @Test
+    public void getLocationById_validId_success() {
+        uniqueLocationList.add(ALICE_LOCATION);
+        assertEquals(ALICE_LOCATION, uniqueLocationList.getLocationById(ALICE_LOCATION.getId()));
+    }
+
+    @Test
+    public void getLocationById_locationNotFound_throwsLocationNotFoundException() {
+        assertThrows(LocationNotFoundException.class, () -> uniqueLocationList.getLocationById(ALICE_LOCATION.getId()));
     }
 
     @Test
@@ -148,6 +160,16 @@ public class UniqueLocationListTest {
     }
 
     @Test
+    public void setLocation_editedLocationIdExistsButTargetDifferentId_throwsLocationNotIdentifiableException() {
+        uniqueLocationList.add(AMY_LOCATION);
+        uniqueLocationList.add(BOB_LOCATION);
+        Location editedAlice = new LocationBuilder(AMY_LOCATION).withId(VALID_ID_BOB_LOCATION)
+                .withName(VALID_NAME_BOB).build();
+        assertThrows(LocationNotIdentifiableException.class, () ->
+                uniqueLocationList.setLocation(AMY_LOCATION, editedAlice));
+    }
+
+    @Test
     public void remove_nullLocation_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> uniqueLocationList.remove(null));
     }
@@ -202,7 +224,7 @@ public class UniqueLocationListTest {
     }
 
     @Test
-    public void setLocations_listWithUnidentifiableLocations_throwsDuplicateLocationException() {
+    public void setLocations_listWithUnidentifiableLocations_throwsLocationNotIdentifiableException() {
         Location editedAlice = new LocationBuilder(ALICE_LOCATION).withAddress(VALID_ADDRESS_BOB)
                 .withName(VALID_NAME_BOB).build();
         List<Location> listWithUnidentifiableLocations = Arrays.asList(ALICE_LOCATION, editedAlice);
@@ -215,4 +237,5 @@ public class UniqueLocationListTest {
         assertThrows(UnsupportedOperationException.class, () ->
                 uniqueLocationList.asUnmodifiableObservableList().remove(0));
     }
+
 }
