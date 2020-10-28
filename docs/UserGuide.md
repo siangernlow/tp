@@ -8,7 +8,7 @@ title: User Guide
 
 **VirusTracker** is a **desktop app for generating statistics for Covid-19, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI).
 It is mainly targeted towards healthcare officials who are handling large amounts of data due to the pandemic.
-VirusTracker aims to provide a faster and quicker alternative to common data entry programs.
+VirusTracker aims to provide a faster and quicker alternative to common statistical programs.
 
 --------------------------------------------------------------------------------------------------------------------
 ## Preface
@@ -21,11 +21,27 @@ VirusTracker works with three main entities:
 * Locations
 * Visits
 
+A person refers to any person whom may be at risk from Covid-19. VirusTracker stores data about the id, name, address, phone number and email of each person. 
+A location refers to any location which are open for visiting. VirusTracker stores data about the id, name and address of each location.
+A visit refers to when a Person visits a Location on a given date. VirusTracker stores the data of the Person and the Location involved in the Visit.
+
 The recommended way for you to use VirusTracker is to first store the information of all the people and locations you wish to track.
-Then, whenever a person visits a location, the corresponding `visit` is added.
+Then, whenever a person visits a location, add the corresponding `visit`.
 
 VirusTracker would be able to generate useful information based off the data that is input into the system.
 
+--------------------------------------------------------------------------------------------------------------------
+## Glossary
+
+The following table presents a list of key terms that will be used in this user guide. 
+
+Term | Meaning
+--------|------------------
+Entity | Refers to people, locations or visits
+Command | Refers to user input that instructs VirusTracker on what to do
+Identifier | Refers to ids or indexes. These are used to uniquely identify a location or person
+Prefix | Refers to prefixes used in commands. These precede fields that are typed in user input
+--------------------------------------------------------------------------------------------------------------------
 ## Quick start
 
 1. Ensure you have Java `11` or above installed in your Computer.
@@ -33,7 +49,7 @@ VirusTracker would be able to generate useful information based off the data tha
 2. Download the latest `virustracker.jar` from [here](https://github.com/AY2021S1-CS2103T-T13-4/tp/releases). <br>
    _Note: VirusTracker is still a work-in-progress and official releases are not available yet._
    
-3. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+3. Copy the file to the folder you want to use as the _home folder_ for your VirusTracker.
 
 4. Double-click the file to start the app. The GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
@@ -43,7 +59,7 @@ VirusTracker would be able to generate useful information based off the data tha
 
    * **`list l/people`** : Lists all people.
 
-   * **`addPerson`**`idp/1 n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 q/false i/false` : Adds a person named `John Doe` to the VirusTracker.
+   * **`addLocation`**`idl/L123A n/NTU a/50 Nanyang Ave, 639798` : Adds a location named `NTU` to the VirusTracker.
 
    * **`deletePerson`**`3` : Deletes the 3rd person shown in the current list.
 
@@ -55,14 +71,34 @@ VirusTracker would be able to generate useful information based off the data tha
 
 --------------------------------------------------------------------------------------------------------------------
 
+## User Interface
+
+You may refer to the following table and figure on the components of the User Interface.
+ ![annotatedUI](images/annotatedUI.png)
+
+The User Interface is made up of multiple components whose purpose are explained in the table below.
+
+| Component | Description |
+| --------------- | ---------------------------------------- | 
+| Toolbar         | Displays the toolbar for VirusTracker. Clicking on `File` and `Help` will show you the exit and help buttons respectively.  | 
+| Command Box     | You may type in your inputs into this textbox.    | 
+| Command Result  | VirusTracker displays responses inside this box. You may read success messages or warnings from this box.  | 
+| Persons List    | Displays a list of Persons. Panels contain detailed information about each person. |
+| Locations List  | Displays a list of Locations. Panels contain detailed information about each location. | 
+| Visits List     | Displays a list of visits. Panels contain information about the person, location and date of the visit. | 
+
+--------------------------------------------------------------------------------------------------------------------
+
 ## Features
+
+This section introduces you to important notations and details that apply to the commands in VirusTracker.
 
 <div markdown="block" class="alert alert-info">
 
 **:information_source: Notes about the command format:**<br>
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+  e.g. in `addPerson n/NAME`, `NAME` is a parameter which can be used as `addPerson n/John Doe`.
 
 * Items in square brackets are optional.<br>
   e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
@@ -73,14 +109,46 @@ VirusTracker would be able to generate useful information based off the data tha
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
-* In the case of repeating parameters, the last parameter is taken.<br>
+* In the case of repeating parameters, VirusTracker takes the last parameter.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER_1 p/PHONE_NUMBER_2`, `p/PHONE_NUMBER_2` is taken and `PHONE_NUMBER_1` is ignored.
 
-* In commands where the user would like to refer to a person or a location, the user has two options. <br>
-  The user may either refer using the index of the person/location in the list or use the Id of the person/location.<br>
-  e.g. `deleteLocation 3` deletes the 3rd location shown in the location list while `deleteLocation idl/L123` deletes the location with Id `L123`.
-
 * **Data** refers collectively to people, locations and visits unless stated otherwise.
+
+* VirusTracker will actively stop the user from creating duplicates of entities. VirusTracker will alert you if it detects you are adding a duplicate entity.
+  Entities are duplicates if they meet any of the following conditions.
+  1. They have the same id.
+  2. For visits, they are duplicates if they have the same date and involve the same person and location.
+  3. For persons, they are duplicates if their name is the same and one of phone and email is the same.
+  4. For locations, they are duplicates if they have the same name and address. 
+</div>
+
+There are many situations where you may want to refer to a specific location or person when giving a command.
+For example, you may want to delete a location or add a visit involving a specific location and person.
+In such cases, VirusTracker provides two methods for you to use when referring to a specific person or location, either index or id.
+This guide collectively refers to indexes and ids as identifiers.
+In the figure below showing a person panel, there is a number beside the person's name and there is a person id.<br>
+ ![personPanel](images/personPanel.png)
+
+You may use either the index number (which corresponds to the position of the person within the persons list) or the id to refer to a person. 
+The same applies for locations.
+In the example shown above, you may use either `deletePerson 1` or `deletePerson idp/S123A` to remove the person named `Alex Yeoh` from VirusTracker.
+You may prefer to use ids when they do not wish to scroll the list to find the relevant index.
+You may also prefer to use indexes which tend to be shorter than the ids of people and locations.
+
+<div markdown="block" class="alert alert-info">
+
+**:information_source: Notes about using indexes and ids:**<br>
+* The field `IDENTIFIER` means that the user needs to input either an id or index.
+  `LOCATION_IDENTIFIER` and `PERSON_IDENTIFIER` refers to location and person identifiers respectively.
+* You may input an index by just using the number alone. However, ids must have a prefix in front of them.
+  `idp` is the prefix for person while `idl` is the prefix for locations. <br>
+  e.g.  `deleteLocation 3` and `deleteLocation idl/L123A`. The first command uses an index of 3 while the second command uses the id `L123A`.
+* When using indexes, it should before any other fields which need prefixes. <br>
+  e.g. `addVisit 1 1 d/2020-02-02` is allowed but `addVisit 1 d/2020-02-02 1` is not allowed.
+* Take note that the index of a person/location may change depending on the index of the person/location as viewed from the most recently displayed person/location list.
+* Indexes **must be positive integers**: 1, 2, 3, …​ and within the range of its shown list, otherwise warnings will be triggered.
+* Ids used must belong to a person/location within VirusTracker.
+
 </div>
 
 ### Adding data
@@ -94,11 +162,11 @@ Adds a person to VirusTracker.
 Format: `addPerson idp/ID n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS q/QUARANTINE_STATUS i/INFECTED_STATUS [t/TAG]…​` 
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A person can have any number of tags (including 0)
+A person can have any number of tags (including 0).
 </div>
 
 * `ID` of person must be unique. No other person in the VirusTracker may have the same ID.
-* `QUARANTINE_STATUS` and `INFECTED_STATUS` only accept true or false.
+* `QUARANTINE_STATUS` and `INFECTED_STATUS` can only be true or false.
 
 Examples:
 * `addPerson idp/S123 n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 q/true i/false`
@@ -120,17 +188,10 @@ Examples:
 
 Adds a visit by the person, location of visit and date of visit
 
-Format: `addVisit PERSON_INDEX LOCATION_INDEX d/DATE` <br>
-Format: `addVisit idp/PERSON_ID idl/LOCATION_ID d/DATE`
+Format: `addVisit PERSON_IDENTIFIER LOCATION_IDENTIFIER d/DATE`
 
-* Visits are used to track close contacts and to detect if infected/quarantined people visit locations they should not.
-* Visits may be added by either using indexes or IDs to refer to the location and person. A mix of both is not allowed and will trigger a warning. 
-* `PERSON_INDEX` refers to the index of the person as viewed from the most recently displayed people list.
-* `LOCATION_INDEX` refers to the index of the location as viewed from the most recently displayed location list.
-* The indexes **must be positive integers**: 1, 2, 3, …​ and within the range of its shown list, otherwise warnings will be triggered.
-* `PERSON_ID` must belong to a person within VirusTracker.
-* `LOCATION_ID` must belong to a location within VirusTracker.
-* `DATE` refers to the date when the person visited the location
+* VirusTracker gives a warning if visits involve an infected/quarantined people visiting locations they should not.
+* Visits may be added by either using all indexes or all ids only. A mix of both is not allowed and will trigger a warning. 
 * Date format should follow "yyyy-MM-dd", otherwise exceptions would be thrown.
 
 Examples:
@@ -272,38 +333,38 @@ Column A now has the formatted data and column C can be deleted.
 ![Format CSV 10](images/FormatCSV/FormatCsv10.png)
 
 ### Deleting data: 
-To delete data from VirusTracker, there are various `delete` commands that could be used.
+To delete data from VirusTracker, there are various `delete` commands that can be used.
 
 #### Deleting a person
 
-Deletes the specified person from the people list.
+Deletes the specified person from the persons list.
 
-Format: `deletePerson PERSON_INDEX` <br>
-Format: `deletePerson idp/PERSON_ID` 
+Format: `deletePerson PERSON_IDENTIFIER` <br>
 
-* Deletes the person at the specified `PERSONS_INDEX` or deletes the person with the specified `PERSON_ID`.
-* `PERSON_INDEX` refers to the index of the person as viewed from the most recently displayed people list.
-* The index **must be a positive integer** 1, 2, 3, …​
-* `PERSON_ID` must belong to a person within VirusTracker.
 * All visits made by the specified person would also be deleted.
+
+<div markdown="block" class="alert alert-danger">
+:warning: **Warning:**
+Be careful that deleting a person is irreversible!
+</div>
 
 Examples:
 * `list l/infected` followed by `delete 2` deletes the 2nd infected person in the displayed people list.
-* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
-* `deletePerson idp/S123` deletes the person with the ID S123.
+* `findPerson Betsy` followed by `delete 1` deletes the 1st person in the results of the `findPerson` command.
+* `deletePerson idp/S123` deletes the person with the id S123.
 
 #### Deleting a location
 
 Deletes the specified location from the location list.
 
-Format: `deleteLocation LOCATION_INDEX` <br>
-Format: `deleteLocation idl/LOCATION_ID` 
+Format: `deleteLocation LOCATION_IDENTIFIER` <br>
 
-* Deletes the location at the specified `LOCATION_INDEX` or deletes the location with the specified `LOCATION_ID`.
-* `LOCATION_INDEX` refers to the index of the location as viewed from the most recently displayed location list.
-* The index **must be a positive integer** 1, 2, 3, …​
-* `LOCATION_ID` must belong to a location within VirusTracker.
 * All visits that contains the specified locations would also be deleted.
+
+<div markdown="block" class="alert alert-danger">
+:warning: **Warning:**
+Be careful that deleting a location is irreversible!
+</div>
 
 Examples:
 * `list l/locations` followed by `deleteLocation 2` deletes the 2nd location in the displayed location list.
@@ -315,8 +376,7 @@ Deletes all visits before and including the date.
 
 Format: `deleteVisits d/DATE`
 
-* `DATE` refers to a valid date within the visits list.
-* A `DATE` is valid if **at least one** visit contains the specified date.
+* A `DATE` is valid if **at least one** visit occurs before or on the specified date.
 * All the visits before and including the date will be removed from the visits list.
 * Date format should follow "yyyy-MM-dd", otherwise exceptions would be thrown.
 
@@ -330,19 +390,13 @@ To edit data in VirusTracker, there are various `edit` commands that could be us
 
 Edits an existing person in VirusTracker.
 
-Format: `editPerson PERSON_INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [q/QUARANTINE_STATUS] [t/TAG]…​` <br>
-Format: `editPerson idp/PERSON_ID [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [q/QUARANTINE_STATUS] [t/TAG]…​` 
+Format: `editPerson PERSON_IDENTIFIER [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [q/QUARANTINE_STATUS] [i/INFECTION_STATUS] [t/TAG]…​` <br>
 
-* A person's ID cannot be edited.
-* Edits the person at the specified `PERSON_INDEX` or the person with the specified `PERSON_ID`.
-* `PERSON_INDEX` refers to the index of the person as viewed from the most recently displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
-* `PERSON_ID` must belong to a person within VirusTracker.
+* A person's id cannot be edited.
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without
-    specifying any tags after it.
+* You can remove all the person’s tags by typing `t/` without specifying any tags after it.
 
 Examples:
 *  `editPerson 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
@@ -352,14 +406,9 @@ Examples:
 
 Edits an existing location in VirusTracker.
 
-Format: `editLocation LOCATION_INDEX [n/NAME] [a/ADDRESS]` <br>
-Format: `editLocation idl/LOCATION_ID [n/NAME] [a/ADDRESS]`
+Format: `editLocation LOCATION_IDENTIFIER [n/NAME] [a/ADDRESS]`
 
 * A location's ID cannot be edited.
-* Edits the location at the specified `LOCATION_INDEX` or the location with the specified `LOCATION_ID`.
-* `LOCATION_INDEX` refers to the index of the location as viewed from the most recently displayed location list.
-* The index **must be a positive integer** 1, 2, 3, …​
-* `LOCATION_ID` must belong to a location within VirusTracker.
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 
@@ -383,8 +432,6 @@ Format: `findPerson KEYWORD [MORE_KEYWORDS]`
 Examples:
 * `findPerson John` returns `john` and `John Doe`
 * `findPerson alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
-
 
 ### Listing data:
 
@@ -393,27 +440,27 @@ There are a variety of `list` commands that list different types of data.
 #### Listing all people 
 Format: `list l/people`
 
-* Displays the list of all people currently stored in VirusTracker.
+* Updates the persons list to display all people currently stored in VirusTracker.
 
 #### Listing all infected people 
 Format: `list l/infected`
 
-* Displays the list of all people that are currently infected.
+* Filters the persons list to display all people that are currently infected.
 
 #### Listing all quarantined people 
 Format: `list l/quarantined`
 
-* Displays the list of all people currently in quarantine.
+* Filters the persons list to display all people currently in quarantine.
 
 #### Listing all locations
 Format: `list l/locations`
 
-* Displays the list of all locations currently stored in VirusTracker.
+* Updates the locations list to displays all locations currently stored in VirusTracker.
 
 #### Listing all visits
 Format: `list l/visits`
 
-* Displays the list of all visits currently stored in VirusTracker.
+* Updates the visits list to displays all visits currently stored in VirusTracker.
 
 #### Listing high risk locations
 
@@ -448,21 +495,29 @@ Format: `list l/stats`
 
 Shows a list of locations visited by an infected person in the past 2 weeks. 
 
-Format: `generateLocations PERSON_INDEX`
+Format: `generateLocations PERSON_IDENTIFIER`
 
 * Locations listed were visited by the infected person of the index given.
 * The result given is a filtered list of locations that the person visited in the past 2 weeks.
 * This function can be used to identify locations needing to be disinfected after being visited by an infected person.
 
+Examples:
+* `generateLocation 1`
+* `generateLocation idp/S123`
+
 ### Generating all people in contact with an infected person:
 
 Shows a list of people who were in contact with an infected person in the past 2 weeks. 
 
-Format `generatePeople PERSON_INDEX`
+Format `generatePeople PERSON_IDENTIFIER`
 
 * People listed were in contact with the infected person of the index given.
 * The result given is a filtered list of people who visited the same locations as that the infected person in the past 2 weeks.
 * This function can be used to identify people who need to be quarantined or issued Stay Home Notices.
+
+Examples:
+* `generatePeople 1`
+* `generatePeople idp/S123`
 
 ### Clearing all entries : `clear`
 
@@ -470,10 +525,9 @@ Clears all entries from VirusTracker.
 
 Format: `clear`
 
-
 ### Viewing help : `help`
 
-Shows a message explaning how to access the help page.
+Shows a message explaining how to access the help page.
 
 ![help message](images/helpMessage.png)
 
@@ -501,13 +555,6 @@ _{explain the feature here}_
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
-
---------------------------------------------------------------------------------------------------------------------
-## Glossary
-Term | Meaning
---------|------------------
-Entity | Refers to people, locations or visits
-
+**A**: Install the app in the other computer. Create a folder named `data` in the same location as the app and copy over `personbook.json, locationbook.json and visitbook.json` into that folder. 
 
 --------------------------------------------------------------------------------------------------------------------
