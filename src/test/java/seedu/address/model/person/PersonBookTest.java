@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.location.Location;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.testutil.PersonBuilder;
 
@@ -80,6 +81,12 @@ public class PersonBookTest {
     @Test
     public void getPersonList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> personBook.getPersonList().remove(0));
+    }
+
+    @Test
+    public void hashCode_success() {
+        List<Person> personsList = personBook.getPersonList();
+        assertEquals(personsList.hashCode(), personBook.hashCode());
     }
 
     /**
