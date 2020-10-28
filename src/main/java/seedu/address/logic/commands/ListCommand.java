@@ -25,8 +25,8 @@ public class ListCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Lists information based on a given type.\n"
-            + "Parameters: l/LIST_TYPE (must be either people, locations, high-risk-locations, visits,"
-            + " infected or quarantined)\n"
+            + "Parameters: l/LIST_TYPE (must be either people, infected, quarantined, locations, visits,"
+            + " high-risk-locations or stats)\n"
             + "Example: " + COMMAND_WORD + " people";
 
     public static final String MESSAGE_SUCCESS_ALL_PEOPLE = "Listed all people";

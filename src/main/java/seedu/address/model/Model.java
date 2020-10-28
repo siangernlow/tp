@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -109,7 +110,12 @@ public interface Model {
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredPersonList(Predicate<Person> predicate);
+    void updateFilteredPersonList(Predicate<? super Person> predicate);
+
+    /**
+     * Returns the current {@code Predicate} of the person filtered list
+     */
+    Optional<Predicate<? super Person>> getPersonPredicate();
 
     //=========== Location Book =====================================================================================
 
@@ -236,10 +242,13 @@ public interface Model {
     void setVisit(Visit target, Visit editedVisit);
 
     /**
-     * Update visit book with {@code editedLocation}
+     * Update visit book with {@code editedPerson}
      */
     void updateVisitBookWithEditedPerson(Person editedPerson);
 
+    /**
+     * Update visit book with {@code editedLocation}
+     */
     void updateVisitBookWithEditedLocation(Location editedLocation);
 
     /** Returns an unmodifiable view of the filtered and sorted visit list */
@@ -249,6 +258,10 @@ public interface Model {
      * Updates the filter of the filtered visit list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredVisitList(Predicate<Visit> predicate);
+    void updateFilteredVisitList(Predicate<? super Visit> predicate);
 
+    /**
+     * Returns the current {@code Predicate} of the visit filtered list
+     */
+    Optional<Predicate<? super Visit>> getVisitPredicate();
 }
