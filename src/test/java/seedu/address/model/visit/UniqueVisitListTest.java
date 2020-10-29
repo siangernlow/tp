@@ -7,6 +7,7 @@ import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalLocations.BOB_LOCATION;
 import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalVisits.FIRST_VISIT;
+import static seedu.address.testutil.TypicalVisits.SECOND_VISIT;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,8 +18,6 @@ import org.junit.jupiter.api.Test;
 import seedu.address.model.visit.exceptions.DuplicateVisitException;
 import seedu.address.model.visit.exceptions.VisitNotFoundException;
 import seedu.address.testutil.VisitBuilder;
-
-
 
 public class UniqueVisitListTest {
     private final UniqueVisitList uniqueVisitList = new UniqueVisitList();
@@ -91,6 +90,14 @@ public class UniqueVisitListTest {
         UniqueVisitList expectedUniqueVisitList = new UniqueVisitList();
         expectedUniqueVisitList.add(editedVisit);
         assertEquals(expectedUniqueVisitList, uniqueVisitList);
+    }
+
+    @Test
+    public void setVisit_duplicateVisit_throwsDuplicateVisitException() {
+        uniqueVisitList.add(FIRST_VISIT);
+        uniqueVisitList.add(SECOND_VISIT);
+        assertThrows(DuplicateVisitException.class, () ->
+                uniqueVisitList.setVisit(SECOND_VISIT, FIRST_VISIT));
     }
 
     @Test

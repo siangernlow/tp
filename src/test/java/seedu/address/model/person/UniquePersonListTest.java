@@ -88,6 +88,17 @@ public class UniquePersonListTest {
     }
 
     @Test
+    public void getPersonById_validId_success() {
+        uniquePersonList.add(ALICE);
+        assertEquals(ALICE, uniquePersonList.getPersonById(ALICE.getId()));
+    }
+
+    @Test
+    public void getPersonById_personNotFound_throwsPersonNotFoundException() {
+        assertThrows(PersonNotFoundException.class, () -> uniquePersonList.getPersonById(ALICE.getId()));
+    }
+
+    @Test
     public void add_nullPerson_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> uniquePersonList.add(null));
     }

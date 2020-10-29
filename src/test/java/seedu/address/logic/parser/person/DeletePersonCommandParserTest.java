@@ -1,5 +1,6 @@
 package seedu.address.logic.parser.person;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -42,5 +43,12 @@ public class DeletePersonCommandParserTest {
     @Test
     public void parse_invalidId_throwsParseException() {
         assertParseFailure(parser, " idp/  ", Id.MESSAGE_CONSTRAINTS);
+    }
+
+    @Test
+    public void parse_containsBothIndexAndId_throwsParseException() {
+        String userInput = "1 " + PREFIX_PERSON_ID + "2";
+        assertParseFailure(parser, userInput,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeletePersonCommand.MESSAGE_USAGE));
     }
 }

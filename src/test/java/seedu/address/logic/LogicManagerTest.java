@@ -20,6 +20,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -118,6 +119,74 @@ public class LogicManagerTest {
     @Test
     public void getFilteredVisitList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> logic.getSortedVisitList().remove(0));
+    }
+
+    // ========== Getters ===========================================================================================
+    @Test
+    public void getPersonBook() {
+        assertEquals(model.getPersonBook(), logic.getPersonBook());
+    }
+
+    @Test
+    public void getSortedPersonList() {
+        assertEquals(model.getSortedPersonList(), logic.getSortedPersonList());
+    }
+
+    @Test
+    public void getPersonBookFilePath() {
+        assertEquals(model.getPersonBookFilePath(), logic.getPersonBookFilePath());
+    }
+
+    //=========== Location Book =====================================================================================
+
+    @Test
+    public void getLocationBook() {
+        assertEquals(model.getLocationBook(), logic.getLocationBook());
+    }
+
+    @Test
+    public void getSortedLocationList() {
+        assertEquals(model.getSortedLocationList(), logic.getSortedLocationList());
+    }
+
+    @Test
+    public void getLocationBookFilePath() {
+        assertEquals(model.getLocationBookFilePath(), logic.getLocationBookFilePath());
+    }
+
+    //=========== Visit Book ========================================================================================
+
+    @Test
+    public void getVisitBook() {
+        assertEquals(model.getVisitBook(), logic.getVisitBook());
+    }
+
+    @Test
+    public void getSortedVisitList() {
+        assertEquals(model.getSortedVisitList(), logic.getSortedVisitList());
+    }
+
+    @Test
+    public void getVisitBookFilePath() {
+        assertEquals(model.getVisitBookFilePath(), logic.getVisitBookFilePath());
+    }
+
+    //=========== GUI Settings ======================================================================================
+
+    @Test
+    public void getGuiSettings() {
+        assertEquals(model.getGuiSettings(), logic.getGuiSettings());
+    }
+
+    @Test
+    public void setGuiSettings() {
+        GuiSettings guiSettings = new GuiSettings(100, 200, 1, 0);
+
+        Model expectedModel = new ModelManager();
+        expectedModel.setGuiSettings(guiSettings);
+        logic.setGuiSettings(guiSettings);
+
+        assertEquals(expectedModel, model);
     }
 
     /**

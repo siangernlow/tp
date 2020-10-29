@@ -82,6 +82,12 @@ public class PersonBookTest {
         assertThrows(UnsupportedOperationException.class, () -> personBook.getPersonList().remove(0));
     }
 
+    @Test
+    public void hashCode_success() {
+        List<Person> personsList = personBook.getPersonList();
+        assertEquals(personsList.hashCode(), personBook.hashCode());
+    }
+
     /**
      * A stub ReadOnlyPersonBook whose persons list can violate interface constraints.
      */

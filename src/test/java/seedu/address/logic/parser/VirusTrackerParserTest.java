@@ -6,6 +6,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LIST;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_DATE;
@@ -27,6 +28,8 @@ import seedu.address.logic.commands.AddFromCsvCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.ExportToCsvCommand;
+import seedu.address.logic.commands.GenerateLocationsCommand;
+import seedu.address.logic.commands.GeneratePeopleCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.location.AddLocationCommand;
@@ -143,6 +146,20 @@ public class VirusTrackerParserTest {
         FindPersonCommand command = (FindPersonCommand) parser.parseCommand(
                 FindPersonCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindPersonCommand(new PersonNameContainsKeywordsPredicate(keywords)), command);
+    }
+
+    @Test
+    public void parseCommand_generateLocations() throws Exception {
+        String userInput = GenerateLocationsCommand.COMMAND_WORD + " 1";
+        GenerateLocationsCommand command = (GenerateLocationsCommand) parser.parseCommand(userInput);
+        assertEquals(new GenerateLocationsCommand(new IndexIdPair(INDEX_FIRST, null, PREFIX_PERSON_ID)), command);
+    }
+
+    @Test
+    public void parseCommand_generatePeople() throws Exception {
+        String userInput = GeneratePeopleCommand.COMMAND_WORD + " 1";
+        GeneratePeopleCommand command = (GeneratePeopleCommand) parser.parseCommand(userInput);
+        assertEquals(new GeneratePeopleCommand(new IndexIdPair(INDEX_FIRST, null, PREFIX_PERSON_ID)), command);
     }
 
     @Test

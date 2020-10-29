@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ID_AMY;
@@ -20,6 +21,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_QUARANTINE_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.model.InfoHandler.INVALID_PERCENTAGE_STRING;
+import static seedu.address.model.InfoHandler.INVALID_RATIO;
 import static seedu.address.model.InfoHandler.getIdHashSetFromPersonsList;
 import static seedu.address.model.InfoHandler.getLocationIdsFromInfectedVisitList;
 import static seedu.address.model.InfoHandler.getNumberOfHighRiskLocations;
@@ -41,6 +44,7 @@ import org.junit.jupiter.api.Test;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
@@ -150,6 +154,24 @@ public class InfoHandlerTest {
     }
 
     @Test
+    public void getRatioAsPercentage() {
+        // valid ratio -> returns 50%
+        double ratio = 0.5;
+        assertEquals("50.00%", infoHandler.getRatioAsPercentage(ratio));
+
+        // invalid ratio from dividing by zero -> returns error string
+        assertEquals(INVALID_PERCENTAGE_STRING, infoHandler.getRatioAsPercentage(INVALID_RATIO));
+
+        // invalid ratio, more than 1 -> returns error string
+        double invalidRatio = 1.5;
+        assertEquals(INVALID_PERCENTAGE_STRING, infoHandler.getRatioAsPercentage(invalidRatio));
+
+        // invalid ratio, negative number -> returns error string
+        invalidRatio = -1.5;
+        assertEquals(INVALID_PERCENTAGE_STRING, infoHandler.getRatioAsPercentage(invalidRatio));
+    }
+
+    @Test
     public void getIdHashSetFromPersonsList_success() {
         List<Person> typicalPersons = TypicalPersons.getTypicalPersons();
         HashSet<Id> expectedPersonsIds = TypicalPersons.getIdsOfTypicalPersonsAsHashSet();
@@ -250,6 +272,29 @@ public class InfoHandlerTest {
             + PREFIX_DATE + "2020-09-12" + "\n";
 
         assertEquals(expectedMessage, infoHandler.getVisitListAsString());
+    }
+
+    @Test
+    public void equals() {
+        // same object -> returns true
+        assertEquals(infoHandler, infoHandler);
+
+        // same values -> returns true
+        InfoHandler infoHandlerCopy = new InfoHandler(modelManager);
+        assertEquals(infoHandler, infoHandlerCopy);
+
+        // different model -> returns false
+        Model newModel = new ModelManager();
+        GuiSettings guiSettings = new GuiSettings(100, 200, 1, 0);
+        newModel.setGuiSettings(guiSettings);
+        InfoHandler infoHandlerDifferentModel = new InfoHandler(newModel);
+        assertNotEquals(infoHandler, infoHandlerDifferentModel);
+
+        // different types -> returns false
+        assertNotEquals(infoHandler, 1);
+
+        // null -> returns false
+        assertNotEquals(infoHandler, null);
     }
 
     /**

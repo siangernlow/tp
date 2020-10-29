@@ -23,7 +23,7 @@ public class GeneratePeopleCommand extends Command {
     public static final String COMMAND_WORD = "generatePeople";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all people which a person of the specified"
-            + "Id (case-insensitive) or index have been in contact with and displays them as a list of locations.\n"
+            + "Id (case-insensitive) or index have been in contact with and displays them as a list of people.\n"
             + "Parameters: PERSON_INDEX or "
             + PREFIX_PERSON_ID + "PERSON_ID\n"
             + "Example: " + COMMAND_WORD + " 1\n"
