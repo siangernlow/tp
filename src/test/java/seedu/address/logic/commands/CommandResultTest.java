@@ -56,4 +56,31 @@ public class CommandResultTest {
         assertNotEquals(commandResult.hashCode(), new CommandResult("feedback",
                 false, true, CommandResult.SWITCH_NONE).hashCode());
     }
+
+    @Test
+    public void isShowHelp() {
+        CommandResult showHelpCommandResult =
+                new CommandResult("feedback", true, false, CommandResult.SWITCH_NONE);
+        CommandResult noHelpCommandResult =
+                new CommandResult("feedback", false, false, CommandResult.SWITCH_NONE);
+        assertTrue(showHelpCommandResult.isShowHelp());
+        assertFalse(noHelpCommandResult.isShowHelp());
+    }
+
+    @Test
+    public void isExit() {
+        CommandResult exitCommandResult =
+                new CommandResult("feedback", false, true, CommandResult.SWITCH_NONE);
+        CommandResult noExitCommandResult =
+                new CommandResult("feedback", false, false, CommandResult.SWITCH_NONE);
+        assertTrue(exitCommandResult.isExit());
+        assertFalse(noExitCommandResult.isExit());
+    }
+
+    @Test
+    public void toString_success() {
+        String feedback = "feedback";
+        CommandResult commandResult = new CommandResult(feedback);
+        assertEquals(feedback, commandResult.toString());
+    }
 }

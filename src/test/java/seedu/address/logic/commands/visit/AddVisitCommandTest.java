@@ -2,11 +2,15 @@ package seedu.address.logic.commands.visit;
 
 import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_LOCATION_ID;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_LOCATION_INDEX;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_ID;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_INDEX;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showLocationAtIndex;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.address.logic.commands.visit.AddVisitCommand.MESSAGE_NO_WARNING;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FOURTH;
@@ -15,6 +19,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SIXTH;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD;
 import static seedu.address.testutil.TypicalLocations.FIONA_LOCATION;
 import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
+import static seedu.address.testutil.TypicalPersons.HEALTHY_PERSON;
 import static seedu.address.testutil.TypicalPersons.INFECTED_AND_QUARANTINED_PERSON;
 import static seedu.address.testutil.TypicalPersons.INFECTED_PERSON;
 import static seedu.address.testutil.TypicalPersons.QUARANTINED_PERSON;
@@ -31,10 +36,12 @@ import static seedu.address.testutil.VisitBuilder.DEFAULT_PERSON_INDEX;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.CommandResult;
@@ -73,7 +80,7 @@ public class AddVisitCommandTest {
     @Test
     public void execute_unfilteredListIndex_success() {
         ModelStubAcceptingVisitAdded modelStub =
-                new AddVisitCommandTest.ModelStubAcceptingVisitAdded();
+                new ModelStubAcceptingVisitAdded();
         Visit validVisit = new VisitBuilder().build();
 
         try {
@@ -82,7 +89,7 @@ public class AddVisitCommandTest {
 
             assertEquals(String.format(AddVisitCommand.MESSAGE_SUCCESS, validVisit),
                     commandResult.getFeedbackToUser());
-            assertEquals(Arrays.asList(validVisit), modelStub.visitsAdded);
+            assertEquals(Collections.singletonList(validVisit), modelStub.visitsAdded);
             assertEquals(commandResult.getSwitchState(), CommandResult.SWITCH_TO_VIEW_VISITS);
         } catch (CommandException e) {
             assert false : "Command Exception not expected.";
@@ -92,7 +99,7 @@ public class AddVisitCommandTest {
     @Test
     public void execute_unfilteredListId_success() {
         ModelStubAcceptingVisitAdded modelStub =
-                new AddVisitCommandTest.ModelStubAcceptingVisitAdded();
+                new ModelStubAcceptingVisitAdded();
         Visit validVisit = new VisitBuilder().build();
 
         try {
@@ -101,7 +108,7 @@ public class AddVisitCommandTest {
 
             assertEquals(String.format(AddVisitCommand.MESSAGE_SUCCESS, validVisit),
                     commandResult.getFeedbackToUser());
-            assertEquals(Arrays.asList(validVisit), modelStub.visitsAdded);
+            assertEquals(Collections.singletonList(validVisit), modelStub.visitsAdded);
             assertEquals(commandResult.getSwitchState(), CommandResult.SWITCH_TO_VIEW_VISITS);
         } catch (CommandException e) {
             assert false : "Command Exception not expected.";
@@ -133,23 +140,83 @@ public class AddVisitCommandTest {
     }
 
     @Test
+    public void execute_invalidPersonId_throwsCommandException() {
+        AddVisitCommand addvisitCommand = new AddVisitCommand(DEFAULT_PERSON_ID, DEFAULT_LOCATION_ID,
+                DEFAULT_DATE);
+        ModelStub modelStub = new ModelStubInvalidPersonId();
+
+        assertThrows(CommandException.class, MESSAGE_INVALID_PERSON_ID, () ->
+                addvisitCommand.execute(modelStub));
+    }
+
+    @Test
+    public void execute_invalidLocationId_throwsCommandException() {
+        AddVisitCommand addvisitCommand = new AddVisitCommand(DEFAULT_PERSON_ID, DEFAULT_LOCATION_ID,
+                DEFAULT_DATE);
+        ModelStub modelStub = new ModelStubInvalidLocationId();
+
+        assertThrows(CommandException.class, MESSAGE_INVALID_LOCATION_ID, () ->
+                addvisitCommand.execute(modelStub));
+    }
+
+    @Test
+    public void execute_invalidPersonIndex_throwsCommandException() {
+        AddVisitCommand addvisitCommand = new AddVisitCommand(DEFAULT_PERSON_INDEX, DEFAULT_LOCATION_INDEX,
+                DEFAULT_DATE);
+        ModelStub modelStub = new ModelStubInvalidPersonIndex();
+
+        assertThrows(CommandException.class, MESSAGE_INVALID_PERSON_INDEX, () ->
+                addvisitCommand.execute(modelStub));
+    }
+
+    @Test
+    public void execute_invalidLocationIndex_throwsCommandException() {
+        AddVisitCommand addvisitCommand = new AddVisitCommand(Index.fromOneBased(1), DEFAULT_LOCATION_INDEX,
+                DEFAULT_DATE);
+        ModelStub modelStub = new ModelStubInvalidLocationIndex();
+
+        assertThrows(CommandException.class, MESSAGE_INVALID_LOCATION_INDEX, () ->
+                addvisitCommand.execute(modelStub));
+    }
+
+    @Test
     public void execute_duplicateVisitIndex_throwsCommandException() {
         Visit validVisit = new VisitBuilder().build();
         AddVisitCommand addvisitCommand = new AddVisitCommand(DEFAULT_PERSON_INDEX, DEFAULT_LOCATION_INDEX,
                 DEFAULT_DATE);
-        ModelStub modelStub = new AddVisitCommandTest.ModelStubWithVisit(validVisit);
+        ModelStub modelStub = new ModelStubWithVisit(validVisit);
 
         assertThrows(CommandException.class, AddVisitCommand.MESSAGE_DUPLICATE_VISIT, () ->
                 addvisitCommand.execute(modelStub));
     }
 
     @Test
-    public void execute_infectedVisit_successWithWarning() {
+    public void execute_noInfectedOrQuarantinedVisit_success() {
         ModelStubAcceptingVisitAdded model =
-                new AddVisitCommandTest.ModelStubAcceptingVisitAdded();
+                new ModelStubAcceptingVisitAdded();
 
         ModelStubAcceptingVisitAdded expectedModel =
-                new AddVisitCommandTest.ModelStubAcceptingVisitAdded();
+                new ModelStubAcceptingVisitAdded();
+
+        Visit visit = new VisitBuilder().withPerson(HEALTHY_PERSON).build();
+        expectedModel.addVisit(visit);
+
+        AddVisitCommand actualCommand = new AddVisitCommand(INDEX_THIRD, INDEX_SECOND,
+                DEFAULT_DATE);
+
+        String expectedMessage = String.format(MESSAGE_NO_WARNING, visit);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
+                CommandResult.SWITCH_TO_VIEW_VISITS);
+        assertCommandSuccess(actualCommand, model, expectedCommandResult, expectedModel);
+    }
+
+    @Test
+    public void execute_infectedVisit_successWithWarning() {
+        ModelStubAcceptingVisitAdded model =
+                new ModelStubAcceptingVisitAdded();
+
+        ModelStubAcceptingVisitAdded expectedModel =
+                new ModelStubAcceptingVisitAdded();
         Visit visitWithInfected = new VisitBuilder().withPerson(INFECTED_PERSON).build();
         expectedModel.addVisit(visitWithInfected);
 
@@ -165,10 +232,10 @@ public class AddVisitCommandTest {
     @Test
     public void execute_quarantinedVisit_successWithWarning() {
         ModelStubAcceptingVisitAdded model =
-                new AddVisitCommandTest.ModelStubAcceptingVisitAdded();
+                new ModelStubAcceptingVisitAdded();
 
         ModelStubAcceptingVisitAdded expectedModel =
-                new AddVisitCommandTest.ModelStubAcceptingVisitAdded();
+                new ModelStubAcceptingVisitAdded();
         Visit visitWithQuarantined = new VisitBuilder().withPerson(QUARANTINED_PERSON).build();
         expectedModel.addVisit(visitWithQuarantined);
 
@@ -184,10 +251,10 @@ public class AddVisitCommandTest {
     @Test
     public void execute_infectedAndQuarantinedVisit_successWithWarning() {
         ModelStubAcceptingVisitAdded model =
-                new AddVisitCommandTest.ModelStubAcceptingVisitAdded();
+                new ModelStubAcceptingVisitAdded();
 
         ModelStubAcceptingVisitAdded expectedModel =
-                new AddVisitCommandTest.ModelStubAcceptingVisitAdded();
+                new ModelStubAcceptingVisitAdded();
         Visit visitWithInfectedAndQuarantined = new VisitBuilder().withPerson(INFECTED_AND_QUARANTINED_PERSON)
                 .withLocation(FIONA_LOCATION).build();
         expectedModel.addVisit(visitWithInfectedAndQuarantined);
@@ -208,15 +275,15 @@ public class AddVisitCommandTest {
     @Test
     public void execute_infectedAndQuarantinedButStayedHome_successNoWarning() {
         ModelStubAcceptingVisitAdded model =
-                new AddVisitCommandTest.ModelStubAcceptingVisitAdded();
+                new ModelStubAcceptingVisitAdded();
 
         ModelStubAcceptingVisitAdded expectedModel =
-                new AddVisitCommandTest.ModelStubAcceptingVisitAdded();
+                new ModelStubAcceptingVisitAdded();
         Visit visitWithInfectedAndQuarantined = new VisitBuilder().withPerson(INFECTED_AND_QUARANTINED_PERSON).build();
         expectedModel.addVisit(visitWithInfectedAndQuarantined);
 
         AddVisitCommand actualCommand = new AddVisitCommand(INDEX_SECOND, DEFAULT_LOCATION_INDEX, DEFAULT_DATE);
-        String expectedMessage = String.format(AddVisitCommand.MESSAGE_NO_WARNING,
+        String expectedMessage = String.format(MESSAGE_NO_WARNING,
                 visitWithInfectedAndQuarantined);
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
                 CommandResult.SWITCH_TO_VIEW_VISITS);
@@ -237,26 +304,26 @@ public class AddVisitCommandTest {
         AddVisitCommand addSampleBCommand = new AddVisitCommand(personBIndex, locationBIndex, dateB);
 
         // same object -> returns true
-        assertTrue(addSampleACommand.equals(addSampleACommand));
+        assertEquals(addSampleACommand, addSampleACommand);
 
         // same values -> returns true
         AddVisitCommand addSampleACommandCopy = new AddVisitCommand(personBIndex, locationBIndex, dateB);
-        assertTrue(addSampleBCommand.equals(addSampleACommandCopy));
+        assertEquals(addSampleACommandCopy, addSampleBCommand);
 
         // different types -> returns false
-        assertFalse(addSampleBCommand.equals(1));
+        assertNotEquals(addSampleBCommand, 1);
 
         // null -> returns false
-        assertFalse(addSampleACommand.equals(null));
+        assertNotEquals(addSampleACommand, null);
 
         // different location -> returns false
-        assertFalse(addSampleACommand.equals(addSampleBCommand));
+        assertNotEquals(addSampleBCommand, addSampleACommand);
     }
 
     /**
      * A Model stub that contains a single visit.
      */
-    private class ModelStubWithVisit extends ModelStub {
+    private static class ModelStubWithVisit extends ModelStub {
         private final Visit visit;
 
         ModelStubWithVisit(Visit visit) {
@@ -273,6 +340,7 @@ public class AddVisitCommandTest {
             } else if (index.equals(INDEX_FIRST)) {
                 return QUARANTINED_PERSON;
             }
+
             return DEFAULT_PERSON;
         }
 
@@ -302,7 +370,7 @@ public class AddVisitCommandTest {
     /**
      * A Model stub that always accept the visit being added.
      */
-    private class ModelStubAcceptingVisitAdded extends ModelStub {
+    private static class ModelStubAcceptingVisitAdded extends ModelStub {
         final ArrayList<Visit> visitsAdded = new ArrayList<>();
 
         @Override
@@ -335,6 +403,8 @@ public class AddVisitCommandTest {
                 return INFECTED_PERSON;
             } else if (index.equals(INDEX_FIRST)) {
                 return QUARANTINED_PERSON;
+            } else if (index.equals(INDEX_THIRD)) {
+                return HEALTHY_PERSON;
             }
             return DEFAULT_PERSON;
         }
@@ -384,4 +454,62 @@ public class AddVisitCommandTest {
         }
     }
 
+    /**
+     * A Model stub that returns false for every person ID.
+     */
+    private static class ModelStubInvalidPersonId extends ModelStub {
+        @Override
+        public boolean hasPersonId(Id id) {
+            return false;
+        }
+    }
+
+    /**
+     * A Model stub that returns false for every location ID.
+     */
+    private static class ModelStubInvalidLocationId extends ModelStub {
+
+        @Override
+        public boolean hasPersonId(Id id) {
+            // returns true so that execution moves to location id checking
+            return true;
+        }
+
+        @Override
+        public Person getPersonById(Id id) {
+            return DEFAULT_PERSON;
+        }
+
+        @Override
+        public boolean hasLocationId(Id id) {
+            return false;
+        }
+    }
+
+    /**
+     * A Model stub that returns false for every person index.
+     */
+    private static class ModelStubInvalidPersonIndex extends ModelStub {
+        @Override
+        public ObservableList<Person> getSortedPersonList() {
+            return FXCollections.observableList(new ArrayList<>());
+        }
+    }
+
+    /**
+     * A Model stub that returns false for every location ID.
+     */
+    private static class ModelStubInvalidLocationIndex extends ModelStub {
+        @Override
+        public ObservableList<Person> getSortedPersonList() {
+            List<Person> personList = new ArrayList<>();
+            personList.add(DEFAULT_PERSON);
+            return FXCollections.observableList(personList);
+        }
+
+        @Override
+        public ObservableList<Location> getSortedLocationList() {
+            return FXCollections.observableList(new ArrayList<>());
+        }
+    }
 }

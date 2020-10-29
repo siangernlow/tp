@@ -19,6 +19,7 @@ import static seedu.address.testutil.TypicalVisits.getNonUniquePersonsVisitBook;
 import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
 
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -152,5 +153,11 @@ public class VisitBookTest {
     @Test
     public void getVisitList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> visitBook.getVisitList().remove(0));
+    }
+
+    @Test
+    public void hashCode_success() {
+        List<Visit> visitsList = visitBook.getVisitList();
+        assertEquals(visitsList.hashCode(), visitBook.hashCode());
     }
 }

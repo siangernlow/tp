@@ -71,7 +71,7 @@ public class JsonLocationBookStorageTest {
         ReadOnlyLocationBook readBack = jsonLocationBookStorage.readLocationBook(filePath).get();
         assertEquals(original, new LocationBook(readBack));
 
-        // Modify data, overwrite exiting file, and read back
+        // Modify data, overwrite existing file, and read back
         original.addLocation(HOON_LOCATION);
         original.removeLocation(ALICE_LOCATION);
         jsonLocationBookStorage.saveLocationBook(original, filePath);

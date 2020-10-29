@@ -83,6 +83,7 @@ public class TypicalPersons {
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
     // Persons with specific properties
+    public static final Person HEALTHY_PERSON = CARL;
     public static final Person INFECTED_PERSON = DANIEL;
     public static final Person QUARANTINED_PERSON = ALICE;
     public static final Person INFECTED_AND_QUARANTINED_PERSON = BENSON;

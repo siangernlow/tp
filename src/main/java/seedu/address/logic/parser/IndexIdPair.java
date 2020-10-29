@@ -131,4 +131,23 @@ public class IndexIdPair extends ReadOnlyIndexIdPair {
             return model.getLocationById(idOpt.get());
         }
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (!super.equals(other)) {
+            return false;
+        }
+
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof IndexIdPair)) {
+            return false;
+        }
+
+        IndexIdPair o = (IndexIdPair) other;
+        return prefix.equals(o.prefix);
+    }
 }

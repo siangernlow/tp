@@ -78,6 +78,12 @@ public class LocationBookTest {
         assertThrows(UnsupportedOperationException.class, () -> locationBook.getLocationList().remove(0));
     }
 
+    @Test
+    public void hashCode_success() {
+        List<Location> locationsList = locationBook.getLocationList();
+        assertEquals(locationsList.hashCode(), locationBook.hashCode());
+    }
+
     /**
      * A stub ReadOnlyLocationBook whose locations list can violate interface constraints.
      */

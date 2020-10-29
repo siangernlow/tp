@@ -1,10 +1,8 @@
-package seedu.address.model.tag;
+package seedu.address.model.attribute;
 
 import static seedu.address.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
-
-import seedu.address.model.attribute.Tag;
 
 public class TagTest {
 

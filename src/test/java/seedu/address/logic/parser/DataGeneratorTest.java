@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_FILE_PATH;
 import static seedu.address.commons.core.Messages.MESSAGE_MISSING_DATA_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_PREAMBLE_SHOULD_BE_EMPTY;
 import static seedu.address.logic.parser.ArgumentTokenizer.arePrefixesPresent;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
@@ -38,18 +39,24 @@ public class DataGeneratorTest {
             TEST_DATA_FOLDER.resolve("PersonsListInvalidPhoneSecondRow.csv").toString();
     private static final String PERSONS_LIST_MISSING_ADDRESS_FIRST_ROW =
             TEST_DATA_FOLDER.resolve("PersonsListMissingNameFirstRow.csv").toString();
+    private static final String PERSONS_LIST_WITH_PREAMBLE =
+            TEST_DATA_FOLDER.resolve("PersonsListWithPreamble.csv").toString();
 
     private static final String VALID_LOCATIONS_CSV_FILE = TEST_DATA_FOLDER.resolve("LocationsList.csv").toString();
     private static final String LOCATIONS_LIST_INVALID_NAME_SECOND_ROW =
             TEST_DATA_FOLDER.resolve("LocationsListInvalidNameSecondRow.csv").toString();
     private static final String LOCATIONS_LIST_MISSING_ADDRESS_SECOND_ROW =
             TEST_DATA_FOLDER.resolve("LocationsListMissingAddressSecondRow.csv").toString();
+    private static final String LOCATIONS_LIST_WITH_PREAMBLE =
+            TEST_DATA_FOLDER.resolve("LocationsListWithPreamble.csv").toString();
 
     private static final String VALID_VISITS_CSV_FILE = TEST_DATA_FOLDER.resolve("VisitsList.csv").toString();
     private static final String VISITS_LIST_INVALID_DATE_SECOND_ROW =
             TEST_DATA_FOLDER.resolve("VisitsListInvalidDateSecondRow.csv").toString();
     private static final String VISITS_LIST_MISSING_DATE_FIRST_ROW =
             TEST_DATA_FOLDER.resolve("VisitsListMissingDateFirstRow.csv").toString();
+    private static final String VISITS_LIST_WITH_PREAMBLE =
+            TEST_DATA_FOLDER.resolve("VisitsListWithPreamble.csv").toString();
 
     private static final String TOKENIZABLE_STRING = "n/Name,a/Address,e/Email@email.com,d/2020-09-09";
     private static final String TOKENIZABLE_STRING_AS_PREAMBLE = "n/Name, a/Address, e/Email@email.com, d/2020-09-09";
@@ -112,6 +119,12 @@ public class DataGeneratorTest {
             -> DataGenerator.generatePersonsList(PERSONS_LIST_MISSING_ADDRESS_FIRST_ROW));
     }
 
+    @Test
+    public void generatePersonsList_preamblePresent_throwsParseException() {
+        assertThrows(ParseException.class, MESSAGE_PREAMBLE_SHOULD_BE_EMPTY, ()
+            -> DataGenerator.generatePersonsList(PERSONS_LIST_WITH_PREAMBLE));
+    }
+
     // ============ Generating Locations Tests ======================================
     @Test
     public void generateLocationsList_validFilePath_success() throws Exception {
@@ -151,6 +164,12 @@ public class DataGeneratorTest {
             -> DataGenerator.generateLocationsList(LOCATIONS_LIST_MISSING_ADDRESS_SECOND_ROW));
     }
 
+    @Test
+    public void generateLocationsList_preamblePresent_throwsParseException() {
+        assertThrows(ParseException.class, MESSAGE_PREAMBLE_SHOULD_BE_EMPTY, ()
+            -> DataGenerator.generateLocationsList(LOCATIONS_LIST_WITH_PREAMBLE));
+    }
+
     // ============ Generating Visits Tests ======================================
     @Test
     public void generateVisitsList_validFilePath_success() throws Exception {
@@ -187,6 +206,12 @@ public class DataGeneratorTest {
         String expectedErrorMessage = String.format(MESSAGE_MISSING_DATA_FORMAT, 1);
         assertThrows(ParseException.class, expectedErrorMessage, ()
             -> DataGenerator.generateVisitsList(VISITS_LIST_MISSING_DATE_FIRST_ROW));
+    }
+
+    @Test
+    public void generateVisitsList_preamblePresent_throwsParseException() {
+        assertThrows(ParseException.class, MESSAGE_PREAMBLE_SHOULD_BE_EMPTY, ()
+            -> DataGenerator.generateVisitsList(VISITS_LIST_WITH_PREAMBLE));
     }
 
     // ================== Utility methods =======================================
