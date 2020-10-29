@@ -1,7 +1,9 @@
 package seedu.address;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.HashMap;
@@ -35,6 +37,37 @@ public class AppParametersTest {
         parametersStub.namedParameters.put("config", "a\0");
         expected.setConfigPath(null);
         assertEquals(expected, AppParameters.parse(parametersStub));
+    }
+
+    @Test
+    public void equals() {
+        AppParameters appParameters = new AppParameters();
+
+        // same object -> returns true
+        assertEquals(appParameters, appParameters);
+
+        //  same values -> returns true
+        AppParameters appParametersCopy = new AppParameters();
+        assertEquals(appParameters, appParametersCopy);
+
+        // different config path -> returns false
+        AppParameters appParametersDifferentPath = new AppParameters();
+        appParametersDifferentPath.setConfigPath(Path.of("differentPath"));
+        assertNotEquals(appParameters, appParametersDifferentPath);
+
+        // different types -> returns false
+        assertNotEquals(appParameters, 1);
+
+        // null -> returns false
+        assertNotEquals(appParameters, null);
+    }
+
+    @Test
+    public void hashCode_success() {
+        Path configPath = Paths.get("config.json");
+        expected.setConfigPath(Paths.get("config.json"));
+
+        assertEquals(configPath.hashCode(), expected.hashCode());
     }
 
     private static class ParametersStub extends Application.Parameters {
