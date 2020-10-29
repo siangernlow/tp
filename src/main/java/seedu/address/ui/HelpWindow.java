@@ -7,8 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
 
@@ -39,10 +37,7 @@ public class HelpWindow extends UiPart<Stage> {
      */
     public HelpWindow(Stage root) {
         super(FXML, root);
-        Font font = Font.font(Font.getFontNames().get(0),
-                FontWeight.BOLD, 15);
         helpMessage.setText(HELP_MESSAGE);
-        helpMessage.setFont(font);
     }
 
     /**
