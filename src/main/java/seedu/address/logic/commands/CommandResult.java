@@ -80,4 +80,9 @@ public class CommandResult {
     public String getSwitchState() {
         return switchState;
     }
+
+    @Override
+    public String toString() {
+        return feedbackToUser;
+    }
 }

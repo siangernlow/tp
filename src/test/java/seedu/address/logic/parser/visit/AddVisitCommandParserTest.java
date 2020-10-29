@@ -1,6 +1,7 @@
 package seedu.address.logic.parser.visit;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_DATE_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -63,5 +64,33 @@ public class AddVisitCommandParserTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddVisitCommand.MESSAGE_USAGE));
 
         //To be further implemented
+    }
+
+    @Test
+    public void parse_invalidId_throwsParseFailure() {
+        String userInput = PREAMBLE_WHITESPACE + " idp/ idl/2 d/2020-08-09";
+        assertParseFailure(parser, userInput,
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddVisitCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_invalidDateWithId_throwsParseFailure() {
+        String userInput = PREAMBLE_WHITESPACE + " idp/3 idl/2 d/not a date";
+        assertParseFailure(parser, userInput,
+                String.format(MESSAGE_INVALID_DATE_FORMAT, AddVisitCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_invalidIndex_throwsParseFailure() {
+        String userInput = "A B  d/2020-08-09";
+        assertParseFailure(parser, userInput,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddVisitCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_invalidDateWithIndex_throwsParseFailure() {
+        String userInput = "1 2 d/invalid date";
+        assertParseFailure(parser, userInput,
+                String.format(MESSAGE_INVALID_DATE_FORMAT, AddVisitCommand.MESSAGE_USAGE));
     }
 }

@@ -38,12 +38,14 @@ import seedu.address.model.visit.VisitBook;
  * The original data should not be modified in this class.
  */
 public class InfoHandler {
-    private static final double HUNDRED_IN_DOUBLE = 100.0;
     // Used as a flag to detect invalid ratios, such as dividing by zero.
-    private static final double INVALID_RATIO = -1.0;
+    public static final double INVALID_RATIO = -1.0;
+    public static final String INVALID_PERCENTAGE_STRING = "-";
+
+    private static final double HUNDRED_IN_DOUBLE = 100.0;
     private static final String COUNT_FORMAT = "%d";
     private static final String PERCENTAGE_FORMAT = "%.2f";
-    private static final String INVALID_PERCENTAGE_STRING = "-%%";
+
     // Headers for summary display
     private static final String TOTAL_PEOPLE_HEADER = "Total number of people:";
     private static final String TOTAL_LOCATIONS_HEADER = "Total number of locations:";
@@ -172,7 +174,7 @@ public class InfoHandler {
      * @return
      */
     public String getRatioAsPercentage(double ratio) {
-        if (ratio == INVALID_RATIO) {
+        if (ratio == INVALID_RATIO || ratio > 1 || ratio < 0) {
             return INVALID_PERCENTAGE_STRING;
         }
         double percentage = HUNDRED_IN_DOUBLE * ratio;
@@ -238,12 +240,6 @@ public class InfoHandler {
     public List<Id> generatePersonIdsByVisitBook(VisitBook visitBook, Id personId) {
         List<Id> personIds = new ArrayList<>();
         for (Visit visit : visitBook.getVisitList()) {
-
-            if (visit.getPerson().getId().equals(personId)) {
-                continue;
-            }
-            personIds.add(visit.getPerson().getId());
-
             if (visit.getPerson().getId().equals(personId)) {
                 continue;
             }

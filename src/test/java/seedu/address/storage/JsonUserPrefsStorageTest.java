@@ -120,4 +120,10 @@ public class JsonUserPrefsStorageTest {
         assertEquals(original, readBack);
     }
 
+    @Test
+    public void getUserPrefsFilePath() {
+        JsonUserPrefsStorage jsonUserPrefsStorage = new JsonUserPrefsStorage(TEST_DATA_FOLDER);
+        assertEquals(TEST_DATA_FOLDER, jsonUserPrefsStorage.getUserPrefsFilePath());
+    }
+
 }

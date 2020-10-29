@@ -1,5 +1,6 @@
 package seedu.address.model.location;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
@@ -7,6 +8,9 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ID_BOB_LOCATION
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.testutil.TypicalLocations.ALICE_LOCATION;
 import static seedu.address.testutil.TypicalLocations.BOB_LOCATION;
+import static seedu.address.testutil.VisitBuilder.DEFAULT_LOCATION;
+
+import java.util.Objects;
 
 import org.junit.jupiter.api.Test;
 
@@ -78,5 +82,17 @@ public class LocationTest {
         // different id -> returns false
         editedAlice = new LocationBuilder(ALICE_LOCATION).withId(VALID_ID_BOB_LOCATION).build();
         assertFalse(ALICE_LOCATION.equals(editedAlice));
+    }
+
+    @Test
+    public void hashCode_success() {
+        Location location = DEFAULT_LOCATION;
+        int hashCode = Objects.hash(
+            location.getId(),
+            location.getName(),
+            location.getAddress()
+        );
+
+        assertEquals(hashCode, location.hashCode());
     }
 }

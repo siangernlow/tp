@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
@@ -13,6 +14,9 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
+import static seedu.address.testutil.VisitBuilder.DEFAULT_PERSON;
+
+import java.util.Objects;
 
 import org.junit.jupiter.api.Test;
 
@@ -145,5 +149,21 @@ public class PersonTest {
         // different infection status -> returns false
         editedAlice = new PersonBuilder(ALICE).withInfectionStatus(VALID_INFECTION_STATUS_BOB).build();
         assertFalse(ALICE.equals(editedAlice));
+    }
+
+    @Test
+    public void hashCode_success() {
+        Person person = DEFAULT_PERSON;
+        int hashCode = Objects.hash(
+            person.getId(),
+            person.getName(),
+            person.getPhone(),
+            person.getEmail(),
+            person.getAddress(),
+            person.getQuarantineStatus(),
+            person.getInfectionStatus(),
+            person.getTags()
+        );
+        assertEquals(hashCode, person.hashCode());
     }
 }

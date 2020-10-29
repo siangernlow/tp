@@ -1,12 +1,11 @@
-package seedu.address.model.person;
+package seedu.address.model.attribute;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
-
-import seedu.address.model.attribute.InfectionStatus;
 
 public class InfectionStatusTest {
 
@@ -33,6 +32,12 @@ public class InfectionStatusTest {
         assertTrue(InfectionStatus.isValidInfectionStatus("true"));
         assertTrue(InfectionStatus.isValidInfectionStatus("FALSE")); // Upper case
         assertTrue(InfectionStatus.isValidInfectionStatus("fAlsE")); // Mixed case
+    }
+
+    @Test
+    public void hashCode_success() {
+        InfectionStatus infectionStatus = new InfectionStatus("true");
+        assertEquals(Boolean.valueOf(true).hashCode(), infectionStatus.hashCode());
     }
 }
 

@@ -50,6 +50,18 @@ public class AddLocationCommandTest {
     }
 
     @Test
+    public void execute_duplicateLocationId_throwsCommandException() {
+        Location validLocation = new LocationBuilder().build();
+        AddLocationCommand addLocationCommand = new AddLocationCommand(validLocation);
+        Location validLocationSameId =
+                new LocationBuilder().withId(LocationBuilder.DEFAULT_ID).withName("another name").build();
+        ModelStub modelStub = new AddLocationCommandTest.ModelStubWithLocation(validLocationSameId);
+
+        assertThrows(CommandException.class, AddLocationCommand.MESSAGE_DUPLICATE_LOCATION_ID, () ->
+                addLocationCommand.execute(modelStub));
+    }
+
+    @Test
     public void equals() {
         Location alice = new LocationBuilder().withName("Alice").build();
         Location bob = new LocationBuilder().withName("Bob").build();
@@ -88,6 +100,12 @@ public class AddLocationCommandTest {
         public boolean hasLocation(Location location) {
             requireNonNull(location);
             return this.location.isSameLocation(location);
+        }
+
+        @Override
+        public boolean hasLocationId(Id id) {
+            requireNonNull(id);
+            return location.getId().equals(id);
         }
     }
 

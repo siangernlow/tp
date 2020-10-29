@@ -1,12 +1,11 @@
-package seedu.address.model.person;
+package seedu.address.model.attribute;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
-
-import seedu.address.model.attribute.Name;
 
 public class NameTest {
 
@@ -38,5 +37,11 @@ public class NameTest {
         assertTrue(Name.isValidName("peter the 2nd")); // alphanumeric characters
         assertTrue(Name.isValidName("Capital Tan")); // with capital letters
         assertTrue(Name.isValidName("David Roger Jackson Ray Jr 2nd")); // long names
+    }
+
+    @Test
+    public void hashCode_success() {
+        Name name = new Name("Bob Max");
+        assertEquals("Bob Max".hashCode(), name.hashCode());
     }
 }

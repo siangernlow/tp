@@ -63,7 +63,7 @@ public class Visit {
      * Returns true if the date of the visit corresponds to the entered date
      */
     public boolean isSameDate(LocalDate date) {
-        return date == this.date;
+        return this.date.equals(date);
     }
 
     /**

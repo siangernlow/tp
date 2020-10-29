@@ -4,19 +4,31 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.address.logic.commands.ListCommand.INVALID_LIST_TYPE;
+import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
 
+import java.util.ArrayList;
+import java.util.function.Predicate;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.ListType;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ModelPredicate;
+import seedu.address.model.ModelStub;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.location.Location;
+import seedu.address.model.person.Person;
+import seedu.address.model.visit.Visit;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
@@ -43,8 +55,8 @@ public class ListCommandTest {
 
     @Test
     public void execute_personsListIsNotFiltered_showsSameList() {
-        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_PEOPLE, false, false,
-                CommandResult.SWITCH_TO_VIEW_PEOPLE);
+        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_PEOPLE,
+                false, false, CommandResult.SWITCH_TO_VIEW_PEOPLE);
         assertCommandSuccess(new ListCommand(PEOPLE_LIST),
                 model, expectedCommandResult, expectedModel);
     }
@@ -52,32 +64,34 @@ public class ListCommandTest {
     @Test
     public void execute_personsListIsFiltered_showsEverything() {
         showPersonAtIndex(model, INDEX_FIRST);
-        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_PEOPLE, false, false,
-                CommandResult.SWITCH_TO_VIEW_PEOPLE);
+        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_PEOPLE,
+                false, false, CommandResult.SWITCH_TO_VIEW_PEOPLE);
         assertCommandSuccess(new ListCommand(PEOPLE_LIST),
                 model, expectedCommandResult, expectedModel);
     }
 
     @Test
     public void execute_locationsList_showsSameList() {
-        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_LOCATIONS, false, false,
-                CommandResult.SWITCH_TO_VIEW_LOCATIONS);
+        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_LOCATIONS,
+                false, false, CommandResult.SWITCH_TO_VIEW_LOCATIONS);
         assertCommandSuccess(new ListCommand(LOCATIONS_LIST),
                 model, expectedCommandResult, expectedModel);
     }
 
     @Test
     public void execute_visitsList_showsSameList() {
-        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_VISITS, false, false,
-                CommandResult.SWITCH_TO_VIEW_VISITS);
+        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_VISITS,
+                false, false, CommandResult.SWITCH_TO_VIEW_VISITS);
+        assertCommandSuccess(new ListCommand(VISITS_LIST),
+                model, expectedCommandResult, expectedModel);
     }
 
     @Test
     public void execute_infectedList_showsSameList() {
         Model expectedModelInfected = expectedModel;
         expectedModelInfected.updateFilteredPersonList(ModelPredicate.PREDICATE_SHOW_ALL_INFECTED);
-        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_INFECTED, false, false,
-                CommandResult.SWITCH_TO_VIEW_PEOPLE);
+        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_INFECTED,
+                false, false, CommandResult.SWITCH_TO_VIEW_PEOPLE);
         assertCommandSuccess(new ListCommand(INFECTED_LIST),
                 model, expectedCommandResult, expectedModelInfected);
     }
@@ -94,17 +108,18 @@ public class ListCommandTest {
 
     @Test
     public void execute_statistics_showsSameList() {
-        //changed due to merge conflict
         String expectedMessage = ListCommand.MESSAGE_SUCCESS_STATISTICS + "\n"
-                + "Total number of people: 7" + "\n"
-                + "Total number of locations: 7" + "\n"
-                + "Total number of visits: 8" + "\n"
-                + "Total number of infected people: 5" + "\n"
-                + "Total number of quarantined people: 2" + "\n"
-                + "Percentage of people infected: 71.43%" + "\n"
-                + "Percentage of people quarantined: 28.57%" + "\n";
-        // assertCommandSuccess(new ListCommand(STATISTICS_LIST),
-        //       model, expectedMessage, expectedModel);
+            + "Total number of people: 0\n"
+            + "Total number of locations: 0\n"
+            + "Total number of visits: 0\n"
+            + "Total number of infected people: 0\n"
+            + "Total number of quarantined people: 0\n"
+            + "Percentage of people infected: -\n"
+            + "Percentage of people quarantined: -\n";
+
+        model = new ModelStubWithLists();
+        assertCommandSuccess(new ListCommand(STATISTICS_LIST),
+                model, expectedMessage, model);
     }
 
     @Test
@@ -116,6 +131,14 @@ public class ListCommandTest {
                 false, false, CommandResult.SWITCH_TO_VIEW_LOCATIONS);
         assertCommandSuccess(new ListCommand(HIGH_RISK_LOCATIONS_LIST),
                 model, expectedCommandResult, expectedModelHighRiskLocations);
+    }
+
+    @Test
+    public void execute_invalidListType_throwsCommandException() {
+        ListCommand command = new ListCommand(ListType.INVALID);
+        Model model = new ModelStub();
+        assertThrows(CommandException.class, String.format(INVALID_LIST_TYPE), ()
+            -> command.execute(model));
     }
 
     @Test
@@ -138,5 +161,30 @@ public class ListCommandTest {
 
         // null -> returns false
         assertFalse(listPersonsCommand.equals(null));
+    }
+
+
+    private static class ModelStubWithLists extends ModelStub {
+        private ObservableList<Person> personList = FXCollections.observableList(new ArrayList<>());
+        private ObservableList<Location> locationList = FXCollections.observableList(new ArrayList<>());
+        private ObservableList<Visit> visitList = FXCollections.observableList(new ArrayList<>());
+
+        @Override
+        public ObservableList<Person> getSortedPersonList() {
+            return personList;
+        }
+
+        @Override
+        public ObservableList<Location> getSortedLocationList() {
+            return locationList;
+        }
+
+        @Override
+        public ObservableList<Visit> getSortedVisitList() {
+            return visitList;
+        }
+
+        @Override
+        public void updateFilteredPersonList(Predicate<? super Person> predicate) {}
     }
 }
