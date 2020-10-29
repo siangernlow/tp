@@ -560,13 +560,13 @@ Examples:
 * `generatePeople 1`
 * `generatePeople idp/S123`
 
-### Clearing all entries : `clear`
+### Clearing all entries : 
 
 Clears all entries from VirusTracker.
 
 Format: `clear`
 
-### Viewing help : `help`
+### Viewing help :
 
 Shows a message explaining how to access the help page.
 
@@ -575,7 +575,7 @@ Shows a message explaining how to access the help page.
 Format: `help`
 
 
-### Exiting the program : `exit`
+### Exiting the program :
 
 Exits the program.
 
