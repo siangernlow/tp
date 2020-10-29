@@ -113,7 +113,7 @@ public interface Model {
     void updateFilteredPersonList(Predicate<? super Person> predicate);
 
     /**
-     * Returns the current {@code Predicate} of the person filtered list
+     * Returns the current {@code Predicate} of the filtered person list
      */
     Optional<Predicate<? super Person>> getPersonPredicate();
 
@@ -186,7 +186,12 @@ public interface Model {
      * Updates the filter of the filtered location list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredLocationList(Predicate<Location> predicate);
+    void updateFilteredLocationList(Predicate<? super Location> predicate);
+
+    /**
+     * Returns the current {@code Predicate} of the filtered location list
+     */
+    Optional<Predicate<? super Location>> getLocationPredicate();
 
     //=========== Visit Book ========================================================================================
 
@@ -261,7 +266,7 @@ public interface Model {
     void updateFilteredVisitList(Predicate<? super Visit> predicate);
 
     /**
-     * Returns the current {@code Predicate} of the visit filtered list
+     * Returns the current {@code Predicate} of the filtered visit list
      */
     Optional<Predicate<? super Visit>> getVisitPredicate();
 }

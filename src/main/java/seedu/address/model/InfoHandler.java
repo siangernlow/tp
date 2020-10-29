@@ -13,8 +13,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_QUARANTINE_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_INFECTED;
+import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_LOCATIONS;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_QUARANTINED;
+import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_VISITS;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +25,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -96,15 +99,30 @@ public class InfoHandler {
     //=========== Get total counts ==================================================================
 
     public int getTotalPeople() {
-        return getPersonList().size();
+        Optional<Predicate<? super Person>> lastUsedPersonPredicate = model.getPersonPredicate();
+        updateModelPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        int totalPeople = getPersonList().size();
+        model.updateFilteredPersonList(lastUsedPersonPredicate.orElse(PREDICATE_SHOW_ALL_PERSONS));
+
+        return totalPeople;
     }
 
     public int getTotalLocations() {
-        return getLocationList().size();
+        Optional<Predicate<? super Location>> lastUsedLocationPredicate = model.getLocationPredicate();
+        model.updateFilteredLocationList(PREDICATE_SHOW_ALL_LOCATIONS);
+        int totalLocations = getLocationList().size();
+        model.updateFilteredLocationList(lastUsedLocationPredicate.orElse(PREDICATE_SHOW_ALL_LOCATIONS));
+
+        return totalLocations;
     }
 
     public int getTotalVisits() {
-        return getVisitList().size();
+        Optional<Predicate<? super Visit>> lastUsedVisitPredicate = model.getVisitPredicate();
+        model.updateFilteredVisitList(PREDICATE_SHOW_ALL_VISITS);
+        int totalVisits = getVisitList().size();
+        model.updateFilteredVisitList(lastUsedVisitPredicate.orElse(PREDICATE_SHOW_ALL_VISITS));
+
+        return totalVisits;
     }
 
     /**
@@ -113,9 +131,10 @@ public class InfoHandler {
      * @return the number of people infected currently
      */
     public int getTotalInfected() {
+        Optional<Predicate<? super Person>> lastUsedPersonPredicate = model.getPersonPredicate();
         updateModelPersonList(PREDICATE_SHOW_ALL_INFECTED);
         int totalInfected = getPersonList().size();
-        updateModelPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredPersonList(lastUsedPersonPredicate.orElse(PREDICATE_SHOW_ALL_PERSONS));
 
         return totalInfected;
     }
@@ -126,9 +145,10 @@ public class InfoHandler {
      * @return the number of people quarantined currently.
      */
     public int getTotalQuarantined() {
+        Optional<Predicate<? super Person>> lastUsedPersonPredicate = model.getPersonPredicate();
         updateModelPersonList(PREDICATE_SHOW_ALL_QUARANTINED);
         int totalQuarantined = getPersonList().size();
-        updateModelPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredPersonList(lastUsedPersonPredicate.orElse(PREDICATE_SHOW_ALL_PERSONS));
 
         return totalQuarantined;
     }
@@ -170,8 +190,8 @@ public class InfoHandler {
     /**
      * Converts the given ratio into a percentage String.
      * Returns {@code INVALID_PERCENTAGE} if given ratio is -1.0
-     * @param ratio
-     * @return
+     * @param ratio given ratio
+     * @return percentage representation of ratio
      */
     public String getRatioAsPercentage(double ratio) {
         if (ratio == INVALID_RATIO || ratio > 1 || ratio < 0) {

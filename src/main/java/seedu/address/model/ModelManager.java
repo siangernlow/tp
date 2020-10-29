@@ -259,9 +259,14 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void updateFilteredLocationList(Predicate<Location> predicate) {
+    public void updateFilteredLocationList(Predicate<? super Location> predicate) {
         requireNonNull(predicate);
         filteredLocations.setPredicate(predicate);
+    }
+
+    @Override
+    public Optional<Predicate<? super Location>> getLocationPredicate() {
+        return Optional.ofNullable(filteredLocations.getPredicate());
     }
 
     //=========== Visit Book ======================================================================================
