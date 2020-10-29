@@ -157,7 +157,7 @@ For example, you may want to delete a location or add a visit involving a specif
 In such cases, VirusTracker provides two methods for you to use when referring to a specific person or location, either index or id.
 This guide collectively refers to indexes and ids as identifiers.
 In the figure below showing a person panel, there is a number beside the person's name and there is a person id.<br>
- ![personPanel](images/personPanel.png)
+ ![personPanel](images/personPanel.PNG)
 
 You may use either the index number (which corresponds to the position of the person within the persons list) or the id to refer to a person. 
 The same applies for locations.
