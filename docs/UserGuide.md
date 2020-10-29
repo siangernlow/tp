@@ -37,18 +37,27 @@ VirusTracker would be able to generate useful information based off the data tha
 Here are a few notations which may be used in this User Guide. Each notation represents a different meaning to help you understand the guide better.
 
 <div markdown="block" class="alert alert-info"> 
+
 :information_source: **Note:**
+
 Presents information which are helpful to take note about. 
+
 </div>
 
 <div markdown="block" class="alert alert-primary">
+
 :bulb: **Tip:**
+
 Good to learn, but not necessary to know.
+
 </div>
 
 <div markdown="block" class="alert alert-danger">
+
 :warning: **Warning:**
+
 Focuses on information that you should be careful about. Being cautious is recommended.
+
 </div>
 
 --------------------------------------------------------------------------------------------------------------------
@@ -156,7 +165,9 @@ In the example shown above, you may use either `deletePerson 1` or `deletePerson
 You may prefer to use ids when they do not wish to scroll the list to find the relevant index.
 You may also prefer to use indexes which tend to be shorter than the ids of people and locations.
 
+
 <div markdown="block" class="alert alert-info">
+
 **:information_source: Notes about using indexes and ids in commands:**<br>
 * The field `IDENTIFIER` means that the user needs to input either an id or index. You are not allowed to use both at the same time. 
   `LOCATION_IDENTIFIER` and `PERSON_IDENTIFIER` refers to location and person identifiers respectively.
@@ -165,17 +176,19 @@ You may also prefer to use indexes which tend to be shorter than the ids of peop
   e.g.  `deleteLocation 3` and `deleteLocation idl/L123A`. The first command uses an index of 3 while the second command uses the id `L123A`.
 * When using indexes, it should before any other fields which need prefixes. <br>
   e.g. `addVisit 1 1 d/2020-02-02` is allowed but `addVisit 1 d/2020-02-02 1` is not allowed.
+
 </div>
-<br>
 
 <div markdown="block" class="alert alert-danger">
-:warning: **Warnings about indexes and ids**<br>
+
+**:warning: Warnings about indexes and ids**<br>
 * Take note that the index of a person/location may change depending on the index of the person/location as viewed from the most recently displayed person/location list.
   Observe that the index of ION Orchard changes from 1 to 2 after adding a new location in the figure below. <br>
 
    ![indexes](images/indexes.png)
 * Indexes **must be positive integers**: 1, 2, 3, …​ and within the range of its shown list, otherwise warnings will be triggered.
 * Ids used must belong to a person/location within VirusTracker.
+
 </div>
 
 
