@@ -1,17 +1,23 @@
 package seedu.address.storage;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.TypicalVisits.ELEVENTH_VISIT;
+import static seedu.address.testutil.TypicalVisits.FIRST_VISIT;
+import static seedu.address.testutil.TypicalVisits.TENTH_VISIT;
 import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.util.JsonUtil;
 import seedu.address.model.visit.ReadOnlyVisitBook;
 import seedu.address.model.visit.VisitBook;
 
@@ -65,7 +71,20 @@ public class JsonVisitBookStorageTest {
         // Save in new file and read back
         jsonVisitBookStorage.saveVisitBook(original, filePath);
         ReadOnlyVisitBook readBack = jsonVisitBookStorage.readVisitBook(filePath).get();
+        assertEquals(original, new VisitBook(readBack));
 
+        // Modify data, overwrite existing file, and read back
+        original.addVisit(TENTH_VISIT);
+        original.removeVisit(FIRST_VISIT);
+        jsonVisitBookStorage.saveVisitBook(original, filePath);
+        readBack = jsonVisitBookStorage.readVisitBook(filePath).get();
+        assertEquals(original, new VisitBook(readBack));
+
+        // Save and read without specifying file path
+        original.addVisit(ELEVENTH_VISIT);
+        jsonVisitBookStorage.saveVisitBook(original); // file path not specified
+        readBack = jsonVisitBookStorage.readVisitBook().get(); // file path not specified
+        assertEquals(original, new VisitBook(readBack));
     }
 
     @Test
