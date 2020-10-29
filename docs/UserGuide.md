@@ -237,7 +237,7 @@ Format: `addVisit PERSON_IDENTIFIER LOCATION_IDENTIFIER d/DATE`
 
 Examples:
 * `addVisit 1 1 d/2020-09-12`
-* `addVisit idp/S123 idl/L123 d/2020-02-02`
+* `addVisit idp/S123A idl/L123A d/2020-02-20`
 
 #### Adding data from CSV files
 
