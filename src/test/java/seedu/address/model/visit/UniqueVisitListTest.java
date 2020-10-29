@@ -19,8 +19,6 @@ import seedu.address.model.visit.exceptions.DuplicateVisitException;
 import seedu.address.model.visit.exceptions.VisitNotFoundException;
 import seedu.address.testutil.VisitBuilder;
 
-
-
 public class UniqueVisitListTest {
     private final UniqueVisitList uniqueVisitList = new UniqueVisitList();
 

@@ -17,7 +17,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import javafx.collections.ObservableList;
 import seedu.address.model.location.exceptions.DuplicateLocationException;
 import seedu.address.model.location.exceptions.LocationNotFoundException;
 import seedu.address.model.location.exceptions.LocationNotIdentifiableException;

@@ -14,14 +14,12 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
-import static seedu.address.testutil.VisitBuilder.DEFAULT_LOCATION;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_PERSON;
 
 import java.util.Objects;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.model.location.Location;
 import seedu.address.testutil.PersonBuilder;
 
 public class PersonTest {

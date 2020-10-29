@@ -2,7 +2,6 @@ package seedu.address.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_FILE_PATH;
 import static seedu.address.commons.core.Messages.MESSAGE_MISSING_DATA_FORMAT;
@@ -19,19 +18,14 @@ import static seedu.address.testutil.Assert.assertThrows;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.function.BiFunction;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.visit.AddVisitCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
-import seedu.address.model.visit.Visit;
 import seedu.address.testutil.TypicalLocations;
 import seedu.address.testutil.TypicalPersons;
 import seedu.address.testutil.TypicalVisitParametersContainers;

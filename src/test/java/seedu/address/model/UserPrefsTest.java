@@ -2,22 +2,13 @@ package seedu.address.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION_ID;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
-import static seedu.address.testutil.VisitBuilder.DEFAULT_LOCATION_ID;
-import static seedu.address.testutil.VisitBuilder.DEFAULT_PERSON_ID;
 
-import java.nio.file.Path;
 import java.util.Objects;
 
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.GuiSettings;
-import seedu.address.logic.parser.IndexIdPair;
-import seedu.address.logic.parser.IndexIdPairTest;
 
 public class UserPrefsTest {
 

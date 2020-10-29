@@ -25,7 +25,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
@@ -224,7 +223,7 @@ public class IndexIdPairTest {
         assertEquals(personPair, personPair);
 
         // same values -> returns true
-        IndexIdPair personPairCopy =new IndexIdPair(INDEX_FIRST, DEFAULT_PERSON_ID, PREFIX_PERSON_ID);
+        IndexIdPair personPairCopy = new IndexIdPair(INDEX_FIRST, DEFAULT_PERSON_ID, PREFIX_PERSON_ID);
         assertEquals(personPairCopy, personPair);
 
         // different IDs -> returns false

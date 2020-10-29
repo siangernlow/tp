@@ -7,13 +7,11 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ID_BOB_LOCATION
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalLocations.ALICE_LOCATION;
 import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
-import static seedu.address.testutil.VisitBuilder.DEFAULT_LOCATION;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import org.junit.jupiter.api.Test;
 

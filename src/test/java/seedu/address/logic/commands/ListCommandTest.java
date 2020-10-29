@@ -12,7 +12,6 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -22,12 +21,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.ListType;
-import seedu.address.model.InfoHandler;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ModelPredicate;
 import seedu.address.model.ModelStub;
-import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
@@ -168,9 +165,9 @@ public class ListCommandTest {
 
 
     private static class ModelStubWithLists extends ModelStub {
-        public ObservableList<Person> personList = FXCollections.observableList(new ArrayList<>());
-        public ObservableList<Location> locationList = FXCollections.observableList(new ArrayList<>());
-        public ObservableList<Visit> visitList = FXCollections.observableList(new ArrayList<>());
+        private ObservableList<Person> personList = FXCollections.observableList(new ArrayList<>());
+        private ObservableList<Location> locationList = FXCollections.observableList(new ArrayList<>());
+        private ObservableList<Visit> visitList = FXCollections.observableList(new ArrayList<>());
 
         @Override
         public ObservableList<Person> getSortedPersonList() {

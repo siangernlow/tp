@@ -1,7 +1,6 @@
 package seedu.address.logic.parser.person;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -10,7 +9,6 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.commands.location.DeleteLocationCommand;
 import seedu.address.logic.commands.person.DeletePersonCommand;
 import seedu.address.logic.parser.IndexIdPair;
 import seedu.address.logic.parser.IndexIdPairStub;

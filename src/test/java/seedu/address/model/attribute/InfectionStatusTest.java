@@ -7,8 +7,6 @@ import static seedu.address.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.model.attribute.InfectionStatus;
-
 public class InfectionStatusTest {
 
     @Test

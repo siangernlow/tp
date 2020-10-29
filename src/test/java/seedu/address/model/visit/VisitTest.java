@@ -7,14 +7,12 @@ import static seedu.address.testutil.TypicalLocations.BOB_LOCATION;
 import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalVisits.FIRST_VISIT;
 import static seedu.address.testutil.TypicalVisits.SECOND_VISIT;
-import static seedu.address.testutil.VisitBuilder.DEFAULT_LOCATION;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.model.location.Location;
 import seedu.address.testutil.VisitBuilder;
 
 public class VisitTest {
