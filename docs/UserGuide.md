@@ -223,7 +223,7 @@ Format: `addLocation idl/ID n/NAME a/ADDRESS`
 
 Examples:
 * `addLocation idl/L123 n/Vivocity a/John street, block 123, #01-01`
-* `addLocation idl/L234 n/Betsy Crowe's House a/Newgate Prison`
+* `addLocation idl/L234 n/Parliament House a/1 Parliament Place, Singapore 178880`
 
 #### Adding a visit
 
