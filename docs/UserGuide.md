@@ -315,7 +315,8 @@ types of errors.
     * Occurs when an input field is of the wrong format
     * Command operation terminates immediately and nothing is added
     * The line number of the erroneous row will be displayed alongside the correct format for the field
-    
+    * Only the first line with such an error will be displayed, so it is possible that other rows after it have an error as well
+    * Within the row, only the first erroneous field will be displayed. It is possible that other fields after it may have the wrong format as well
     
 Examples:
 * `addFromCsv C:/Users/alice/Desktop/peopleToAdd.csv l/people`
