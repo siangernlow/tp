@@ -27,6 +27,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.attribute.Id;
+import seedu.address.model.attribute.Tag;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
 import seedu.address.model.visit.ReadOnlyVisitBook;
@@ -435,7 +436,10 @@ public class InfoHandler {
 
         String tags = person.getTagsAsString();
         if (!tags.isEmpty()) {
-            attributes.add(PREFIX_TAG + person.getTagsAsString());
+            String[] listOfTags = tags.split(",");
+            for (String tag : listOfTags) {
+                attributes.add(PREFIX_TAG + tag);
+            }
         }
 
         return attributes;
