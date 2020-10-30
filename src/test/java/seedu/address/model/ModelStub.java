@@ -154,7 +154,12 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public void updateFilteredLocationList(Predicate<Location> predicate) {
+    public void updateFilteredLocationList(Predicate<? super Location> predicate) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public Optional<Predicate<? super Location>> getLocationPredicate() {
         throw new AssertionError("This method should not be called.");
     }
 

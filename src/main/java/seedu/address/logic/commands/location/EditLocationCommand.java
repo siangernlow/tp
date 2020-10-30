@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_LOCATIONS;
 
 import java.util.Optional;
 
@@ -71,8 +70,6 @@ public class EditLocationCommand extends Command {
         }
 
         model.setLocation(locationToEdit, editedLocation);
-        model.updateFilteredLocationList(PREDICATE_SHOW_ALL_LOCATIONS);
-
         model.updateVisitBookWithEditedLocation(editedLocation);
 
         return new CommandResult(String.format(MESSAGE_EDIT_LOCATION_SUCCESS, editedLocation), false, false,

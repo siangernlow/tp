@@ -12,6 +12,7 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -186,5 +187,26 @@ public class ListCommandTest {
 
         @Override
         public void updateFilteredPersonList(Predicate<? super Person> predicate) {}
+
+        @Override
+        public void updateFilteredLocationList(Predicate<? super Location> predicate) {}
+
+        @Override
+        public void updateFilteredVisitList(Predicate<? super Visit> predicate) {}
+
+        @Override
+        public Optional<Predicate<? super Person>> getPersonPredicate() {
+            return Optional.empty();
+        }
+
+        @Override
+        public Optional<Predicate<? super Location>> getLocationPredicate() {
+            return Optional.empty();
+        }
+
+        @Override
+        public Optional<Predicate<? super Visit>> getVisitPredicate() {
+            return Optional.empty();
+        }
     }
 }

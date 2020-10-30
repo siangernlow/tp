@@ -116,6 +116,7 @@ public class EditPersonCommandTest {
 
         Model expectedModel = new ModelManager(new PersonBook(model.getPersonBook()),
                 new LocationBook(model.getLocationBook()), new VisitBook(model.getVisitBook()), new UserPrefs());
+        showPersonAtIndex(expectedModel, INDEX_FIRST);
         expectedModel.setPerson(model.getSortedPersonList().get(0), editedPerson);
         expectedModel.updateVisitBookWithEditedPerson(editedPerson);
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
