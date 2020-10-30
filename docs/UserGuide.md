@@ -298,6 +298,26 @@ Format: `addFromCsv FILE_PATH l/LIST_TYPE`
 
 </div>
 
+
+##### _Error Handling_
+Sometimes, the format of the CSV file may be wrong when executing the command. VirusTracker has different behaviour for different
+types of errors.
+1. Duplicate entities detected within the CSV file 
+    * Command operation does not terminate
+    * VirusTracker adds all entities which are not duplicates
+    * At the end of the operation, the lines in the CSV files with duplicates are displayed so that you could make adjustments to the file. 
+2. Erroneous entry _(Not enough parameters)_
+    * Occurs when one or more rows do not have enough compulsory parameters
+    * Command operation terminates immediately and nothing is added
+    * The line number of the erroneous row lacking parameters will be displayed
+    * Only the first line with such an error will be displayed, so it is possible that other lines may not have enough paramters as well
+3. Erroneous entry _(Wrong format for field)_
+    * Occurs when an input field is of the wrong format
+    * Command operation terminates immediately and nothing is added
+    * The line number of the erroneous row will be displayed alongside the correct format for the field
+    * Only the first line with such an error will be displayed, so it is possible that other rows after it have an error as well
+    * Within the row, only the first erroneous field will be displayed. It is possible that other fields after it may have the wrong format as well
+    
 Examples:
 * `addFromCsv C:/Users/alice/Desktop/peopleToAdd.csv l/people`
 * `addFromCsv D:/visits on Dec 20.csv l/visits`

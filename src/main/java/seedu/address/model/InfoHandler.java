@@ -455,7 +455,10 @@ public class InfoHandler {
 
         String tags = person.getTagsAsString();
         if (!tags.isEmpty()) {
-            attributes.add(PREFIX_TAG + person.getTagsAsString());
+            String[] listOfTags = tags.split(",");
+            for (String tag : listOfTags) {
+                attributes.add(PREFIX_TAG + tag);
+            }
         }
 
         return attributes;
