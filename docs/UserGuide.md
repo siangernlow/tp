@@ -206,8 +206,14 @@ Format: `addPerson idp/ID n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS q/QUARANTINE_S
 A person can have any number of tags (including 0).
 </div>
 
+<div markdown="block" class="alert alert-info"> 
+
+:information_source: **Note:**
+
 * `ID` of person must be unique. No other person in the VirusTracker may have the same ID.
 * `QUARANTINE_STATUS` and `INFECTED_STATUS` can only be true or false.
+
+</div>
 
 Examples:
 * `addPerson idp/S123 n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 q/true i/false`
@@ -219,11 +225,17 @@ Adds a location to VirusTracker.
 
 Format: `addLocation idl/ID n/NAME a/ADDRESS`
 
+<div markdown="block" class="alert alert-info"> 
+
+:information_source: **Note:**
+
 * `ID` of location must be unique. No other location in the VirusTracker may have the same ID.
+
+</div>
 
 Examples:
 * `addLocation idl/L123 n/Vivocity a/John street, block 123, #01-01`
-* `addLocation idl/L234 n/Betsy Crowe's House a/Newgate Prison`
+* `addLocation idl/L234 n/Parliament House a/1 Parliament Place, Singapore 178880`
 
 #### Adding a visit
 
@@ -231,13 +243,19 @@ Adds a visit by the person, location of visit and date of visit
 
 Format: `addVisit PERSON_IDENTIFIER LOCATION_IDENTIFIER d/DATE`
 
+<div markdown="block" class="alert alert-info"> 
+
+:information_source: **Note:**
+
 * VirusTracker gives a warning if visits involve an infected/quarantined people visiting locations they should not.
 * Visits may be added by either using all indexes or all ids only. A mix of both is not allowed and will trigger a warning. 
 * Date format should follow "yyyy-MM-dd", otherwise exceptions would be thrown.
 
+</div>
+
 Examples:
 * `addVisit 1 1 d/2020-09-12`
-* `addVisit idp/S123 idl/L123 d/2020-02-02`
+* `addVisit idp/S123A idl/L123A d/2020-02-20`
 
 #### Adding data from CSV files
 
@@ -258,6 +276,10 @@ as to ensure that the referenced people and locations in the visits data csv fil
 
 Format: `addFromCsv FILE_PATH l/LIST_TYPE`
 
+<div markdown="block" class="alert alert-info"> 
+
+:information_source: **Note:**
+
 * `FILE_PATH` refers to the absolute file path where the CSV file resides.
   * For example, if you wish to import data from `personList.csv` located in your desktop, the absolute file path could look
   something like this: `C:/Users/user/Desktop/personList.csv` _(for Windows)_, `/Users/admin/Documents/personList.csv` _(for MacOS)_,
@@ -273,6 +295,9 @@ Format: `addFromCsv FILE_PATH l/LIST_TYPE`
   * For visits data, the format used references the id of the people and locations. The format using
   list indexing is not supported.
 * If you do not specify an absolute path, VirusTracker **may not be able to find your file!**
+
+</div>
+
 
 ##### _Error Handling_
 Sometimes, the format of the CSV file may be wrong when executing the command. VirusTracker has different behaviour for different
@@ -291,6 +316,7 @@ types of errors.
     * Command operation terminates immediately and nothing is added
     * The line number of the erroneous row will be displayed alongside the correct format for the field
     
+    
 Examples:
 * `addFromCsv C:/Users/alice/Desktop/peopleToAdd.csv l/people`
 * `addFromCsv D:/visits on Dec 20.csv l/visits`
@@ -304,6 +330,10 @@ which could then be read by the VirusTracker application on another device.
 
 Format: `exportToCsv FILE_PATH l/LIST_TYPE`
 
+<div markdown="block" class="alert alert-info"> 
+
+:information_source: **Note:**
+
 * `FILE_PATH` refers to the absolute file path where the CSV file should reside.
   * Refer to the [Adding data from CSV files](#adding-data-from-csv-files) section to find out the absolute path of a file.
   * If the CSV file does not exist at the specified location, VirusTracker will create it for you.
@@ -311,6 +341,8 @@ Format: `exportToCsv FILE_PATH l/LIST_TYPE`
   * The prefix `l/` is also used for [listing data](#listing-data-list)
 * The CSV file will have its data in [VirusTracker readable format](#format-for-csv-files).
 * If you do not specify an absolute path, the file may be **created at an unexpected place!**
+
+</div>
 
 Examples:
 * `exportToCsv C:/Users/alice/Desktop/peopleToAdd.csv l/people` creates a people data CSV file named `peopleToAdd.csv`
@@ -399,7 +431,12 @@ Deletes the specified person from the persons list.
 
 Format: `deletePerson PERSON_IDENTIFIER` <br>
 
+<div markdown="block" class="alert alert-info"> 
+
+:information_source: **Note:**
 * All visits made by the specified person would also be deleted.
+
+</div>
 
 <div markdown="block" class="alert alert-danger">
 :warning: **Warning:**
@@ -417,7 +454,13 @@ Deletes the specified location from the location list.
 
 Format: `deleteLocation LOCATION_IDENTIFIER` <br>
 
+<div markdown="block" class="alert alert-info"> 
+
+:information_source: **Note:**
+
 * All visits that contains the specified locations would also be deleted.
+
+</div>
 
 <div markdown="block" class="alert alert-danger">
 :warning: **Warning:**
@@ -434,9 +477,15 @@ Deletes all visits before and including the date.
 
 Format: `deleteVisits d/DATE`
 
+<div markdown="block" class="alert alert-info"> 
+
+:information_source: **Note:**
+
 * A `DATE` is valid if **at least one** visit occurs before or on the specified date.
 * All the visits before and including the date will be removed from the visits list.
 * Date format should follow "yyyy-MM-dd", otherwise exceptions would be thrown.
+
+</div>
 
 Examples:
 * `deleteVisits d/2020-09-12`
@@ -450,11 +499,17 @@ Edits an existing person in VirusTracker.
 
 Format: `editPerson PERSON_IDENTIFIER [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [q/QUARANTINE_STATUS] [i/INFECTION_STATUS] [t/TAG]…​` <br>
 
+<div markdown="block" class="alert alert-info"> 
+
+:information_source: **Note:**
+
 * A person's id cannot be edited.
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person’s tags by typing `t/` without specifying any tags after it.
+
+</div>
 
 Examples:
 *  `editPerson 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
@@ -466,9 +521,15 @@ Edits an existing location in VirusTracker.
 
 Format: `editLocation LOCATION_IDENTIFIER [n/NAME] [a/ADDRESS]`
 
+<div markdown="block" class="alert alert-info"> 
+
+:information_source: **Note:**
+
 * A location's ID cannot be edited.
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
+
+</div>
 
 Examples:
 *  `editLocation 1 n/NTU a/Bugis street` Edits the name and address of the 1st location to be `NTU` and `Bugis Street` respectively.
@@ -480,12 +541,18 @@ Finds persons whose names contain any of the given keywords.
 
 Format: `findPerson KEYWORD [MORE_KEYWORDS]`
 
+<div markdown="block" class="alert alert-info"> 
+
+:information_source: **Note:**
+
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+
+</div>
 
 Examples:
 * `findPerson John` returns `john` and `John Doe`
@@ -526,6 +593,10 @@ Lists the locations with high risk of Covid infection.
 
 Format: `list l/high-risk-locations`
 
+<div markdown="block" class="alert alert-info"> 
+
+:information_source: **Note:**
+
 * A location is considered as infected if an infected person visited that location.
 * If number of infected locations are more than 60% of number of total locations, number of high risk locations equals 
 to 40% of number of total locations. Else, number of high risk locations equals to number of infected locations.
@@ -535,12 +606,18 @@ locations is `40% * 10 = 4`. The first `4` infected locations from the list of i
 lowest risk are displayed.
 * If there are less than ten locations that are infected, all locations will
   be shown.
+
+</div>
   
 #### Listing summary of data
 
 Shows the general summary of the data in the form of statistics.
 
 Format: `list l/stats`
+
+<div markdown="block" class="alert alert-info"> 
+
+:information_source: **Note:**
 
 * Data used to generate statistics are the people, locations and visits added into VirusTracker.
 * Currently, the statistics generated include:
@@ -549,19 +626,27 @@ Format: `list l/stats`
     3. Percentage of people infected/quarantined
 * The above provides a brief summary of the pandemic and is subject to extension.
 
+</div>
+
 ### Generating all locations visited by a person:
 
 Shows a list of locations visited by an infected person in the past 2 weeks. 
 
 Format: `generateLocations PERSON_IDENTIFIER`
 
+<div markdown="block" class="alert alert-info"> 
+
+:information_source: **Note:**
+
 * Locations listed were visited by the infected person of the index given.
 * The result given is a filtered list of locations that the person visited in the past 2 weeks.
 * This function can be used to identify locations needing to be disinfected after being visited by an infected person.
 
+</div>
+
 Examples:
-* `generateLocation 1`
-* `generateLocation idp/S123`
+* `generateLocation 4`
+* `generateLocation idp/S456D`
 
 ### Generating all people in contact with an infected person:
 
@@ -569,21 +654,27 @@ Shows a list of people who were in contact with an infected person in the past 2
 
 Format `generatePeople PERSON_IDENTIFIER`
 
+<div markdown="block" class="alert alert-info"> 
+
+:information_source: **Note:**
+
 * People listed were in contact with the infected person of the index given.
 * The result given is a filtered list of people who visited the same locations as that the infected person in the past 2 weeks.
 * This function can be used to identify people who need to be quarantined or issued Stay Home Notices.
 
-Examples:
-* `generatePeople 1`
-* `generatePeople idp/S123`
+</div>
 
-### Clearing all entries : `clear`
+Examples:
+* `generatePeople 4`
+* `generatePeople idp/S456D`
+
+### Clearing all entries : 
 
 Clears all entries from VirusTracker.
 
 Format: `clear`
 
-### Viewing help : `help`
+### Viewing help :
 
 Shows a message explaining how to access the help page.
 
@@ -592,7 +683,7 @@ Shows a message explaining how to access the help page.
 Format: `help`
 
 
-### Exiting the program : `exit`
+### Exiting the program :
 
 Exits the program.
 
