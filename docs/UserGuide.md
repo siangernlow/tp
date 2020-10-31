@@ -150,8 +150,10 @@ This section introduces you to important notations and details that apply to the
   Entities are duplicates if they meet any of the following conditions.
   1. They have the same id.
   2. For visits, they are duplicates if they have the same date and involve the same person and location.
-  3. For persons, they are duplicates if their name is the same and one of phone and email is the same.
-  4. For locations, they are duplicates if they have the same name and address. 
+  3. For persons, they are duplicates if either
+       - their name and phone are the same or
+       - their name and email are the same.
+  4. For locations, they are duplicates if they have the same address. 
 </div>
 
 ### Valid Formats for Command Parameters

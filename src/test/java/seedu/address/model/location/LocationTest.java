@@ -7,6 +7,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ID_BOB_LOCATION;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.testutil.TypicalLocations.ALICE_LOCATION;
+import static seedu.address.testutil.TypicalLocations.BENSON_LOCATION;
 import static seedu.address.testutil.TypicalLocations.BOB_LOCATION;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_LOCATION;
 
@@ -98,5 +99,28 @@ public class LocationTest {
         );
 
         assertEquals(hashCode, location.hashCode());
+    }
+
+    @Test
+    public void compareTo() {
+        Location smaller = ALICE_LOCATION;
+        Location bigger = BENSON_LOCATION;
+        Location sameNameDiffId = new LocationBuilder(ALICE_LOCATION)
+                .withId(BENSON_LOCATION.getId().toString()).build();
+
+        // smaller location compare to bigger location -> negative
+        assertTrue(smaller.compareTo(bigger) < 0);
+
+        // bigger location compare to smaller location -> positive
+        assertTrue(bigger.compareTo(smaller) > 0);
+
+        // same location comparison -> 0
+        assertTrue(bigger.compareTo(bigger) == 0);
+
+        // same name, smaller id -> negative
+        assertTrue(smaller.compareTo(sameNameDiffId) < 0);
+
+        // same name, bigger id -> positive
+        assertTrue(sameNameDiffId.compareTo(smaller) > 0);
     }
 }

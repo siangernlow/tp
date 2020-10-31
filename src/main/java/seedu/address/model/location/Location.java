@@ -123,6 +123,9 @@ public class Location implements Comparable<Location> {
 
     @Override
     public int compareTo(Location location) {
+        if (getName().compareTo(location.getName()) == 0) {
+            return getId().compareTo(location.getId());
+        }
         return getName().compareTo(location.getName());
     }
 }

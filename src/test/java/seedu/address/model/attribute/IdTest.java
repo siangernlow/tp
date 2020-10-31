@@ -41,4 +41,19 @@ public class IdTest {
         Id id = new Id("S123A");
         assertEquals("S123A".hashCode(), id.hashCode());
     }
+
+    @Test
+    public void compareTo() {
+        Id smaller = new Id("S1234");
+        Id bigger = new Id("S2345");
+
+        // smaller id compare to bigger id -> negative
+        assertTrue(smaller.compareTo(bigger) < 0);
+
+        // same id comparison -> 0
+        assertTrue(smaller.compareTo(smaller) == 0);
+
+        // bigger id compare to smaller id -> positive
+        assertTrue(bigger.compareTo(smaller) > 0);
+    }
 }
