@@ -76,7 +76,7 @@ The following table presents a list of key terms that will be used in this user 
 
 1. Ensure you have Java `11` or above installed in your Computer.
 
-2. Download the latest `virustracker.jar` from [here](https://github.com/AY2021S1-CS2103T-T13-4/tp/releases). <br>
+2. Download the latest `virustracker.jar` from [here](https://github.com/AY2021S1-CS2103T-T13-1/tp/releases). <br>
    _Note: VirusTracker is still a work-in-progress and official releases are not available yet._
    
 3. Copy the file to the folder you want to use as the _home folder_ for your VirusTracker.
