@@ -64,7 +64,12 @@ public class PersonCard extends UiPart<Region> {
         infectionStatus.setText("Infected: " + person.getInfectionStatus().toString());
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+                .forEach(tag -> {
+                    Label label = new Label(tag.tagName);
+                    label.setWrapText(true);
+                    label.setMaxWidth(270);
+                    tags.getChildren().add(label);
+                });
     }
 
     @Override
