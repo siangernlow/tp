@@ -65,18 +65,19 @@ Focuses on information that you should be careful about. Being cautious is recom
 
 The following table presents a list of key terms that will be used in this user guide. 
 
-Term | Meaning
---------|------------------
-Entity | Refers to people, locations or visits
-Command | Refers to user input that instructs VirusTracker on what to do
-Identifier | Refers to ids or indexes. These are used to uniquely identify a location or person
-Prefix | Refers to prefixes used in commands. These precede fields that are typed in user input
+| Term       | Meaning                                                                                |
+|------------|----------------------------------------------------------------------------------------|
+| Entity     | Refers to people, locations or visits                                                  |
+| Command    | Refers to user input that instructs VirusTracker on what to do                         |
+| Identifier | Refers to ids or indexes. These are used to uniquely identify a location or person     |
+| Prefix     | Refers to prefixes used in commands. These precede fields that are typed in user input |
+
 --------------------------------------------------------------------------------------------------------------------
 ## Quick start
 
 1. Ensure you have Java `11` or above installed in your Computer.
 
-2. Download the latest `virustracker.jar` from [here](https://github.com/AY2021S1-CS2103T-T13-4/tp/releases). <br>
+2. Download the latest `virustracker.jar` from [here](https://github.com/AY2021S1-CS2103T-T13-1/tp/releases). <br>
    _Note: VirusTracker is still a work-in-progress and official releases are not available yet._
    
 3. Copy the file to the folder you want to use as the _home folder_ for your VirusTracker.
@@ -256,6 +257,77 @@ Format: `addVisit PERSON_IDENTIFIER LOCATION_IDENTIFIER d/DATE`
 Examples:
 * `addVisit 1 1 d/2020-09-12`
 * `addVisit idp/S123A idl/L123A d/2020-02-20`
+
+### Listing data:
+
+There are a variety of `list` commands that list different types of data.
+
+#### Listing all people 
+Format: `list l/people`
+
+* Updates the persons list to display all people currently stored in VirusTracker.
+
+#### Listing all infected people 
+Format: `list l/infected`
+
+* Filters the persons list to display all people that are currently infected.
+
+#### Listing all quarantined people 
+Format: `list l/quarantined`
+
+* Filters the persons list to display all people currently in quarantine.
+
+#### Listing all locations
+Format: `list l/locations`
+
+* Updates the locations list to displays all locations currently stored in VirusTracker.
+
+#### Listing all visits
+Format: `list l/visits`
+
+* Updates the visits list to displays all visits currently stored in VirusTracker.
+
+#### Listing high risk locations
+
+Lists the locations with high risk of Covid infection.
+
+Format: `list l/high-risk-locations`
+
+<div markdown="block" class="alert alert-info"> 
+
+:information_source: **Note:**
+
+* A location is considered as infected if an infected person visited that location.
+* If number of infected locations are more than 60% of number of total locations, number of high risk locations equals 
+to 40% of number of total locations. Else, number of high risk locations equals to number of infected locations.
+* Let number of high risk locations be `n`. The first `n` number of most infected locations are shown.
+* For example, number of total locations is `10`, number of infected locations is `7`, so the number of high risk 
+locations is `40% * 10 = 4`. The first `4` infected locations from the list of infected locations sorted from highest to 
+lowest risk are displayed.
+* If there are less than ten locations that are infected, all locations will
+  be shown.
+
+</div>
+  
+#### Listing summary of data
+
+Shows the general summary of the data in the form of statistics.
+
+Format: `list l/stats`
+
+<div markdown="block" class="alert alert-info"> 
+
+:information_source: **Note:**
+
+* Data used to generate statistics are the people, locations and visits added into VirusTracker.
+* Currently, the statistics generated include:
+    1. Total number of people, locations and visits
+    2. Total number of people infected/quarantined
+    3. Percentage of people infected/quarantined
+* The above provides a brief summary of the pandemic and is subject to extension.
+
+</div>
+
 
 #### Adding data from CSV files
 
@@ -559,76 +631,6 @@ Examples:
 * `findPerson John` returns `john` and `John Doe`
 * `findPerson alex david` returns `Alex Yeoh`, `David Li`<br>
 
-### Listing data:
-
-There are a variety of `list` commands that list different types of data.
-
-#### Listing all people 
-Format: `list l/people`
-
-* Updates the persons list to display all people currently stored in VirusTracker.
-
-#### Listing all infected people 
-Format: `list l/infected`
-
-* Filters the persons list to display all people that are currently infected.
-
-#### Listing all quarantined people 
-Format: `list l/quarantined`
-
-* Filters the persons list to display all people currently in quarantine.
-
-#### Listing all locations
-Format: `list l/locations`
-
-* Updates the locations list to displays all locations currently stored in VirusTracker.
-
-#### Listing all visits
-Format: `list l/visits`
-
-* Updates the visits list to displays all visits currently stored in VirusTracker.
-
-#### Listing high risk locations
-
-Lists the locations with high risk of Covid infection.
-
-Format: `list l/high-risk-locations`
-
-<div markdown="block" class="alert alert-info"> 
-
-:information_source: **Note:**
-
-* A location is considered as infected if an infected person visited that location.
-* If number of infected locations are more than 60% of number of total locations, number of high risk locations equals 
-to 40% of number of total locations. Else, number of high risk locations equals to number of infected locations.
-* Let number of high risk locations be `n`. The first `n` number of most infected locations are shown.
-* For example, number of total locations is `10`, number of infected locations is `7`, so the number of high risk 
-locations is `40% * 10 = 4`. The first `4` infected locations from the list of infected locations sorted from highest to 
-lowest risk are displayed.
-* If there are less than ten locations that are infected, all locations will
-  be shown.
-
-</div>
-  
-#### Listing summary of data
-
-Shows the general summary of the data in the form of statistics.
-
-Format: `list l/stats`
-
-<div markdown="block" class="alert alert-info"> 
-
-:information_source: **Note:**
-
-* Data used to generate statistics are the people, locations and visits added into VirusTracker.
-* Currently, the statistics generated include:
-    1. Total number of people, locations and visits
-    2. Total number of people infected/quarantined
-    3. Percentage of people infected/quarantined
-* The above provides a brief summary of the pandemic and is subject to extension.
-
-</div>
-
 ### Generating all locations visited by a person:
 
 Shows a list of locations visited by an infected person in the past 2 weeks. 
@@ -694,11 +696,6 @@ Format: `exit`
 ### Saving the data
 
 VirusTracker data saves in the hard disk automatically after any command that changes the data. There is no need to save manually.
-
-
-### Archiving data files `[coming in v2.0]`
-
-_{explain the feature here}_
 
 --------------------------------------------------------------------------------------------------------------------
 
