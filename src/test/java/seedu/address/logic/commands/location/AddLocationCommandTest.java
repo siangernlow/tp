@@ -54,7 +54,8 @@ public class AddLocationCommandTest {
         Location validLocation = new LocationBuilder().build();
         AddLocationCommand addLocationCommand = new AddLocationCommand(validLocation);
         Location validLocationSameId =
-                new LocationBuilder().withId(LocationBuilder.DEFAULT_ID).withName("another name").build();
+                new LocationBuilder().withId(LocationBuilder.DEFAULT_ID).withName("another name")
+                        .withAddress("another address").build();
         ModelStub modelStub = new AddLocationCommandTest.ModelStubWithLocation(validLocationSameId);
 
         assertThrows(CommandException.class, AddLocationCommand.MESSAGE_DUPLICATE_LOCATION_ID, () ->

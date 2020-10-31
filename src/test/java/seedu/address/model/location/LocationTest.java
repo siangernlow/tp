@@ -26,13 +26,17 @@ public class LocationTest {
         // null -> returns false
         assertFalse(ALICE_LOCATION.isSameLocation(null));
 
-        // different name, same address -> returns false
+        // different name, same address -> returns true
         Location editedAlice = new LocationBuilder(ALICE_LOCATION).withName(VALID_NAME_BOB).build();
-        assertFalse(ALICE_LOCATION.isSameLocation(editedAlice));
+        assertTrue(ALICE_LOCATION.isSameLocation(editedAlice));
 
         // same name, different address -> returns false
         editedAlice = new LocationBuilder(ALICE_LOCATION).withAddress(VALID_ADDRESS_BOB).build();
         assertFalse(ALICE_LOCATION.isSameLocation(editedAlice));
+
+        // same name, same address -> returns true
+        editedAlice = new LocationBuilder(ALICE_LOCATION).build();
+        assertTrue(ALICE_LOCATION.isSameLocation(editedAlice));
     }
 
     @Test
