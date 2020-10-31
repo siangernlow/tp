@@ -2,6 +2,6 @@
   "locations": [ {
     "name": "Location with invalid name field: Ha!ns Mu@ster",
     "address": "4th street",
-    "id": "L1"
+    "id": "L1234"
   } ]
 }

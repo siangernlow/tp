@@ -37,8 +37,8 @@ public class DeleteLocationCommandParserTest {
 
     @Test
     public void parse_validId_returnsDeleteLocationCommand() {
-        assertParseSuccess(parser, " idl/1", new DeleteLocationCommand(
-                new IndexIdPair(null, new Id("1"), PREFIX_LOCATION_ID)));
+        assertParseSuccess(parser, " idl/12345", new DeleteLocationCommand(
+                new IndexIdPair(null, new Id("12345"), PREFIX_LOCATION_ID)));
     }
 
     @Test

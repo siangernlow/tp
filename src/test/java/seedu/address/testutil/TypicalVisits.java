@@ -150,7 +150,7 @@ public class TypicalVisits {
      * by {@code getVisitsForTest}
      */
     public static List<Id> getLocationsIdsFromVisitsForTest() {
-        return new ArrayList<>(Arrays.asList(new Id("L9"), new Id("L3"), new Id("L10")));
+        return new ArrayList<>(Arrays.asList(new Id("L9101112"), new Id("L10111213"), new Id("L3456")));
     }
 
     /**

@@ -140,8 +140,9 @@ This section introduces you to important notations and details that apply to the
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
-* In the case of repeating parameters, VirusTracker takes the last parameter.<br>
-  e.g. if the command specifies `n/NAME p/PHONE_NUMBER_1 p/PHONE_NUMBER_2`, `p/PHONE_NUMBER_2` is taken and `PHONE_NUMBER_1` is ignored.
+* In the case where you give multiple responses to the same parameter, VirusTracker takes the last response.<br>
+  e.g. Given the command format `addPerson n/NAME p/PHONE_NUMBER` and your command `addPerson n/John p/12345678 p/87654321`,
+  VirusTracker takes the phone number to be `87654321` and ignores `12345678`.
 
 * **Data** refers collectively to people, locations and visits unless stated otherwise.
 
@@ -149,9 +150,41 @@ This section introduces you to important notations and details that apply to the
   Entities are duplicates if they meet any of the following conditions.
   1. They have the same id.
   2. For visits, they are duplicates if they have the same date and involve the same person and location.
-  3. For persons, they are duplicates if their name is the same and one of phone and email is the same.
-  4. For locations, they are duplicates if they have the same name and address. 
+  3. For persons, they are duplicates if either
+       - their name and phone are the same or
+       - their name and email are the same.
+  4. For locations, they are duplicates if they have the same address. 
 </div>
+
+### Valid Formats for Command Parameters
+
+From the following table, you may see a list of command parameters that found in this user guide.
+Each row shows the parameter, the corresponding prefix and conditions for the parameter to be valid. 
+
+| Parameter | Prefix | Valid Format |
+| ----------| ------ | ------------ | 
+| Date      |  d/    | Date format should follow `yyyy-MM-dd`.<br> e.g. 23 January 2020 is "2020-01-23". | 
+| List type |  l/    | List types can only be `people`, `quarantined`, `infected`, `locations`, `visits`, `high-risk-locations`, `stats`. | 
+| Name      |  n/    | Names may only contain alphanumeric characters and spaces, and it should not be blank. |
+| Phone     |  p/    | Phone numbers may only contain numbers, and it should be at least 3 digits long. |
+| Address   |  a/    | Addresses can take any values, and it should not be blank.|
+| Email     |  e/    | Please refer to [Email Format](#Email Format) below for more details.|
+| Quarantine Status | q/| Quarantine status should either be true or false, and it should not be blank.|
+| Infected Status | i/ | Infection status should either be true or false, and it should not be blank. |
+| Tag       | t/     | Tags should be alphanumeric. |
+| Person Id | idp/   | Person Ids can take any values, and it should be at least 5 characters long.|
+| Location Id | idl/ | Location Ids can take any values, and it should be at least 5 characters long.|
+
+#### Email Format
+Emails should be of the format `local-part@domain` and adhere to the following constraints:
+ 1. The local-part should only contain alphanumeric characters and these special characters, excluding the parentheses, (!#$%&'*+/=?`{|}~^.-).
+ 2. This is followed by a '@' and then a domain name. 
+ 3. The domain name must:
+     - be at least 2 characters long
+     - start and end with alphanumeric characters
+     - consist of alphanumeric characters, a period or a hyphen for the characters in between, if any.
+
+### Index and Ids
 
 There are many situations where you may want to refer to a specific location or person when giving a command.
 For example, you may want to delete a location or add a visit involving a specific location and person.
@@ -251,6 +284,8 @@ Format: `addVisit PERSON_IDENTIFIER LOCATION_IDENTIFIER d/DATE`
 * VirusTracker gives a warning if visits involve an infected/quarantined people visiting locations they should not.
 * Visits may be added by either using all indexes or all ids only. A mix of both is not allowed and will trigger a warning. 
 * Date format should follow "yyyy-MM-dd", otherwise exceptions would be thrown.
+* Dates of the visit must not be after the current date.<br>
+  e.g. If today is 31 October 2020, you may set the date as 31 October 2020 or earlier, but not 1 November 2020. 
 
 </div>
 

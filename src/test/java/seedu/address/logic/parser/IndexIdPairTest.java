@@ -34,8 +34,8 @@ import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
 
 public class IndexIdPairTest {
-    private String personIdString = " idp/S123";
-    private String locationIdString = " idl/L123";
+    private String personIdString = " idp/S1234";
+    private String locationIdString = " idl/L1234";
     private String indexString = "1";
     private String outOfBoundIndex = "2";
     private String invalidIndex = "0";
@@ -43,8 +43,8 @@ public class IndexIdPairTest {
     private String empty = "";
     private String personIdNotExistString = " idp/not exist";
     private String locationIdNotExistString = " idl/not exist";
-    private Id personId = new Id("S123");
-    private Id locationId = new Id("L123");
+    private Id personId = new Id("S1234");
+    private Id locationId = new Id("L1234");
     private Id idNotExist = new Id("not exist");
 
     private ArgumentMultimap argMultimap;

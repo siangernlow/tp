@@ -37,6 +37,8 @@ public class UniqueLocationListTest {
 
     @Test
     public void contains_locationInList_returnsTrue() {
+        Location alice = new LocationBuilder().withName("Alice Pauline House")
+                .withAddress("123, Jurong West Ave 6, #08-111").withId("L1234").build();
         uniqueLocationList.add(ALICE_LOCATION);
         assertTrue(uniqueLocationList.contains(ALICE_LOCATION));
     }
@@ -141,7 +143,7 @@ public class UniqueLocationListTest {
     @Test
     public void setLocation_editedLocationHasDifferentIdentity_success() {
         uniqueLocationList.add(ALICE_LOCATION);
-        Location editedLocation = new LocationBuilder().withId("L1").build();
+        Location editedLocation = new LocationBuilder().withId("L1234").build();
         uniqueLocationList.setLocation(ALICE_LOCATION, editedLocation);
         UniqueLocationList expectedUniqueLocationList = new UniqueLocationList();
         expectedUniqueLocationList.add(editedLocation);
