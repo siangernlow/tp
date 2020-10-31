@@ -1,7 +1,6 @@
 package seedu.address.model.util;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -72,15 +71,13 @@ public class SampleDataUtil {
     }
 
     public static List<Visit> getSampleVisits() {
-        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate date = LocalDate.parse("2020-02-02", inputFormat);
+        LocalDate date = LocalDate.now();
         List<Visit> visits = new ArrayList<>();
-        for (Person p : getSamplePersons()) {
-            for (Location l : getSampleLocations()) {
-                visits.add(new Visit(p, l, date));
-                date = date.minusDays(1);
-            }
-            date = date.plusDays(5);
+        int size = Math.min(getSampleLocations().length, getSamplePersons().length);
+        for (int i = 0; i < size; i++) {
+            visits.add(new Visit(getSamplePersons()[i], getSampleLocations()[size - 1 - i], date));
+            visits.add(new Visit(getSamplePersons()[size - 1 - i], getSampleLocations()[i], date));
+            date = date.minusDays(1);
         }
         return visits;
     }

@@ -9,13 +9,14 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Id {
 
-    public static final String MESSAGE_CONSTRAINTS = "Ids can take any values, and it should not be blank.";
+    public static final String MESSAGE_CONSTRAINTS = "Ids can take any values, "
+            + "and it should be at least 5 characters long.";
 
     /*
      * The first character of the Id must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "[^\\s].*";
+    public static final String VALIDATION_REGEX = ".{5,}";
 
     public final String value;
 
@@ -34,7 +35,8 @@ public class Id {
      * Returns true if a given string is a valid Id.
      */
     public static boolean isValidId(String test) {
-        return test.matches(VALIDATION_REGEX);
+        String trimmedTest = test.trim();
+        return trimmedTest.matches(VALIDATION_REGEX);
     }
 
     @Override

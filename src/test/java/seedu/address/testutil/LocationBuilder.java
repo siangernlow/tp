@@ -11,7 +11,7 @@ import seedu.address.model.location.Location;
 public class LocationBuilder {
     public static final String DEFAULT_NAME = "Vivocity";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
-    public static final String DEFAULT_ID = "L1";
+    public static final String DEFAULT_ID = "L1234";
 
     private Name name;
     private Address address;

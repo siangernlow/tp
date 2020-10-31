@@ -60,12 +60,12 @@ public class CommandTestUtil {
     public static final String VALID_INFECTION_STATUS_BOB = "true";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
-    public static final String VALID_ID_AMY_LOCATION = "L9";
-    public static final String VALID_ID_BOB_LOCATION = "L10";
-    public static final String VALID_ID_AMY = "S9";
-    public static final String VALID_ID_BOB = "S10";
-    public static final String VALID_ID_NUS = "L1";
-    public static final String VALID_ID_VIVOCITY = "L2";
+    public static final String VALID_ID_AMY_LOCATION = "L9101112";
+    public static final String VALID_ID_BOB_LOCATION = "L10111213";
+    public static final String VALID_ID_AMY = "S9101112";
+    public static final String VALID_ID_BOB = "S10111213";
+    public static final String VALID_ID_NUS = "L1234";
+    public static final String VALID_ID_VIVOCITY = "L2345";
 
     public static final String ID_DESC_AMY = " " + PREFIX_PERSON_ID + VALID_ID_AMY;
     public static final String ID_DESC_BOB = " " + PREFIX_PERSON_ID + VALID_ID_BOB;

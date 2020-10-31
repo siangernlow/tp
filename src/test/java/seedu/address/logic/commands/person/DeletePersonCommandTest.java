@@ -142,16 +142,16 @@ public class DeletePersonCommandTest {
         assertFalse(deleteFirstIndexCommand.equals(deleteSecondIndexCommand));
 
         DeletePersonCommand deleteFirstIdCommand = new DeletePersonCommand(
-                new IndexIdPairStub(null, new Id("S1")));
+                new IndexIdPairStub(null, new Id("S1234")));
         DeletePersonCommand deleteSecondIdCommand = new DeletePersonCommand(
-                new IndexIdPairStub(null, new Id("S2")));
+                new IndexIdPairStub(null, new Id("S2345")));
 
         // same object -> returns true
         assertTrue(deleteFirstIdCommand.equals(deleteFirstIdCommand));
 
         // same values -> returns true
         DeletePersonCommand deleteFirstIdCommandCopy = new DeletePersonCommand(
-                new IndexIdPairStub(null, new Id("S1")));
+                new IndexIdPairStub(null, new Id("S1234")));
         assertTrue(deleteFirstIdCommand.equals(deleteFirstIdCommandCopy));
 
         // different types -> returns false

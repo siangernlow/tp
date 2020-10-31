@@ -37,7 +37,7 @@ public class DeletePersonCommandParserTest {
 
     @Test
     public void parse_validId_returnsDeletePersonCommand() {
-        assertParseSuccess(parser, " idp/1", new DeletePersonCommand(new IndexIdPairStub(null, new Id("1"))));
+        assertParseSuccess(parser, " idp/12345", new DeletePersonCommand(new IndexIdPairStub(null, new Id("12345"))));
     }
 
     @Test
