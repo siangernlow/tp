@@ -31,7 +31,7 @@ public class AddPersonCommand extends Command {
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
-            + PREFIX_QUARANTINE_STATUS + " QUARANTINE_STATUS "
+            + PREFIX_QUARANTINE_STATUS + "QUARANTINE_STATUS "
             + PREFIX_INFECTION_STATUS + "INFECTION STATUS "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
