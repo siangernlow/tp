@@ -140,8 +140,9 @@ This section introduces you to important notations and details that apply to the
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
-* In the case of repeating parameters, VirusTracker takes the last parameter.<br>
-  e.g. if the command specifies `n/NAME p/PHONE_NUMBER_1 p/PHONE_NUMBER_2`, `p/PHONE_NUMBER_2` is taken and `PHONE_NUMBER_1` is ignored.
+* In the case where you give multiple responses to the same parameter, VirusTracker takes the last response.<br>
+  e.g. Given the command format `addPerson n/NAME p/PHONE_NUMBER` and your command `addPerson n/John p/12345678 p/87654321`,
+  VirusTracker takes the phone number to be `87654321` and ignores `12345678`.
 
 * **Data** refers collectively to people, locations and visits unless stated otherwise.
 
