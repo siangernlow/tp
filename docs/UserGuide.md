@@ -695,11 +695,6 @@ Format: `exit`
 
 VirusTracker data saves in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
-
-### Archiving data files `[coming in v2.0]`
-
-_{explain the feature here}_
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
