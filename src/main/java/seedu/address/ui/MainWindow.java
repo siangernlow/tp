@@ -69,6 +69,8 @@ public class MainWindow extends UiPart<Stage> {
 
         // Set dependencies
         this.primaryStage = primaryStage;
+        this.primaryStage.setMinWidth(GuiSettings.MIN_WIDTH);
+        this.primaryStage.setMinHeight(GuiSettings.MIN_HEIGHT);
         this.logic = logic;
 
         // Configure the UI
