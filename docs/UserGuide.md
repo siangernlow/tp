@@ -154,6 +154,36 @@ This section introduces you to important notations and details that apply to the
   4. For locations, they are duplicates if they have the same name and address. 
 </div>
 
+### Valid Formats for Command Parameters
+
+From the following table, you may see a list of command parameters that found in this user guide.
+Each row shows the parameter, the corresponding prefix and conditions for the parameter to be valid. 
+
+| Parameter | Prefix | Valid Format |
+| ----------| ------ | ------------ | 
+| Date      |  d/    | Date format should follow `yyyy-MM-dd`.<br> e.g. 23 January 2020 is "2020-01-23". | 
+| List type |  l/    | List types can only be `people`, `quarantined`, `infected`, `locations`, `visits`, `high-risk-locations`, `stats`. | 
+| Name      |  n/    | Names may only contain alphanumeric characters and spaces, and it should not be blank. |
+| Phone     |  p/    | Phone numbers may only contain numbers, and it should be at least 3 digits long. |
+| Address   |  a/    | Addresses can take any values, and it should not be blank.|
+| Email     |  e/    | Please refer to [Email Format](#Email Format) below for more details.|
+| Quarantine Status | q/| Quarantine status should either be true or false, and it should not be blank.|
+| Infected Status | i/ | Infection status should either be true or false, and it should not be blank. |
+| Tag       | t/     | Tags should be alphanumeric. |
+| Person Id | idp/   | Person Ids can take any values, and it should be at least 5 characters long.|
+| Location Id | idl/ | Location Ids can take any values, and it should be at least 5 characters long.|
+
+#### Email Format
+Emails should be of the format `local-part@domain` and adhere to the following constraints:
+ 1. The local-part should only contain alphanumeric characters and these special characters, excluding the parentheses, (!#$%&'*+/=?`{|}~^.-).
+ 2. This is followed by a '@' and then a domain name. 
+ 3. The domain name must:
+     - be at least 2 characters long
+     - start and end with alphanumeric characters
+     - consist of alphanumeric characters, a period or a hyphen for the characters in between, if any.
+
+### Index and Ids
+
 There are many situations where you may want to refer to a specific location or person when giving a command.
 For example, you may want to delete a location or add a visit involving a specific location and person.
 In such cases, VirusTracker provides two methods for you to use when referring to a specific person or location, either index or id.
