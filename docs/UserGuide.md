@@ -65,12 +65,12 @@ Focuses on information that you should be careful about. Being cautious is recom
 
 The following table presents a list of key terms that will be used in this user guide. 
 
-Term | Meaning
---------|------------------
-Entity | Refers to people, locations or visits
-Command | Refers to user input that instructs VirusTracker on what to do
-Identifier | Refers to ids or indexes. These are used to uniquely identify a location or person
-Prefix | Refers to prefixes used in commands. These precede fields that are typed in user input
+| Term       | Meaning                                                                                |
+|------------|----------------------------------------------------------------------------------------|
+| Entity     | Refers to people, locations or visits                                                  |
+| Command    | Refers to user input that instructs VirusTracker on what to do                         |
+| Identifier | Refers to ids or indexes. These are used to uniquely identify a location or person     |
+| Prefix     | Refers to prefixes used in commands. These precede fields that are typed in user input |
 --------------------------------------------------------------------------------------------------------------------
 ## Quick start
 
