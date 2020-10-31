@@ -252,6 +252,8 @@ Format: `addVisit PERSON_IDENTIFIER LOCATION_IDENTIFIER d/DATE`
 * VirusTracker gives a warning if visits involve an infected/quarantined people visiting locations they should not.
 * Visits may be added by either using all indexes or all ids only. A mix of both is not allowed and will trigger a warning. 
 * Date format should follow "yyyy-MM-dd", otherwise exceptions would be thrown.
+* Dates of the visit must not be after the current date.<br>
+  e.g. If today is 31 October 2020, you may set the date as 31 October 2020 or earlier, but not 1 November 2020. 
 
 </div>
 
