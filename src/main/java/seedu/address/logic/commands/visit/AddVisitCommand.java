@@ -30,7 +30,7 @@ public class AddVisitCommand extends Command {
     public static final String COMMAND_WORD = "addVisit";
 
     public static final String MESSAGE_SUCCESS = "New visit added: %1$s";
-    public static final String MESSAGE_DUPLICATE_VISIT = "This visit already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_VISIT = "This visit already exists in the VirusTracker.";
     public static final String MESSAGE_NO_WARNING = MESSAGE_SUCCESS;
     public static final String MESSAGE_INFECTED_MADE_VISIT = MESSAGE_SUCCESS + "\n"
             + "The following person is infected and "
@@ -41,8 +41,10 @@ public class AddVisitCommand extends Command {
     public static final String MESSAGE_INFECTED_AND_QUARANTINED_MADE_VISIT = MESSAGE_SUCCESS + "\n"
             + "The following person is infected and "
             + "is in quarantine. The Stay-Home Notice may have been violated.";
+    public static final String MESSAGE_FUTURE_VISIT = "This visit has a date from the future."
+            + "Please give a date that is today or before today.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add a new visit to the visits list "
-            + "using a person, location and date of visit.\n"
+            + "using a person, location and date of visit. Dates must not be from the future.\n"
             + "You may identify a person and location by index or Id. Mixing of the index and Id is not allowed.\n"
             + "Indexes are based on the most recently viewed persons and locations list.\n"
             + "Parameters: (PERSON_INDEX LOCATION_INDEX) or ("
@@ -88,6 +90,10 @@ public class AddVisitCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+
+        if (date.isAfter(LocalDate.now())) {
+            throw new CommandException(MESSAGE_FUTURE_VISIT);
+        }
 
         Visit visit = null;
         if (personId.isPresent() && locationId.isPresent()) {

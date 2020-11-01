@@ -174,7 +174,7 @@ public class UniquePersonListTest {
     public void setPerson_editedPersonIsNotIdentifiable_throwsPersonNotIdentifiableException() {
         uniquePersonList.add(ALICE);
         uniquePersonList.add(BOB);
-        Person editedPerson = new PersonBuilder(AMY).withId("S1").build();
+        Person editedPerson = new PersonBuilder(AMY).withId("S1234").build();
         assertThrows(PersonNotIdentifiableException.class, () -> uniquePersonList.setPerson(BOB, editedPerson));
     }
 

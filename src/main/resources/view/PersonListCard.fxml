@@ -25,15 +25,15 @@
             <Region fx:constant="USE_PREF_SIZE" />
           </minWidth>
         </Label>
-        <Label fx:id="personName" text="\$first" styleClass="cell_big_label" />
+        <Label fx:id="personName" text="\$first" styleClass="cell_big_label" maxWidth="250" wrapText="true"/>
       </HBox>
       <FlowPane fx:id="tags" />
-      <Label fx:id="id" styleClass="cell_small_label" text="\$id" />
-      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
-      <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-      <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-      <Label fx:id="quarantineStatus" styleClass="cell_small_label" text="\$quarantineStatus" />
-      <Label fx:id="infectionStatus" styleClass="cell_small_label" text="\$infectionStatus" />
+      <Label fx:id="id" styleClass="cell_small_label" text="\$id" maxWidth="270" wrapText="true"/>
+      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" maxWidth="270" wrapText="true"/>
+      <Label fx:id="address" styleClass="cell_small_label" text="\$address" maxWidth="270" wrapText="true"/>
+      <Label fx:id="email" styleClass="cell_small_label" text="\$email" maxWidth="270" wrapText="true"/>
+      <Label fx:id="quarantineStatus" styleClass="cell_small_label" text="\$quarantineStatus" maxWidth="270" wrapText="true"/>
+      <Label fx:id="infectionStatus" styleClass="cell_small_label" text="\$infectionStatus" maxWidth="270" wrapText="true"/>
     </VBox>
   </GridPane>
 </HBox>

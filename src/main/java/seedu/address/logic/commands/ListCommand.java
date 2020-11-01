@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LIST;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_INFECTED;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_LOCATIONS;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_PERSONS;
@@ -27,7 +28,8 @@ public class ListCommand extends Command {
             + ": Lists information based on a given type.\n"
             + "Parameters: l/LIST_TYPE (must be either people, infected, quarantined, locations, visits,"
             + " high-risk-locations or stats)\n"
-            + "Example: " + COMMAND_WORD + " people";
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_LIST + "people";
 
     public static final String MESSAGE_SUCCESS_ALL_PEOPLE = "Listed all people";
     public static final String MESSAGE_SUCCESS_ALL_LOCATIONS = "Listed all locations";

@@ -7,7 +7,7 @@
     "address" : "123, Jurong West Ave 6, #08-111",
     "quarantineStatus": "true",
     "infectionStatus" : "false",
-    "id" : "S1",
+    "id" : "S1234",
     "tagged" : [ "friends" ]
   }, {
     "name" : "Benson Meier",
@@ -16,7 +16,7 @@
     "address" : "311, Clementi Ave 2, #02-25",
     "quarantineStatus": "true",
     "infectionStatus" : "true",
-    "id" : "S2",
+    "id" : "S2345",
     "tagged" : [ "owesMoney", "friends" ]
   }, {
     "name" : "Carl Kurz",
@@ -25,7 +25,7 @@
     "address" : "wall street",
     "quarantineStatus": "false",
     "infectionStatus" : "false",
-    "id" : "S3",
+    "id" : "S3456",
     "tagged" : [ ]
   }, {
     "name" : "Daniel Meier",
@@ -34,7 +34,7 @@
     "address" : "10th street",
     "quarantineStatus": "false",
     "infectionStatus" : "true",
-    "id" : "S4",
+    "id" : "S4567",
     "tagged" : [ "friends" ]
   }, {
     "name" : "Elle Meyer",
@@ -43,7 +43,7 @@
     "address" : "michegan ave",
     "quarantineStatus": "false",
     "infectionStatus" : "true",
-    "id" : "S5",
+    "id" : "S5678",
     "tagged" : [ ]
   }, {
     "name" : "Fiona Kunz",
@@ -52,7 +52,7 @@
     "address" : "little tokyo",
     "quarantineStatus": "false",
     "infectionStatus" : "true",
-    "id" : "S6",
+    "id" : "S6789",
     "tagged" : [ ]
   }, {
     "name" : "George Best",
@@ -61,7 +61,7 @@
     "address" : "4th street",
     "quarantineStatus": "false",
     "infectionStatus" : "true",
-    "id" : "S7",
+    "id" : "S78910",
     "tagged" : [ ]
   } ]
 }
