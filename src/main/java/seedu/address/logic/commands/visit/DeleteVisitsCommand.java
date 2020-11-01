@@ -44,6 +44,8 @@ public class DeleteVisitsCommand extends Command {
      */
 
     public String deleteVisit(Model model, List<Visit> lastShownList, LocalDate targetDate) throws CommandException {
+        assert targetDate != null;
+        assert lastShownList != null;
         // display the visits deleted
         StringBuilder visitsToDelete = new StringBuilder(MESSAGE_DELETE_VISIT_SUCCESS);
         // count how many visits are deleted and display them in an order
@@ -56,7 +58,7 @@ public class DeleteVisitsCommand extends Command {
                 order++;
             }
         }
-        assert order >= 1;
+
         if (order > 1) {
             for (Visit visit: visitsToBeDeleted) {
                 model.deleteVisit(visit);

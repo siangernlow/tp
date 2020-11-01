@@ -217,19 +217,19 @@ already be aware of the state given Unique Identifier of the object.
 If VirusTracker creates the Unique Identifiers, this benefit would be lost since users will need to find the
 Unique Identifier provided by the VirusTracker. 
 
-### Deleting Visit using a Unique Identifier (Shu long)
+### Deleting Visit using a specific Index (Shu long)
 This feature allows the VirusTracker to delete the certain visit histories easily from the visit book as it may contain
 incorrect information that does not contribute to contact tracing and generating the potential list for quarantine.
 Hence, implementing this feature is necessary which enables the user to be more flexible in handling the data by 
 removing the invalid visit record from the data before adding the updated version.
 
-**Format:** `deleteVisit UNIQUE_IDENTIFIER`
+**Format:** `deleteVisit Index`
 
-* `UNIQUE_IDENTIFIER` refers to the Index of the targeted visit inside the displayed visit list. The targeted visit must exist in VirusTracker.
+* `Index` refers to the Index of the targeted visit inside the displayed visit list. The targeted visit must exist in VirusTracker.
 
 #### Implementation
 
-* The visit that corresponds to the specified VISIT_IDENTIFIER will be removed from the visit list.
+* The visit that corresponds to the specified Index will be removed from the visit list.
 
 #### Sequence diagram
 The sequence diagram below shows how the deleteVisit operation works. Certain utility classes have been omitted for readability.
@@ -628,21 +628,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User chooses to add a person to the persons list.
-2.  System requests for details of the person. 
-3.  User enters the required details.
-4.  System adds the new person.
-5.  System displays the updated persons list.
+1.  User enters the details to add a person to the persons list.
+2.  System adds the new person.
+3.  System displays the updated persons list.
 
     Use case ends.
 
 **Extensions**
       
-* 3a. System detects error in the entered data.
-    * 3a1. System prompts user for correct data.
-    * 3a2. User enters new data.  
-    Steps 3a1-3a2 are repeated until the data entered are correct.  
-    Use case resumes at step 4.
+* 2a. System detects error in the entered data.
+    * 2a1. System prompts user for correct data.
+    * 2a2. User enters new data.  
+    Steps 2a1-2a2 are repeated until the data entered are correct.  
+    Use case resumes at step 3.
          
     Use case ends.
 
@@ -650,21 +648,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User chooses to remove a certain person from the persons list.
-2. System requests for details of the targeted person.
-3. User enters the required information.
-4. System deletes the person based on the information entered.
-5. System displays the updated persons list.  
+1. User enters the details to remove a certain person from the persons list.
+2. System deletes the person based on the information entered.
+3. System displays the updated persons list.  
    
    Use case ends.
       
 **Extensions**
        
-* 3a. System detects error in the entered data.
-    * 3a1. System prompts user for correct data.
-    * 3a2. User enters new data.  
-    Steps 3a1-3a2 are repeated until the data entered are correct.  
-    Use case resumes at step 4.
+* 2a. System detects error in the entered data.
+    * 2a1. System prompts user for correct data.
+    * 2a2. User enters new data.  
+    Steps 2a1-2a2 are repeated until the data entered are correct.  
+    Use case resumes at step 3.
          
     Use case ends.
     
@@ -672,21 +668,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User chooses to edit a certain person from the persons list.
-2. System requests for details of the edited person.
-3. User enters the required information.
-4. System edits the person based on the information entered.
-5. System displays the updated persons list.  
+1. User enters the details to edit a certain person from the persons list.
+2. System edits the person based on the information entered.
+3. System displays the updated persons list.  
    
    Use case ends.
       
 **Extensions**
        
-* 3a. System detects error in the entered data.
-    * 3a1. System prompts user for correct data.
-    * 3a2. User enters new data.  
-    Steps 3a1-3a2 are repeated until the data entered are correct.  
-    Use case resumes at step 4.
+* 2a. System detects error in the entered data.
+    * 2a1. System prompts user for correct data.
+    * 2a2. User enters new data.  
+    Steps 2a1-2a2 are repeated until the data entered are correct.  
+    Use case resumes at step 3.
          
     Use case ends.
     
@@ -694,20 +688,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User chooses to find a certain person from the persons list.
-2. System requests for details of the targeted person.
-3. User enters the required information.
-4. System displays the targeted person.  
+1. User enters the details to find a certain person from the persons list.
+2. System searches for the targeted person.  
+3. System displays the targeted person.  
    
    Use case ends.
       
 **Extensions**
        
-* 3a. System detects error in the entered data.
-    * 3a1. System prompts user for correct data.
-    * 3a2. User enters new data.  
-    Steps 3a1-3a2 are repeated until the data entered are correct.  
-    Use case resumes at step 4.
+* 2a. System detects error in the entered data.
+    * 2a1. System prompts user for correct data.
+    * 2a2. User enters new data.  
+    Steps 2a1-2a2 are repeated until the data entered are correct.  
+    Use case resumes at step 3.
          
     Use case ends.    
     
@@ -776,21 +769,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User chooses to add a visit.
-2.  System requests for details of the visit. 
-3.  User enters the required details.
-4.  System adds the new visit.
-5.  System displays the updated visits list.
+1.  User enters the details to add a visit to the visits list.
+2.  System adds the new visit.
+3.  System displays the updated visits list.
 
     Use case ends.
 
 **Extensions**
       
-* 3a. System detects error in the entered data.
-    * 3a1. System prompts user for correct data.
-    * 3a2. User enters new data.  
-    Steps 3a1-3a2 are repeated until the data entered are correct.  
-    Use case resumes at step 4.
+* 2a. System detects error in the entered data.
+    * 2a1. System prompts user for correct data.
+    * 2a2. User enters new data.  
+    Steps 2a1-2a2 are repeated until the data entered are correct.  
+    Use case resumes at step 3.
          
     Use case ends.
 
@@ -798,21 +789,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User chooses to remove a certain visit from the visit list.
-2. System requests for details of the targeted visit.
-3. User enters the required information.
-4. System deletes the visit based on the information entered.
-5. System displays the updated visits list.  
+1. User enters the details to remove a certain visit from the visits list.
+2. System deletes the visit based on the information entered.
+3. System displays the updated visits list.  
    
    Use case ends.
       
 **Extensions**
        
-* 3a. System detects error in the entered data.
-    * 3a1. System prompts user for correct data.
-    * 3a2. User enters new data.  
-    Steps 3a1-3a2 are repeated until the data entered are correct.  
-    Use case resumes at step 4.
+* 2a. System detects error in the entered data.
+    * 2a1. System prompts user for correct data.
+    * 2a2. User enters new data.  
+    Steps 2a1-2a2 are repeated until the data entered are correct.  
+    Use case resumes at step 3.
          
     Use case ends.
     
@@ -820,21 +809,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User chooses to clear all the visits up to and before a date.
-2. System requests for details of the targeted date.
-3. User enters the required information.
-4. System deletes the visits based on the information entered.
-5. System displays the updated visits list.  
+1. User enters the details to clear all the visits up to and before a date.
+2. System deletes the visits based on the information entered.
+3. System displays the updated visits list.  
    
    Use case ends.
       
 **Extensions**
        
-* 3a. System detects error in the entered data.
-    * 3a1. System prompts user for correct data.
-    * 3a2. User enters new data.  
-    Steps 3a1-3a2 are repeated until the data entered are correct.  
-    Use case resumes at step 4.
+* 2a. System detects error in the entered data.
+    * 2a1. System prompts user for correct data.
+    * 2a2. User enters new data.  
+    Steps 2a1-2a2 are repeated until the data entered are correct.  
+    Use case resumes at step 3.
          
     Use case ends.
 
