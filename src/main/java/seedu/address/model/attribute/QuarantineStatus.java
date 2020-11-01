@@ -15,7 +15,7 @@ import java.util.Optional;
 public class QuarantineStatus {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Quarantine status should either be false or if infected, the quarantine start date."
+            "Quarantine status should either be false or if infected, the quarantine start date.\n"
             + "e.g. 2020-02-02 and false are valid values.";
 
     /*

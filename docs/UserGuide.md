@@ -169,8 +169,8 @@ Each row shows the parameter, the corresponding prefix and conditions for the pa
 | Phone     |  p/    | Phone numbers may only contain numbers, and it should be at least 3 digits long. |
 | Address   |  a/    | Addresses can take any values, and it should not be blank.|
 | Email     |  e/    | Please refer to [Email Format](#Email Format) below for more details.|
-| Quarantine Status | q/| Quarantine status should either be true or false, and it should not be blank.|
-| Infected Status | i/ | Infection status should either be true or false, and it should not be blank. |
+| Quarantine Status | q/| Quarantine status should either be false or if quarantined, the quarantined date.|
+| Infected Status | i/ | Infection status should either be false or if infected, the infected date. |
 | Tag       | t/     | Tags should be alphanumeric. |
 | Person Id | idp/   | Person Ids can take any values, and it should be at least 5 characters long.|
 | Location Id | idl/ | Location Ids can take any values, and it should be at least 5 characters long.|
@@ -245,7 +245,7 @@ A person can have any number of tags (including 0).
 :information_source: **Note:**
 
 * `ID` of person must be unique. No other person in the VirusTracker may have the same ID.
-* `QUARANTINE_STATUS` and `INFECTED_STATUS` can only be true or false.
+* `QUARANTINE_STATUS` and `INFECTED_STATUS` can only be false or the date of quarantine or infection respectively.
 
 </div>
 
