@@ -15,7 +15,8 @@ import java.util.Optional;
 public class InfectionStatus {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Infection status should either be false or the infection start date, and it should not be blank.";
+            "Infection status should either be false or if infected, the infection start date."
+            + "e.g. 2020-02-02 and false are valid values.";
 
     /*
      * The infection status can only be specified as

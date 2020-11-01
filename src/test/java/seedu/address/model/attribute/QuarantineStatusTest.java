@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 
+import java.util.Objects;
+
 import org.junit.jupiter.api.Test;
 
 public class QuarantineStatusTest {
@@ -31,10 +33,10 @@ public class QuarantineStatusTest {
         assertFalse(QuarantineStatus.isValidQuarantineStatus("91")); // numbers only
         assertFalse(QuarantineStatus.isValidQuarantineStatus("phone")); // alphabets
         assertFalse(QuarantineStatus.isValidQuarantineStatus("9011p041")); // mix of alphabets and digits
+        assertFalse(QuarantineStatus.isValidQuarantineStatus("true")); // true is not allowed
 
         // valid quarantine status
-        assertTrue(QuarantineStatus.isValidQuarantineStatus("true")); // boolean true
-        assertTrue(QuarantineStatus.isValidQuarantineStatus("True")); // capitalised true
+        assertTrue(QuarantineStatus.isValidQuarantineStatus("2020-02-02")); // date
         assertTrue(QuarantineStatus.isValidQuarantineStatus("false")); // boolean false
         assertTrue(QuarantineStatus.isValidQuarantineStatus("False")); // capitalised false
         assertTrue(QuarantineStatus.isValidQuarantineStatus("FaLSe")); // mix of upper and lower cases
@@ -42,7 +44,7 @@ public class QuarantineStatusTest {
 
     @Test
     public void equals() {
-        QuarantineStatus quarantineStatus = new QuarantineStatus("True");
+        QuarantineStatus quarantineStatus = new QuarantineStatus("false");
 
         // same object -> returns true
         assertTrue(quarantineStatus.equals(quarantineStatus));
@@ -57,14 +59,18 @@ public class QuarantineStatusTest {
         // null -> returns false
         assertFalse(quarantineStatus.equals(null));
 
-        // different remark -> returns false
-        QuarantineStatus differentQuarantineStatus = new QuarantineStatus("false");
+        // different value -> returns false
+        QuarantineStatus differentQuarantineStatus = new QuarantineStatus("2020-02-02");
         assertFalse(quarantineStatus.equals(differentQuarantineStatus));
     }
 
     @Test
     public void hashCode_success() {
-        QuarantineStatus quarantineStatus = new QuarantineStatus("true");
-        assertEquals(Boolean.valueOf(true).hashCode(), quarantineStatus.hashCode());
+        QuarantineStatus quarantineStatus = new QuarantineStatus("false");
+        int hashCode = Objects.hash(
+                quarantineStatus.getStatusAsBoolean(),
+                quarantineStatus.getQuarantineDate()
+        );
+        assertEquals(hashCode, quarantineStatus.hashCode());
     }
 }
