@@ -23,7 +23,8 @@ public class Email {
 
     // alphanumeric and special characters
     private static final String LOCAL_PART_REGEX = "^[\\w" + SPECIAL_CHARACTERS + "]*[^\\W_]";
-    private static final String DOMAIN_BEFORE_PERIOD_REGEX = "(([^\\W_]+-?[^\\W_]*)+\\.?)*"; // alphanumeric, period and hyphen
+    // alphanumeric, period and hyphen
+    private static final String DOMAIN_BEFORE_PERIOD_REGEX = "(([^\\W_]+-?[^\\W_]*)+\\.?)*";
     // com, info, and other top level domain names, max 63 characters
     private static final String DOMAIN_AFTER_PERIOD_REGEX = "[a-zA-Z0-9]{2,63}$";
     public static final String VALIDATION_REGEX = LOCAL_PART_REGEX + "@"
