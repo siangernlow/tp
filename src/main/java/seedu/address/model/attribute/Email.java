@@ -9,23 +9,25 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Email {
 
-    private static final String SPECIAL_CHARACTERS = "!#$%&'*+/=?`{|}~^.-";
+    private static final String SPECIAL_CHARACTERS = "\\._%+-";
     public static final String MESSAGE_CONSTRAINTS = "Emails should be of the format local-part@domain "
             + "and adhere to the following constraints:\n"
             + "1. The local-part should only contain alphanumeric characters and these special characters, excluding "
             + "the parentheses, (" + SPECIAL_CHARACTERS + ") .\n"
             + "2. This is followed by a '@' and then a domain name. "
+            + "There should not be any special characters before and after the \"@\"\n"
             + "The domain name must:\n"
             + "    - be at least 2 characters long\n"
             + "    - start and end with alphanumeric characters\n"
             + "    - consist of alphanumeric characters, a period or a hyphen for the characters in between, if any.";
+
     // alphanumeric and special characters
-    private static final String LOCAL_PART_REGEX = "^[\\w" + SPECIAL_CHARACTERS + "]+";
-    private static final String DOMAIN_FIRST_CHARACTER_REGEX = "[^\\W_]"; // alphanumeric characters except underscore
-    private static final String DOMAIN_MIDDLE_REGEX = "[a-zA-Z0-9.-]*"; // alphanumeric, period and hyphen
-    private static final String DOMAIN_LAST_CHARACTER_REGEX = "[^\\W_]$";
+    private static final String LOCAL_PART_REGEX = "^[\\w" + SPECIAL_CHARACTERS + "]*[^\\W_]";
+    private static final String DOMAIN_BEFORE_PERIOD_REGEX = "(([^\\W_]+-?[^\\W_]*)+\\.?)*"; // alphanumeric, period and hyphen
+    // com, info, and other top level domain names, max 63 characters
+    private static final String DOMAIN_AFTER_PERIOD_REGEX = "[a-zA-Z0-9]{2,63}$";
     public static final String VALIDATION_REGEX = LOCAL_PART_REGEX + "@"
-            + DOMAIN_FIRST_CHARACTER_REGEX + DOMAIN_MIDDLE_REGEX + DOMAIN_LAST_CHARACTER_REGEX;
+            + DOMAIN_BEFORE_PERIOD_REGEX + DOMAIN_AFTER_PERIOD_REGEX;
 
     public final String value;
 
