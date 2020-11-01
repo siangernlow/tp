@@ -56,6 +56,7 @@ public class DeleteVisitsCommand extends Command {
                 order++;
             }
         }
+        assert order >= 1;
         if (order > 1) {
             for (Visit visit: visitsToBeDeleted) {
                 model.deleteVisit(visit);

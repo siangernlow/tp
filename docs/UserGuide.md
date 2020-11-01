@@ -544,6 +544,20 @@ Examples:
 * `list l/locations` followed by `deleteLocation 2` deletes the 2nd location in the displayed location list.
 * `deleteLocation idl/L123` deletes the location with the ID L123.
 
+#### Deleting a visit
+
+Deletes the specified visit from the visit list.
+
+Format: `deleteVisit VISIT_IDENTIFIER` <br>
+
+<div markdown="block" class="alert alert-danger">
+:warning: **Warning:**
+Be careful that deleting a visit is irreversible!
+</div>
+
+Examples:
+* `list l/visits` followed by `deleteVisit 2` deletes the 2nd visit in the displayed visit list.
+
 #### Deleting visits using date
 
 Deletes all visits before and including the date.

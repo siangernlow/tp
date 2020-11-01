@@ -47,8 +47,8 @@ public class DeleteVisitCommand extends Command {
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_VISIT_INDEX);
         }
-
         Visit visitToDelete = lastShownList.get(targetIndex.getZeroBased());
+        assert visitToDelete != null;
         model.deleteVisit(visitToDelete);
         return new CommandResult(String.format(MESSAGE_DELETE_VISIT_SUCCESS, visitToDelete));
     }
