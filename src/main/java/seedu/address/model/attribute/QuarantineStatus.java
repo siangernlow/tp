@@ -3,6 +3,11 @@ package seedu.address.model.attribute;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.util.Objects;
+import java.util.Optional;
+
 /**
  * Represents a Person's quarantine status in the tracker.
  * Guarantees: immutable; is valid as declared in {@link #isValidQuarantineStatus(String)}
@@ -10,15 +15,17 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class QuarantineStatus {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Quarantine status should either be true or false, and it should not be blank.";
+            "Quarantine status should either be false or the quarantine start date, and it should not be blank.";
 
     /*
      * The quarantine status can only be specified as
-     * true or false, case-insensitive.
+     * a date or false, case-insensitive.
+     * Checks that quarantine status is false.
      */
-    public static final String VALIDATION_REGEX = "(?i)(true|false)";
+    public static final String VALIDATION_REGEX = "(?i)(false)";
 
     public final boolean isQuarantined;
+    public final Optional<LocalDate> quarantineDate;
 
     /**
      * Constructs a {@code QuarantineStatus}.
@@ -28,14 +35,28 @@ public class QuarantineStatus {
     public QuarantineStatus(String quarantineStatus) {
         requireNonNull(quarantineStatus);
         checkArgument(isValidQuarantineStatus(quarantineStatus), MESSAGE_CONSTRAINTS);
-        isQuarantined = Boolean.parseBoolean(quarantineStatus);
+        if (quarantineStatus.matches(VALIDATION_REGEX)) {
+            isQuarantined = false;
+            quarantineDate = Optional.empty();
+        } else {
+            isQuarantined = true;
+            LocalDate date = LocalDate.parse(quarantineStatus);
+            quarantineDate = Optional.of(date);
+        }
     }
 
     /**
      * Returns true if a given string is a valid quarantine status.
      */
     public static boolean isValidQuarantineStatus(String test) {
-        return test.matches(VALIDATION_REGEX);
+        if (!test.matches(VALIDATION_REGEX)) {
+            try {
+                LocalDate.parse(test);
+            } catch (DateTimeParseException e) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -46,6 +67,14 @@ public class QuarantineStatus {
         return isQuarantined;
     }
 
+    /**
+     * Returns the quarantine date as an optional.
+     * May contain a null if not quarantined.
+     */
+    public Optional<LocalDate> getQuarantineDate() {
+        return quarantineDate;
+    }
+
     @Override
     public String toString() {
         return String.valueOf(isQuarantined);
@@ -53,13 +82,21 @@ public class QuarantineStatus {
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof QuarantineStatus // instanceof handles nulls
-                && isQuarantined == ((QuarantineStatus) other).isQuarantined); // state check
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof QuarantineStatus)) {
+            return false;
+        }
+
+        QuarantineStatus otherStatus = (QuarantineStatus) other;
+        return otherStatus.isQuarantined == isQuarantined
+                && otherStatus.quarantineDate.equals(quarantineDate);
     }
 
     @Override
     public int hashCode() {
-        return Boolean.valueOf(isQuarantined).hashCode();
+        return Objects.hash(isQuarantined, quarantineDate);
     }
 }
