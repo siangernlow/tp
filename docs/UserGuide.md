@@ -548,7 +548,7 @@ Examples:
 
 Deletes the specified visit from the visit list.
 
-Format: `deleteVisit VISIT_IDENTIFIER` <br>
+Format: `deleteVisit VISIT_IDENTIFIER`
 
 <div markdown="block" class="alert alert-danger">
 :warning: **Warning:**
