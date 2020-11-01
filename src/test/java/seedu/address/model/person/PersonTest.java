@@ -13,6 +13,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_QUARANTINE_STAT
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_PERSON;
 
@@ -165,5 +166,27 @@ public class PersonTest {
             person.getTags()
         );
         assertEquals(hashCode, person.hashCode());
+    }
+
+    @Test
+    public void compareTo() {
+        Person smaller = ALICE;
+        Person bigger = BENSON;
+        Person sameNameDiffId = new PersonBuilder(ALICE).withId(BENSON.getId().toString()).build();
+
+        // smaller Person compare to bigger Person -> negative
+        assertTrue(smaller.compareTo(bigger) < 0);
+
+        // bigger Person compare to smaller Person -> positive
+        assertTrue(bigger.compareTo(smaller) > 0);
+
+        // same Person comparison -> 0
+        assertTrue(bigger.compareTo(bigger) == 0);
+
+        // same name, smaller id -> negative
+        assertTrue(smaller.compareTo(sameNameDiffId) < 0);
+
+        // same name, bigger id -> positive
+        assertTrue(sameNameDiffId.compareTo(smaller) > 0);
     }
 }

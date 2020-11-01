@@ -199,9 +199,9 @@ public class InfoHandlerTest {
         }
         HashMap<Id, Integer> actualHashMap = sortByValues(locations);
         HashMap<Id, Integer> expectedHashMap = new LinkedHashMap<>();
-        expectedHashMap.put(new Id("L9"), 3);
-        expectedHashMap.put(new Id("L3"), 1);
-        expectedHashMap.put(new Id("L10"), 1);
+        expectedHashMap.put(new Id("L9101112"), 3);
+        expectedHashMap.put(new Id("L3456"), 1);
+        expectedHashMap.put(new Id("L10111213"), 1);
         assertEquals(expectedHashMap, actualHashMap);
     }
 

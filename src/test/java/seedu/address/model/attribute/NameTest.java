@@ -44,4 +44,19 @@ public class NameTest {
         Name name = new Name("Bob Max");
         assertEquals("Bob Max".hashCode(), name.hashCode());
     }
+
+    @Test
+    public void compareTo() {
+        Name smaller = new Name("Alice");
+        Name bigger = new Name("Bob");
+
+        // bigger name compare to smaller name -> positive
+        assertTrue(bigger.compareTo(smaller) > 0);
+
+        // smaller name compare to bigger name -> negative
+        assertTrue(smaller.compareTo(bigger) < 0);
+
+        // same name comparison -> 0
+        assertTrue(bigger.compareTo(bigger) == 0);
+    }
 }

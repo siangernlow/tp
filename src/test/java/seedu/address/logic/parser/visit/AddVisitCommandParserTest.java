@@ -20,7 +20,7 @@ public class AddVisitCommandParserTest {
 
     @Test
     public void parse_allFieldsPresent_success() {
-        assertParseSuccess(parser, PREAMBLE_WHITESPACE + " idp/S2" + " idl/L2" + " d/ 2020-09-12",
+        assertParseSuccess(parser, PREAMBLE_WHITESPACE + " idp/S2345" + " idl/L2345" + " d/ 2020-09-12",
                 new AddVisitCommand(DEFAULT_PERSON_ID, DEFAULT_LOCATION_ID, DEFAULT_DATE));
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + " 2" + " 2" + " d/ 2020-09-12",
                 new AddVisitCommand(DEFAULT_PERSON_INDEX, DEFAULT_LOCATION_INDEX, DEFAULT_DATE));
@@ -29,8 +29,8 @@ public class AddVisitCommandParserTest {
     @Test
     public void parse_mixOfIdAndIndexes_failure() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddVisitCommand.MESSAGE_USAGE);
-        assertParseFailure(parser, " 2 " + " idp/2" + " d/ 2020-09-12", expectedMessage);
-        assertParseFailure(parser, " 2" + " idl/2" + " d/ 2020-09-12", expectedMessage);
+        assertParseFailure(parser, " 2 " + " idp/23456" + " d/ 2020-09-12", expectedMessage);
+        assertParseFailure(parser, " 2" + " idl/23456" + " d/ 2020-09-12", expectedMessage);
     }
 
     @Test
@@ -56,7 +56,7 @@ public class AddVisitCommandParserTest {
     @Test
     public void parse_invalidValue_failure() {
         // invalid date
-        assertParseFailure(parser, "2 " + " 0 " + " ",
+        assertParseFailure(parser, "2 " + " 1 " + " ",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddVisitCommand.MESSAGE_USAGE));
 
         // invalid locationId and date
@@ -68,14 +68,14 @@ public class AddVisitCommandParserTest {
 
     @Test
     public void parse_invalidId_throwsParseFailure() {
-        String userInput = PREAMBLE_WHITESPACE + " idp/ idl/2 d/2020-08-09";
+        String userInput = PREAMBLE_WHITESPACE + " idp/1 idl/2 d/2020-08-09";
         assertParseFailure(parser, userInput,
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddVisitCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parse_invalidDateWithId_throwsParseFailure() {
-        String userInput = PREAMBLE_WHITESPACE + " idp/3 idl/2 d/not a date";
+        String userInput = PREAMBLE_WHITESPACE + " idp/34567 idl/23456 d/not a date";
         assertParseFailure(parser, userInput,
                 String.format(MESSAGE_INVALID_DATE_FORMAT, AddVisitCommand.MESSAGE_USAGE));
     }

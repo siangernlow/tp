@@ -15,23 +15,23 @@ import seedu.address.model.visit.Visit;
  */
 public class TypicalVisitParametersContainers {
     public static final DataGenerator.VisitParametersContainer FIRST_VPC =
-            new VpcBuilder().withPersonIndex(new Id("S1")).withLocationIndex(new Id("L1")).build();
+            new VpcBuilder().withPersonIndex(new Id("S1234")).withLocationIndex(new Id("L1234")).build();
     public static final DataGenerator.VisitParametersContainer SECOND_VPC =
-            new VpcBuilder().withPersonIndex(new Id("S2")).withLocationIndex(new Id("L2")).build();
+            new VpcBuilder().withPersonIndex(new Id("S2345")).withLocationIndex(new Id("L2345")).build();
     public static final DataGenerator.VisitParametersContainer THIRD_VPC =
-            new VpcBuilder().withPersonIndex(new Id("S3")).withLocationIndex(new Id("L3")).build();
+            new VpcBuilder().withPersonIndex(new Id("S3456")).withLocationIndex(new Id("L3456")).build();
     public static final DataGenerator.VisitParametersContainer FOURTH_VPC =
-            new VpcBuilder().withPersonIndex(new Id("S4")).withLocationIndex(new Id("L4")).build();
+            new VpcBuilder().withPersonIndex(new Id("S4567")).withLocationIndex(new Id("L4567")).build();
     public static final DataGenerator.VisitParametersContainer FIFTH_VPC =
-            new VpcBuilder().withPersonIndex(new Id("S5")).withLocationIndex(new Id("L5")).build();
+            new VpcBuilder().withPersonIndex(new Id("S5678")).withLocationIndex(new Id("L5678")).build();
     public static final DataGenerator.VisitParametersContainer SIXTH_VPC =
-            new VpcBuilder().withPersonIndex(new Id("S6")).withLocationIndex(new Id("L6")).build();
+            new VpcBuilder().withPersonIndex(new Id("S6789")).withLocationIndex(new Id("L6789")).build();
     public static final DataGenerator.VisitParametersContainer SEVENTH_VPC =
-            new VpcBuilder().withPersonIndex(new Id("S7")).withLocationIndex(new Id("L7")).build();
+            new VpcBuilder().withPersonIndex(new Id("S78910")).withLocationIndex(new Id("L78910")).build();
     public static final DataGenerator.VisitParametersContainer EIGHTH_VPC =
-            new VpcBuilder().withPersonIndex(new Id("S8")).withLocationIndex(new Id("L8")).build();
+            new VpcBuilder().withPersonIndex(new Id("S891011")).withLocationIndex(new Id("L891011")).build();
     public static final DataGenerator.VisitParametersContainer NINTH_VPC =
-            new VpcBuilder().withPersonIndex(new Id("S9")).withLocationIndex(new Id("L9")).build();
+            new VpcBuilder().withPersonIndex(new Id("S9101112")).withLocationIndex(new Id("L9101112")).build();
 
     private TypicalVisitParametersContainers() {} // prevents instantiation
 
@@ -58,8 +58,8 @@ public class TypicalVisitParametersContainers {
     }
 
     public static class VpcBuilder {
-        public static final Id DEFAULT_PERSON_INDEX = new Id("S1");
-        public static final Id DEFAULT_LOCATION_INDEX = new Id("L1");
+        public static final Id DEFAULT_PERSON_INDEX = new Id("S1234");
+        public static final Id DEFAULT_LOCATION_INDEX = new Id("L1234");
         private static final DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         public static final LocalDate DEFAULT_DATE = LocalDate.parse("2020-10-12", inputFormat);
 

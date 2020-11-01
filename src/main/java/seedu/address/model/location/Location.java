@@ -18,8 +18,10 @@ public class Location implements Comparable<Location> {
     private final Id id;
 
     // Identity fields
-    private final Name name;
     private final Address address;
+
+    // Data fields
+    private final Name name;
 
     /**
      * Every field must be present and not null. Id must be unique.
@@ -70,7 +72,7 @@ public class Location implements Comparable<Location> {
     }
 
     /**
-     * Returns true if both locations have the same name and address.
+     * Returns true if both locations have the same address.
      * This defines a weaker notion of equality between two locations.
      */
     public boolean isSameLocation(Location otherLocation) {
@@ -79,7 +81,6 @@ public class Location implements Comparable<Location> {
         }
 
         return otherLocation != null
-                && otherLocation.getName().equals(getName())
                 && otherLocation.getAddress().equals(getAddress());
     }
 
@@ -122,6 +123,9 @@ public class Location implements Comparable<Location> {
 
     @Override
     public int compareTo(Location location) {
+        if (getName().compareTo(location.getName()) == 0) {
+            return getId().compareTo(location.getId());
+        }
         return getName().compareTo(location.getName());
     }
 }

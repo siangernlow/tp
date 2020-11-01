@@ -10,6 +10,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_INDEX;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showLocationAtIndex;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.address.logic.commands.visit.AddVisitCommand.MESSAGE_FUTURE_VISIT;
 import static seedu.address.logic.commands.visit.AddVisitCommand.MESSAGE_NO_WARNING;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
@@ -140,6 +141,35 @@ public class AddVisitCommandTest {
     }
 
     @Test
+    public void execute_validDate_success() {
+        // testing with current date
+        LocalDate todayDate = LocalDate.now();
+        AddVisitCommand addvisitCommand = new AddVisitCommand(DEFAULT_PERSON_INDEX, DEFAULT_LOCATION_INDEX, todayDate);
+        ModelStub modelStub = new ModelStubAcceptingVisitAdded();
+        Visit visit = new VisitBuilder().withDate(todayDate.toString())
+                .withLocation(DEFAULT_LOCATION).withPerson(DEFAULT_PERSON).build();
+        Model expectedModel = new ModelStubAcceptingVisitAdded();
+        expectedModel.addVisit(visit);
+        String expectedMsg = String.format(MESSAGE_NO_WARNING, visit);
+        CommandResult expectedCommandResult = new CommandResult(expectedMsg, false, false,
+                CommandResult.SWITCH_TO_VIEW_VISITS);
+        assertCommandSuccess(addvisitCommand, modelStub, expectedCommandResult, expectedModel);
+
+        // testing with yesterday date
+        LocalDate yesterdayDate = LocalDate.now().minusDays(1);
+        addvisitCommand = new AddVisitCommand(DEFAULT_PERSON_INDEX, DEFAULT_LOCATION_INDEX, yesterdayDate);
+        modelStub = new ModelStubAcceptingVisitAdded();
+        visit = new VisitBuilder().withDate(yesterdayDate.toString())
+                .withLocation(DEFAULT_LOCATION).withPerson(DEFAULT_PERSON).build();
+        expectedModel = new ModelStubAcceptingVisitAdded();
+        expectedModel.addVisit(visit);
+        expectedMsg = String.format(MESSAGE_NO_WARNING, visit);
+        expectedCommandResult = new CommandResult(expectedMsg, false, false,
+                CommandResult.SWITCH_TO_VIEW_VISITS);
+        assertCommandSuccess(addvisitCommand, modelStub, expectedCommandResult, expectedModel);
+    }
+
+    @Test
     public void execute_invalidPersonId_throwsCommandException() {
         AddVisitCommand addvisitCommand = new AddVisitCommand(DEFAULT_PERSON_ID, DEFAULT_LOCATION_ID,
                 DEFAULT_DATE);
@@ -171,7 +201,7 @@ public class AddVisitCommandTest {
 
     @Test
     public void execute_invalidLocationIndex_throwsCommandException() {
-        AddVisitCommand addvisitCommand = new AddVisitCommand(Index.fromOneBased(1), DEFAULT_LOCATION_INDEX,
+        AddVisitCommand addvisitCommand = new AddVisitCommand(INDEX_FIRST, DEFAULT_LOCATION_INDEX,
                 DEFAULT_DATE);
         ModelStub modelStub = new ModelStubInvalidLocationIndex();
 
@@ -187,6 +217,17 @@ public class AddVisitCommandTest {
         ModelStub modelStub = new ModelStubWithVisit(validVisit);
 
         assertThrows(CommandException.class, AddVisitCommand.MESSAGE_DUPLICATE_VISIT, () ->
+                addvisitCommand.execute(modelStub));
+    }
+
+    @Test
+    public void execute_invalidDate_throwsCommandException() {
+        LocalDate futureDate = LocalDate.now().plusDays(1);
+        AddVisitCommand addvisitCommand = new AddVisitCommand(INDEX_FIRST, DEFAULT_LOCATION_INDEX,
+                futureDate);
+        ModelStub modelStub = new ModelStubInvalidLocationIndex();
+
+        assertThrows(CommandException.class, MESSAGE_FUTURE_VISIT, () ->
                 addvisitCommand.execute(modelStub));
     }
 

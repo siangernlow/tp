@@ -230,6 +230,9 @@ public class Person implements Comparable<Person> {
 
     @Override
     public int compareTo(Person person) {
+        if (getName().compareTo(person.getName()) == 0) {
+            return getId().compareTo(person.getId());
+        }
         return getName().compareTo(person.getName());
     }
 }
