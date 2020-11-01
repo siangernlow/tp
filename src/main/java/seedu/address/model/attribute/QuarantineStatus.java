@@ -77,7 +77,11 @@ public class QuarantineStatus {
 
     @Override
     public String toString() {
-        return String.valueOf(isQuarantined);
+        if (isQuarantined) {
+            return quarantineDate.get().toString();
+        } else {
+            return String.valueOf(false);
+        }
     }
 
     @Override

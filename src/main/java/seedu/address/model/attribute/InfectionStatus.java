@@ -77,7 +77,11 @@ public class InfectionStatus {
 
     @Override
     public String toString() {
-        return String.valueOf(isInfected);
+        if (isInfected) {
+            return infectionDate.get().toString();
+        } else {
+            return String.valueOf(false);
+        }
     }
 
     @Override
