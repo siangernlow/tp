@@ -33,7 +33,11 @@ public class VisitCard extends UiPart<Region> {
     @FXML
     private Label personName;
     @FXML
+    private Label personId;
+    @FXML
     private Label locationName;
+    @FXML
+    private Label locationId;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -44,7 +48,9 @@ public class VisitCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         date.setText("Date: " + visit.getDate().toString());
         personName.setText("Visit by: " + visit.getPerson().getName());
+        personId.setText("Person ID: " + visit.getPersonIdAsString());
         locationName.setText("Location: " + visit.getLocation().getName());
+        locationId.setText("Location ID: " + visit.getLocationIdAsString());
     }
 
     @Override
