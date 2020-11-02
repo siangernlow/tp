@@ -33,14 +33,13 @@ public class Person implements Comparable<Person> {
     private final Address address;
     private final QuarantineStatus quarantineStatus;
     private final InfectionStatus infectionStatus;
-    private final Set<Tag> tags = new HashSet<>();
 
     /**
      * Every field must be present and not null. Id must be unique.
      */
     public Person(Id id, Name name, Phone phone, Email email, Address address, QuarantineStatus quarantineStatus,
-                  InfectionStatus infectionStatus, Set<Tag> tags) {
-        requireAllNonNull(id, name, phone, email, address, quarantineStatus, infectionStatus, tags);
+                  InfectionStatus infectionStatus) {
+        requireAllNonNull(id, name, phone, email, address, quarantineStatus, infectionStatus);
 
         this.name = name;
         this.phone = phone;
@@ -48,7 +47,6 @@ public class Person implements Comparable<Person> {
         this.address = address;
         this.quarantineStatus = quarantineStatus;
         this.infectionStatus = infectionStatus;
-        this.tags.addAll(tags);
         this.id = id;
     }
 
@@ -74,14 +72,6 @@ public class Person implements Comparable<Person> {
 
     public InfectionStatus getInfectionStatus() {
         return infectionStatus;
-    }
-
-    /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
-     */
-    public Set<Tag> getTags() {
-        return Collections.unmodifiableSet(tags);
     }
 
     public Id getId() {
@@ -116,23 +106,6 @@ public class Person implements Comparable<Person> {
 
     public String getInfectionStatusAsString() {
         return infectionStatus.toString();
-    }
-
-    public String getTagsAsString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Tag tag : tags) {
-            // toString() method of Tag adds '[' and ']', which is not needed here.
-            stringBuilder.append(tag.tagName).append(",");
-        }
-        String tagsString = stringBuilder.toString();
-
-        if (tagsString.isEmpty()) {
-            return tagsString;
-        }
-
-        // Remove trailing comma
-        tagsString = tagsString.substring(0, tagsString.length() - 1);
-        return tagsString;
     }
 
     /**
@@ -196,14 +169,13 @@ public class Person implements Comparable<Person> {
                 && otherPerson.getAddress().equals(getAddress())
                 && otherPerson.getQuarantineStatus().equals(getQuarantineStatus())
                 && otherPerson.getInfectionStatus().equals(getInfectionStatus())
-                && otherPerson.getTags().equals(getTags())
                 && otherPerson.getId().equals(getId());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(id, name, phone, email, address, quarantineStatus, infectionStatus, tags);
+        return Objects.hash(id, name, phone, email, address, quarantineStatus, infectionStatus);
     }
 
     @Override
@@ -223,7 +195,6 @@ public class Person implements Comparable<Person> {
                 .append(" Infected: ")
                 .append(getInfectionStatus())
                 .append(" Tags: ");
-        getTags().forEach(builder::append);
         return builder.toString();
     }
 

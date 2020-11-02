@@ -24,10 +24,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.attribute.Address;
@@ -121,11 +119,7 @@ public class DataGenerator {
             InfectionStatus infectionStatus = ParserUtil.parseInfectionStatus(
                     recoverDataFormat(argMultimap.getValue(PREFIX_INFECTION_STATUS).get()));
 
-            List<String> tags = argMultimap.getAllValues(PREFIX_TAG);
-            tags = tags.stream().map(DataGenerator::recoverDataFormat).collect(Collectors.toList());
-            Set<Tag> tagList = ParserUtil.parseTags(tags);
-
-            return new Person(personId, name, phone, email, address, quarantineStatus, infectionStatus, tagList);
+            return new Person(personId, name, phone, email, address, quarantineStatus, infectionStatus);
         } catch (ParseException pe) {
             throw new ParseException(String.format(INVALID_ROW_FORMAT, lineNumber, pe.getMessage()));
         }

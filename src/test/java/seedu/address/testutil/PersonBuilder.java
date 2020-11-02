@@ -1,8 +1,5 @@
 package seedu.address.testutil;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import seedu.address.model.attribute.Address;
 import seedu.address.model.attribute.Email;
 import seedu.address.model.attribute.Id;
@@ -11,7 +8,6 @@ import seedu.address.model.attribute.Name;
 import seedu.address.model.attribute.Phone;
 import seedu.address.model.attribute.QuarantineStatus;
 import seedu.address.model.person.Person;
-import seedu.address.model.util.SampleDataUtil;
 
 /**
  * A utility class to help with building Person objects.
@@ -33,7 +29,6 @@ public class PersonBuilder {
     private QuarantineStatus quarantineStatus;
     private InfectionStatus infectionStatus;
     private Id id;
-    private Set<Tag> tags;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -46,7 +41,6 @@ public class PersonBuilder {
         quarantineStatus = new QuarantineStatus(DEFAULT_QUARANTINE_STATUS);
         infectionStatus = new InfectionStatus(DEFAULT_INFECTION_STATUS);
         id = new Id(DEFAULT_ID);
-        tags = new HashSet<>();
     }
 
     /**
@@ -60,7 +54,6 @@ public class PersonBuilder {
         quarantineStatus = personToCopy.getQuarantineStatus();
         infectionStatus = personToCopy.getInfectionStatus();
         id = personToCopy.getId();
-        tags = new HashSet<>(personToCopy.getTags());
     }
 
     /**
@@ -68,14 +61,6 @@ public class PersonBuilder {
      */
     public PersonBuilder withName(String name) {
         this.name = new Name(name);
-        return this;
-    }
-
-    /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
-     */
-    public PersonBuilder withTags(String ... tags) {
-        this.tags = SampleDataUtil.getTagSet(tags);
         return this;
     }
 
@@ -131,6 +116,6 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(id, name, phone, email, address, quarantineStatus, infectionStatus, tags);
+        return new Person(id, name, phone, email, address, quarantineStatus, infectionStatus);
     }
 }

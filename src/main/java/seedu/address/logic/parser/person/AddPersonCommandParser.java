@@ -57,9 +57,8 @@ public class AddPersonCommandParser implements Parser<AddPersonCommand> {
                 argMultimap.getValue(PREFIX_QUARANTINE_STATUS).get());
         InfectionStatus infectionStatus = ParserUtil.parseInfectionStatus(
                 argMultimap.getValue(PREFIX_INFECTION_STATUS).get());
-        Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        Person person = new Person(id, name, phone, email, address, quarantineStatus, infectionStatus, tagList);
+        Person person = new Person(id, name, phone, email, address, quarantineStatus, infectionStatus);
 
         return new AddPersonCommand(person);
     }

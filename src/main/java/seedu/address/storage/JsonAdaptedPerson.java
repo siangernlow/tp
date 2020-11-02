@@ -1,11 +1,5 @@
 package seedu.address.storage;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -33,7 +27,6 @@ class JsonAdaptedPerson {
     private final String quarantineStatus;
     private final String infectionStatus;
     private final String id;
-    private final List<JsonAdaptedTag> tagged = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -43,8 +36,7 @@ class JsonAdaptedPerson {
             @JsonProperty("email") String email, @JsonProperty("address") String address,
             @JsonProperty("quarantineStatus") String quarantineStatus,
             @JsonProperty("infectionStatus") String infectionStatus,
-            @JsonProperty("id") String id,
-            @JsonProperty("tagged") List<JsonAdaptedTag> tagged) {
+            @JsonProperty("id") String id) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -52,9 +44,6 @@ class JsonAdaptedPerson {
         this.quarantineStatus = quarantineStatus;
         this.infectionStatus = infectionStatus;
         this.id = id;
-        if (tagged != null) {
-            this.tagged.addAll(tagged);
-        }
     }
 
     /**
@@ -68,9 +57,6 @@ class JsonAdaptedPerson {
         quarantineStatus = source.getQuarantineStatus().toString();
         infectionStatus = source.getInfectionStatus().toString();
         id = source.getId().toString();
-        tagged.addAll(source.getTags().stream()
-                .map(JsonAdaptedTag::new)
-                .collect(Collectors.toList()));
     }
 
     /**
@@ -79,11 +65,6 @@ class JsonAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person.
      */
     public Person toModelType() throws IllegalValueException {
-        final List<Tag> personTags = new ArrayList<>();
-        for (JsonAdaptedTag tag : tagged) {
-            personTags.add(tag.toModelType());
-        }
-
         if (name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
         }
@@ -143,10 +124,8 @@ class JsonAdaptedPerson {
         }
         final Id modelId = new Id(id);
 
-        final Set<Tag> modelTags = new HashSet<>(personTags);
-
         return new Person(modelId, modelName, modelPhone, modelEmail, modelAddress, modelQuarantineStatus,
-                modelInfectionStatus, modelTags);
+                modelInfectionStatus);
     }
 
 }

@@ -453,14 +453,6 @@ public class InfoHandler {
         attributes.add(PREFIX_QUARANTINE_STATUS + person.getQuarantineStatusAsString());
         attributes.add(PREFIX_INFECTION_STATUS + person.getInfectionStatusAsString());
 
-        String tags = person.getTagsAsString();
-        if (!tags.isEmpty()) {
-            String[] listOfTags = tags.split(",");
-            for (String tag : listOfTags) {
-                attributes.add(PREFIX_TAG + tag);
-            }
-        }
-
         return attributes;
     }
 
