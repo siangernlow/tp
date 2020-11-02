@@ -173,13 +173,14 @@ Each row shows the parameter, the corresponding prefix and conditions for the pa
 
 #### Email Format
 Emails should be of the format `local-part@domain` and adhere to the following constraints:
- 1. The local-part should only contain alphanumeric characters and these special characters, excluding the parentheses, (!#$%&'*+/=?`{|}~^.-).
+ 1. The local-part should only contain alphanumeric characters and these special characters, excluding the parentheses, (._%+-).
  2. This is followed by a '@' and then a domain name. 
  3. The domain name must:
      - be at least 2 characters long
      - start and end with alphanumeric characters
      - consist of alphanumeric characters, a period or a hyphen for the characters in between, if any.
-
+     - not have consecutive special characters. (E.g. `example@mail..com` has two consecutive periods.)
+     
 ### Index and Ids
 
 There are many situations where you may want to refer to a specific location or person when giving a command.
@@ -570,6 +571,20 @@ Be careful that deleting a location is irreversible!
 Examples:
 * `list l/locations` followed by `deleteLocation 2` deletes the 2nd location in the displayed location list.
 * `deleteLocation idl/L123` deletes the location with the ID L123.
+
+#### Deleting a visit
+
+Deletes the specified visit from the visit list.
+
+Format: `deleteVisit Index`
+
+<div markdown="block" class="alert alert-danger">
+:warning: **Warning:**
+Be careful that deleting a visit is irreversible!
+</div>
+
+Examples:
+* `list l/visits` followed by `deleteVisit 2` deletes the 2nd visit in the displayed visit list.
 
 #### Deleting visits using date
 
