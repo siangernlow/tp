@@ -23,6 +23,7 @@ import seedu.address.logic.commands.person.DeletePersonCommand;
 import seedu.address.logic.commands.person.EditPersonCommand;
 import seedu.address.logic.commands.person.FindPersonCommand;
 import seedu.address.logic.commands.visit.AddVisitCommand;
+import seedu.address.logic.commands.visit.DeleteVisitCommand;
 import seedu.address.logic.commands.visit.DeleteVisitsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.parser.location.AddLocationCommandParser;
@@ -33,6 +34,7 @@ import seedu.address.logic.parser.person.DeletePersonCommandParser;
 import seedu.address.logic.parser.person.EditPersonCommandParser;
 import seedu.address.logic.parser.person.FindPersonCommandParser;
 import seedu.address.logic.parser.visit.AddVisitCommandParser;
+import seedu.address.logic.parser.visit.DeleteVisitCommandParser;
 import seedu.address.logic.parser.visit.DeleteVisitsCommandParser;
 
 /**
@@ -104,6 +106,9 @@ public class VirusTrackerParser {
 
         case AddVisitCommand.COMMAND_WORD:
             return new AddVisitCommandParser().parse(arguments);
+
+        case DeleteVisitCommand.COMMAND_WORD:
+            return new DeleteVisitCommandParser().parse(arguments);
 
         case DeleteVisitsCommand.COMMAND_WORD:
             return new DeleteVisitsCommandParser().parse(arguments);

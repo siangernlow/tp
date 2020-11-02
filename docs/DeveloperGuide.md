@@ -217,7 +217,35 @@ already be aware of the state given Unique Identifier of the object.
 If VirusTracker creates the Unique Identifiers, this benefit would be lost since users will need to find the
 Unique Identifier provided by the VirusTracker. 
 
-### Deleting Visit using a specific date (Shu long)
+### Deleting Visit using a specific Index (Shu long)
+This feature allows the VirusTracker to delete the certain visit histories easily from the visit book as it may contain
+incorrect information that does not contribute to contact tracing and generating the potential list for quarantine.
+Hence, implementing this feature is necessary which enables the user to be more flexible in handling the data by 
+removing the invalid visit record from the data before adding the updated version.
+
+**Format:** `deleteVisit Index`
+
+* `Index` refers to the Index of the targeted visit inside the displayed visit list. The targeted visit must exist in VirusTracker.
+
+#### Implementation
+
+* The visit that corresponds to the specified Index will be removed from the visit list.
+
+#### Sequence diagram
+The sequence diagram below shows how the deleteVisit operation works. Certain utility classes have been omitted for readability.
+![DeleteVisitSequenceDiagram](images/DeleteVisitSequenceDiagram.png)
+
+The following activity diagram summarizes what happens when a user executes the `deleteVisit 1` command.
+![DeleteVisitActivityDiagram](images/DeleteVisitActivityDiagram.png)
+
+#### Design consideration
+
+To specifically remove an invalid visit from the visit list, the index of that targeted visit as shown in the list offers an easy
+way to quickly identify which visit the user is referring to, compared to using other fields of that visit information such
+as the details of the person, details of the location and details of the location, which requires a lot of input from the user
+for the same intended outcome.
+
+### Deleting Visits using a specific date (Shu long)
 This feature allows the VirusTracker to delete the outdated visit histories easily from the visit book as certain visit 
 records will not contribute to contact tracing and generating the potential list for quarantine. The rationale is that 
 the visits record before a time mark, for example 2 months ago, may not help to trace the recent list of contact 
@@ -579,7 +607,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | user | generate a list of infected people currently stored in VirusTracker|    
 | `* * *`  | user | generate a list of quarantined people currently stored in VirusTracker|    
 | `* * *`  | user with access to visits data from SafeEntry app   | add visit data to a list | generate desired lists and track contacts with the infected cases|
-| `* * *`  | user with access to the visit list| delete all visits by date | remove all the outdated visits inside the list |
+| `* * *`  | user with access to the visit list| delete a visit data | remove the invalid visit inside the visit list |
+| `* * *`  | user with access to the visit list| delete all visits by date | remove all the outdated visits inside the visit list |
 | `* * *`  | user setting up SafeEntry checkpoints | identify locations with high risk of infection | know which places need these checkpoints the most |
 | `* * *`  | user publishing daily reports | generate daily statistics quickly and easily|                                                         |
 | `* * *`  | user managing infected patient | update people's infection status | keep the current epidemic situation up to date |
@@ -595,7 +624,88 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `VirusTracker` and the **Actor** is the `user`, unless specified otherwise)
 
-**UC01 - Add a location**
+**UC01 - Add a Person**
+
+**MSS**
+
+1.  User enters the details to add a person to the persons list.
+2.  System adds the new person.
+3.  System displays the updated persons list.
+
+    Use case ends.
+
+**Extensions**
+      
+* 2a. System detects error in the entered data.
+    * 2a1. System prompts user for correct data.
+    * 2a2. User enters new data.  
+    Steps 2a1-2a2 are repeated until the data entered are correct.  
+    Use case resumes at step 3.
+         
+    Use case ends.
+
+**UC02 - Delete a Person**
+
+**MSS**
+
+1. User enters the details to remove a certain person from the persons list.
+2. System deletes the person based on the information entered.
+3. System displays the updated persons list.  
+   
+   Use case ends.
+      
+**Extensions**
+       
+* 2a. System detects error in the entered data.
+    * 2a1. System prompts user for correct data.
+    * 2a2. User enters new data.  
+    Steps 2a1-2a2 are repeated until the data entered are correct.  
+    Use case resumes at step 3.
+         
+    Use case ends.
+    
+**UC03 - Edit a Person**
+
+**MSS**
+
+1. User enters the details to edit a certain person from the persons list.
+2. System edits the person based on the information entered.
+3. System displays the updated persons list.  
+   
+   Use case ends.
+      
+**Extensions**
+       
+* 2a. System detects error in the entered data.
+    * 2a1. System prompts user for correct data.
+    * 2a2. User enters new data.  
+    Steps 2a1-2a2 are repeated until the data entered are correct.  
+    Use case resumes at step 3.
+         
+    Use case ends.
+    
+**UC04 - Find a Person**
+
+**MSS**
+
+1. User enters the details to find a certain person from the persons list.
+2. System searches for the targeted person.  
+3. System displays the targeted person.  
+   
+   Use case ends.
+      
+**Extensions**
+       
+* 2a. System detects error in the entered data.
+    * 2a1. System prompts user for correct data.
+    * 2a2. User enters new data.  
+    Steps 2a1-2a2 are repeated until the data entered are correct.  
+    Use case resumes at step 3.
+         
+    Use case ends.    
+    
+
+**UC05 - Add a location**
 
 **MSS**
 
@@ -615,7 +725,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     
     Use case ends.
 
-**UC02 - Delete a location**
+**UC06 - Delete a location**
 
 **MSS**
 
@@ -635,7 +745,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     
     Use case ends.
 
-**UC03 - Edit a location**
+**UC07 - Edit a location**
 
 **MSS**
 
@@ -655,51 +765,67 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     
     Use case ends.
 
-**UC04 - Add a visit**
+**UC08 - Add a visit**
 
 **MSS**
 
-1.  User chooses to add a visit.
-2.  System requests for details of the visit. 
-3.  User enters the required details.
-4.  System adds the new visit.
-5.  System displays the updated visits list.
+1.  User enters the details to add a visit to the visits list.
+2.  System adds the new visit.
+3.  System displays the updated visits list.
 
     Use case ends.
 
 **Extensions**
       
-* 3a. System detects error in the entered data.
-    * 3a1. System prompts user for correct data.
-    * 3a2. User enters new data.  
-    Steps 3a1-3a2 are repeated until the data entered are correct.  
-    Use case resumes at step 4.
+* 2a. System detects error in the entered data.
+    * 2a1. System prompts user for correct data.
+    * 2a2. User enters new data.  
+    Steps 2a1-2a2 are repeated until the data entered are correct.  
+    Use case resumes at step 3.
          
     Use case ends.
 
-**UC05 - Delete visits**
+**UC09 - Delete a visit**
 
 **MSS**
 
-1. User chooses to clear all the visits up to and before a date.
-2. System requests for details of the targeted date.
-3. User enters the required information.
-4. System deletes the visits based on the information entered.
-5. System displays the updated visits list.  
+1. User enters the details to remove a certain visit from the visits list.
+2. System deletes the visit based on the information entered.
+3. System displays the updated visits list.  
    
    Use case ends.
       
 **Extensions**
        
-* 3a. System detects error in the entered data.
-    * 3a1. System prompts user for correct data.
-    * 3a2. User enters new data.  
-    Steps 3a1-3a2 are repeated until the data entered are correct.  
-    Use case resumes at step 4.
+* 2a. System detects error in the entered data.
+    * 2a1. System prompts user for correct data.
+    * 2a2. User enters new data.  
+    Steps 2a1-2a2 are repeated until the data entered are correct.  
+    Use case resumes at step 3.
+         
+    Use case ends.
+    
+**UC10 - Delete visits by date**
+
+**MSS**
+
+1. User enters the details to clear all the visits up to and before a date.
+2. System deletes the visits based on the information entered.
+3. System displays the updated visits list.  
+   
+   Use case ends.
+      
+**Extensions**
+       
+* 2a. System detects error in the entered data.
+    * 2a1. System prompts user for correct data.
+    * 2a2. User enters new data.  
+    Steps 2a1-2a2 are repeated until the data entered are correct.  
+    Use case resumes at step 3.
          
     Use case ends.
 
-**UC06 - Update infection status**
+**UC11 - Update infection status**
 
 **MSS**
 
@@ -723,7 +849,7 @@ Use case ends.
     
     Use case ends.  
             
-**UC07 - Update quarantine status**
+**UC12 - Update quarantine status**
 
 **MSS**
 
@@ -743,7 +869,7 @@ Use case ends.
 * *a. At any time, user choose to cancel the update.    
     Use case ends.  
 
-**UC08 - View all people**
+**UC13 - View all people**
 
 **MSS**
 
@@ -760,7 +886,7 @@ Use case ends.
     
   Use case ends.
     
-**UC09 - View all locations**
+**UC14 - View all locations**
 
 **MSS**
 
@@ -777,7 +903,7 @@ Use case ends.
     
   Use case ends.
     
-**UC10 - View all visits**
+**UC15 - View all visits**
 
 **MSS**
 
@@ -794,7 +920,7 @@ Use case ends.
     
   Use case ends.
     
-**UC11 - View all infected people**
+**UC16 - View all infected people**
 
 **MSS**
 
@@ -812,7 +938,7 @@ Use case ends.
 * 2b. There are no infected people.
     * 2b1. Go to 2a.
 
-**UC08 - View all quarantined people**
+**UC17 - View all quarantined people**
 
 **MSS**
 
@@ -830,7 +956,7 @@ Use case ends.
 * 2b. There are no quarantined people.
     * 2b1. Go to 2a.
     
-**UC09 - View locations that an infected person has been to**
+**UC18 - View locations that an infected person has been to**
 
 **MSS**
 
@@ -857,7 +983,7 @@ Use case ends.
         
         Use case ends.       
 
-**UC10 - View people in contact with an infected person**
+**UC19 - View people in contact with an infected person**
 
 **MSS**
 
@@ -885,7 +1011,7 @@ Use case ends.
         
         Use case ends.  
     
-**UC11 - View high-risk locations**
+**UC20 - View high-risk locations**
 
 **MSS**
 
@@ -900,7 +1026,7 @@ Use case ends.
 
     Use case ends.
 
-**UC12 - View summary of data**
+**UC21 - View summary of data**
 
 **MSS**
 
@@ -915,7 +1041,7 @@ Use case ends.
     * 2a1. System flags that statistic as unavailable.
     * 2a2. For remaining valid statistics, go to 2. 
     
-**UC13 - Add data from CSV file**
+**UC22 - Add data from CSV file**
 
 **MSS**
 
