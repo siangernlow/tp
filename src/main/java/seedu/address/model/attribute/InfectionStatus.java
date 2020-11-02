@@ -76,6 +76,22 @@ public class InfectionStatus {
         return infectionDate;
     }
 
+    public Optional<String> getReaderFriendlyDate() {
+        if (infectionDate.isEmpty()) {
+            return Optional.empty();
+        }
+
+        LocalDate date = infectionDate.get();
+
+        String day = String.valueOf(date.getDayOfMonth());
+        String month = date.getMonth().toString();
+        month = month.substring(0, 1).toUpperCase() + month.substring(1, 3).toLowerCase();
+        String year = String.valueOf(date.getYear());
+        String readerFriendlyDate = day + " " + month + " " + year;
+
+        return Optional.of(readerFriendlyDate);
+    }
+
     @Override
     public String toString() {
         if (isInfected) {

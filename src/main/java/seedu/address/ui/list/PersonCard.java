@@ -42,10 +42,6 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
-    private Label quarantineStatus;
-    @FXML
-    private Label infectionStatus;
-    @FXML
     private FlowPane tags;
 
     /**
@@ -60,8 +56,20 @@ public class PersonCard extends UiPart<Region> {
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
-        quarantineStatus.setText("Quarantine Status: " + person.getQuarantineStatus().toString());
-        infectionStatus.setText("Infected: " + person.getInfectionStatus().toString());
+
+        if (person.isInfected()) {
+            String msg = "Infected: "
+                    + person.getInfectionStatus().getReaderFriendlyDate().get();
+            Label label = new Label(msg);
+            tags.getChildren().add(label);
+        }
+        if (person.isQuarantined()) {
+            String msg = "Quarantined: "
+                    + person.getQuarantineStatus().getReaderFriendlyDate().get();
+            Label label = new Label(msg);
+            tags.getChildren().add(label);
+        }
+
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> {
