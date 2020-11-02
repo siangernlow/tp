@@ -221,6 +221,12 @@ public class InfoHandler {
         return visitsByPerson;
     }
 
+    /**
+     * Checks if a visit is by a person with a specified id.
+     * @param visit Visit being checked.
+     * @param personId Id of the person.
+     * @return A boolean of whether a visit is by a person with a specified id.
+     */
     private boolean isValidVisit(Visit visit, Id personId) {
         boolean isPersonValid = visit.getPerson().getId().equals(personId);
         LocalDate currentDate = LocalDate.now();
@@ -244,31 +250,17 @@ public class InfoHandler {
     }
 
     /**
-     * Generates a list of visits that are associated with the given list of location Ids.
-     * @param locationIds List of location Ids.
-     * @return List of visits that are associated with the location Ids.
+     * Generates a list of visits that are associated with the given visits.
+     * @param visitBook Visits provided.
+     * @return List of visits that are associated with the given visits.
      */
-    public VisitBook generateVisitsByLocationIds(List<Id> locationIds) {
-        ReadOnlyVisitBook tempVisitBook = model.getVisitBook();
-        VisitBook associatedVisits = new VisitBook();
-        for (Id locationId : locationIds) {
-            for (int i = 0; i < tempVisitBook.getVisitList().size(); i++) {
-                Visit visit = tempVisitBook.getVisitList().get(i);
-                if (visit.getLocation().getId().equals(locationId)) {
-                    associatedVisits.addVisit(visit);
-                }
-            }
-        }
-        return associatedVisits;
-    }
-
     public VisitBook generateAffectedVisits(VisitBook visitBook) {
         ReadOnlyVisitBook tempVisitBook = model.getVisitBook();
         VisitBook associatedVisits = new VisitBook();
         for (Visit givenVisit : visitBook.getVisitList()) {
             for (int i = 0; i < tempVisitBook.getVisitList().size(); i++) {
                 Visit visit = tempVisitBook.getVisitList().get(i);
-                if (isAffectedVisit(visit, givenVisit, associatedVisits)) {
+                if (isAddableVisit(visit, givenVisit, associatedVisits)) {
                     associatedVisits.addVisit(visit);
                 }
             }
@@ -276,9 +268,16 @@ public class InfoHandler {
         return associatedVisits;
     }
 
-    private boolean isAffectedVisit(Visit visit, Visit originalVisit, VisitBook associatedVisits) {
-        boolean isLocationValid = visit.getLocation().getId().equals(originalVisit.getLocation().getId());
-        boolean isDateValid = visit.getDate().isEqual(originalVisit.getDate());
+    /**
+     * Checks if a visit is considered affected by a given visit and can be added to the list of affected visits.
+     * @param visit Visit to be checked.
+     * @param givenVisit Visit the above parameter is being checked against.
+     * @param associatedVisits List of visits already affected by the given visit.
+     * @return A boolean of whether the visit can be added or not.
+     */
+    private boolean isAddableVisit(Visit visit, Visit givenVisit, VisitBook associatedVisits) {
+        boolean isLocationValid = visit.getLocation().getId().equals(givenVisit.getLocation().getId());
+        boolean isDateValid = visit.getDate().isEqual(givenVisit.getDate());
         boolean isDuplicate = associatedVisits.getVisitList().contains(visit);
         return isLocationValid && isDateValid && !isDuplicate;
     }
