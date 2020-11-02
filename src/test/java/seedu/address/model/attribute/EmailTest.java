@@ -49,7 +49,7 @@ public class EmailTest {
         assertFalse(Email.isValidEmail("peterjack@-example.com")); // domain name starts with a hyphen
         assertFalse(Email.isValidEmail("peterjack@example.com-")); // domain name ends with a hyphen
         assertFalse(Email.isValidEmail("peterjack-@example.com")); // local part ends with a hyphen
-        assertFalse(Email.isValidEmail("peterjack-@example..com")); // two periods consecutively
+        assertFalse(Email.isValidEmail("peterjack@example..com")); // two periods consecutively
 
         // valid email
         assertTrue(Email.isValidEmail("PeterJack_1190@example.com"));
