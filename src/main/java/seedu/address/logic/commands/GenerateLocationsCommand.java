@@ -30,7 +30,8 @@ public class GenerateLocationsCommand extends Command {
             + "Example: " + COMMAND_WORD
             + PREFIX_PERSON_ID + "S123A";
 
-    public static final String MESSAGE_PERSON_HAS_NO_VISITS = "This person is not associated with any visits";
+    public static final String MESSAGE_PERSON_HAS_NO_VISITS = "This person is not associated with any visits"
+            + "in the past 2 weeks";
     public static final String MESSAGE_PERSON_IS_NOT_INFECTED = "This person is not infected";
 
     private final ReadOnlyIndexIdPair pair;

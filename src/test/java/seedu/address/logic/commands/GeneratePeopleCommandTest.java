@@ -12,12 +12,12 @@ import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_INFECTED;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_QUARANTINED;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
-import static seedu.address.testutil.TypicalLocations.DANIEL_LOCATION;
-import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalLocations.*;
+import static seedu.address.testutil.TypicalPersons.*;
 import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
 import static seedu.address.testutil.VisitBuilder.DEFAULT_DATE;
 
+import java.time.LocalDate;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
@@ -28,6 +28,7 @@ import seedu.address.logic.parser.IndexIdPairStub;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.person.Person;
 import seedu.address.model.visit.Visit;
 import seedu.address.testutil.PersonBuilder;
@@ -109,6 +110,9 @@ public class GeneratePeopleCommandTest {
     @Test
     public void execute_noPeopleFound_throwCommandException() {
         String expectedMessage = MESSAGE_NO_PEOPLE_FOUND;
+        Visit testVisit = new Visit(new PersonBuilder().withId("S5678").build(),
+                ELLE_LOCATION, LocalDate.now());
+        model.addVisit(testVisit);
         Index index = Index.fromOneBased(5);
         GeneratePeopleCommand command = new GeneratePeopleCommand(new IndexIdPairStub(index, null));
         assertThrows(CommandException.class, () -> command.execute(model));
@@ -122,12 +126,14 @@ public class GeneratePeopleCommandTest {
     @Test
     public void execute_validInputFromViewingAllPeople_success() {
         String expectedMessage = "Generated people for: Daniel Meier";
-        Visit testVisit = new Visit(new PersonBuilder().withId("S8910H").build(),
-                DANIEL_LOCATION, DEFAULT_DATE);
-        model.addVisit(testVisit);
+        Visit testVisitOne = new Visit(DANIEL, DANIEL_LOCATION, LocalDate.now());
+        Visit testVisitTwo = new Visit(ELLE, DANIEL_LOCATION, LocalDate.now());
+        model.addVisit(testVisitOne);
+        model.addVisit(testVisitTwo);
         Model expectedModelForGenerate = expectedModel;
-        expectedModelForGenerate.addVisit(testVisit);
-        Predicate<Person> personPredicate = person -> person.getId().equals("S8910H");
+        expectedModelForGenerate.addVisit(testVisitOne);
+        expectedModelForGenerate.addVisit(testVisitTwo);
+        Predicate<Person> personPredicate = person -> person.getId().equals(new Id("S5678"));
         expectedModelForGenerate.updateFilteredPersonList(personPredicate);
         Index index = Index.fromOneBased(4);
         GeneratePeopleCommand command = new GeneratePeopleCommand(new IndexIdPairStub(index, null));
@@ -139,12 +145,14 @@ public class GeneratePeopleCommandTest {
     @Test
     public void execute_validInputFromViewingAllInfected_noPeopleFound() {
         String expectedMessage = MESSAGE_NO_PEOPLE_FOUND;
+        Visit testVisit = new Visit(DANIEL, DANIEL_LOCATION, LocalDate.now());
         Model modelForAllInfected = model;
+        modelForAllInfected.addVisit(testVisit);
         modelForAllInfected.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
-        GeneratePeopleCommand command = new GeneratePeopleCommand(new IndexIdPairStub(INDEX_FIRST, null));
-        assertThrows(CommandException.class, () -> command.execute(model));
+        GeneratePeopleCommand command = new GeneratePeopleCommand(new IndexIdPairStub(INDEX_SECOND, null));
+        assertThrows(CommandException.class, () -> command.execute(modelForAllInfected));
         try {
-            command.execute(model);
+            command.execute(modelForAllInfected);
         } catch (CommandException e) {
             assertTrue(e.getMessage().equals(expectedMessage));
         }
@@ -156,5 +164,41 @@ public class GeneratePeopleCommandTest {
         modelForAllQuarantined.updateFilteredPersonList(PREDICATE_SHOW_ALL_QUARANTINED);
         GeneratePeopleCommand command = new GeneratePeopleCommand(new IndexIdPairStub(INDEX_FIRST, null));
         assertThrows(CommandException.class, () -> command.execute(modelForAllQuarantined));
+    }
+
+    @Test
+    public void execute_dateOfVisitIsWithinRange_success() {
+        String expectedMessage = "Generated people for: Daniel Meier";
+        LocalDate testDate = LocalDate.now().minusDays(7);
+        Visit testVisitOne = new Visit(DANIEL, DANIEL_LOCATION, testDate);
+        Visit testVisitTwo = new Visit(ELLE, DANIEL_LOCATION, testDate);
+        model.addVisit(testVisitOne);
+        model.addVisit(testVisitTwo);
+        Model expectedModelForGenerate = expectedModel;
+        expectedModelForGenerate.addVisit(testVisitOne);
+        expectedModelForGenerate.addVisit(testVisitTwo);
+        Predicate<Person> personPredicate = person -> person.getId().equals(new Id("S5678"));
+        expectedModelForGenerate.updateFilteredPersonList(personPredicate);
+        Index index = Index.fromOneBased(4);
+        GeneratePeopleCommand command = new GeneratePeopleCommand(new IndexIdPairStub(index, null));
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
+                CommandResult.SWITCH_TO_VIEW_PEOPLE);
+        assertCommandSuccess(command, model, expectedCommandResult, expectedModelForGenerate);
+    }
+
+    @Test
+    public void execute_dateOfVisitOutOfRange_noPeopleFound() {
+        String expectedMessage = MESSAGE_PERSON_HAS_NO_VISITS;
+        LocalDate testDate = LocalDate.now().minusDays(14);
+        Visit testVisitOne = new Visit(DANIEL, DANIEL_LOCATION, testDate);
+        model.addVisit(testVisitOne);
+        Index index = Index.fromOneBased(4);
+        GeneratePeopleCommand command = new GeneratePeopleCommand(new IndexIdPairStub(index, null));
+        assertThrows(CommandException.class, () -> command.execute(model));
+        try {
+            command.execute(model);
+        } catch (CommandException e) {
+            assertTrue(e.getMessage().equals(expectedMessage));
+        }
     }
 }

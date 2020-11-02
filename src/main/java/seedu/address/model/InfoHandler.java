@@ -18,6 +18,8 @@ import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_QUARANTINED;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_VISITS;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -48,6 +50,7 @@ public class InfoHandler {
     private static final double HUNDRED_IN_DOUBLE = 100.0;
     private static final String COUNT_FORMAT = "%d";
     private static final String PERCENTAGE_FORMAT = "%.2f";
+    private static final int NUM_DAYS_IN_TWO_WEEKS = 14;
 
     // Headers for summary display
     private static final String TOTAL_PEOPLE_HEADER = "Total number of people:";
@@ -210,11 +213,21 @@ public class InfoHandler {
         ReadOnlyVisitBook tempVisitBook = model.getVisitBook();
         VisitBook visitsByPerson = new VisitBook();
         for (int i = 0; i < tempVisitBook.getVisitList().size(); i++) {
-            if (tempVisitBook.getVisitList().get(i).getPerson().getId().equals(personId)) {
+            Visit visit = tempVisitBook.getVisitList().get(i);
+            if (isValidVisit(visit, personId)) {
                 visitsByPerson.addVisit(tempVisitBook.getVisitList().get(i));
             }
         }
         return visitsByPerson;
+    }
+
+    private boolean isValidVisit(Visit visit, Id personId) {
+        boolean isPersonValid = visit.getPerson().getId().equals(personId);
+        LocalDate currentDate = LocalDate.now();
+        LocalDate visitDate = visit.getDate();
+        boolean isDateValid = (currentDate.isAfter(visitDate) || currentDate.isEqual(visitDate))
+                && ChronoUnit.DAYS.between(visitDate, currentDate) < NUM_DAYS_IN_TWO_WEEKS;
+        return isPersonValid && isDateValid;
     }
 
     /**
@@ -247,6 +260,27 @@ public class InfoHandler {
             }
         }
         return associatedVisits;
+    }
+
+    public VisitBook generateAffectedVisits(VisitBook visitBook) {
+        ReadOnlyVisitBook tempVisitBook = model.getVisitBook();
+        VisitBook associatedVisits = new VisitBook();
+        for (Visit givenVisit : visitBook.getVisitList()) {
+            for (int i = 0; i < tempVisitBook.getVisitList().size(); i++) {
+                Visit visit = tempVisitBook.getVisitList().get(i);
+                if (isAffectedVisit(visit, givenVisit, associatedVisits)) {
+                    associatedVisits.addVisit(visit);
+                }
+            }
+        }
+        return associatedVisits;
+    }
+
+    private boolean isAffectedVisit(Visit visit, Visit originalVisit, VisitBook associatedVisits) {
+        boolean isLocationValid = visit.getLocation().getId().equals(originalVisit.getLocation().getId());
+        boolean isDateValid = visit.getDate().isEqual(originalVisit.getDate());
+        boolean isDuplicate = associatedVisits.getVisitList().contains(visit);
+        return isLocationValid && isDateValid && !isDuplicate;
     }
 
     /**

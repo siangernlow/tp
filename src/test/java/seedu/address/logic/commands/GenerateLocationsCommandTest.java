@@ -12,10 +12,12 @@ import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_INFECTED;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_QUARANTINED;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
+import static seedu.address.testutil.TypicalLocations.DANIEL_LOCATION;
 import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.*;
 import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
 
+import java.time.LocalDate;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
@@ -27,7 +29,10 @@ import seedu.address.logic.parser.IndexIdPairStub;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
+import seedu.address.model.person.Person;
+import seedu.address.model.visit.Visit;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
@@ -106,8 +111,11 @@ public class GenerateLocationsCommandTest {
     @Test
     public void execute_validInputFromViewingAllPeople_success() {
         String expectedMessage = "Generated locations for: Daniel Meier";
+        Visit testVisit = new Visit(DANIEL, DANIEL_LOCATION, LocalDate.now());
+        model.addVisit(testVisit);
         Model expectedModelForGenerate = expectedModel;
-        Predicate<Location> locationPredicate = location -> location.getId().equals("L456D");
+        expectedModelForGenerate.addVisit(testVisit);
+        Predicate<Location> locationPredicate = location -> location.getId().equals(new Id("L456D"));
         expectedModelForGenerate.updateFilteredLocationList(locationPredicate);
         Index index = Index.fromOneBased(4);
         GenerateLocationsCommand command = new GenerateLocationsCommand(new IndexIdPair(index, null, PREFIX_PERSON_ID));
@@ -120,11 +128,14 @@ public class GenerateLocationsCommandTest {
     public void execute_validInputFromViewingAllInfected_success() {
         CommandResult expectedCommand = new CommandResult("Generated locations for: Benson Meier",
                 false, false, CommandResult.SWITCH_TO_VIEW_LOCATIONS);
+        Visit testVisit = new Visit(BENSON, DANIEL_LOCATION, LocalDate.now());
         Model modelForAllInfected = model;
+        modelForAllInfected.addVisit(testVisit);
         modelForAllInfected.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
 
         Model expectedModelForGenerate = expectedModel;
-        Predicate<Location> locationPredicate = location -> location.getId().equals("L456D");
+        expectedModelForGenerate.addVisit(testVisit);
+        Predicate<Location> locationPredicate = location -> location.getId().equals(new Id("L456D"));
         expectedModelForGenerate.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
         expectedModelForGenerate.updateFilteredLocationList(locationPredicate);
 
@@ -138,5 +149,22 @@ public class GenerateLocationsCommandTest {
         modelForAllQuarantined.updateFilteredPersonList(PREDICATE_SHOW_ALL_QUARANTINED);
         GenerateLocationsCommand command = new GenerateLocationsCommand(new IndexIdPairStub(INDEX_FIRST, null));
         assertThrows(CommandException.class, () -> command.execute(modelForAllQuarantined));
+    }
+
+    @Test
+    public void execute_dateOfVisitIsWithinRange_success() {
+        String expectedMessage = "Generated locations for: Daniel Meier";
+        LocalDate testDate = LocalDate.now().minusDays(7);
+        Visit testVisitOne = new Visit(DANIEL, DANIEL_LOCATION, testDate);
+        model.addVisit(testVisitOne);
+        Model expectedModelForGenerate = expectedModel;
+        expectedModelForGenerate.addVisit(testVisitOne);
+        Predicate<Location> locationPredicate = location -> location.getId().equals(new Id("L456D"));
+        expectedModelForGenerate.updateFilteredLocationList(personPredicate);
+        Index index = Index.fromOneBased(4);
+        GeneratePeopleCommand command = new GeneratePeopleCommand(new IndexIdPairStub(index, null));
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
+                CommandResult.SWITCH_TO_VIEW_PEOPLE);
+        assertCommandSuccess(command, model, expectedCommandResult, expectedModelForGenerate);
     }
 }
