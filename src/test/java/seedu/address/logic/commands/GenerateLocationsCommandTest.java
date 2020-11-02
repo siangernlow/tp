@@ -14,7 +14,9 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 import static seedu.address.testutil.TypicalLocations.DANIEL_LOCATION;
 import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
-import static seedu.address.testutil.TypicalPersons.*;
+import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.DANIEL;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
 
 import java.time.LocalDate;
@@ -31,7 +33,6 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
-import seedu.address.model.person.Person;
 import seedu.address.model.visit.Visit;
 
 /**

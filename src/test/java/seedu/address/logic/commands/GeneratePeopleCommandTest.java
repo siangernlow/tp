@@ -12,10 +12,13 @@ import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_INFECTED;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_QUARANTINED;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
-import static seedu.address.testutil.TypicalLocations.*;
-import static seedu.address.testutil.TypicalPersons.*;
+import static seedu.address.testutil.TypicalLocations.DANIEL_LOCATION;
+import static seedu.address.testutil.TypicalLocations.ELLE_LOCATION;
+import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
+import static seedu.address.testutil.TypicalPersons.DANIEL;
+import static seedu.address.testutil.TypicalPersons.ELLE;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
-import static seedu.address.testutil.VisitBuilder.DEFAULT_DATE;
 
 import java.time.LocalDate;
 import java.util.function.Predicate;
