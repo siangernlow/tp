@@ -44,6 +44,7 @@ import seedu.address.logic.commands.person.EditPersonCommand;
 import seedu.address.logic.commands.person.FindPersonCommand;
 import seedu.address.logic.commands.visit.AddVisitCommand;
 import seedu.address.logic.commands.visit.AddVisitsFromCsvCommand;
+import seedu.address.logic.commands.visit.DeleteVisitCommand;
 import seedu.address.logic.commands.visit.DeleteVisitsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.location.Location;
@@ -106,6 +107,13 @@ public class VirusTrackerParserTest {
         DeleteLocationCommand command = (DeleteLocationCommand) parser.parseCommand(
                 DeleteLocationCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased());
         assertEquals(new DeleteLocationCommand(new IndexIdPairStub(INDEX_FIRST, null)), command);
+    }
+
+    @Test
+    public void parseCommand_deleteVisit() throws Exception {
+        DeleteVisitCommand command = (DeleteVisitCommand) parser.parseCommand(
+                DeleteVisitCommand.COMMAND_WORD + " " + "1");
+        assertEquals(new DeleteVisitCommand(INDEX_FIRST), command);
     }
 
     @Test
