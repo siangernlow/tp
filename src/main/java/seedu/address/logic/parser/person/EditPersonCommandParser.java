@@ -25,7 +25,6 @@ import seedu.address.logic.parser.IndexIdPair;
 import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.attribute.Tag;
 
 /**
  * Parses input arguments and creates a new EditPersonCommand object

@@ -21,7 +21,6 @@ import seedu.address.model.attribute.InfectionStatus;
 import seedu.address.model.attribute.Name;
 import seedu.address.model.attribute.Phone;
 import seedu.address.model.attribute.QuarantineStatus;
-import seedu.address.model.attribute.Tag;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.

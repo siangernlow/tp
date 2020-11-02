@@ -54,7 +54,6 @@ import seedu.address.model.attribute.InfectionStatus;
 import seedu.address.model.attribute.Name;
 import seedu.address.model.attribute.Phone;
 import seedu.address.model.attribute.QuarantineStatus;
-import seedu.address.model.attribute.Tag;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 public class EditPersonCommandParserTest {
