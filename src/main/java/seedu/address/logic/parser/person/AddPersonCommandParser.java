@@ -9,7 +9,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_QUARANTINE_STATUS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.logic.commands.person.AddPersonCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
@@ -39,7 +38,7 @@ public class AddPersonCommandParser implements Parser<AddPersonCommand> {
     public AddPersonCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_PERSON_ID, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                        PREFIX_ADDRESS, PREFIX_QUARANTINE_STATUS, PREFIX_INFECTION_STATUS, PREFIX_TAG);
+                        PREFIX_ADDRESS, PREFIX_QUARANTINE_STATUS, PREFIX_INFECTION_STATUS);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_PERSON_ID, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL,
                 PREFIX_QUARANTINE_STATUS, PREFIX_INFECTION_STATUS) || !argMultimap.getPreamble().isEmpty()) {

@@ -132,10 +132,7 @@ This section introduces you to important notations and details that apply to the
   e.g. in `addPerson n/NAME`, `NAME` is a parameter which can be used as `addPerson n/John Doe`.
 
 * Items in square brackets are optional.<br>
-  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-
-* Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+  e.g `list [high-risk-location-number] l/high-risk-locations` can be used as `list 5 l/high-risk-locations` or as `list l/high-risk-locations`.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -171,7 +168,6 @@ Each row shows the parameter, the corresponding prefix and conditions for the pa
 | Email     |  e/    | Please refer to [Email Format](#Email Format) below for more details.|
 | Quarantine Status | q/| Quarantine status should either be true or false, and it should not be blank.|
 | Infected Status | i/ | Infection status should either be true or false, and it should not be blank. |
-| Tag       | t/     | Tags should be alphanumeric. |
 | Person Id | idp/   | Person Ids can take any values, and it should be at least 5 characters long.|
 | Location Id | idl/ | Location Ids can take any values, and it should be at least 5 characters long.|
 
@@ -234,11 +230,7 @@ To add data to VirusTracker, there are `add` commands for each entity.
 
 Adds a person to VirusTracker.
 
-Format: `addPerson idp/ID n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS q/QUARANTINE_STATUS i/INFECTED_STATUS [t/TAG]…​` 
-
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A person can have any number of tags (including 0).
-</div>
+Format: `addPerson idp/ID n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS q/QUARANTINE_STATUS i/INFECTED_STATUS` 
 
 <div markdown="block" class="alert alert-info"> 
 
@@ -605,7 +597,7 @@ To edit data in VirusTracker, there are various `edit` commands that could be us
 
 Edits an existing person in VirusTracker.
 
-Format: `editPerson PERSON_IDENTIFIER [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [q/QUARANTINE_STATUS] [i/INFECTION_STATUS] [t/TAG]…​` <br>
+Format: `editPerson PERSON_IDENTIFIER [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [q/QUARANTINE_STATUS] [i/INFECTION_STATUS]` <br>
 
 <div markdown="block" class="alert alert-info"> 
 
@@ -614,14 +606,12 @@ Format: `editPerson PERSON_IDENTIFIER [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [
 * A person's id cannot be edited.
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without specifying any tags after it.
 
 </div>
 
 Examples:
 *  `editPerson 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `editPerson idp/S123A n/Betsy Crower t/` Edits the name of the person with ID S123 to be `Betsy Crower` and clears all existing tags.
+*  `editPerson idp/S123A n/Betsy Crower` Edits the name of the person with ID S123 to be `Betsy Crower`.
 
 #### Editing a location
 

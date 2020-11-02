@@ -190,8 +190,7 @@ public class Person implements Comparable<Person> {
                 .append(" Quarantined: ")
                 .append(getQuarantineStatus())
                 .append(" Infected: ")
-                .append(getInfectionStatus())
-                .append(" Tags: ");
+                .append(getInfectionStatus());
         return builder.toString();
     }
 

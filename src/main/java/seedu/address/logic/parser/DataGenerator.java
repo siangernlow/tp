@@ -15,7 +15,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_QUARANTINE_STATUS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -69,13 +68,13 @@ public class DataGenerator {
 
         // The prefixes of the fields required to build a person
         Prefix[] prefixes = new Prefix[]{PREFIX_PERSON_ID, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-            PREFIX_QUARANTINE_STATUS, PREFIX_INFECTION_STATUS, PREFIX_TAG};
+            PREFIX_QUARANTINE_STATUS, PREFIX_INFECTION_STATUS};
 
         while (scanner.hasNext()) {
             ArgumentMultimap dataValues = tokenizeData(scanner.nextLine(), prefixes);
             // Leave out prefix tag as it is not compulsory
             Person person = generatePerson(dataValues, lineNumber,
-                    Arrays.copyOfRange(prefixes, 0, prefixes.length - 1));
+                    Arrays.copyOfRange(prefixes, 0, prefixes.length));
             personsList.add(person);
             lineNumber++;
         }

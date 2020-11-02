@@ -23,7 +23,6 @@ public class JsonAdaptedPersonTest {
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_QUARANTINE_STATUS = "status";
     private static final String INVALID_INFECTION_STATUS = "nope";
-    private static final String INVALID_TAG = "#friend";
     private static final String INVALID_ID = " 0";
 
     private static final String VALID_NAME = BENSON.getName().toString();

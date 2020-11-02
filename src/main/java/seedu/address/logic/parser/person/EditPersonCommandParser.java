@@ -9,7 +9,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_QUARANTINE_STATUS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.IndexIdPair.checkIndexOrIdOnly;
 
 import seedu.address.logic.commands.person.EditPersonCommand;
@@ -35,7 +34,7 @@ public class EditPersonCommandParser implements Parser<EditPersonCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_PERSON_ID, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                        PREFIX_ADDRESS, PREFIX_QUARANTINE_STATUS, PREFIX_INFECTION_STATUS, PREFIX_TAG);
+                        PREFIX_ADDRESS, PREFIX_QUARANTINE_STATUS, PREFIX_INFECTION_STATUS);
 
         if (!checkIndexOrIdOnly(argMultimap, PREFIX_PERSON_ID)) {
             throw new ParseException(
