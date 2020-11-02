@@ -389,12 +389,16 @@ Format: `addFromCsv FILE_PATH l/LIST_TYPE`
     2. Select 'Properties'
     3. Take note of the path specified in the 'Location' field. `E.g. C:/Users/user/Desktop`
     4. The absolute file path is the path found in Step 3 along with your file name. `C:/Users/user/Desktop/personList.csv`
+
 * `LIST_TYPE` refers to 'people', 'locations' or 'visits'.
   * The prefix `l/` is also used for [listing data](#listing-data-list)
 * The CSV file should have its data in [VirusTracker readable format](#format-for-csv-files).
   * For visits data, the format used references the id of the people and locations. The format using
   list indexing is not supported.
-* If you do not specify an absolute path, VirusTracker **may not be able to find your file!**
+* By default, if only the file name is specified in the `FILE_PATH` parameter, VirusTracker would attempt to import the CSV file in
+the same directory as the VirusTracker application.
+  * For example, if the VirusTracker.jar file is located in a folder named `app` and the following command is run: `addFromCsv peopleList.csv l/people`,
+  VirusTracker would search for a `peopleList.csv` file inside the `app` folder. 
 
 </div>
 
@@ -441,7 +445,10 @@ Format: `exportToCsv FILE_PATH l/LIST_TYPE`
 * `LIST_TYPE` refers to 'people', 'locations' or 'visits'.
   * The prefix `l/` is also used for [listing data](#listing-data-list)
 * The CSV file will have its data in [VirusTracker readable format](#format-for-csv-files).
-* If you do not specify an absolute path, the file may be **created at an unexpected place!**
+* By default, if only the file name is specified in the `FILE_PATH` parameter, VirusTracker would attempt to export the CSV file to
+the same directory as the VirusTracker application.
+  * For example, if the VirusTracker.jar file is located in a folder named `app` and the following command is run: `exportToCsv peopleList.csv l/people`,
+  VirusTracker would create a `peopleList.csv` file inside the `app` folder. 
 
 </div>
 
