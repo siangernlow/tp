@@ -160,11 +160,43 @@ public class GenerateLocationsCommandTest {
         Model expectedModelForGenerate = expectedModel;
         expectedModelForGenerate.addVisit(testVisitOne);
         Predicate<Location> locationPredicate = location -> location.getId().equals(new Id("L456D"));
-        expectedModelForGenerate.updateFilteredLocationList(personPredicate);
+        expectedModelForGenerate.updateFilteredLocationList(locationPredicate);
         Index index = Index.fromOneBased(4);
-        GeneratePeopleCommand command = new GeneratePeopleCommand(new IndexIdPairStub(index, null));
+        GenerateLocationsCommand command = new GenerateLocationsCommand(new IndexIdPairStub(index, null));
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                CommandResult.SWITCH_TO_VIEW_PEOPLE);
+                CommandResult.SWITCH_TO_VIEW_LOCATIONS);
         assertCommandSuccess(command, model, expectedCommandResult, expectedModelForGenerate);
+    }
+
+    @Test
+    public void execute_dateOfVisitMoreThanTwoWeeksAgo_noVisitsFound() {
+        String expectedMessage = MESSAGE_PERSON_HAS_NO_VISITS;
+        LocalDate testDate = LocalDate.now().minusDays(14);
+        Visit testVisitOne = new Visit(DANIEL, DANIEL_LOCATION, testDate);
+        model.addVisit(testVisitOne);
+        Index index = Index.fromOneBased(4);
+        GenerateLocationsCommand command = new GenerateLocationsCommand(new IndexIdPairStub(index, null));
+        assertThrows(CommandException.class, () -> command.execute(model));
+        try {
+            command.execute(model);
+        } catch (CommandException e) {
+            assertTrue(e.getMessage().equals(expectedMessage));
+        }
+    }
+
+    @Test
+    public void execute_dateOfVisitInTheFuture_noVisitsFound() {
+        String expectedMessage = MESSAGE_PERSON_HAS_NO_VISITS;
+        LocalDate testDate = LocalDate.now().plusDays(1);
+        Visit testVisitOne = new Visit(DANIEL, DANIEL_LOCATION, testDate);
+        model.addVisit(testVisitOne);
+        Index index = Index.fromOneBased(4);
+        GenerateLocationsCommand command = new GenerateLocationsCommand(new IndexIdPairStub(index, null));
+        assertThrows(CommandException.class, () -> command.execute(model));
+        try {
+            command.execute(model);
+        } catch (CommandException e) {
+            assertTrue(e.getMessage().equals(expectedMessage));
+        }
     }
 }

@@ -187,9 +187,25 @@ public class GeneratePeopleCommandTest {
     }
 
     @Test
-    public void execute_dateOfVisitOutOfRange_noPeopleFound() {
+    public void execute_dateOfVisitMoreThanTwoWeeksAgo_noPeopleFound() {
         String expectedMessage = MESSAGE_PERSON_HAS_NO_VISITS;
         LocalDate testDate = LocalDate.now().minusDays(14);
+        Visit testVisitOne = new Visit(DANIEL, DANIEL_LOCATION, testDate);
+        model.addVisit(testVisitOne);
+        Index index = Index.fromOneBased(4);
+        GeneratePeopleCommand command = new GeneratePeopleCommand(new IndexIdPairStub(index, null));
+        assertThrows(CommandException.class, () -> command.execute(model));
+        try {
+            command.execute(model);
+        } catch (CommandException e) {
+            assertTrue(e.getMessage().equals(expectedMessage));
+        }
+    }
+
+    @Test
+    public void execute_dateOfVisitInTheFuture_noPeopleFound() {
+        String expectedMessage = MESSAGE_PERSON_HAS_NO_VISITS;
+        LocalDate testDate = LocalDate.now().plusDays(1);
         Visit testVisitOne = new Visit(DANIEL, DANIEL_LOCATION, testDate);
         model.addVisit(testVisitOne);
         Index index = Index.fromOneBased(4);
