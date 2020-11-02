@@ -7,7 +7,6 @@
     "quarantineStatus": "false",
     "infectionStatus" : "true",
     "idPerson" : "S6789",
-    "tagged" : [ ],
     "nameLocation" : "Fiona Kunz House",
     "addressLocation" : "little tokyo",
     "idLocation": "L10111213",
