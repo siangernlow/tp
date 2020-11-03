@@ -26,8 +26,10 @@
                 </Label>
                 <Label fx:id="personName" text="\$first" styleClass="cell_big_label" maxWidth="250" wrapText="true"/>
             </HBox>
-            <Label fx:id="date" styleClass="cell_small_label" text="\$date" maxWidth="270" wrapText="true"/>
             <Label fx:id="locationName" styleClass="cell_small_label" text="\$location" maxWidth="270" wrapText="true"/>
+            <Label fx:id="personId" styleClass="cell_small_label" text="\$location" maxWidth="270" wrapText="true"/>
+            <Label fx:id="locationId" styleClass="cell_small_label" text="\$location" maxWidth="270" wrapText="true"/>
+            <Label fx:id="date" styleClass="cell_small_label" text="\$date" maxWidth="270" wrapText="true"/>
         </VBox>
     </GridPane>
 </HBox>

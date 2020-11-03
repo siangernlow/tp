@@ -169,8 +169,8 @@ Each row shows the parameter, the corresponding prefix and conditions for the pa
 | Phone     |  p/    | Phone numbers may only contain numbers, and it should be at least 3 digits long. |
 | Address   |  a/    | Addresses can take any values, and it should not be blank.|
 | Email     |  e/    | Please refer to [Email Format](#Email Format) below for more details.|
-| Quarantine Status | q/| Quarantine status should either be true or false, and it should not be blank.|
-| Infected Status | i/ | Infection status should either be true or false, and it should not be blank. |
+| Quarantine Status | q/| Quarantine status should either be false or if quarantined, the quarantined date.|
+| Infected Status | i/ | Infection status should either be false or if infected, the infected date. |
 | Tag       | t/     | Tags should be alphanumeric. |
 | Person Id | idp/   | Person Ids can take any values, and it should be at least 5 characters long.|
 | Location Id | idl/ | Location Ids can take any values, and it should be at least 5 characters long.|
@@ -246,7 +246,7 @@ A person can have any number of tags (including 0).
 :information_source: **Note:**
 
 * `ID` of person must be unique. No other person in the VirusTracker may have the same ID.
-* `QUARANTINE_STATUS` and `INFECTED_STATUS` can only be true or false.
+* `QUARANTINE_STATUS` and `INFECTED_STATUS` can only be false or the date of quarantine or infection respectively.
 
 </div>
 
@@ -397,12 +397,16 @@ Format: `addFromCsv FILE_PATH l/LIST_TYPE`
     2. Select 'Properties'
     3. Take note of the path specified in the 'Location' field. `E.g. C:/Users/user/Desktop`
     4. The absolute file path is the path found in Step 3 along with your file name. `C:/Users/user/Desktop/personList.csv`
+
 * `LIST_TYPE` refers to 'people', 'locations' or 'visits'.
   * The prefix `l/` is also used for [listing data](#listing-data-list)
 * The CSV file should have its data in [VirusTracker readable format](#format-for-csv-files).
   * For visits data, the format used references the id of the people and locations. The format using
   list indexing is not supported.
-* If you do not specify an absolute path, VirusTracker **may not be able to find your file!**
+* By default, if only the file name is specified in the `FILE_PATH` parameter, VirusTracker would attempt to import the CSV file in
+the same directory as the VirusTracker application.
+  * For example, if the VirusTracker.jar file is located in a folder named `app` and the following command is run: `addFromCsv peopleList.csv l/people`,
+  VirusTracker would search for a `peopleList.csv` file inside the `app` folder. 
 
 </div>
 
@@ -449,7 +453,10 @@ Format: `exportToCsv FILE_PATH l/LIST_TYPE`
 * `LIST_TYPE` refers to 'people', 'locations' or 'visits'.
   * The prefix `l/` is also used for [listing data](#listing-data-list)
 * The CSV file will have its data in [VirusTracker readable format](#format-for-csv-files).
-* If you do not specify an absolute path, the file may be **created at an unexpected place!**
+* By default, if only the file name is specified in the `FILE_PATH` parameter, VirusTracker would attempt to export the CSV file to
+the same directory as the VirusTracker application.
+  * For example, if the VirusTracker.jar file is located in a folder named `app` and the following command is run: `exportToCsv peopleList.csv l/people`,
+  VirusTracker would create a `peopleList.csv` file inside the `app` folder. 
 
 </div>
 
