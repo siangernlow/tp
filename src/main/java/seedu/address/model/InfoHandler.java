@@ -222,7 +222,11 @@ public class InfoHandler {
     }
 
     /**
-     * Checks if a visit is by a person with a specified id.
+     * Checks if a visit is valid. It is considered valid if it meets 2 criteria.
+     * 1. It is by a person with a specified id.
+     * 2. It must also be within 2 weeks of the current date.
+     * Note: 2 weeks refers to a 14 day period that is inclusive of the current date, but exclusive of the date 14
+     * days ago.
      * @param visit Visit being checked.
      * @param personId Id of the person.
      * @return A boolean of whether a visit is by a person with a specified id.
@@ -250,11 +254,14 @@ public class InfoHandler {
     }
 
     /**
-     * Generates a list of visits that are associated with the given visits.
+     * Generates a list of visits that are associated with the given visits. This is an intermediate method for the
+     * generatePeopleCommand. After the visits of an infected person have been found, this method finds all other
+     * visits by other people that are associated with the infected person's visits. A visit is considered associated
+     * if the location and date of visit are the same.
      * @param visitBook Visits provided.
      * @return List of visits that are associated with the given visits.
      */
-    public VisitBook generateAffectedVisits(VisitBook visitBook) {
+    public VisitBook generateAssociatedVisits(VisitBook visitBook) {
         ReadOnlyVisitBook tempVisitBook = model.getVisitBook();
         VisitBook associatedVisits = new VisitBook();
         for (Visit givenVisit : visitBook.getVisitList()) {
@@ -269,7 +276,13 @@ public class InfoHandler {
     }
 
     /**
-     * Checks if a visit is considered affected by a given visit and can be added to the list of affected visits.
+     * Checks if another visit can be added to the list of visits that is associated with the a specified visit.
+     * The visit is considered addable if it meets 3 criteria.
+     * 1. The location of the visit is the same as the specified visit's.
+     * 2. The date of the visit is the same as the specified visit's.
+     * 3. The visit is not already included in the list of visits (This is to prevent duplicates).
+     * This method is only used inside generateAssociatedVisits and it was to prevent conditional statements from
+     * becoming too deeply nested.
      * @param visit Visit to be checked.
      * @param givenVisit Visit the above parameter is being checked against.
      * @param associatedVisits List of visits already affected by the given visit.

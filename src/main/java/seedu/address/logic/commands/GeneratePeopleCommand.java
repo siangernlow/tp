@@ -31,9 +31,9 @@ public class GeneratePeopleCommand extends Command {
             + PREFIX_PERSON_ID + "S123A";
 
     public static final String MESSAGE_NO_PEOPLE_FOUND = "There were no people in contact with the given person"
-            + "in the past 2 weeks";
+            + " in the past 2 weeks";
     public static final String MESSAGE_PERSON_HAS_NO_VISITS = "This person is not associated with any visits"
-            + "in the past 2 weeks";
+            + " in the past 2 weeks";
     public static final String MESSAGE_PERSON_IS_NOT_INFECTED = "This person is not infected";
 
     private final ReadOnlyIndexIdPair pair;
@@ -56,7 +56,7 @@ public class GeneratePeopleCommand extends Command {
         if (visitsByPerson.getVisitList().isEmpty()) {
             throw new CommandException(MESSAGE_PERSON_HAS_NO_VISITS);
         }
-        VisitBook affectedVisits = infoHandler.generateAffectedVisits(visitsByPerson);
+        VisitBook affectedVisits = infoHandler.generateAssociatedVisits(visitsByPerson);
         List<Id> personIds = infoHandler.generatePersonIdsByVisitBook(affectedVisits, personIdFromBook);
         if (personIds.isEmpty()) {
             throw new CommandException(MESSAGE_NO_PEOPLE_FOUND);
