@@ -9,13 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_QUARANTINE_STATUS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.IndexIdPair.checkIndexOrIdOnly;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Optional;
-import java.util.Set;
 
 import seedu.address.logic.commands.person.EditPersonCommand;
 import seedu.address.logic.commands.person.EditPersonCommand.EditPersonDescriptor;
@@ -25,7 +19,6 @@ import seedu.address.logic.parser.IndexIdPair;
 import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.attribute.Tag;
 
 /**
  * Parses input arguments and creates a new EditPersonCommand object
@@ -41,7 +34,7 @@ public class EditPersonCommandParser implements Parser<EditPersonCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_PERSON_ID, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                        PREFIX_ADDRESS, PREFIX_QUARANTINE_STATUS, PREFIX_INFECTION_STATUS, PREFIX_TAG);
+                        PREFIX_ADDRESS, PREFIX_QUARANTINE_STATUS, PREFIX_INFECTION_STATUS);
 
         if (!checkIndexOrIdOnly(argMultimap, PREFIX_PERSON_ID)) {
             throw new ParseException(
@@ -71,7 +64,6 @@ public class EditPersonCommandParser implements Parser<EditPersonCommand> {
                     ParserUtil.parseInfectionStatus(argMultimap.getValue(PREFIX_INFECTION_STATUS).get())
             );
         }
-        parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
 
         if (!editPersonDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditPersonCommand.MESSAGE_NOT_EDITED);
@@ -79,20 +71,4 @@ public class EditPersonCommandParser implements Parser<EditPersonCommand> {
 
         return new EditPersonCommand(pair, editPersonDescriptor);
     }
-
-    /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
-     * If {@code tags} contain only one element which is an empty string, it will be parsed into a
-     * {@code Set<Tag>} containing zero tags.
-     */
-    private Optional<Set<Tag>> parseTagsForEdit(Collection<String> tags) throws ParseException {
-        assert tags != null;
-
-        if (tags.isEmpty()) {
-            return Optional.empty();
-        }
-        Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
-        return Optional.of(ParserUtil.parseTags(tagSet));
-    }
-
 }

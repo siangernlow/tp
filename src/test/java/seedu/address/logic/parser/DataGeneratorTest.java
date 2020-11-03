@@ -71,8 +71,7 @@ public class DataGeneratorTest {
             && otherPerson.getEmail().equals(person.getEmail())
             && otherPerson.getAddress().equals(person.getAddress())
             && otherPerson.getQuarantineStatus().equals(person.getQuarantineStatus())
-            && otherPerson.getInfectionStatus().equals(person.getInfectionStatus())
-            && otherPerson.getTags().equals(person.getTags());
+            && otherPerson.getInfectionStatus().equals(person.getInfectionStatus());
 
     private static final BiFunction<Location, Location, Boolean> locationEqualityCheckWithoutId = (
             location, otherLocation) ->
