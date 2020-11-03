@@ -32,7 +32,7 @@ import seedu.address.model.attribute.Tag;
 import seedu.address.model.person.Person;
 
 /**
- * Edits the details of an existing person in the address book.
+ * Edits the details of an existing person in the VirusTracker.
  */
 public class EditPersonCommand extends Command {
 
@@ -146,7 +146,6 @@ public class EditPersonCommand extends Command {
         private Address address;
         private QuarantineStatus quarantineStatus;
         private InfectionStatus infectionStatus;
-        private Id id;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
