@@ -8,7 +8,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_QUARANTINE_STATUS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
@@ -32,8 +31,7 @@ public class AddPersonCommand extends Command {
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
             + PREFIX_QUARANTINE_STATUS + "QUARANTINE_STATUS "
-            + PREFIX_INFECTION_STATUS + "INFECTION STATUS "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + PREFIX_INFECTION_STATUS + "INFECTION STATUS\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_PERSON_ID + "T123A "
             + PREFIX_NAME + "John Doe "
@@ -41,9 +39,7 @@ public class AddPersonCommand extends Command {
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_QUARANTINE_STATUS + "false "
-            + PREFIX_INFECTION_STATUS + "2020-02-02 "
-            + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney";
+            + PREFIX_INFECTION_STATUS + "2020-02-02 ";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the VirusTracker.";

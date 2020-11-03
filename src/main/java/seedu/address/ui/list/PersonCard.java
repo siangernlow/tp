@@ -1,10 +1,7 @@
 package seedu.address.ui.list;
 
-import java.util.Comparator;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.Person;
@@ -45,8 +42,6 @@ public class PersonCard extends UiPart<Region> {
     private Label quarantineStatus;
     @FXML
     private Label infectionStatus;
-    @FXML
-    private FlowPane tags;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -62,14 +57,6 @@ public class PersonCard extends UiPart<Region> {
         email.setText(person.getEmail().value);
         quarantineStatus.setText("Quarantine Status: " + person.getQuarantineStatus().toString());
         infectionStatus.setText("Infected: " + person.getInfectionStatus().toString());
-        person.getTags().stream()
-                .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> {
-                    Label label = new Label(tag.tagName);
-                    label.setWrapText(true);
-                    label.setMaxWidth(270);
-                    tags.getChildren().add(label);
-                });
     }
 
     @Override
