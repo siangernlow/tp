@@ -3,6 +3,11 @@ package seedu.address.model.attribute;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.util.Objects;
+import java.util.Optional;
+
 /**
  * Represents a Person's infection status in the tracker.
  * Guarantees: immutable; is valid as declared in {@link #isValidInfectionStatus(String)}
@@ -10,15 +15,18 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class InfectionStatus {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Infection status should either be true or false, and it should not be blank.";
+            "Infection status should either be false or if infected, the infection start date.\n"
+            + "e.g. 2020-02-02 and false are valid values.";
 
     /*
      * The infection status can only be specified as
-     * true or false, case-insensitive.
+     * a date or false, case-insensitive.
+     * Checks that infection status is false.
      */
-    public static final String VALIDATION_REGEX = "(?i)(true|false)";
+    public static final String VALIDATION_REGEX = "(?i)(false)";
 
     private final boolean isInfected;
+    private final Optional<LocalDate> infectionDate;
 
     /**
      * Constructs an {@code InfectionStatus}.
@@ -28,14 +36,28 @@ public class InfectionStatus {
     public InfectionStatus(String infectionStatus) {
         requireNonNull(infectionStatus);
         checkArgument(isValidInfectionStatus(infectionStatus), MESSAGE_CONSTRAINTS);
-        isInfected = Boolean.parseBoolean(infectionStatus);
+        if (infectionStatus.matches(VALIDATION_REGEX)) {
+            isInfected = false;
+            infectionDate = Optional.empty();
+        } else {
+            isInfected = true;
+            LocalDate date = LocalDate.parse(infectionStatus);
+            infectionDate = Optional.of(date);
+        }
     }
 
     /**
      * Returns true if a given string is a valid infection status.
      */
     public static boolean isValidInfectionStatus(String test) {
-        return test.matches(VALIDATION_REGEX);
+        if (!test.matches(VALIDATION_REGEX)) {
+            try {
+                LocalDate.parse(test);
+            } catch (DateTimeParseException e) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -46,21 +68,41 @@ public class InfectionStatus {
         return isInfected;
     }
 
+    /**
+     * Returns the infection date as an optional.
+     * May contain a null if not infected.
+     */
+    public Optional<LocalDate> getInfectionDate() {
+        return infectionDate;
+    }
+
     @Override
     public String toString() {
-        return String.valueOf(isInfected);
+        if (isInfected) {
+            return infectionDate.get().toString();
+        } else {
+            return String.valueOf(false);
+        }
     }
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof InfectionStatus // instanceof handles nulls
-                && isInfected == ((InfectionStatus) other).isInfected); // state check
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof InfectionStatus)) {
+            return false;
+        }
+
+        InfectionStatus otherStatus = (InfectionStatus) other;
+        return otherStatus.isInfected == isInfected
+                && otherStatus.infectionDate.equals(infectionDate);
     }
 
     @Override
     public int hashCode() {
-        return Boolean.valueOf(isInfected).hashCode();
+        return Objects.hash(isInfected, infectionDate);
     }
 
 }

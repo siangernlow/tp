@@ -33,12 +33,12 @@ public class TypicalPersons {
 
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
-            .withPhone("94351253").withQuarantineStatus("true")
+            .withPhone("94351253").withQuarantineStatus("2020-02-02")
             .withInfectionStatus("false").withTags("friends").withId("S1234").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
-            .withAddress("311, Clementi Ave 2, #02-25").withQuarantineStatus("true")
+            .withAddress("311, Clementi Ave 2, #02-25").withQuarantineStatus("2020-02-02")
             .withEmail("johnd@example.com").withPhone("98765432")
-            .withInfectionStatus("true")
+            .withInfectionStatus("2020-02-02")
             .withTags("owesMoney", "friends").withId("S2345").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("wall street").withInfectionStatus("false")
@@ -46,23 +46,23 @@ public class TypicalPersons {
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
             .withEmail("cornelia@example.com").withAddress("10th street").withTags("friends")
             .withQuarantineStatus("false")
-            .withInfectionStatus("true").withId("S4567").build();
+            .withInfectionStatus("2020-02-02").withId("S4567").build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
             .withEmail("werner@example.com").withAddress("michegan ave").withQuarantineStatus("false")
-            .withInfectionStatus("true").withId("S5678").build();
+            .withInfectionStatus("2020-02-02").withId("S5678").build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
             .withEmail("lydia@example.com").withAddress("little tokyo").withQuarantineStatus("false")
-            .withInfectionStatus("true").withId("S6789").build();
+            .withInfectionStatus("2020-02-02").withId("S6789").build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
             .withEmail("anna@example.com").withAddress("4th street").withQuarantineStatus("false")
-            .withInfectionStatus("true").withId("S78910").build();
+            .withInfectionStatus("2020-02-02").withId("S78910").build();
 
     // Manually added
     public static final Person HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
             .withEmail("stefan@example.com").withAddress("little india").withInfectionStatus("false")
             .withId("S891011").build();
     public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
-            .withEmail("hans@example.com").withAddress("chicago ave").withInfectionStatus("true")
+            .withEmail("hans@example.com").withAddress("chicago ave").withInfectionStatus("2020-02-02")
             .withId("S9101112").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}

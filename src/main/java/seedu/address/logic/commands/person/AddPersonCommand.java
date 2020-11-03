@@ -17,13 +17,13 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 
 /**
- * Adds a person to the address book.
+ * Adds a person to the VirusTracker.
  */
 public class AddPersonCommand extends Command {
 
     public static final String COMMAND_WORD = "addPerson";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the VirusTracker. "
             + "Person must have a unique identifier.\n"
             + "Parameters: "
             + PREFIX_PERSON_ID + "ID "
@@ -41,7 +41,7 @@ public class AddPersonCommand extends Command {
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_QUARANTINE_STATUS + "false "
-            + PREFIX_INFECTION_STATUS + "true "
+            + PREFIX_INFECTION_STATUS + "2020-02-02 "
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 
