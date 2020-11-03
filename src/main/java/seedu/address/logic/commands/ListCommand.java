@@ -29,10 +29,9 @@ public class ListCommand extends Command {
             + "Parameters: l/LIST_TYPE (must be either people, infected, quarantined, locations, visits,"
             + " high-risk-locations or stats)\n"
             + "For high-risk-locations only:\n"
-            + "Parameters: HIGH_RISK_LOCATIONS_NUMBER l/high-risk-locations\n"
-            + "Example: " + COMMAND_WORD + " "
-            + PREFIX_LIST + "people\n"
-            + "list 3 l/high-risk-locations";
+            + "Parameters: [HIGH_RISK_LOCATIONS_NUMBER] l/high-risk-locations\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_LIST + "people\n"
+            + "Example: " + COMMAND_WORD + " 3 l/high-risk-locations";
 
     public static final String MESSAGE_SUCCESS_ALL_PEOPLE = "Listed all people";
     public static final String MESSAGE_SUCCESS_ALL_LOCATIONS = "Listed all locations";
@@ -43,7 +42,7 @@ public class ListCommand extends Command {
     public static final String MESSAGE_SUCCESS_HIGH_RISK_LOCATIONS = "Listed high risk locations";
     public static final String INVALID_LIST_TYPE = "There is no such list type.";
     public static final String INVALID_HIGH_RISK_LOCATIONS_NUMBER = "Number for high risk locations should be a"
-            + " non-negative integer and should not be larger than number of total locations.";
+            + " non-negative integer and should not be larger than the total number of locations.";
 
     private final ListType listType;
     private final boolean userSpecified;
