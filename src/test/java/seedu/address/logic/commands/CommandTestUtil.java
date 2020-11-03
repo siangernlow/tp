@@ -53,10 +53,10 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_ADDRESS_NUS = "21 Lower Kent Ridge Rd, Singapore 119077";
     public static final String VALID_ADDRESS_VIVOCITY = "1 HarbourFront Walk, Singapore 098585";
-    public static final String VALID_QUARANTINE_STATUS_AMY = "true";
+    public static final String VALID_QUARANTINE_STATUS_AMY = "2020-02-02";
     public static final String VALID_QUARANTINE_STATUS_BOB = "false";
     public static final String VALID_INFECTION_STATUS_AMY = "false";
-    public static final String VALID_INFECTION_STATUS_BOB = "true";
+    public static final String VALID_INFECTION_STATUS_BOB = "2020-02-02";
     public static final String VALID_ID_AMY_LOCATION = "L9101112";
     public static final String VALID_ID_BOB_LOCATION = "L10111213";
     public static final String VALID_ID_AMY = "S9101112";

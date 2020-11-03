@@ -27,7 +27,7 @@ import seedu.address.model.attribute.QuarantineStatus;
 import seedu.address.model.person.Person;
 
 /**
- * Edits the details of an existing person in the address book.
+ * Edits the details of an existing person in the VirusTracker.
  */
 public class EditPersonCommand extends Command {
 
@@ -139,13 +139,11 @@ public class EditPersonCommand extends Command {
         private Address address;
         private QuarantineStatus quarantineStatus;
         private InfectionStatus infectionStatus;
-        private Id id;
 
         public EditPersonDescriptor() {}
 
         /**
          * Copy constructor.
-         * A defensive copy of {@code tags} is used internally.
          */
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             setName(toCopy.name);
