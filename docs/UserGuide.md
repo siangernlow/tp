@@ -83,7 +83,7 @@ The following table presents a list of key terms that will be used in this user 
 3. Copy the file to the folder you want to use as the _home folder_ for your VirusTracker.
 
 4. Double-click the file to start the app. The GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
-   ![Ui](images/Ui.png)
+   ![Ui](images/Ui_updated.png)
 
 5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
@@ -218,9 +218,11 @@ You may also prefer to use indexes which tend to be shorter than the ids of peop
 
 **:warning: Warnings about indexes and ids**<br>
 * Take note that the index of a person/location may change depending on the index of the person/location as viewed from the most recently displayed person/location list.
-  Observe that the index of ION Orchard changes from 1 to 2 after adding a new location in the figure below. <br>
+  Observe that the index of ION Orchard changes from 1 to 2 after adding a new location (_Great World City_) in the figure below. <br>
 
-   ![indexes](images/indexes.png)
+   ![indexes](images/ion1.png)
+   ![indexes](images/ion2.png)
+ 
 * Indexes **must be positive integers**: 1, 2, 3, …​ and within the range of its shown list, otherwise warnings will be triggered.
 * Ids used must belong to a person/location within VirusTracker.
 
