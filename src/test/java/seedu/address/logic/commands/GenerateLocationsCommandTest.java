@@ -74,12 +74,7 @@ public class GenerateLocationsCommandTest {
         String expectedMessage = MESSAGE_INVALID_PERSON_INDEX;
         Index index = Index.fromOneBased(100);
         GenerateLocationsCommand command = new GenerateLocationsCommand(new IndexIdPairStub(index, null));
-        assertThrows(CommandException.class, () -> command.execute(model));
-        try {
-            command.execute(model);
-        } catch (CommandException e) {
-            assertTrue(e.getMessage().equals(expectedMessage));
-        }
+        assertThrows(CommandException.class, () -> command.execute(model), expectedMessage);
     }
 
     @Test
@@ -87,12 +82,7 @@ public class GenerateLocationsCommandTest {
         String expectedMessage = MESSAGE_PERSON_IS_NOT_INFECTED;
         Index index = Index.fromOneBased(1);
         GenerateLocationsCommand command = new GenerateLocationsCommand(new IndexIdPairStub(index, null));
-        assertThrows(CommandException.class, () -> command.execute(model));
-        try {
-            command.execute(model);
-        } catch (CommandException e) {
-            assertTrue(e.getMessage().equals(expectedMessage));
-        }
+        assertThrows(CommandException.class, () -> command.execute(model), expectedMessage);
     }
 
     @Test
@@ -101,12 +91,7 @@ public class GenerateLocationsCommandTest {
         model.deleteVisit(model.getVisitBook().getVisitList().get(6));
         Index index = Index.fromOneBased(5);
         GenerateLocationsCommand command = new GenerateLocationsCommand(new IndexIdPairStub(index, null));
-        assertThrows(CommandException.class, () -> command.execute(model));
-        try {
-            command.execute(model);
-        } catch (CommandException e) {
-            assertTrue(e.getMessage().equals(expectedMessage));
-        }
+        assertThrows(CommandException.class, () -> command.execute(model), expectedMessage);
     }
 
     @Test
@@ -177,12 +162,7 @@ public class GenerateLocationsCommandTest {
         model.addVisit(testVisitOne);
         Index index = Index.fromOneBased(4);
         GenerateLocationsCommand command = new GenerateLocationsCommand(new IndexIdPairStub(index, null));
-        assertThrows(CommandException.class, () -> command.execute(model));
-        try {
-            command.execute(model);
-        } catch (CommandException e) {
-            assertTrue(e.getMessage().equals(expectedMessage));
-        }
+        assertThrows(CommandException.class, () -> command.execute(model), expectedMessage);
     }
 
     @Test
@@ -193,11 +173,6 @@ public class GenerateLocationsCommandTest {
         model.addVisit(testVisitOne);
         Index index = Index.fromOneBased(4);
         GenerateLocationsCommand command = new GenerateLocationsCommand(new IndexIdPairStub(index, null));
-        assertThrows(CommandException.class, () -> command.execute(model));
-        try {
-            command.execute(model);
-        } catch (CommandException e) {
-            assertTrue(e.getMessage().equals(expectedMessage));
-        }
+        assertThrows(CommandException.class, () -> command.execute(model), expectedMessage);
     }
 }

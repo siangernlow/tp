@@ -76,24 +76,14 @@ public class GeneratePeopleCommandTest {
         String expectedMessage = MESSAGE_INVALID_PERSON_INDEX;
         Index index = Index.fromOneBased(100);
         GeneratePeopleCommand command = new GeneratePeopleCommand(new IndexIdPairStub(index, null));
-        assertThrows(CommandException.class, () -> command.execute(model));
-        try {
-            command.execute(model);
-        } catch (CommandException e) {
-            assertTrue(e.getMessage().equals(expectedMessage));
-        }
+        assertThrows(CommandException.class, () -> command.execute(model), expectedMessage);
     }
 
     @Test
     public void execute_personAtIndexNotInfected_throwCommandException() {
         String expectedMessage = MESSAGE_PERSON_IS_NOT_INFECTED;
         GeneratePeopleCommand command = new GeneratePeopleCommand(new IndexIdPairStub(INDEX_FIRST, null));
-        assertThrows(CommandException.class, () -> command.execute(model));
-        try {
-            command.execute(model);
-        } catch (CommandException e) {
-            assertTrue(e.getMessage().equals(expectedMessage));
-        }
+        assertThrows(CommandException.class, () -> command.execute(model), expectedMessage);
     }
 
     @Test
@@ -102,12 +92,7 @@ public class GeneratePeopleCommandTest {
         model.deleteVisit(model.getVisitBook().getVisitList().get(6));
         Index index = Index.fromOneBased(5);
         GeneratePeopleCommand command = new GeneratePeopleCommand(new IndexIdPairStub(index, null));
-        assertThrows(CommandException.class, () -> command.execute(model));
-        try {
-            command.execute(model);
-        } catch (CommandException e) {
-            assertTrue(e.getMessage().equals(expectedMessage));
-        }
+        assertThrows(CommandException.class, () -> command.execute(model), expectedMessage);
     }
 
     @Test
@@ -118,12 +103,7 @@ public class GeneratePeopleCommandTest {
         model.addVisit(testVisit);
         Index index = Index.fromOneBased(5);
         GeneratePeopleCommand command = new GeneratePeopleCommand(new IndexIdPairStub(index, null));
-        assertThrows(CommandException.class, () -> command.execute(model));
-        try {
-            command.execute(model);
-        } catch (CommandException e) {
-            assertTrue(e.getMessage().equals(expectedMessage));
-        }
+        assertThrows(CommandException.class, () -> command.execute(model), expectedMessage);
     }
 
     @Test
@@ -153,12 +133,7 @@ public class GeneratePeopleCommandTest {
         modelForAllInfected.addVisit(testVisit);
         modelForAllInfected.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
         GeneratePeopleCommand command = new GeneratePeopleCommand(new IndexIdPairStub(INDEX_SECOND, null));
-        assertThrows(CommandException.class, () -> command.execute(modelForAllInfected));
-        try {
-            command.execute(modelForAllInfected);
-        } catch (CommandException e) {
-            assertTrue(e.getMessage().equals(expectedMessage));
-        }
+        assertThrows(CommandException.class, () -> command.execute(modelForAllInfected), expectedMessage);
     }
 
     @Test
@@ -197,12 +172,7 @@ public class GeneratePeopleCommandTest {
         model.addVisit(testVisitOne);
         Index index = Index.fromOneBased(4);
         GeneratePeopleCommand command = new GeneratePeopleCommand(new IndexIdPairStub(index, null));
-        assertThrows(CommandException.class, () -> command.execute(model));
-        try {
-            command.execute(model);
-        } catch (CommandException e) {
-            assertTrue(e.getMessage().equals(expectedMessage));
-        }
+        assertThrows(CommandException.class, () -> command.execute(model), expectedMessage);
     }
 
     @Test
@@ -213,11 +183,6 @@ public class GeneratePeopleCommandTest {
         model.addVisit(testVisitOne);
         Index index = Index.fromOneBased(4);
         GeneratePeopleCommand command = new GeneratePeopleCommand(new IndexIdPairStub(index, null));
-        assertThrows(CommandException.class, () -> command.execute(model));
-        try {
-            command.execute(model);
-        } catch (CommandException e) {
-            assertTrue(e.getMessage().equals(expectedMessage));
-        }
+        assertThrows(CommandException.class, () -> command.execute(model), expectedMessage);
     }
 }
