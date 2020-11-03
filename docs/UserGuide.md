@@ -319,21 +319,26 @@ Format: `list l/visits`
 
 Lists the locations with high risk of Covid infection.
 
-Format: `list l/high-risk-locations`
+Format: `list [HIGH_RISK_LOCATIONS_NUMBER] l/high-risk-locations`
 
 <div markdown="block" class="alert alert-info"> 
 
 :information_source: **Note:**
 
 * A location is considered as infected if an infected person visited that location.
-* If number of infected locations are more than 60% of number of total locations, number of high risk locations equals 
+* The parameter `HIGH_RISK_LOCATIONS_NUMBER` is optional. User who want to see a specific number of high risk locations
+need to specify this parameter.
+* `HIGH_RISK_LOCATIONS_NUMBER` must be a non-negative interger and it must not be larger than the total number of
+locations.
+* If user specify a valid value for `HIGH_RISK_LOCATIONS_NUMBER`, the number of high risk locations displayed will be
+equal to the user specified value.
+* If user does not specify any value for `HIGH_RISK_LOCATIONS_NUMBER` (i.e. leaving this parameter blank), the number of
+high risk locations displayed will be calculated by the app following this rule: If number of infected locations are more than 60% of number of total locations, number of high risk locations equals 
 to 40% of number of total locations. Else, number of high risk locations equals to number of infected locations.
 * Let number of high risk locations be `n`. The first `n` number of most infected locations are shown.
-* For example, number of total locations is `10`, number of infected locations is `7`, so the number of high risk 
+* For example, if the user does not specify any value for `HIGH_RISK_LOCATIONS_NUMBER` and number of total locations is `10`, number of infected locations is `7`, so the number of high risk 
 locations is `40% * 10 = 4`. The first `4` infected locations from the list of infected locations sorted from highest to 
 lowest risk are displayed.
-* If there are less than ten locations that are infected, all locations will
-  be shown.
 
 </div>
   
