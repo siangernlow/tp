@@ -1,9 +1,5 @@
 package seedu.address.testutil;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import seedu.address.logic.commands.person.EditPersonCommand.EditPersonDescriptor;
 import seedu.address.model.attribute.Address;
 import seedu.address.model.attribute.Email;
@@ -11,7 +7,6 @@ import seedu.address.model.attribute.InfectionStatus;
 import seedu.address.model.attribute.Name;
 import seedu.address.model.attribute.Phone;
 import seedu.address.model.attribute.QuarantineStatus;
-import seedu.address.model.attribute.Tag;
 import seedu.address.model.person.Person;
 
 /**
@@ -40,7 +35,6 @@ public class EditPersonDescriptorBuilder {
         descriptor.setAddress(person.getAddress());
         descriptor.setQuarantineStatus(person.getQuarantineStatus());
         descriptor.setInfectionStatus(person.getInfectionStatus());
-        descriptor.setTags(person.getTags());
     }
 
     /**
@@ -87,16 +81,6 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withInfectionStatus(String infectionStatus) {
         descriptor.setInfectionStatus(new InfectionStatus(infectionStatus));
-        return this;
-    }
-
-    /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
-     * that we are building.
-     */
-    public EditPersonDescriptorBuilder withTags(String... tags) {
-        Set<Tag> tagSet = Stream.of(tags).map(Tag::new).collect(Collectors.toSet());
-        descriptor.setTags(tagSet);
         return this;
     }
 

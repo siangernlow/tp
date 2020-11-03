@@ -10,7 +10,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_INFECTION_STATU
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_QUARANTINE_STATUS_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -20,7 +19,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_QUARANTINE_STATUS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.InfoHandler.INVALID_PERCENTAGE_STRING;
 import static seedu.address.model.InfoHandler.INVALID_RATIO;
 import static seedu.address.model.InfoHandler.getIdHashSetFromPersonsList;
@@ -236,8 +234,7 @@ public class InfoHandlerTest {
             + PREFIX_EMAIL + VALID_EMAIL_AMY + ","
             + "\"" + PREFIX_ADDRESS + VALID_ADDRESS_AMY + "\","
             + PREFIX_QUARANTINE_STATUS + VALID_QUARANTINE_STATUS_AMY + ","
-            + PREFIX_INFECTION_STATUS + VALID_INFECTION_STATUS_AMY + ","
-            + PREFIX_TAG + VALID_TAG_FRIEND + "\n";
+            + PREFIX_INFECTION_STATUS + VALID_INFECTION_STATUS_AMY + "\n";
 
         assertEquals(expectedMessage, infoHandler.getPersonListAsString());
     }
