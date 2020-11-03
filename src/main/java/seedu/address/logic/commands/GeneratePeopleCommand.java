@@ -56,7 +56,7 @@ public class GeneratePeopleCommand extends Command {
         if (visitsByPerson.getVisitList().isEmpty()) {
             throw new CommandException(MESSAGE_PERSON_HAS_NO_VISITS);
         }
-        VisitBook affectedVisits = infoHandler.generateAssociatedVisits(visitsByPerson);
+        VisitBook affectedVisits = infoHandler.generateOtherVisitsThatHappenedOnSameDay(visitsByPerson);
         List<Id> personIds = infoHandler.generatePersonIdsByVisitBook(affectedVisits, personIdFromBook);
         if (personIds.isEmpty()) {
             throw new CommandException(MESSAGE_NO_PEOPLE_FOUND);

@@ -214,7 +214,7 @@ public class InfoHandler {
         VisitBook visitsByPerson = new VisitBook();
         for (int i = 0; i < tempVisitBook.getVisitList().size(); i++) {
             Visit visit = tempVisitBook.getVisitList().get(i);
-            if (isValidVisit(visit, personId)) {
+            if (isVisitByPersonId(visit, personId)) {
                 visitsByPerson.addVisit(tempVisitBook.getVisitList().get(i));
             }
         }
@@ -231,7 +231,7 @@ public class InfoHandler {
      * @param personId Id of the person.
      * @return A boolean of whether a visit is by a person with a specified id.
      */
-    private boolean isValidVisit(Visit visit, Id personId) {
+    private boolean isVisitByPersonId(Visit visit, Id personId) {
         boolean isPersonValid = visit.getPerson().getId().equals(personId);
         LocalDate currentDate = LocalDate.now();
         LocalDate visitDate = visit.getDate();
@@ -254,25 +254,25 @@ public class InfoHandler {
     }
 
     /**
-     * Generates a list of visits that are associated with the given visits. This is an intermediate method for the
-     * generatePeopleCommand. After the visits of an infected person have been found, this method finds all other
-     * visits by other people that are associated with the infected person's visits. A visit is considered associated
-     * if the location and date of visit are the same.
+     * Generates a list of visits that happened on the same day as the given visits. This is an intermediate method for
+     * the generatePeopleCommand. After the visits of an infected person have been found, this method finds all other
+     * visits by other people that happened on the same day as the infected person's visits. A visit is considered
+     * to have happened on the same day if the location and date of visit are the same.
      * @param visitBook Visits provided.
      * @return List of visits that are associated with the given visits.
      */
-    public VisitBook generateAssociatedVisits(VisitBook visitBook) {
+    public VisitBook generateOtherVisitsThatHappenedOnSameDay(VisitBook visitBook) {
         ReadOnlyVisitBook tempVisitBook = model.getVisitBook();
-        VisitBook associatedVisits = new VisitBook();
+        VisitBook otherVisits = new VisitBook();
         for (Visit givenVisit : visitBook.getVisitList()) {
             for (int i = 0; i < tempVisitBook.getVisitList().size(); i++) {
                 Visit visit = tempVisitBook.getVisitList().get(i);
-                if (isAddableVisit(visit, givenVisit, associatedVisits)) {
-                    associatedVisits.addVisit(visit);
+                if (isAddableVisitThatHappenedOnSameDay(visit, givenVisit, otherVisits)) {
+                    otherVisits.addVisit(visit);
                 }
             }
         }
-        return associatedVisits;
+        return otherVisits;
     }
 
     /**
@@ -288,7 +288,7 @@ public class InfoHandler {
      * @param associatedVisits List of visits already affected by the given visit.
      * @return A boolean of whether the visit can be added or not.
      */
-    private boolean isAddableVisit(Visit visit, Visit givenVisit, VisitBook associatedVisits) {
+    private boolean isAddableVisitThatHappenedOnSameDay(Visit visit, Visit givenVisit, VisitBook associatedVisits) {
         boolean isLocationValid = visit.getLocation().getId().equals(givenVisit.getLocation().getId());
         boolean isDateValid = visit.getDate().isEqual(givenVisit.getDate());
         boolean isDuplicate = associatedVisits.getVisitList().contains(visit);
