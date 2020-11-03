@@ -28,7 +28,7 @@ import seedu.address.model.attribute.Tag;
  */
 public class ParserUtil {
 
-    public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_INDEX = "The input index is out of range for the current list!";
     public static final String MESSAGE_INVALID_DATE_FORMAT = "Wrong input date format";
 
     /**
