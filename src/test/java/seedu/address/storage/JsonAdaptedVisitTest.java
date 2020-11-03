@@ -7,9 +7,6 @@ import static seedu.address.testutil.TypicalLocations.BENSON_LOCATION;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalVisits.FIRST_VISIT;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -30,7 +27,6 @@ public class JsonAdaptedVisitTest {
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_QUARANTINE_STATUS = "status";
     private static final String INVALID_INFECTION_STATUS = "nope";
-    private static final String INVALID_TAG = "#friend";
     private static final String INVALID_ID = " 0";
 
     private static final String VALID_NAME_LOCATION = BENSON_LOCATION.getName().toString();
@@ -45,15 +41,12 @@ public class JsonAdaptedVisitTest {
     private static final String VALID_QUARANTINE_STATUS = BENSON.getQuarantineStatus().toString();
     private static final String VALID_INFECTION_STATUS = BENSON.getInfectionStatus().toString();
     private static final String VALID_ID_PERSON = BENSON.getId().toString();
-    private static final List<JsonAdaptedTag> VALID_TAGS = BENSON.getTags().stream()
-            .map(JsonAdaptedTag::new)
-            .collect(Collectors.toList());
 
     @Test
     public void toModelType_validVisitDetails_returnsVisit() throws Exception {
         JsonAdaptedVisit visit = new JsonAdaptedVisit(
                 VALID_NAME_PERSON, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS_PERSON,
-                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON, VALID_TAGS,
+                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON,
                 VALID_NAME_LOCATION, VALID_ADDRESS_LOCATION, VALID_ID_LOCATION, VALID_DATE);
         assertEquals(FIRST_VISIT, visit.toModelType());
     }
@@ -62,7 +55,7 @@ public class JsonAdaptedVisitTest {
     public void toModelType_invalidPersonName_throwsIllegalValueException() {
         JsonAdaptedVisit visit = new JsonAdaptedVisit(
                 INVALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS_PERSON,
-                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON, VALID_TAGS,
+                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON,
                 VALID_NAME_LOCATION, VALID_ADDRESS_LOCATION, VALID_ID_LOCATION, VALID_DATE);
         String expectedMessage = Name.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
@@ -72,7 +65,7 @@ public class JsonAdaptedVisitTest {
     public void toModelType_nullPersonName_throwsIllegalValueException() {
         JsonAdaptedVisit visit = new JsonAdaptedVisit(
                 null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS_PERSON,
-                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON, VALID_TAGS,
+                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON,
                 VALID_NAME_LOCATION, VALID_ADDRESS_LOCATION, VALID_ID_LOCATION, VALID_DATE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
@@ -82,7 +75,7 @@ public class JsonAdaptedVisitTest {
     public void toModelType_invalidPhone_throwsIllegalValueException() {
         JsonAdaptedVisit visit = new JsonAdaptedVisit(
                 VALID_NAME_PERSON, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS_PERSON,
-                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON, VALID_TAGS,
+                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON,
                 VALID_NAME_LOCATION, VALID_ADDRESS_LOCATION, VALID_ID_LOCATION, VALID_DATE);
         String expectedMessage = Phone.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
@@ -92,7 +85,7 @@ public class JsonAdaptedVisitTest {
     public void toModelType_nullPhone_throwsIllegalValueException() {
         JsonAdaptedVisit visit = new JsonAdaptedVisit(
                 VALID_NAME_PERSON, null, VALID_EMAIL, VALID_ADDRESS_PERSON,
-                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON, VALID_TAGS,
+                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON,
                 VALID_NAME_LOCATION, VALID_ADDRESS_LOCATION, VALID_ID_LOCATION, VALID_DATE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
@@ -102,7 +95,7 @@ public class JsonAdaptedVisitTest {
     public void toModelType_invalidEmail_throwsIllegalValueException() {
         JsonAdaptedVisit visit = new JsonAdaptedVisit(
                 VALID_NAME_PERSON, VALID_PHONE, INVALID_EMAIL, VALID_ADDRESS_PERSON,
-                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON, VALID_TAGS,
+                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON,
                 VALID_NAME_LOCATION, VALID_ADDRESS_LOCATION, VALID_ID_LOCATION, VALID_DATE);
         String expectedMessage = Email.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
@@ -112,7 +105,7 @@ public class JsonAdaptedVisitTest {
     public void toModelType_nullEmail_throwsIllegalValueException() {
         JsonAdaptedVisit visit = new JsonAdaptedVisit(
                 VALID_NAME_PERSON, VALID_PHONE, null, VALID_ADDRESS_PERSON,
-                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON, VALID_TAGS,
+                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON,
                 VALID_NAME_LOCATION, VALID_ADDRESS_LOCATION, VALID_ID_LOCATION, VALID_DATE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
@@ -122,7 +115,7 @@ public class JsonAdaptedVisitTest {
     public void toModelType_invalidAddressPerson_throwsIllegalValueException() {
         JsonAdaptedVisit visit = new JsonAdaptedVisit(
                 VALID_NAME_PERSON, VALID_PHONE, VALID_EMAIL, INVALID_ADDRESS,
-                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON, VALID_TAGS,
+                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON,
                 VALID_NAME_LOCATION, VALID_ADDRESS_LOCATION, VALID_ID_LOCATION, VALID_DATE);
         String expectedMessage = Address.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
@@ -132,7 +125,7 @@ public class JsonAdaptedVisitTest {
     public void toModelType_nullAddressPerson_throwsIllegalValueException() {
         JsonAdaptedVisit visit = new JsonAdaptedVisit(
                 VALID_NAME_PERSON, VALID_PHONE, VALID_EMAIL, null,
-                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON, VALID_TAGS,
+                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON,
                 VALID_NAME_LOCATION, VALID_ADDRESS_LOCATION, VALID_ID_LOCATION, VALID_DATE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
@@ -142,7 +135,7 @@ public class JsonAdaptedVisitTest {
     public void toModelType_invalidQuarantineStatus_throwsIllegalValueException() {
         JsonAdaptedVisit visit = new JsonAdaptedVisit(
                 VALID_NAME_PERSON, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS_PERSON,
-                INVALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON, VALID_TAGS,
+                INVALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON,
                 VALID_NAME_LOCATION, VALID_ADDRESS_LOCATION, VALID_ID_LOCATION, VALID_DATE);
         String expectedMessage = QuarantineStatus.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
@@ -152,7 +145,7 @@ public class JsonAdaptedVisitTest {
     public void toModelType_nullQuarantineStatus_throwsIllegalValueException() {
         JsonAdaptedVisit visit = new JsonAdaptedVisit(
                 VALID_NAME_PERSON, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS_PERSON,
-                null, VALID_INFECTION_STATUS, VALID_ID_PERSON, VALID_TAGS,
+                null, VALID_INFECTION_STATUS, VALID_ID_PERSON,
                 VALID_NAME_LOCATION, VALID_ADDRESS_LOCATION, VALID_ID_LOCATION, VALID_DATE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, QuarantineStatus.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
@@ -162,7 +155,7 @@ public class JsonAdaptedVisitTest {
     public void toModelType_invalidInfectionStatus_throwsIllegalValueException() {
         JsonAdaptedVisit visit = new JsonAdaptedVisit(
                 VALID_NAME_PERSON, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS_PERSON,
-                VALID_QUARANTINE_STATUS, INVALID_INFECTION_STATUS, VALID_ID_PERSON, VALID_TAGS,
+                VALID_QUARANTINE_STATUS, INVALID_INFECTION_STATUS, VALID_ID_PERSON,
                 VALID_NAME_LOCATION, VALID_ADDRESS_LOCATION, VALID_ID_LOCATION, VALID_DATE);
         String expectedMessage = InfectionStatus.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
@@ -172,7 +165,7 @@ public class JsonAdaptedVisitTest {
     public void toModelType_nullInfectionStatus_throwsIllegalValueException() {
         JsonAdaptedVisit visit = new JsonAdaptedVisit(
                 VALID_NAME_PERSON, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS_PERSON,
-                VALID_QUARANTINE_STATUS, null, VALID_ID_PERSON, VALID_TAGS,
+                VALID_QUARANTINE_STATUS, null, VALID_ID_PERSON,
                 VALID_NAME_LOCATION, VALID_ADDRESS_LOCATION, VALID_ID_LOCATION, VALID_DATE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, InfectionStatus.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
@@ -182,7 +175,7 @@ public class JsonAdaptedVisitTest {
     public void toModelType_invalidPersonId_throwsIllegalValueException() {
         JsonAdaptedVisit visit = new JsonAdaptedVisit(
                 VALID_NAME_PERSON, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS_PERSON,
-                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, INVALID_ID, VALID_TAGS,
+                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, INVALID_ID,
                 VALID_NAME_LOCATION, VALID_ADDRESS_LOCATION, VALID_ID_LOCATION, VALID_DATE);
         String expectedMessage = Id.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
@@ -192,7 +185,7 @@ public class JsonAdaptedVisitTest {
     public void toModelType_nullPersonId_throwsIllegalValueException() {
         JsonAdaptedVisit visit = new JsonAdaptedVisit(
                 VALID_NAME_PERSON, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS_PERSON,
-                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, null, VALID_TAGS,
+                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, null,
                 VALID_NAME_LOCATION, VALID_ADDRESS_LOCATION, VALID_ID_LOCATION, VALID_DATE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Id.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
@@ -202,7 +195,7 @@ public class JsonAdaptedVisitTest {
     public void toModelType_invalidLocationName_throwsIllegalValueException() {
         JsonAdaptedVisit visit = new JsonAdaptedVisit(
                 VALID_NAME_PERSON, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS_PERSON,
-                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON, VALID_TAGS,
+                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON,
                 INVALID_NAME, VALID_ADDRESS_LOCATION, VALID_ID_LOCATION, VALID_DATE);
         String expectedMessage = Name.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
@@ -212,7 +205,7 @@ public class JsonAdaptedVisitTest {
     public void toModelType_nullLocationName_throwsIllegalValueException() {
         JsonAdaptedVisit visit = new JsonAdaptedVisit(
                 VALID_NAME_PERSON, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS_PERSON,
-                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON, VALID_TAGS,
+                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON,
                 null, VALID_ADDRESS_LOCATION, VALID_ID_LOCATION, VALID_DATE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
@@ -222,7 +215,7 @@ public class JsonAdaptedVisitTest {
     public void toModelType_invalidLocationAddress_throwsIllegalValueException() {
         JsonAdaptedVisit visit = new JsonAdaptedVisit(
                 VALID_NAME_PERSON, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS_PERSON,
-                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON, VALID_TAGS,
+                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON,
                 VALID_NAME_LOCATION, INVALID_ADDRESS, VALID_ID_LOCATION, VALID_DATE);
         String expectedMessage = Address.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
@@ -232,7 +225,7 @@ public class JsonAdaptedVisitTest {
     public void toModelType_nullLocationAddress_throwsIllegalValueException() {
         JsonAdaptedVisit visit = new JsonAdaptedVisit(
                 VALID_NAME_PERSON, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS_PERSON,
-                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON, VALID_TAGS,
+                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON,
                 VALID_NAME_LOCATION, null, VALID_ID_LOCATION, VALID_DATE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
@@ -242,7 +235,7 @@ public class JsonAdaptedVisitTest {
     public void toModelType_invalidLocationId_throwsIllegalValueException() {
         JsonAdaptedVisit visit = new JsonAdaptedVisit(
                 VALID_NAME_PERSON, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS_PERSON,
-                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON, VALID_TAGS,
+                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON,
                 VALID_NAME_LOCATION, VALID_ADDRESS_LOCATION, INVALID_ID_LOCATION, VALID_DATE);
         String expectedMessage = Id.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
@@ -252,7 +245,7 @@ public class JsonAdaptedVisitTest {
     public void toModelType_nullLocationId_throwsIllegalValueException() {
         JsonAdaptedVisit visit = new JsonAdaptedVisit(
                 VALID_NAME_PERSON, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS_PERSON,
-                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON, VALID_TAGS,
+                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON,
                 VALID_NAME_LOCATION, VALID_ADDRESS_LOCATION, null, VALID_DATE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Id.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
@@ -262,7 +255,7 @@ public class JsonAdaptedVisitTest {
     public void toModelType_invalidDate_throwsIllegalValueException() {
         JsonAdaptedVisit visit = new JsonAdaptedVisit(
                 VALID_NAME_PERSON, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS_PERSON,
-                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON, VALID_TAGS,
+                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON,
                 VALID_NAME_LOCATION, VALID_ADDRESS_LOCATION, VALID_ID_LOCATION, INVALID_DATE);
         String expectedMessage = "Please enter the correct date format";
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);
@@ -272,7 +265,7 @@ public class JsonAdaptedVisitTest {
     public void toModelType_nullDate_throwsIllegalValueException() {
         JsonAdaptedVisit visit = new JsonAdaptedVisit(
                 VALID_NAME_PERSON, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS_PERSON,
-                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON, VALID_TAGS,
+                VALID_QUARANTINE_STATUS, VALID_INFECTION_STATUS, VALID_ID_PERSON,
                 VALID_NAME_LOCATION, VALID_ADDRESS_LOCATION, VALID_ID_LOCATION, null);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, "date");
         assertThrows(IllegalValueException.class, expectedMessage, visit::toModelType);

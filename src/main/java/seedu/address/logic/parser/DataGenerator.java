@@ -15,7 +15,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_QUARANTINE_STATUS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,10 +23,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.attribute.Address;
@@ -37,7 +34,6 @@ import seedu.address.model.attribute.InfectionStatus;
 import seedu.address.model.attribute.Name;
 import seedu.address.model.attribute.Phone;
 import seedu.address.model.attribute.QuarantineStatus;
-import seedu.address.model.attribute.Tag;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
 
@@ -72,13 +68,13 @@ public class DataGenerator {
 
         // The prefixes of the fields required to build a person
         Prefix[] prefixes = new Prefix[]{PREFIX_PERSON_ID, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-            PREFIX_QUARANTINE_STATUS, PREFIX_INFECTION_STATUS, PREFIX_TAG};
+            PREFIX_QUARANTINE_STATUS, PREFIX_INFECTION_STATUS};
 
         while (scanner.hasNext()) {
             ArgumentMultimap dataValues = tokenizeData(scanner.nextLine(), prefixes);
             // Leave out prefix tag as it is not compulsory
             Person person = generatePerson(dataValues, lineNumber,
-                    Arrays.copyOfRange(prefixes, 0, prefixes.length - 1));
+                    Arrays.copyOfRange(prefixes, 0, prefixes.length));
             personsList.add(person);
             lineNumber++;
         }
@@ -122,11 +118,7 @@ public class DataGenerator {
             InfectionStatus infectionStatus = ParserUtil.parseInfectionStatus(
                     recoverDataFormat(argMultimap.getValue(PREFIX_INFECTION_STATUS).get()));
 
-            List<String> tags = argMultimap.getAllValues(PREFIX_TAG);
-            tags = tags.stream().map(DataGenerator::recoverDataFormat).collect(Collectors.toList());
-            Set<Tag> tagList = ParserUtil.parseTags(tags);
-
-            return new Person(personId, name, phone, email, address, quarantineStatus, infectionStatus, tagList);
+            return new Person(personId, name, phone, email, address, quarantineStatus, infectionStatus);
         } catch (ParseException pe) {
             throw new ParseException(String.format(INVALID_ROW_FORMAT, lineNumber, pe.getMessage()));
         }

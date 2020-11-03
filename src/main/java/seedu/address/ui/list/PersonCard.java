@@ -1,7 +1,5 @@
 package seedu.address.ui.list;
 
-import java.util.Comparator;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
@@ -69,15 +67,6 @@ public class PersonCard extends UiPart<Region> {
             Label label = new Label(msg);
             tags.getChildren().add(label);
         }
-
-        person.getTags().stream()
-                .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> {
-                    Label label = new Label(tag.tagName);
-                    label.setWrapText(true);
-                    label.setMaxWidth(270);
-                    tags.getChildren().add(label);
-                });
     }
 
     @Override

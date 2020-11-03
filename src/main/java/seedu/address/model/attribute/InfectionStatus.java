@@ -16,6 +16,7 @@ public class InfectionStatus {
 
     public static final String MESSAGE_CONSTRAINTS =
             "Infection status should either be false or if infected, the infection start date.\n"
+            + "The start date cannot be from the future.\n"
             + "e.g. 2020-02-02 and false are valid values.";
 
     /*
@@ -52,7 +53,10 @@ public class InfectionStatus {
     public static boolean isValidInfectionStatus(String test) {
         if (!test.matches(VALIDATION_REGEX)) {
             try {
-                LocalDate.parse(test);
+                LocalDate date = LocalDate.parse(test);
+                if (date.isAfter(LocalDate.now())) {
+                    return false;
+                }
             } catch (DateTimeParseException e) {
                 return false;
             }
