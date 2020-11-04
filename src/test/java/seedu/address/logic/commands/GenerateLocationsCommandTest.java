@@ -12,10 +12,14 @@ import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_INFECTED;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_QUARANTINED;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
+import static seedu.address.testutil.TypicalLocations.DANIEL_LOCATION;
 import static seedu.address.testutil.TypicalLocations.getTypicalLocationBook;
+import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.DANIEL;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalVisits.getTypicalVisitBook;
 
+import java.time.LocalDate;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
@@ -29,6 +33,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
+import seedu.address.model.visit.Visit;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
@@ -69,12 +74,7 @@ public class GenerateLocationsCommandTest {
         String expectedMessage = MESSAGE_INVALID_PERSON_INDEX;
         Index index = Index.fromOneBased(100);
         GenerateLocationsCommand command = new GenerateLocationsCommand(new IndexIdPairStub(index, null));
-        assertThrows(CommandException.class, () -> command.execute(model));
-        try {
-            command.execute(model);
-        } catch (CommandException e) {
-            assertTrue(e.getMessage().equals(expectedMessage));
-        }
+        assertThrows(CommandException.class, () -> command.execute(model), expectedMessage);
     }
 
     @Test
@@ -82,12 +82,7 @@ public class GenerateLocationsCommandTest {
         String expectedMessage = MESSAGE_PERSON_IS_NOT_INFECTED;
         Index index = Index.fromOneBased(1);
         GenerateLocationsCommand command = new GenerateLocationsCommand(new IndexIdPairStub(index, null));
-        assertThrows(CommandException.class, () -> command.execute(model));
-        try {
-            command.execute(model);
-        } catch (CommandException e) {
-            assertTrue(e.getMessage().equals(expectedMessage));
-        }
+        assertThrows(CommandException.class, () -> command.execute(model), expectedMessage);
     }
 
     @Test
@@ -96,18 +91,16 @@ public class GenerateLocationsCommandTest {
         model.deleteVisit(model.getVisitBook().getVisitList().get(6));
         Index index = Index.fromOneBased(5);
         GenerateLocationsCommand command = new GenerateLocationsCommand(new IndexIdPairStub(index, null));
-        assertThrows(CommandException.class, () -> command.execute(model));
-        try {
-            command.execute(model);
-        } catch (CommandException e) {
-            assertTrue(e.getMessage().equals(expectedMessage));
-        }
+        assertThrows(CommandException.class, () -> command.execute(model), expectedMessage);
     }
 
     @Test
     public void execute_validInputFromViewingAllPeople_success() {
         String expectedMessage = "Generated locations for: Daniel Meier";
+        Visit testVisit = new Visit(DANIEL, DANIEL_LOCATION, LocalDate.now());
+        model.addVisit(testVisit);
         Model expectedModelForGenerate = expectedModel;
+        expectedModelForGenerate.addVisit(testVisit);
         Predicate<Location> locationPredicate = location -> location.getId().equals(new Id("L4567"));
         expectedModelForGenerate.updateFilteredLocationList(locationPredicate);
         Index index = Index.fromOneBased(4);
@@ -119,11 +112,14 @@ public class GenerateLocationsCommandTest {
     @Test
     public void execute_validInputFromViewingAllInfected_success() {
         CommandResult expectedCommand = new CommandResult("Generated locations for: Benson Meier");
+        Visit testVisit = new Visit(BENSON, DANIEL_LOCATION, LocalDate.now());
         Model modelForAllInfected = model;
+        modelForAllInfected.addVisit(testVisit);
         modelForAllInfected.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
 
         Model expectedModelForGenerate = expectedModel;
         Predicate<Location> locationPredicate = location -> location.getId().equals(new Id("L2345"));
+        expectedModelForGenerate.addVisit(testVisit);
         expectedModelForGenerate.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
         expectedModelForGenerate.updateFilteredLocationList(locationPredicate);
 
@@ -137,5 +133,44 @@ public class GenerateLocationsCommandTest {
         modelForAllQuarantined.updateFilteredPersonList(PREDICATE_SHOW_ALL_QUARANTINED);
         GenerateLocationsCommand command = new GenerateLocationsCommand(new IndexIdPairStub(INDEX_FIRST, null));
         assertThrows(CommandException.class, () -> command.execute(modelForAllQuarantined));
+    }
+
+    @Test
+    public void execute_dateOfVisitIsWithinRange_success() {
+        String expectedMessage = "Generated locations for: Daniel Meier";
+        LocalDate testDate = LocalDate.now().minusDays(7);
+        Visit testVisitOne = new Visit(DANIEL, DANIEL_LOCATION, testDate);
+        model.addVisit(testVisitOne);
+        Model expectedModelForGenerate = expectedModel;
+        expectedModelForGenerate.addVisit(testVisitOne);
+        Predicate<Location> locationPredicate = location -> location.getId().equals(new Id("L456D"));
+        expectedModelForGenerate.updateFilteredLocationList(locationPredicate);
+        Index index = Index.fromOneBased(4);
+        GenerateLocationsCommand command = new GenerateLocationsCommand(new IndexIdPairStub(index, null));
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
+                CommandResult.SWITCH_TO_VIEW_LOCATIONS);
+        assertCommandSuccess(command, model, expectedCommandResult, expectedModelForGenerate);
+    }
+
+    @Test
+    public void execute_dateOfVisitMoreThanTwoWeeksAgo_noVisitsFound() {
+        String expectedMessage = MESSAGE_PERSON_HAS_NO_VISITS;
+        LocalDate testDate = LocalDate.now().minusDays(14);
+        Visit testVisitOne = new Visit(DANIEL, DANIEL_LOCATION, testDate);
+        model.addVisit(testVisitOne);
+        Index index = Index.fromOneBased(4);
+        GenerateLocationsCommand command = new GenerateLocationsCommand(new IndexIdPairStub(index, null));
+        assertThrows(CommandException.class, () -> command.execute(model), expectedMessage);
+    }
+
+    @Test
+    public void execute_dateOfVisitInTheFuture_noVisitsFound() {
+        String expectedMessage = MESSAGE_PERSON_HAS_NO_VISITS;
+        LocalDate testDate = LocalDate.now().plusDays(1);
+        Visit testVisitOne = new Visit(DANIEL, DANIEL_LOCATION, testDate);
+        model.addVisit(testVisitOne);
+        Index index = Index.fromOneBased(4);
+        GenerateLocationsCommand command = new GenerateLocationsCommand(new IndexIdPairStub(index, null));
+        assertThrows(CommandException.class, () -> command.execute(model), expectedMessage);
     }
 }
