@@ -47,7 +47,7 @@ public class LocationCard extends UiPart<Region> {
         super(FXML);
         this.location = location;
         index.setText(displayedIndex + ". ");
-        id.setText("Location ID: " + location.getId().value);
+        id.setText("ID: " + location.getId().value);
         locationName.setText(location.getName().fullName);
         address.setText(location.getAddress().value);
     }
