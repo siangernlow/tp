@@ -17,6 +17,8 @@ import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_QUARANTINED;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_VISITS;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -47,6 +49,7 @@ public class InfoHandler {
     private static final double HUNDRED_IN_DOUBLE = 100.0;
     private static final String COUNT_FORMAT = "%d";
     private static final String PERCENTAGE_FORMAT = "%.2f";
+    private static final int NUM_DAYS_IN_TWO_WEEKS = 14;
 
     // Headers for summary display
     private static final String TOTAL_PEOPLE_HEADER = "Total number of people:";
@@ -209,11 +212,31 @@ public class InfoHandler {
         ReadOnlyVisitBook tempVisitBook = model.getVisitBook();
         VisitBook visitsByPerson = new VisitBook();
         for (int i = 0; i < tempVisitBook.getVisitList().size(); i++) {
-            if (tempVisitBook.getVisitList().get(i).getPerson().getId().equals(personId)) {
+            Visit visit = tempVisitBook.getVisitList().get(i);
+            if (isVisitByPersonId(visit, personId)) {
                 visitsByPerson.addVisit(tempVisitBook.getVisitList().get(i));
             }
         }
         return visitsByPerson;
+    }
+
+    /**
+     * Checks if a visit is valid. It is considered valid if it meets 2 criteria.
+     * 1. It is by a person with a specified id.
+     * 2. It must also be within 2 weeks of the current date.
+     * Note: 2 weeks refers to a 14 day period that is inclusive of the current date, but exclusive of the date 14
+     * days ago.
+     * @param visit Visit being checked.
+     * @param personId Id of the person.
+     * @return A boolean of whether a visit is by a person with a specified id.
+     */
+    private boolean isVisitByPersonId(Visit visit, Id personId) {
+        boolean isPersonValid = visit.getPerson().getId().equals(personId);
+        LocalDate currentDate = LocalDate.now();
+        LocalDate visitDate = visit.getDate();
+        boolean isDateValid = (currentDate.isAfter(visitDate) || currentDate.isEqual(visitDate))
+                && ChronoUnit.DAYS.between(visitDate, currentDate) < NUM_DAYS_IN_TWO_WEEKS;
+        return isPersonValid && isDateValid;
     }
 
     /**
@@ -230,22 +253,45 @@ public class InfoHandler {
     }
 
     /**
-     * Generates a list of visits that are associated with the given list of location Ids.
-     * @param locationIds List of location Ids.
-     * @return List of visits that are associated with the location Ids.
+     * Generates a list of visits that happened on the same day as the given visits. This is an intermediate method for
+     * the generatePeopleCommand. After the visits of an infected person have been found, this method finds all other
+     * visits by other people that happened on the same day as the infected person's visits. A visit is considered
+     * to have happened on the same day if the location and date of visit are the same.
+     * @param visitBook Visits provided.
+     * @return List of visits that are associated with the given visits.
      */
-    public VisitBook generateVisitsByLocationIds(List<Id> locationIds) {
+    public VisitBook generateOtherVisitsThatHappenedOnSameDay(VisitBook visitBook) {
         ReadOnlyVisitBook tempVisitBook = model.getVisitBook();
-        VisitBook associatedVisits = new VisitBook();
-        for (Id locationId : locationIds) {
+        VisitBook otherVisits = new VisitBook();
+        for (Visit givenVisit : visitBook.getVisitList()) {
             for (int i = 0; i < tempVisitBook.getVisitList().size(); i++) {
                 Visit visit = tempVisitBook.getVisitList().get(i);
-                if (visit.getLocation().getId().equals(locationId)) {
-                    associatedVisits.addVisit(visit);
+                if (isAddableVisitThatHappenedOnSameDay(visit, givenVisit, otherVisits)) {
+                    otherVisits.addVisit(visit);
                 }
             }
         }
-        return associatedVisits;
+        return otherVisits;
+    }
+
+    /**
+     * Checks if another visit can be added to the list of visits that is associated with the a specified visit.
+     * The visit is considered addable if it meets 3 criteria.
+     * 1. The location of the visit is the same as the specified visit's.
+     * 2. The date of the visit is the same as the specified visit's.
+     * 3. The visit is not already included in the list of visits (This is to prevent duplicates).
+     * This method is only used inside generateAssociatedVisits and it was to prevent conditional statements from
+     * becoming too deeply nested.
+     * @param visit Visit to be checked.
+     * @param givenVisit Visit the above parameter is being checked against.
+     * @param associatedVisits List of visits already affected by the given visit.
+     * @return A boolean of whether the visit can be added or not.
+     */
+    private boolean isAddableVisitThatHappenedOnSameDay(Visit visit, Visit givenVisit, VisitBook associatedVisits) {
+        boolean isLocationValid = visit.getLocation().getId().equals(givenVisit.getLocation().getId());
+        boolean isDateValid = visit.getDate().isEqual(givenVisit.getDate());
+        boolean isDuplicate = associatedVisits.getVisitList().contains(visit);
+        return isLocationValid && isDateValid && !isDuplicate;
     }
 
     /**
