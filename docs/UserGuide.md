@@ -132,10 +132,7 @@ This section introduces you to important notations and details that apply to the
   e.g. in `addPerson n/NAME`, `NAME` is a parameter which can be used as `addPerson n/John Doe`.
 
 * Items in square brackets are optional.<br>
-  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-
-* Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+  e.g `list [high-risk-location-number] l/high-risk-locations` can be used as `list 5 l/high-risk-locations` or as `list l/high-risk-locations`.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -171,7 +168,6 @@ Each row shows the parameter, the corresponding prefix and conditions for the pa
 | Email     |  e/    | Please refer to [Email Format](#Email Format) below for more details.|
 | Quarantine Status | q/| Quarantine status should either be false or if quarantined, the quarantined date.|
 | Infected Status | i/ | Infection status should either be false or if infected, the infected date. |
-| Tag       | t/     | Tags should be alphanumeric. |
 | Person Id | idp/   | Person Ids can take any values, and it should be at least 5 characters long.|
 | Location Id | idl/ | Location Ids can take any values, and it should be at least 5 characters long.|
 
@@ -237,11 +233,7 @@ To add data to VirusTracker, there are `add` commands for each entity.
 
 Adds a person to VirusTracker.
 
-Format: `addPerson idp/ID n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS q/QUARANTINE_STATUS i/INFECTED_STATUS [t/TAG]…​` 
-
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A person can have any number of tags (including 0).
-</div>
+Format: `addPerson idp/ID n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS q/QUARANTINE_STATUS i/INFECTED_STATUS` 
 
 <div markdown="block" class="alert alert-info"> 
 
@@ -329,21 +321,26 @@ Format: `list l/visits`
 
 Lists the locations with high risk of Covid infection.
 
-Format: `list l/high-risk-locations`
+Format: `list [HIGH_RISK_LOCATIONS_NUMBER] l/high-risk-locations`
 
 <div markdown="block" class="alert alert-info"> 
 
 :information_source: **Note:**
 
 * A location is considered as infected if an infected person visited that location.
-* If number of infected locations are more than 60% of number of total locations, number of high risk locations equals 
+* The parameter `HIGH_RISK_LOCATIONS_NUMBER` is optional. User who want to see a specific number of high risk locations
+need to specify this parameter.
+* `HIGH_RISK_LOCATIONS_NUMBER` must be a non-negative interger and it must not be larger than the total number of
+locations.
+* If user specify a valid value for `HIGH_RISK_LOCATIONS_NUMBER`, the number of high risk locations displayed will be
+equal to the user specified value.
+* If user does not specify any value for `HIGH_RISK_LOCATIONS_NUMBER` (i.e. leaving this parameter blank), the number of
+high risk locations displayed will be calculated by the app following this rule: If number of infected locations are more than 60% of number of total locations, number of high risk locations equals 
 to 40% of number of total locations. Else, number of high risk locations equals to number of infected locations.
 * Let number of high risk locations be `n`. The first `n` number of most infected locations are shown.
-* For example, number of total locations is `10`, number of infected locations is `7`, so the number of high risk 
+* For example, if the user does not specify any value for `HIGH_RISK_LOCATIONS_NUMBER` and number of total locations is `10`, number of infected locations is `7`, so the number of high risk 
 locations is `40% * 10 = 4`. The first `4` infected locations from the list of infected locations sorted from highest to 
 lowest risk are displayed.
-* If there are less than ten locations that are infected, all locations will
-  be shown.
 
 </div>
   
@@ -629,7 +626,7 @@ To edit data in VirusTracker, there are various `edit` commands that could be us
 
 Edits an existing person in VirusTracker.
 
-Format: `editPerson PERSON_IDENTIFIER [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [q/QUARANTINE_STATUS] [i/INFECTION_STATUS] [t/TAG]…​` <br>
+Format: `editPerson PERSON_IDENTIFIER [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [q/QUARANTINE_STATUS] [i/INFECTION_STATUS]` <br>
 
 <div markdown="block" class="alert alert-info"> 
 
@@ -638,14 +635,12 @@ Format: `editPerson PERSON_IDENTIFIER [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [
 * A person's id cannot be edited.
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without specifying any tags after it.
 
 </div>
 
 Examples:
 *  `editPerson 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `editPerson idp/S123A n/Betsy Crower t/` Edits the name of the person with ID S123 to be `Betsy Crower` and clears all existing tags.
+*  `editPerson idp/S123A n/Betsy Crower` Edits the name of the person with ID S123 to be `Betsy Crower`.
 
 #### Editing a location
 

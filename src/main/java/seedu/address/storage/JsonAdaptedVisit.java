@@ -2,11 +2,6 @@ package seedu.address.storage;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -19,7 +14,6 @@ import seedu.address.model.attribute.InfectionStatus;
 import seedu.address.model.attribute.Name;
 import seedu.address.model.attribute.Phone;
 import seedu.address.model.attribute.QuarantineStatus;
-import seedu.address.model.attribute.Tag;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
 import seedu.address.model.visit.Visit;
@@ -37,7 +31,6 @@ public class JsonAdaptedVisit {
     private final String quarantineStatus;
     private final String infectionStatus;
     private final String idPerson;
-    private final List<JsonAdaptedTag> tagged = new ArrayList<>();
     private final String nameLocation;
     private final String addressLocation;
     private final String idLocation;
@@ -54,7 +47,6 @@ public class JsonAdaptedVisit {
                             @JsonProperty("quarantineStatus") String quarantineStatus,
                             @JsonProperty("infectionStatus") String infectionStatus,
                             @JsonProperty("idPerson") String idPerson,
-                            @JsonProperty("tagged") List<JsonAdaptedTag> tagged,
                             @JsonProperty("nameLocation") String nameLocation,
                             @JsonProperty("addressLocation") String addressLocation,
                             @JsonProperty("idLocation") String idLocation,
@@ -66,9 +58,6 @@ public class JsonAdaptedVisit {
         this.quarantineStatus = quarantineStatus;
         this.infectionStatus = infectionStatus;
         this.idPerson = idPerson;
-        if (tagged != null) {
-            this.tagged.addAll(tagged);
-        }
         this.nameLocation = nameLocation;
         this.addressLocation = addressLocation;
         this.idLocation = idLocation;
@@ -86,9 +75,6 @@ public class JsonAdaptedVisit {
         quarantineStatus = source.getPerson().getQuarantineStatus().toString();
         infectionStatus = source.getPerson().getInfectionStatus().toString();
         idPerson = source.getPerson().getId().value;
-        tagged.addAll(source.getPerson().getTags().stream()
-                .map(JsonAdaptedTag::new)
-                .collect(Collectors.toList()));
         nameLocation = source.getLocation().getName().fullName;
         addressLocation = source.getLocation().getAddress().value;
         idLocation = source.getLocation().getId().value;
@@ -101,11 +87,6 @@ public class JsonAdaptedVisit {
      * @throws IllegalValueException if there were any data constraints violated in the adapted visit.
      */
     public Visit toModelType() throws IllegalValueException {
-        final List<Tag> personTags = new ArrayList<>();
-        for (JsonAdaptedTag tag : tagged) {
-            personTags.add(tag.toModelType());
-        }
-
         if (namePerson == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
         }
@@ -165,9 +146,8 @@ public class JsonAdaptedVisit {
         }
         final Id modelIdPerson = new Id(idPerson);
 
-        final Set<Tag> modelTags = new HashSet<>(personTags);
         final Person modelPerson = new Person(modelIdPerson, modelName, modelPhone, modelEmail, modelAddress,
-                modelQuarantineStatus, modelInfectionStatus, modelTags);
+                modelQuarantineStatus, modelInfectionStatus);
 
         if (nameLocation == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));

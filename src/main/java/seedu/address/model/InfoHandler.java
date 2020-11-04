@@ -11,7 +11,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_QUARANTINE_STATUS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_INFECTED;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_LOCATIONS;
 import static seedu.address.model.ModelPredicate.PREDICATE_SHOW_ALL_PERSONS;
@@ -452,14 +451,6 @@ public class InfoHandler {
         attributes.add(PREFIX_ADDRESS + person.getAddressAsString());
         attributes.add(PREFIX_QUARANTINE_STATUS + person.getQuarantineStatusAsString());
         attributes.add(PREFIX_INFECTION_STATUS + person.getInfectionStatusAsString());
-
-        String tags = person.getTagsAsString();
-        if (!tags.isEmpty()) {
-            String[] listOfTags = tags.split(",");
-            for (String tag : listOfTags) {
-                attributes.add(PREFIX_TAG + tag);
-            }
-        }
 
         return attributes;
     }

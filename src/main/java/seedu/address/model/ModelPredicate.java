@@ -32,8 +32,13 @@ public class ModelPredicate {
         return visit -> infectedIds.contains(visit.getPerson().getId());
     }
 
-    /** {@code Predicate} for filtering high risk locations */
-    public static Predicate<Location> getPredicateForHighRiskLocations(Model model) {
+    /**
+     * {@code Predicate} for filtering high risk locations
+     * If user does not specify the number of high risk locations, then -1 is passed in
+     * for {@code highRiskLocationNumber} as argument.
+     */
+    public static Predicate<Location> getPredicateForHighRiskLocations(Model model, boolean userSpecified,
+                                                                       int highRiskLocationNumber) {
         Optional<Predicate<? super Person>> lastUsedPersonPredicate = model.getPersonPredicate();
         Optional<Predicate<? super Visit>> lastUsedVisitPredicate = model.getVisitPredicate();
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
@@ -48,8 +53,8 @@ public class ModelPredicate {
 
         model.updateFilteredLocationList(PREDICATE_SHOW_ALL_LOCATIONS);
         int numberOfTotalLocations = model.getSortedLocationList().size();
-        int numberOfHighRiskLocations = InfoHandler.getNumberOfHighRiskLocations(
-                infectedLocationIds.size(), numberOfTotalLocations);
+        int numberOfHighRiskLocations = userSpecified ? highRiskLocationNumber
+            : InfoHandler.getNumberOfHighRiskLocations(infectedLocationIds.size(), numberOfTotalLocations);
 
         ArrayList<Id> highRiskLocationIds =
                 new ArrayList<>(infectedLocationIds.subList(0, numberOfHighRiskLocations));
