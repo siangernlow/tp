@@ -53,8 +53,7 @@ class EditLocationCommandTest {
 
         expectedModel.setLocation(model.getSortedLocationList().get(0), editedLocation);
         expectedModel.updateVisitBookWithEditedLocation(editedLocation);
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                CommandResult.SWITCH_TO_VIEW_LOCATIONS);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
 
         assertCommandSuccess(editLocationCommand, model, expectedCommandResult, expectedModel);
     }
@@ -77,8 +76,7 @@ class EditLocationCommandTest {
                 new LocationBook(model.getLocationBook()), new VisitBook(model.getVisitBook()), new UserPrefs());
         expectedModel.setLocation(lastLocation, editedLocation);
         expectedModel.updateVisitBookWithEditedLocation(editedLocation);
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                CommandResult.SWITCH_TO_VIEW_LOCATIONS);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
 
         assertCommandSuccess(editLocationCommand, model, expectedCommandResult, expectedModel);
     }
@@ -94,8 +92,7 @@ class EditLocationCommandTest {
         Model expectedModel = new ModelManager(new PersonBook(model.getPersonBook()),
                 new LocationBook(model.getLocationBook()), new VisitBook(model.getVisitBook()), new UserPrefs());
         expectedModel.updateVisitBookWithEditedLocation(editedLocation);
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                CommandResult.SWITCH_TO_VIEW_LOCATIONS);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
 
         assertCommandSuccess(editLocationCommand, model, expectedCommandResult, expectedModel);
     }
@@ -117,8 +114,7 @@ class EditLocationCommandTest {
         expectedModel.setLocation(model.getSortedLocationList().get(0), editedLocation);
         expectedModel.updateVisitBookWithEditedLocation(editedLocation);
 
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                CommandResult.SWITCH_TO_VIEW_LOCATIONS);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
 
         assertCommandSuccess(editLocationCommand, model, expectedCommandResult, expectedModel);
     }

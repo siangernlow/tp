@@ -131,8 +131,7 @@ public class GeneratePeopleCommandTest {
         expectedModelForGenerate.updateFilteredPersonList(personPredicate);
         Index index = Index.fromOneBased(4);
         GeneratePeopleCommand command = new GeneratePeopleCommand(new IndexIdPairStub(index, null));
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                CommandResult.SWITCH_TO_VIEW_PEOPLE);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
         assertCommandSuccess(command, model, expectedCommandResult, expectedModelForGenerate);
     }
 

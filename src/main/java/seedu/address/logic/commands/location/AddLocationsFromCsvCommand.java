@@ -1,7 +1,6 @@
 package seedu.address.logic.commands.location;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.commands.CommandResult.SWITCH_TO_VIEW_LOCATIONS;
 
 import java.util.List;
 
@@ -50,7 +49,7 @@ public class AddLocationsFromCsvCommand extends AddFromCsvCommand {
         }
 
         String successMessage = createSuccessMessage(successfulAdditions, linesWithDuplicates.toString());
-        return new CommandResult(successMessage, false, false, SWITCH_TO_VIEW_LOCATIONS);
+        return new CommandResult(successMessage);
     }
 
     /**

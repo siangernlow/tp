@@ -32,8 +32,7 @@ public class FindPersonCommand extends Command {
         requireNonNull(model);
         model.updateFilteredPersonList(predicate);
         return new CommandResult(
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getSortedPersonList().size()),
-                false, false, CommandResult.SWITCH_TO_VIEW_PEOPLE);
+                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getSortedPersonList().size()));
     }
 
     @Override

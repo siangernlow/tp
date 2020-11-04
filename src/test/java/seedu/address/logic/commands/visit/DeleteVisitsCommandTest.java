@@ -54,8 +54,7 @@ public class DeleteVisitsCommandTest {
         }
 
         String expectedResult = expectedMessage.toString();
-        CommandResult expectedCommandResult = new CommandResult(expectedResult, false, false,
-                CommandResult.SWITCH_TO_VIEW_VISITS);
+        CommandResult expectedCommandResult = new CommandResult(expectedResult);
         assertCommandSuccess(deleteVisitsCommand, model, expectedCommandResult, expectedModel);
     }
 
@@ -93,8 +92,7 @@ public class DeleteVisitsCommandTest {
 
         showNoVisit(expectedModel);
 
-        CommandResult expectedCommandResult = new CommandResult(expectedResult, false, false,
-                CommandResult.SWITCH_TO_VIEW_VISITS);
+        CommandResult expectedCommandResult = new CommandResult(expectedResult);
         assertCommandSuccess(deleteVisitsCommand, model, expectedCommandResult, expectedModel);
     }
 

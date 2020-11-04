@@ -109,8 +109,7 @@ public class AddVisitCommand extends Command {
 
         model.addVisit(visit);
         String successMessage = getIllegalVisitWarning(visit);
-        return new CommandResult(String.format(successMessage, visit), false, false,
-                CommandResult.SWITCH_TO_VIEW_VISITS);
+        return new CommandResult(String.format(successMessage, visit));
     }
 
     private Visit getVisitToAdd(Id personId, Id locationId, Model model) throws CommandException {

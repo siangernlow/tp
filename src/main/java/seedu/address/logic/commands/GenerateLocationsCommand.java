@@ -60,8 +60,7 @@ public class GenerateLocationsCommand extends Command {
         List<Id> locationIds = infoHandler.generateLocationIdsByVisitBook(visitsByPerson);
         model.updateFilteredLocationList(ModelPredicate.getPredicateShowLocationsById(locationIds));
         return new CommandResult(
-                "Generated locations for: " + infectedPerson.getName(),
-                false, false, CommandResult.SWITCH_TO_VIEW_LOCATIONS);
+                "Generated locations for: " + infectedPerson.getName());
     }
 
     @Override

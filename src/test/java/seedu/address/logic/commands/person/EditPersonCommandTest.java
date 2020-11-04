@@ -54,8 +54,7 @@ public class EditPersonCommandTest {
                 new LocationBook(model.getLocationBook()), new VisitBook(model.getVisitBook()), new UserPrefs());
         expectedModel.setPerson(model.getSortedPersonList().get(0), editedPerson);
         expectedModel.updateVisitBookWithEditedPerson(editedPerson);
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                CommandResult.SWITCH_TO_VIEW_PEOPLE);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
         assertCommandSuccess(editPersonCommand, model, expectedCommandResult, expectedModel);
     }
 
@@ -79,8 +78,7 @@ public class EditPersonCommandTest {
                 new LocationBook(model.getLocationBook()), new VisitBook(model.getVisitBook()), new UserPrefs());
         expectedModel.setPerson(lastPerson, editedPerson);
         expectedModel.updateVisitBookWithEditedPerson(editedPerson);
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                CommandResult.SWITCH_TO_VIEW_PEOPLE);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
 
         assertCommandSuccess(editPersonCommand, model, expectedCommandResult, expectedModel);
     }
@@ -97,8 +95,7 @@ public class EditPersonCommandTest {
                 new LocationBook(model.getLocationBook()), new VisitBook(model.getVisitBook()), new UserPrefs());
         expectedModel.updateVisitBookWithEditedPerson(editedPerson);
 
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                CommandResult.SWITCH_TO_VIEW_PEOPLE);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
 
         assertCommandSuccess(editPersonCommand, model, expectedCommandResult, expectedModel);
     }
@@ -119,8 +116,7 @@ public class EditPersonCommandTest {
         showPersonAtIndex(expectedModel, INDEX_FIRST);
         expectedModel.setPerson(model.getSortedPersonList().get(0), editedPerson);
         expectedModel.updateVisitBookWithEditedPerson(editedPerson);
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                CommandResult.SWITCH_TO_VIEW_PEOPLE);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
 
         assertCommandSuccess(editPersonCommand, model, expectedCommandResult, expectedModel);
     }

@@ -53,24 +53,19 @@ public class ListCommand extends Command {
         switch (listType) {
         case ALL_PEOPLE:
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-            return new CommandResult(MESSAGE_SUCCESS_ALL_PEOPLE, false, false,
-                    CommandResult.SWITCH_TO_VIEW_PEOPLE);
+            return new CommandResult(MESSAGE_SUCCESS_ALL_PEOPLE);
         case ALL_LOCATIONS:
             model.updateFilteredLocationList(PREDICATE_SHOW_ALL_LOCATIONS);
-            return new CommandResult(MESSAGE_SUCCESS_ALL_LOCATIONS, false, false,
-                    CommandResult.SWITCH_TO_VIEW_LOCATIONS);
+            return new CommandResult(MESSAGE_SUCCESS_ALL_LOCATIONS);
         case ALL_VISITS:
             model.updateFilteredVisitList(PREDICATE_SHOW_ALL_VISITS);
-            return new CommandResult(MESSAGE_SUCCESS_ALL_VISITS, false, false,
-                    CommandResult.SWITCH_TO_VIEW_VISITS);
+            return new CommandResult(MESSAGE_SUCCESS_ALL_VISITS);
         case ALL_INFECTED:
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
-            return new CommandResult(MESSAGE_SUCCESS_ALL_INFECTED, false, false,
-                    CommandResult.SWITCH_TO_VIEW_PEOPLE);
+            return new CommandResult(MESSAGE_SUCCESS_ALL_INFECTED);
         case ALL_QUARANTINED:
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_QUARANTINED);
-            return new CommandResult(MESSAGE_SUCCESS_ALL_QUARANTINED, false, false,
-                    CommandResult.SWITCH_TO_VIEW_PEOPLE);
+            return new CommandResult(MESSAGE_SUCCESS_ALL_QUARANTINED);
         case STATISTICS:
             InfoHandler infoHandler = new InfoHandler(model);
             String stats = infoHandler.getStatistics();
@@ -79,8 +74,7 @@ public class ListCommand extends Command {
             Predicate<Location> predicateForHighRiskLocations =
                     ModelPredicate.getPredicateForHighRiskLocations(model);
             model.updateFilteredLocationList(predicateForHighRiskLocations);
-            return new CommandResult(MESSAGE_SUCCESS_HIGH_RISK_LOCATIONS, false, false,
-                    CommandResult.SWITCH_TO_VIEW_LOCATIONS);
+            return new CommandResult(MESSAGE_SUCCESS_HIGH_RISK_LOCATIONS);
         default:
             throw new CommandException(INVALID_LIST_TYPE);
         }

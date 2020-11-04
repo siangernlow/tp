@@ -41,8 +41,7 @@ public class DeleteLocationCommandTest {
                 model.getVisitBook(), new UserPrefs());
         expectedModel.deleteLocation(locationToDelete);
         expectedModel.deleteVisitsWithLocation(locationToDelete);
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                CommandResult.SWITCH_TO_VIEW_LOCATIONS);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
 
         assertCommandSuccess(deleteLocationCommand, model, expectedCommandResult, expectedModel);
     }
@@ -70,8 +69,7 @@ public class DeleteLocationCommandTest {
         expectedModel.deleteLocation(locationToDelete);
         expectedModel.deleteVisitsWithLocation(locationToDelete);
         showNoLocation(expectedModel);
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                CommandResult.SWITCH_TO_VIEW_LOCATIONS);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
 
         assertCommandSuccess(deleteLocationCommand, model, expectedCommandResult, expectedModel);
     }
@@ -101,8 +99,7 @@ public class DeleteLocationCommandTest {
         ModelManager expectedModel = new ModelManager(model.getPersonBook(), model.getLocationBook(),
                 model.getVisitBook(), new UserPrefs());
         expectedModel.deleteLocation(locationToDelete);
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                CommandResult.SWITCH_TO_VIEW_LOCATIONS);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
 
         assertCommandSuccess(deleteLocationCommand, model, expectedCommandResult, expectedModel);
     }
