@@ -39,7 +39,7 @@ public class AddLocationsFromCsvCommand extends AddFromCsvCommand {
             Location location = locationsToAdd.get(i);
 
             // Duplicate location found
-            if (model.hasLocation(location)) {
+            if (model.hasLocation(location) || model.hasLocationId(location.getId())) {
                 linesWithDuplicates.append(i + 1).append(" ");
                 continue;
             }

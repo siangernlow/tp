@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ModelStub;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.TypicalPersons;
@@ -136,6 +137,11 @@ public class AddPersonsFromCsvCommandTest {
         @Override
         public boolean hasPerson(Person person) {
             return personsAdded.contains(person);
+        }
+
+        @Override
+        public boolean hasPersonId(Id id) {
+            return personsAdded.stream().anyMatch(p -> p.getId().equals(id));
         }
 
         @Override

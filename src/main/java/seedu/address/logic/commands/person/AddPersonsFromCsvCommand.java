@@ -39,7 +39,7 @@ public class AddPersonsFromCsvCommand extends AddFromCsvCommand {
             Person person = peopleToAdd.get(i);
 
             // Duplicate person found
-            if (model.hasPerson(person)) {
+            if (model.hasPerson(person) || model.hasPersonId(person.getId())) {
                 linesWithDuplicates.append(i + 1).append(" ");
                 continue;
             }
