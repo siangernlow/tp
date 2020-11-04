@@ -110,7 +110,7 @@ class EditLocationCommandTest {
 
         Model expectedModel = new ModelManager(new PersonBook(model.getPersonBook()),
                 new LocationBook(model.getLocationBook()), new VisitBook(model.getVisitBook()), new UserPrefs());
-
+        showLocationAtIndex(expectedModel, INDEX_FIRST);
         expectedModel.setLocation(model.getSortedLocationList().get(0), editedLocation);
         expectedModel.updateVisitBookWithEditedLocation(editedLocation);
 

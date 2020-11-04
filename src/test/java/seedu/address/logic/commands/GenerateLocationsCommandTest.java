@@ -27,6 +27,7 @@ import seedu.address.logic.parser.IndexIdPairStub;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
 
 /**
@@ -107,7 +108,7 @@ public class GenerateLocationsCommandTest {
     public void execute_validInputFromViewingAllPeople_success() {
         String expectedMessage = "Generated locations for: Daniel Meier";
         Model expectedModelForGenerate = expectedModel;
-        Predicate<Location> locationPredicate = location -> location.getId().equals("L456D");
+        Predicate<Location> locationPredicate = location -> location.getId().equals(new Id("L4567"));
         expectedModelForGenerate.updateFilteredLocationList(locationPredicate);
         Index index = Index.fromOneBased(4);
         GenerateLocationsCommand command = new GenerateLocationsCommand(new IndexIdPair(index, null, PREFIX_PERSON_ID));
@@ -122,7 +123,7 @@ public class GenerateLocationsCommandTest {
         modelForAllInfected.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
 
         Model expectedModelForGenerate = expectedModel;
-        Predicate<Location> locationPredicate = location -> location.getId().equals("L456D");
+        Predicate<Location> locationPredicate = location -> location.getId().equals(new Id("L2345"));
         expectedModelForGenerate.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
         expectedModelForGenerate.updateFilteredLocationList(locationPredicate);
 

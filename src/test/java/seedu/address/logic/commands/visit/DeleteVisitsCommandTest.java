@@ -90,8 +90,6 @@ public class DeleteVisitsCommandTest {
 
         String expectedResult = expectedMessage.toString();
 
-        showNoVisit(expectedModel);
-
         CommandResult expectedCommandResult = new CommandResult(expectedResult);
         assertCommandSuccess(deleteVisitsCommand, model, expectedCommandResult, expectedModel);
     }
