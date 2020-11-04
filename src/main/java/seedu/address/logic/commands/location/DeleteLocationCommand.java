@@ -44,8 +44,7 @@ public class DeleteLocationCommand extends Command {
         model.deleteLocation(locationToDelete);
         model.deleteVisitsWithLocation(locationToDelete);
 
-        return new CommandResult(String.format(MESSAGE_DELETE_LOCATION_SUCCESS, locationToDelete), false, false,
-                CommandResult.SWITCH_TO_VIEW_LOCATIONS);
+        return new CommandResult(String.format(MESSAGE_DELETE_LOCATION_SUCCESS, locationToDelete));
     }
 
     @Override

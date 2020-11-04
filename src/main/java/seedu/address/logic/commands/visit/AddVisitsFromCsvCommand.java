@@ -1,7 +1,6 @@
 package seedu.address.logic.commands.visit;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.commands.CommandResult.SWITCH_TO_VIEW_VISITS;
 
 import java.util.List;
 
@@ -57,7 +56,7 @@ public class AddVisitsFromCsvCommand extends AddFromCsvCommand {
         }
 
         String successMessage = createSuccessMessage(successfulAdditions, linesWithDuplicates.toString());
-        return new CommandResult(successMessage, false, false, SWITCH_TO_VIEW_VISITS);
+        return new CommandResult(successMessage);
     }
 
     /**

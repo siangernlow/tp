@@ -109,8 +109,7 @@ public class AddVisitCommand extends Command {
 
         model.addVisit(visit);
         String successMessage = getIllegalVisitWarning(visit);
-        return new CommandResult(String.format(successMessage, visit), false, false,
-                CommandResult.SWITCH_TO_VIEW_VISITS);
+        return new CommandResult(String.format(successMessage, visit));
     }
 
     private Visit getVisitToAdd(Id personId, Id locationId, Model model) throws CommandException {
@@ -164,15 +163,33 @@ public class AddVisitCommand extends Command {
             return MESSAGE_NO_WARNING;
         }
 
+        LocalDate stayHomeDate;
+        LocalDate visitDate = visit.getDate();
+
         if (isPersonInfected && isPersonQuarantined) { // Person is infected and in quarantine
-            return MESSAGE_INFECTED_AND_QUARANTINED_MADE_VISIT;
+            LocalDate infectionDate = person.getInfectionStatus().getInfectionDate().get();
+            LocalDate quarantineDate = person.getQuarantineStatus().getQuarantineDate().get();
+            stayHomeDate = infectionDate.isBefore(quarantineDate) ? infectionDate : quarantineDate;
+
+            if (stayHomeDate.isBefore(visitDate)) {
+                return MESSAGE_INFECTED_AND_QUARANTINED_MADE_VISIT;
+            }
         } else if (isPersonInfected) { // Person is infected only
-            return MESSAGE_INFECTED_MADE_VISIT;
+            stayHomeDate = person.getInfectionStatus().getInfectionDate().get();
+
+            if (stayHomeDate.isBefore(visitDate)) {
+                return MESSAGE_INFECTED_MADE_VISIT;
+            }
         } else if (isPersonQuarantined) { // Person is in quarantine only
-            return MESSAGE_QUARANTINED_MADE_VISIT;
-        } else { // Person is not infected or in quarantine
-            return MESSAGE_NO_WARNING;
+            stayHomeDate = person.getQuarantineStatus().getQuarantineDate().get();
+
+            if (stayHomeDate.isBefore(visitDate)) {
+                return MESSAGE_QUARANTINED_MADE_VISIT;
+            }
         }
+
+        // Person is not infected or in quarantine
+        return MESSAGE_NO_WARNING;
     }
 
     @Override

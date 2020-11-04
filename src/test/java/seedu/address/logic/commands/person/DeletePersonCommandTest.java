@@ -46,8 +46,7 @@ public class DeletePersonCommandTest {
                 model.getVisitBook(), new UserPrefs());
         expectedModel.deletePerson(personToDelete);
         expectedModel.deleteVisitsWithPerson(personToDelete);
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                CommandResult.SWITCH_TO_VIEW_PEOPLE);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
 
         assertCommandSuccess(deletePersonCommand, model, expectedCommandResult, expectedModel);
     }
@@ -74,8 +73,7 @@ public class DeletePersonCommandTest {
         expectedModel.deletePerson(personToDelete);
         expectedModel.deleteVisitsWithPerson(personToDelete);
         showNoPerson(expectedModel);
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                CommandResult.SWITCH_TO_VIEW_PEOPLE);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
 
         assertCommandSuccess(deletePersonCommand, model, expectedCommandResult, expectedModel);
     }
@@ -105,8 +103,7 @@ public class DeletePersonCommandTest {
                 model.getVisitBook(), new UserPrefs());
         expectedModel.deletePerson(personToDelete);
         expectedModel.deleteVisitsWithPerson(personToDelete);
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                CommandResult.SWITCH_TO_VIEW_PEOPLE);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
 
         assertCommandSuccess(deletePersonCommand, model, expectedCommandResult, expectedModel);
     }

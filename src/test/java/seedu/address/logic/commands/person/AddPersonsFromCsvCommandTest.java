@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ModelStub;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.TypicalPersons;
@@ -46,8 +47,7 @@ public class AddPersonsFromCsvCommandTest {
 
         AddPersonsFromCsvCommand actualCommand = new AddPersonsFromCsvCommand(personsToAdd);
         CommandResult commandResult =
-                new CommandResult(String.format(MESSAGE_SUCCESS, personsToAdd.size(), PERSONS),
-                        false, false, CommandResult.SWITCH_TO_VIEW_PEOPLE);
+                new CommandResult(String.format(MESSAGE_SUCCESS, personsToAdd.size(), PERSONS));
         assertCommandSuccess(actualCommand, actualModel, commandResult, expectedModel);
     }
 
@@ -87,9 +87,7 @@ public class AddPersonsFromCsvCommandTest {
         String linesWithDuplicates = String.format("%d %d ", personsToAdd.size() - 1, personsToAdd.size());
         String expectedMessage = String.format(MESSAGE_SUCCESS, numOfUniqueAdditions, PERSONS)
                 + String.format(MESSAGE_DUPLICATES_NOT_ADDED, PERSONS, linesWithDuplicates);
-        CommandResult commandResult =
-                new CommandResult(expectedMessage,
-                        false, false, CommandResult.SWITCH_TO_VIEW_PEOPLE);
+        CommandResult commandResult = new CommandResult(expectedMessage);
         assertCommandSuccess(actualCommand, actualModel, commandResult, expectedModel);
     }
 
@@ -139,6 +137,11 @@ public class AddPersonsFromCsvCommandTest {
         @Override
         public boolean hasPerson(Person person) {
             return personsAdded.contains(person);
+        }
+
+        @Override
+        public boolean hasPersonId(Id id) {
+            return personsAdded.stream().anyMatch(p -> p.getId().equals(id));
         }
 
         @Override

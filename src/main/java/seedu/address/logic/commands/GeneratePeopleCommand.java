@@ -30,8 +30,10 @@ public class GeneratePeopleCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_PERSON_ID + "S123A";
 
-    public static final String MESSAGE_NO_PEOPLE_FOUND = "There were no people in contact with the given person";
-    public static final String MESSAGE_PERSON_HAS_NO_VISITS = "This person is not associated with any visits";
+    public static final String MESSAGE_NO_PEOPLE_FOUND = "There were no people in contact with the given person"
+            + " in the past 2 weeks";
+    public static final String MESSAGE_PERSON_HAS_NO_VISITS = "This person is not associated with any visits"
+            + " in the past 2 weeks";
     public static final String MESSAGE_PERSON_IS_NOT_INFECTED = "This person is not infected";
 
     private final ReadOnlyIndexIdPair pair;
@@ -54,16 +56,14 @@ public class GeneratePeopleCommand extends Command {
         if (visitsByPerson.getVisitList().isEmpty()) {
             throw new CommandException(MESSAGE_PERSON_HAS_NO_VISITS);
         }
-        List<Id> locationIds = infoHandler.generateLocationIdsByVisitBook(visitsByPerson);
-        VisitBook affectedVisits = infoHandler.generateVisitsByLocationIds(locationIds);
+        VisitBook affectedVisits = infoHandler.generateOtherVisitsThatHappenedOnSameDay(visitsByPerson);
         List<Id> personIds = infoHandler.generatePersonIdsByVisitBook(affectedVisits, personIdFromBook);
         if (personIds.isEmpty()) {
             throw new CommandException(MESSAGE_NO_PEOPLE_FOUND);
         }
         model.updateFilteredPersonList(ModelPredicate.getPredicateShowPeopleById(personIds));
         return new CommandResult(
-                "Generated people for: " + infectedPerson.getName(),
-                false, false, CommandResult.SWITCH_TO_VIEW_PEOPLE);
+                "Generated people for: " + infectedPerson.getName());
     }
 
     @Override
