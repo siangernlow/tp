@@ -340,8 +340,7 @@ public class AddVisitCommandTest {
         AddVisitCommand actualCommand = new AddVisitCommand(INDEX_SECOND, DEFAULT_LOCATION_INDEX,
                 LocalDate.parse("2020-11-04"));
         String expectedMessage = String.format(MESSAGE_NO_WARNING, visitWithInfectedAndQuarantined);
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                CommandResult.SWITCH_TO_VIEW_VISITS);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
 
         assertCommandSuccess(actualCommand, model, expectedCommandResult, expectedModel);
     }
