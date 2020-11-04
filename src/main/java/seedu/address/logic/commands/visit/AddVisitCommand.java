@@ -156,8 +156,8 @@ public class AddVisitCommand extends Command {
     private static String getIllegalVisitWarning(Visit visit) {
         Person person = visit.getPerson();
         Location location = visit.getLocation();
-        boolean isPersonInfected = person.getInfectionStatus().getStatusAsBoolean();
-        boolean isPersonQuarantined = person.getQuarantineStatus().getStatusAsBoolean();
+        boolean isPersonInfected = person.isInfected();
+        boolean isPersonQuarantined = person.isQuarantined();
 
         if (person.getAddress().equals(location.getAddress())) { // Person stayed home
             return MESSAGE_NO_WARNING;

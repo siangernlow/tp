@@ -11,7 +11,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_QUARANTINE_STATUS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import java.io.File;
@@ -54,12 +53,10 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_ADDRESS_NUS = "21 Lower Kent Ridge Rd, Singapore 119077";
     public static final String VALID_ADDRESS_VIVOCITY = "1 HarbourFront Walk, Singapore 098585";
-    public static final String VALID_QUARANTINE_STATUS_AMY = "true";
+    public static final String VALID_QUARANTINE_STATUS_AMY = "2020-02-02";
     public static final String VALID_QUARANTINE_STATUS_BOB = "false";
     public static final String VALID_INFECTION_STATUS_AMY = "false";
-    public static final String VALID_INFECTION_STATUS_BOB = "true";
-    public static final String VALID_TAG_HUSBAND = "husband";
-    public static final String VALID_TAG_FRIEND = "friend";
+    public static final String VALID_INFECTION_STATUS_BOB = "2020-02-02";
     public static final String VALID_ID_AMY_LOCATION = "L9101112";
     public static final String VALID_ID_BOB_LOCATION = "L10111213";
     public static final String VALID_ID_AMY = "S9101112";
@@ -89,8 +86,6 @@ public class CommandTestUtil {
             + VALID_QUARANTINE_STATUS_BOB;
     public static final String INFECTION_DESC_AMY = " " + PREFIX_INFECTION_STATUS + VALID_INFECTION_STATUS_AMY;
     public static final String INFECTION_DESC_BOB = " " + PREFIX_INFECTION_STATUS + VALID_INFECTION_STATUS_BOB;
-    public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
-    public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
     public static final String INVALID_PERSON_ID_DESC = " " + PREFIX_PERSON_ID + " "; // '&' not allowed in names
     public static final String INVALID_LOCATION_ID_DESC = " " + PREFIX_LOCATION_ID + " "; // '&' not allowed in names
@@ -102,7 +97,6 @@ public class CommandTestUtil {
             + PREFIX_QUARANTINE_STATUS + "quarantined"; // only booleans allowed
     public static final String INVALID_INFECTION_DESC =
             " " + PREFIX_INFECTION_STATUS + "nope"; // only true or false allowed
-    public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_ID_LOCATION = " -1";
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
@@ -117,11 +111,10 @@ public class CommandTestUtil {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
                 .withQuarantineStatus(VALID_QUARANTINE_STATUS_AMY).withInfectionStatus(VALID_INFECTION_STATUS_AMY)
-                .withTags(VALID_TAG_FRIEND).build();
+                .build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withQuarantineStatus(VALID_QUARANTINE_STATUS_BOB).withInfectionStatus(VALID_INFECTION_STATUS_BOB)
-                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
                 .build();
     }
 

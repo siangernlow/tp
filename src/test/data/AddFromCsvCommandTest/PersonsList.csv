@@ -1,7 +1,7 @@
-idp/S1234,n/Alice Pauline,p/94351253,e/alice@example.com,"a/123, Jurong West Ave 6, #08-111",q/TRUE,i/FALSE,t/friends
-idp/S2345,n/Benson Meier,p/98765432,e/johnd@example.com,"a/311, Clementi Ave 2, #02-25",q/TRUE,i/TRUE,t/owesMoney,t/friends
+idp/S1234,n/Alice Pauline,p/94351253,e/alice@example.com,"a/123, Jurong West Ave 6, #08-111",q/2020-02-02,i/FALSE
+idp/S2345,n/Benson Meier,p/98765432,e/johnd@example.com,"a/311, Clementi Ave 2, #02-25",q/2020-02-02,i/2020-02-02
 idp/S3456,n/Carl Kurz,p/95352563,e/heinz@example.com,a/wall street,q/FALSE,i/FALSE
-idp/S4567,n/Daniel Meier,p/87652533,e/cornelia@example.com,a/10th street,q/FALSE,i/TRUE,t/friends
-idp/S5678,n/Elle Meyer,p/9482224,e/werner@example.com,a/michegan ave,q/FALSE,i/TRUE
-idp/S6789,n/Fiona Kunz,p/9482427,e/lydia@example.com,a/little tokyo,q/FALSE,i/TRUE
-idp/S78910,n/George Best,p/9482442,e/anna@example.com,a/4th street,q/FALSE,i/TRUE
+idp/S4567,n/Daniel Meier,p/87652533,e/cornelia@example.com,a/10th street,q/FALSE,i/2020-02-02
+idp/S5678,n/Elle Meyer,p/9482224,e/werner@example.com,a/michegan ave,q/FALSE,i/2020-02-02
+idp/S6789,n/Fiona Kunz,p/9482427,e/lydia@example.com,a/little tokyo,q/FALSE,i/2020-02-02
+idp/S78910,n/George Best,p/9482442,e/anna@example.com,a/4th street,q/FALSE,i/2020-02-02

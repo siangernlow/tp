@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.address.logic.commands.ListCommand.INVALID_HIGH_RISK_LOCATIONS_NUMBER;
 import static seedu.address.logic.commands.ListCommand.INVALID_LIST_TYPE;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
@@ -42,6 +43,10 @@ public class ListCommandTest {
     private static final ListType QUARANTINED_LIST = ListType.ALL_QUARANTINED;
     private static final ListType STATISTICS_LIST = ListType.STATISTICS;
     private static final ListType HIGH_RISK_LOCATIONS_LIST = ListType.HIGH_RISK_LOCATIONS;
+    private static final ListType INVALID_LIST = ListType.INVALID;
+
+    private static final int NEGATIVE_ONE = -1;
+    private static final int HIGH_RISK_LOCATIONS_NUMBER = 3;
 
     private Model model;
     private Model expectedModel;
@@ -57,7 +62,7 @@ public class ListCommandTest {
     @Test
     public void execute_personsListIsNotFiltered_showsSameList() {
         CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_PEOPLE);
-        assertCommandSuccess(new ListCommand(PEOPLE_LIST),
+        assertCommandSuccess(new ListCommand(PEOPLE_LIST, false, NEGATIVE_ONE),
                 model, expectedCommandResult, expectedModel);
     }
 
@@ -65,21 +70,21 @@ public class ListCommandTest {
     public void execute_personsListIsFiltered_showsEverything() {
         showPersonAtIndex(model, INDEX_FIRST);
         CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_PEOPLE);
-        assertCommandSuccess(new ListCommand(PEOPLE_LIST),
+        assertCommandSuccess(new ListCommand(PEOPLE_LIST, false, NEGATIVE_ONE),
                 model, expectedCommandResult, expectedModel);
     }
 
     @Test
     public void execute_locationsList_showsSameList() {
         CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_LOCATIONS);
-        assertCommandSuccess(new ListCommand(LOCATIONS_LIST),
+        assertCommandSuccess(new ListCommand(LOCATIONS_LIST, false, NEGATIVE_ONE),
                 model, expectedCommandResult, expectedModel);
     }
 
     @Test
     public void execute_visitsList_showsSameList() {
         CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_VISITS);
-        assertCommandSuccess(new ListCommand(VISITS_LIST),
+        assertCommandSuccess(new ListCommand(VISITS_LIST, false, NEGATIVE_ONE),
                 model, expectedCommandResult, expectedModel);
     }
 
@@ -88,7 +93,7 @@ public class ListCommandTest {
         Model expectedModelInfected = expectedModel;
         expectedModelInfected.updateFilteredPersonList(ModelPredicate.PREDICATE_SHOW_ALL_INFECTED);
         CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_INFECTED);
-        assertCommandSuccess(new ListCommand(INFECTED_LIST),
+        assertCommandSuccess(new ListCommand(INFECTED_LIST, false, NEGATIVE_ONE),
                 model, expectedCommandResult, expectedModelInfected);
     }
 
@@ -97,7 +102,7 @@ public class ListCommandTest {
         Model expectedModelQuarantined = expectedModel;
         expectedModelQuarantined.updateFilteredPersonList(ModelPredicate.PREDICATE_SHOW_ALL_QUARANTINED);
         CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_QUARANTINED);
-        assertCommandSuccess(new ListCommand(QUARANTINED_LIST),
+        assertCommandSuccess(new ListCommand(QUARANTINED_LIST, false, NEGATIVE_ONE),
                 model, expectedCommandResult, expectedModelQuarantined);
     }
 
@@ -113,41 +118,66 @@ public class ListCommandTest {
             + "Percentage of people quarantined: -\n";
 
         model = new ModelStubWithLists();
-        assertCommandSuccess(new ListCommand(STATISTICS_LIST),
+        assertCommandSuccess(new ListCommand(STATISTICS_LIST, false, NEGATIVE_ONE),
                 model, expectedMessage, model);
     }
 
     @Test
-    public void execute_highRiskLocations_showsSameList() {
+    public void execute_highRiskLocationsUserNotSpecifyNumber_showsSameList() {
         Model expectedModelHighRiskLocations = expectedModel;
         expectedModelHighRiskLocations.updateFilteredLocationList(
-                ModelPredicate.getPredicateForHighRiskLocations(expectedModelHighRiskLocations));
+                ModelPredicate.getPredicateForHighRiskLocations(expectedModelHighRiskLocations, false, NEGATIVE_ONE));
         CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_HIGH_RISK_LOCATIONS);
-        assertCommandSuccess(new ListCommand(HIGH_RISK_LOCATIONS_LIST),
+        assertCommandSuccess(new ListCommand(HIGH_RISK_LOCATIONS_LIST, false, NEGATIVE_ONE),
+                model, expectedCommandResult, expectedModelHighRiskLocations);
+    }
+
+    @Test
+    public void execute_highRiskLocationsUserSpecifyNumber_showsSameList() {
+        Model expectedModelHighRiskLocations = expectedModel;
+        expectedModelHighRiskLocations.updateFilteredLocationList(
+                ModelPredicate.getPredicateForHighRiskLocations(expectedModelHighRiskLocations, true,
+                        HIGH_RISK_LOCATIONS_NUMBER));
+        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_HIGH_RISK_LOCATIONS);
+        assertCommandSuccess(new ListCommand(HIGH_RISK_LOCATIONS_LIST, true, HIGH_RISK_LOCATIONS_NUMBER),
                 model, expectedCommandResult, expectedModelHighRiskLocations);
     }
 
     @Test
     public void execute_invalidListType_throwsCommandException() {
-        ListCommand command = new ListCommand(ListType.INVALID);
+        ListCommand command = new ListCommand(INVALID_LIST, false, NEGATIVE_ONE);
         Model model = new ModelStub();
         assertThrows(CommandException.class, String.format(INVALID_LIST_TYPE), ()
             -> command.execute(model));
     }
 
     @Test
+    public void execute_invalidHighRiskLocationsNumber_throwsCommandException() {
+        // list high risk locations with -1
+        ListCommand command1 = new ListCommand(HIGH_RISK_LOCATIONS_LIST, true, NEGATIVE_ONE);
+        assertThrows(CommandException.class, String.format(INVALID_HIGH_RISK_LOCATIONS_NUMBER), ()
+            -> command1.execute(model));
+
+        // list high risk locations with number larger than number of total locations
+        ListCommand command2 = new ListCommand(HIGH_RISK_LOCATIONS_LIST, true,
+                model.getLocationBook().getLocationList().size() + 1);
+        assertThrows(CommandException.class, String.format(INVALID_HIGH_RISK_LOCATIONS_NUMBER), ()
+            -> command2.execute(model));
+    }
+
+    @Test
     public void equals() {
-        ListCommand listPersonsCommand = new ListCommand(PEOPLE_LIST);
+        ListCommand listPersonsCommand = new ListCommand(PEOPLE_LIST, false, NEGATIVE_ONE);
 
         // same object -> returns true
         assertTrue(listPersonsCommand.equals(listPersonsCommand));
 
         // same values -> returns true
-        ListCommand listPersonsCommandCopy = new ListCommand(PEOPLE_LIST);
+        ListCommand listPersonsCommandCopy = new ListCommand(PEOPLE_LIST, false, NEGATIVE_ONE);
         assertTrue(listPersonsCommand.equals(listPersonsCommandCopy));
 
         // different values -> returns false
-        ListCommand differentListCommand = new ListCommand(LOCATIONS_LIST);
+        ListCommand differentListCommand = new ListCommand(LOCATIONS_LIST, false, NEGATIVE_ONE);
         assertFalse(listPersonsCommand.equals(differentListCommand));
 
         // different types -> returns false
