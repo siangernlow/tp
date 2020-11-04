@@ -132,10 +132,7 @@ This section introduces you to important notations and details that apply to the
   e.g. in `addPerson n/NAME`, `NAME` is a parameter which can be used as `addPerson n/John Doe`.
 
 * Items in square brackets are optional.<br>
-  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-
-* Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+  e.g `list [high-risk-location-number] l/high-risk-locations` can be used as `list 5 l/high-risk-locations` or as `list l/high-risk-locations`.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -169,21 +166,21 @@ Each row shows the parameter, the corresponding prefix and conditions for the pa
 | Phone     |  p/    | Phone numbers may only contain numbers, and it should be at least 3 digits long. |
 | Address   |  a/    | Addresses can take any values, and it should not be blank.|
 | Email     |  e/    | Please refer to [Email Format](#Email Format) below for more details.|
-| Quarantine Status | q/| Quarantine status should either be true or false, and it should not be blank.|
-| Infected Status | i/ | Infection status should either be true or false, and it should not be blank. |
-| Tag       | t/     | Tags should be alphanumeric. |
+| Quarantine Status | q/| Quarantine status should either be false or if quarantined, the quarantined date.|
+| Infected Status | i/ | Infection status should either be false or if infected, the infected date. |
 | Person Id | idp/   | Person Ids can take any values, and it should be at least 5 characters long.|
 | Location Id | idl/ | Location Ids can take any values, and it should be at least 5 characters long.|
 
 #### Email Format
 Emails should be of the format `local-part@domain` and adhere to the following constraints:
- 1. The local-part should only contain alphanumeric characters and these special characters, excluding the parentheses, (!#$%&'*+/=?`{|}~^.-).
+ 1. The local-part should only contain alphanumeric characters and these special characters, excluding the parentheses, (._%+-).
  2. This is followed by a '@' and then a domain name. 
  3. The domain name must:
      - be at least 2 characters long
      - start and end with alphanumeric characters
      - consist of alphanumeric characters, a period or a hyphen for the characters in between, if any.
-
+     - not have consecutive special characters. (E.g. `example@mail..com` has two consecutive periods.)
+     
 ### Index and Ids
 
 There are many situations where you may want to refer to a specific location or person when giving a command.
@@ -234,18 +231,14 @@ To add data to VirusTracker, there are `add` commands for each entity.
 
 Adds a person to VirusTracker.
 
-Format: `addPerson idp/ID n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS q/QUARANTINE_STATUS i/INFECTED_STATUS [t/TAG]…​` 
-
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A person can have any number of tags (including 0).
-</div>
+Format: `addPerson idp/ID n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS q/QUARANTINE_STATUS i/INFECTED_STATUS` 
 
 <div markdown="block" class="alert alert-info"> 
 
 :information_source: **Note:**
 
 * `ID` of person must be unique. No other person in the VirusTracker may have the same ID.
-* `QUARANTINE_STATUS` and `INFECTED_STATUS` can only be true or false.
+* `QUARANTINE_STATUS` and `INFECTED_STATUS` can only be false or the date of quarantine or infection respectively.
 
 </div>
 
@@ -326,21 +319,26 @@ Format: `list l/visits`
 
 Lists the locations with high risk of Covid infection.
 
-Format: `list l/high-risk-locations`
+Format: `list [HIGH_RISK_LOCATIONS_NUMBER] l/high-risk-locations`
 
 <div markdown="block" class="alert alert-info"> 
 
 :information_source: **Note:**
 
 * A location is considered as infected if an infected person visited that location.
-* If number of infected locations are more than 60% of number of total locations, number of high risk locations equals 
+* The parameter `HIGH_RISK_LOCATIONS_NUMBER` is optional. User who want to see a specific number of high risk locations
+need to specify this parameter.
+* `HIGH_RISK_LOCATIONS_NUMBER` must be a non-negative interger and it must not be larger than the total number of
+locations.
+* If user specify a valid value for `HIGH_RISK_LOCATIONS_NUMBER`, the number of high risk locations displayed will be
+equal to the user specified value.
+* If user does not specify any value for `HIGH_RISK_LOCATIONS_NUMBER` (i.e. leaving this parameter blank), the number of
+high risk locations displayed will be calculated by the app following this rule: If number of infected locations are more than 60% of number of total locations, number of high risk locations equals 
 to 40% of number of total locations. Else, number of high risk locations equals to number of infected locations.
 * Let number of high risk locations be `n`. The first `n` number of most infected locations are shown.
-* For example, number of total locations is `10`, number of infected locations is `7`, so the number of high risk 
+* For example, if the user does not specify any value for `HIGH_RISK_LOCATIONS_NUMBER` and number of total locations is `10`, number of infected locations is `7`, so the number of high risk 
 locations is `40% * 10 = 4`. The first `4` infected locations from the list of infected locations sorted from highest to 
 lowest risk are displayed.
-* If there are less than ten locations that are infected, all locations will
-  be shown.
 
 </div>
   
@@ -396,12 +394,16 @@ Format: `addFromCsv FILE_PATH l/LIST_TYPE`
     2. Select 'Properties'
     3. Take note of the path specified in the 'Location' field. `E.g. C:/Users/user/Desktop`
     4. The absolute file path is the path found in Step 3 along with your file name. `C:/Users/user/Desktop/personList.csv`
+
 * `LIST_TYPE` refers to 'people', 'locations' or 'visits'.
   * The prefix `l/` is also used for [listing data](#listing-data-list)
 * The CSV file should have its data in [VirusTracker readable format](#format-for-csv-files).
   * For visits data, the format used references the id of the people and locations. The format using
   list indexing is not supported.
-* If you do not specify an absolute path, VirusTracker **may not be able to find your file!**
+* By default, if only the file name is specified in the `FILE_PATH` parameter, VirusTracker would attempt to import the CSV file in
+the same directory as the VirusTracker application.
+  * For example, if the VirusTracker.jar file is located in a folder named `app` and the following command is run: `addFromCsv peopleList.csv l/people`,
+  VirusTracker would search for a `peopleList.csv` file inside the `app` folder. 
 
 </div>
 
@@ -448,7 +450,10 @@ Format: `exportToCsv FILE_PATH l/LIST_TYPE`
 * `LIST_TYPE` refers to 'people', 'locations' or 'visits'.
   * The prefix `l/` is also used for [listing data](#listing-data-list)
 * The CSV file will have its data in [VirusTracker readable format](#format-for-csv-files).
-* If you do not specify an absolute path, the file may be **created at an unexpected place!**
+* By default, if only the file name is specified in the `FILE_PATH` parameter, VirusTracker would attempt to export the CSV file to
+the same directory as the VirusTracker application.
+  * For example, if the VirusTracker.jar file is located in a folder named `app` and the following command is run: `exportToCsv peopleList.csv l/people`,
+  VirusTracker would create a `peopleList.csv` file inside the `app` folder. 
 
 </div>
 
@@ -579,6 +584,20 @@ Examples:
 * `list l/locations` followed by `deleteLocation 2` deletes the 2nd location in the displayed location list.
 * `deleteLocation idl/L123` deletes the location with the ID L123.
 
+#### Deleting a visit
+
+Deletes the specified visit from the visit list.
+
+Format: `deleteVisit Index`
+
+<div markdown="block" class="alert alert-danger">
+:warning: **Warning:**
+Be careful that deleting a visit is irreversible!
+</div>
+
+Examples:
+* `list l/visits` followed by `deleteVisit 2` deletes the 2nd visit in the displayed visit list.
+
 #### Deleting visits using date
 
 Deletes all visits before and including the date.
@@ -605,7 +624,7 @@ To edit data in VirusTracker, there are various `edit` commands that could be us
 
 Edits an existing person in VirusTracker.
 
-Format: `editPerson PERSON_IDENTIFIER [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [q/QUARANTINE_STATUS] [i/INFECTION_STATUS] [t/TAG]…​` <br>
+Format: `editPerson PERSON_IDENTIFIER [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [q/QUARANTINE_STATUS] [i/INFECTION_STATUS]` <br>
 
 <div markdown="block" class="alert alert-info"> 
 
@@ -614,14 +633,12 @@ Format: `editPerson PERSON_IDENTIFIER [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [
 * A person's id cannot be edited.
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without specifying any tags after it.
 
 </div>
 
 Examples:
 *  `editPerson 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `editPerson idp/S123A n/Betsy Crower t/` Edits the name of the person with ID S123 to be `Betsy Crower` and clears all existing tags.
+*  `editPerson idp/S123A n/Betsy Crower` Edits the name of the person with ID S123 to be `Betsy Crower`.
 
 #### Editing a location
 

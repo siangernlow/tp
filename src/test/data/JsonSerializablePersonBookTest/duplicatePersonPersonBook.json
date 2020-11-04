@@ -6,15 +6,14 @@
     "address": "123, Jurong West Ave 6, #08-111",
     "quarantineStatus": "false",
     "infectionStatus": "false",
-    "id" : "S1234",
-    "tagged": [ "friends" ]
+    "id" : "S1234"
   }, {
     "name": "Alice Pauline",
     "phone": "94351253",
     "email": "pauline@example.com",
     "address": "4th street",
     "quarantineStatus": "false",
-    "infectionStatus": "true",
+    "infectionStatus": "2020-02-02",
     "id" : "S1234"
   } ]
 }
