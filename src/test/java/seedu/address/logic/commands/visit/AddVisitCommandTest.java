@@ -322,6 +322,30 @@ public class AddVisitCommandTest {
         assertCommandSuccess(actualCommand, model, expectedCommandResult, expectedModel);
     }
 
+    /**
+     * This test ensures that no warning is shown if an infected/quarantined
+     * person makes a visit before he was infected and quarantined.
+     */
+    @Test
+    public void execute_infectedAndQuarantinedButVisitBeforeStayHome_successNoWarning() {
+        ModelStubAcceptingVisitAdded model =
+                new ModelStubAcceptingVisitAdded();
+
+        ModelStubAcceptingVisitAdded expectedModel =
+                new ModelStubAcceptingVisitAdded();
+        Visit visitWithInfectedAndQuarantined = new VisitBuilder().withPerson(INFECTED_AND_QUARANTINED_PERSON)
+                .withDate("2020-11-04").build();
+        expectedModel.addVisit(visitWithInfectedAndQuarantined);
+
+        AddVisitCommand actualCommand = new AddVisitCommand(INDEX_SECOND, DEFAULT_LOCATION_INDEX,
+                LocalDate.parse("2020-11-04"));
+        String expectedMessage = String.format(MESSAGE_NO_WARNING, visitWithInfectedAndQuarantined);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
+                CommandResult.SWITCH_TO_VIEW_VISITS);
+
+        assertCommandSuccess(actualCommand, model, expectedCommandResult, expectedModel);
+    }
+
     @Test
     public void equals() {
         Index personAIndex = Index.fromOneBased(Integer.parseInt("1"));

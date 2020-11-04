@@ -45,7 +45,7 @@ public class SampleDataUtil {
                     new QuarantineStatus("false"), new InfectionStatus("2020-10-10")),
             new Person(new Id("S678F"), new Name("Roy Balakrishnan"), new Phone("92624417"),
                     new Email("royb@example.com"), new Address("Blk 45 Aljunied Street 85, #11-31"),
-                    new QuarantineStatus("2020-12-02"), new InfectionStatus("2020-12-02"))
+                    new QuarantineStatus("2020-10-02"), new InfectionStatus("2020-10-02"))
         };
     }
 

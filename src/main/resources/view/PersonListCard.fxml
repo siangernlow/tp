@@ -32,8 +32,6 @@
       <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" maxWidth="270" wrapText="true"/>
       <Label fx:id="address" styleClass="cell_small_label" text="\$address" maxWidth="270" wrapText="true"/>
       <Label fx:id="email" styleClass="cell_small_label" text="\$email" maxWidth="270" wrapText="true"/>
-      <Label fx:id="quarantineStatus" styleClass="cell_small_label" text="\$quarantineStatus" maxWidth="270" wrapText="true"/>
-      <Label fx:id="infectionStatus" styleClass="cell_small_label" text="\$infectionStatus" maxWidth="270" wrapText="true"/>
     </VBox>
   </GridPane>
 </HBox>
