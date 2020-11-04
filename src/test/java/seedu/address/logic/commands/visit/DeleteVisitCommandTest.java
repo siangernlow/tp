@@ -63,7 +63,6 @@ public class DeleteVisitCommandTest {
                 model.getVisitBook(), new UserPrefs());
 
         expectedModel.deleteVisit(visitToDelete);
-        showNoVisit(expectedModel);
 
         assertCommandSuccess(deleteVisitCommand, model, expectedMessage, expectedModel);
     }

@@ -61,8 +61,7 @@ public class ListCommandTest {
 
     @Test
     public void execute_personsListIsNotFiltered_showsSameList() {
-        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_PEOPLE,
-                false, false, CommandResult.SWITCH_TO_VIEW_PEOPLE);
+        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_PEOPLE);
         assertCommandSuccess(new ListCommand(PEOPLE_LIST, false, NEGATIVE_ONE),
                 model, expectedCommandResult, expectedModel);
     }
@@ -70,24 +69,21 @@ public class ListCommandTest {
     @Test
     public void execute_personsListIsFiltered_showsEverything() {
         showPersonAtIndex(model, INDEX_FIRST);
-        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_PEOPLE,
-                false, false, CommandResult.SWITCH_TO_VIEW_PEOPLE);
+        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_PEOPLE);
         assertCommandSuccess(new ListCommand(PEOPLE_LIST, false, NEGATIVE_ONE),
                 model, expectedCommandResult, expectedModel);
     }
 
     @Test
     public void execute_locationsList_showsSameList() {
-        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_LOCATIONS,
-                false, false, CommandResult.SWITCH_TO_VIEW_LOCATIONS);
+        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_LOCATIONS);
         assertCommandSuccess(new ListCommand(LOCATIONS_LIST, false, NEGATIVE_ONE),
                 model, expectedCommandResult, expectedModel);
     }
 
     @Test
     public void execute_visitsList_showsSameList() {
-        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_VISITS,
-                false, false, CommandResult.SWITCH_TO_VIEW_VISITS);
+        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_VISITS);
         assertCommandSuccess(new ListCommand(VISITS_LIST, false, NEGATIVE_ONE),
                 model, expectedCommandResult, expectedModel);
     }
@@ -96,8 +92,7 @@ public class ListCommandTest {
     public void execute_infectedList_showsSameList() {
         Model expectedModelInfected = expectedModel;
         expectedModelInfected.updateFilteredPersonList(ModelPredicate.PREDICATE_SHOW_ALL_INFECTED);
-        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_INFECTED,
-                false, false, CommandResult.SWITCH_TO_VIEW_PEOPLE);
+        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_INFECTED);
         assertCommandSuccess(new ListCommand(INFECTED_LIST, false, NEGATIVE_ONE),
                 model, expectedCommandResult, expectedModelInfected);
     }
@@ -106,8 +101,7 @@ public class ListCommandTest {
     public void execute_quarantinedList_showsSameList() {
         Model expectedModelQuarantined = expectedModel;
         expectedModelQuarantined.updateFilteredPersonList(ModelPredicate.PREDICATE_SHOW_ALL_QUARANTINED);
-        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_QUARANTINED,
-                false, false, CommandResult.SWITCH_TO_VIEW_PEOPLE);
+        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_ALL_QUARANTINED);
         assertCommandSuccess(new ListCommand(QUARANTINED_LIST, false, NEGATIVE_ONE),
                 model, expectedCommandResult, expectedModelQuarantined);
     }
@@ -133,8 +127,7 @@ public class ListCommandTest {
         Model expectedModelHighRiskLocations = expectedModel;
         expectedModelHighRiskLocations.updateFilteredLocationList(
                 ModelPredicate.getPredicateForHighRiskLocations(expectedModelHighRiskLocations, false, NEGATIVE_ONE));
-        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_HIGH_RISK_LOCATIONS,
-                false, false, CommandResult.SWITCH_TO_VIEW_LOCATIONS);
+        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_HIGH_RISK_LOCATIONS);
         assertCommandSuccess(new ListCommand(HIGH_RISK_LOCATIONS_LIST, false, NEGATIVE_ONE),
                 model, expectedCommandResult, expectedModelHighRiskLocations);
     }
@@ -145,8 +138,7 @@ public class ListCommandTest {
         expectedModelHighRiskLocations.updateFilteredLocationList(
                 ModelPredicate.getPredicateForHighRiskLocations(expectedModelHighRiskLocations, true,
                         HIGH_RISK_LOCATIONS_NUMBER));
-        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_HIGH_RISK_LOCATIONS,
-                false, false, CommandResult.SWITCH_TO_VIEW_LOCATIONS);
+        CommandResult expectedCommandResult = new CommandResult(ListCommand.MESSAGE_SUCCESS_HIGH_RISK_LOCATIONS);
         assertCommandSuccess(new ListCommand(HIGH_RISK_LOCATIONS_LIST, true, HIGH_RISK_LOCATIONS_NUMBER),
                 model, expectedCommandResult, expectedModelHighRiskLocations);
     }

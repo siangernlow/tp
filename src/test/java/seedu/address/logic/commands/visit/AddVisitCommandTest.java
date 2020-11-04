@@ -91,7 +91,6 @@ public class AddVisitCommandTest {
             assertEquals(String.format(AddVisitCommand.MESSAGE_SUCCESS, validVisit),
                     commandResult.getFeedbackToUser());
             assertEquals(Collections.singletonList(validVisit), modelStub.visitsAdded);
-            assertEquals(commandResult.getSwitchState(), CommandResult.SWITCH_TO_VIEW_VISITS);
         } catch (CommandException e) {
             assert false : "Command Exception not expected.";
         }
@@ -110,7 +109,6 @@ public class AddVisitCommandTest {
             assertEquals(String.format(AddVisitCommand.MESSAGE_SUCCESS, validVisit),
                     commandResult.getFeedbackToUser());
             assertEquals(Collections.singletonList(validVisit), modelStub.visitsAdded);
-            assertEquals(commandResult.getSwitchState(), CommandResult.SWITCH_TO_VIEW_VISITS);
         } catch (CommandException e) {
             assert false : "Command Exception not expected.";
         }
@@ -134,7 +132,6 @@ public class AddVisitCommandTest {
         try {
             CommandResult commandResult = new AddVisitCommand(INDEX_FIRST, INDEX_FIRST, DEFAULT_DATE).execute(model);
             assertEquals(model.getSortedVisitList().get(0), validVisit);
-            assertEquals(commandResult.getSwitchState(), CommandResult.SWITCH_TO_VIEW_VISITS);
         } catch (CommandException e) {
             assert false : "Command Exception not expected.";
         }
@@ -151,8 +148,7 @@ public class AddVisitCommandTest {
         Model expectedModel = new ModelStubAcceptingVisitAdded();
         expectedModel.addVisit(visit);
         String expectedMsg = String.format(MESSAGE_NO_WARNING, visit);
-        CommandResult expectedCommandResult = new CommandResult(expectedMsg, false, false,
-                CommandResult.SWITCH_TO_VIEW_VISITS);
+        CommandResult expectedCommandResult = new CommandResult(expectedMsg);
         assertCommandSuccess(addvisitCommand, modelStub, expectedCommandResult, expectedModel);
 
         // testing with yesterday date
@@ -164,8 +160,7 @@ public class AddVisitCommandTest {
         expectedModel = new ModelStubAcceptingVisitAdded();
         expectedModel.addVisit(visit);
         expectedMsg = String.format(MESSAGE_NO_WARNING, visit);
-        expectedCommandResult = new CommandResult(expectedMsg, false, false,
-                CommandResult.SWITCH_TO_VIEW_VISITS);
+        expectedCommandResult = new CommandResult(expectedMsg);
         assertCommandSuccess(addvisitCommand, modelStub, expectedCommandResult, expectedModel);
     }
 
@@ -246,8 +241,7 @@ public class AddVisitCommandTest {
                 DEFAULT_DATE);
 
         String expectedMessage = String.format(MESSAGE_NO_WARNING, visit);
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                CommandResult.SWITCH_TO_VIEW_VISITS);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
         assertCommandSuccess(actualCommand, model, expectedCommandResult, expectedModel);
     }
 
@@ -264,8 +258,7 @@ public class AddVisitCommandTest {
         AddVisitCommand actualCommand = new AddVisitCommand(INDEX_FOURTH, INDEX_SECOND,
                 DEFAULT_DATE);
         String expectedMessage = String.format(AddVisitCommand.MESSAGE_INFECTED_MADE_VISIT, visitWithInfected);
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                CommandResult.SWITCH_TO_VIEW_VISITS);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
 
         assertCommandSuccess(actualCommand, model, expectedCommandResult, expectedModel);
     }
@@ -283,8 +276,7 @@ public class AddVisitCommandTest {
         AddVisitCommand actualCommand = new AddVisitCommand(INDEX_FIRST, INDEX_SECOND,
                 DEFAULT_DATE);
         String expectedMessage = String.format(AddVisitCommand.MESSAGE_QUARANTINED_MADE_VISIT, visitWithQuarantined);
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                CommandResult.SWITCH_TO_VIEW_VISITS);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
 
         assertCommandSuccess(actualCommand, model, expectedCommandResult, expectedModel);
     }
@@ -303,8 +295,7 @@ public class AddVisitCommandTest {
         AddVisitCommand actualCommand = new AddVisitCommand(INDEX_SECOND, INDEX_SIXTH, DEFAULT_DATE);
         String expectedMessage = String.format(AddVisitCommand.MESSAGE_INFECTED_AND_QUARANTINED_MADE_VISIT,
                 visitWithInfectedAndQuarantined);
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                CommandResult.SWITCH_TO_VIEW_VISITS);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
 
         assertCommandSuccess(actualCommand, model, expectedCommandResult, expectedModel);
     }
@@ -326,8 +317,7 @@ public class AddVisitCommandTest {
         AddVisitCommand actualCommand = new AddVisitCommand(INDEX_SECOND, DEFAULT_LOCATION_INDEX, DEFAULT_DATE);
         String expectedMessage = String.format(MESSAGE_NO_WARNING,
                 visitWithInfectedAndQuarantined);
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                CommandResult.SWITCH_TO_VIEW_VISITS);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
 
         assertCommandSuccess(actualCommand, model, expectedCommandResult, expectedModel);
     }
@@ -350,8 +340,7 @@ public class AddVisitCommandTest {
         AddVisitCommand actualCommand = new AddVisitCommand(INDEX_SECOND, DEFAULT_LOCATION_INDEX,
                 LocalDate.parse("2020-11-04"));
         String expectedMessage = String.format(MESSAGE_NO_WARNING, visitWithInfectedAndQuarantined);
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                CommandResult.SWITCH_TO_VIEW_VISITS);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
 
         assertCommandSuccess(actualCommand, model, expectedCommandResult, expectedModel);
     }

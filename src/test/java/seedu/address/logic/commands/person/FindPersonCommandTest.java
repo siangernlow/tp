@@ -65,8 +65,7 @@ public class FindPersonCommandTest {
         PersonNameContainsKeywordsPredicate predicate = preparePredicate(" ");
         FindPersonCommand command = new FindPersonCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                CommandResult.SWITCH_TO_VIEW_PEOPLE);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
         assertCommandSuccess(command, model, expectedCommandResult, expectedModel);
         assertEquals(Collections.emptyList(), model.getSortedPersonList());
     }
@@ -77,8 +76,7 @@ public class FindPersonCommandTest {
         PersonNameContainsKeywordsPredicate predicate = preparePredicate("Kurz Elle Kunz");
         FindPersonCommand command = new FindPersonCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                CommandResult.SWITCH_TO_VIEW_PEOPLE);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
         assertCommandSuccess(command, model, expectedCommandResult, expectedModel);
         assertEquals(Arrays.asList(CARL, ELLE, FIONA), model.getSortedPersonList());
     }

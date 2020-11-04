@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ModelStub;
+import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
 import seedu.address.testutil.LocationBuilder;
 import seedu.address.testutil.TypicalLocations;
@@ -47,8 +48,7 @@ public class AddLocationsFromCsvCommandTest {
 
         AddLocationsFromCsvCommand actualCommand = new AddLocationsFromCsvCommand(locationsToAdd);
         CommandResult commandResult =
-                new CommandResult(String.format(MESSAGE_SUCCESS, locationsToAdd.size(), LOCATIONS),
-                        false, false, CommandResult.SWITCH_TO_VIEW_LOCATIONS);
+                new CommandResult(String.format(MESSAGE_SUCCESS, locationsToAdd.size(), LOCATIONS));
         assertCommandSuccess(actualCommand, actualModel, commandResult, expectedModel);
     }
 
@@ -88,9 +88,7 @@ public class AddLocationsFromCsvCommandTest {
         String linesWithDuplicates = String.format("%d %d ", locationsToAdd.size() - 1, locationsToAdd.size());
         String expectedMessage = String.format(MESSAGE_SUCCESS, numOfUniqueAdditions, LOCATIONS)
                 + String.format(MESSAGE_DUPLICATES_NOT_ADDED, LOCATIONS, linesWithDuplicates);
-        CommandResult commandResult =
-                new CommandResult(expectedMessage,
-                        false, false, CommandResult.SWITCH_TO_VIEW_LOCATIONS);
+        CommandResult commandResult = new CommandResult(expectedMessage);
         assertCommandSuccess(actualCommand, actualModel, commandResult, expectedModel);
     }
 
@@ -140,6 +138,11 @@ public class AddLocationsFromCsvCommandTest {
         @Override
         public boolean hasLocation(Location location) {
             return locationsAdded.contains(location);
+        }
+
+        @Override
+        public boolean hasLocationId(Id id) {
+            return locationsAdded.stream().anyMatch(l -> l.getId().equals(id));
         }
 
         @Override

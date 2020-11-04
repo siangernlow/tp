@@ -101,27 +101,25 @@ public class GenerateLocationsCommandTest {
         model.addVisit(testVisit);
         Model expectedModelForGenerate = expectedModel;
         expectedModelForGenerate.addVisit(testVisit);
-        Predicate<Location> locationPredicate = location -> location.getId().equals(new Id("L456D"));
+        Predicate<Location> locationPredicate = location -> location.getId().equals(new Id("L4567"));
         expectedModelForGenerate.updateFilteredLocationList(locationPredicate);
         Index index = Index.fromOneBased(4);
         GenerateLocationsCommand command = new GenerateLocationsCommand(new IndexIdPair(index, null, PREFIX_PERSON_ID));
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                CommandResult.SWITCH_TO_VIEW_LOCATIONS);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
         assertCommandSuccess(command, model, expectedCommandResult, expectedModelForGenerate);
     }
 
     @Test
     public void execute_validInputFromViewingAllInfected_success() {
-        CommandResult expectedCommand = new CommandResult("Generated locations for: Benson Meier",
-                false, false, CommandResult.SWITCH_TO_VIEW_LOCATIONS);
+        CommandResult expectedCommand = new CommandResult("Generated locations for: Benson Meier");
         Visit testVisit = new Visit(BENSON, DANIEL_LOCATION, LocalDate.now());
         Model modelForAllInfected = model;
         modelForAllInfected.addVisit(testVisit);
         modelForAllInfected.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
 
         Model expectedModelForGenerate = expectedModel;
+        Predicate<Location> locationPredicate = location -> location.getId().equals(new Id("L4567"));
         expectedModelForGenerate.addVisit(testVisit);
-        Predicate<Location> locationPredicate = location -> location.getId().equals(new Id("L456D"));
         expectedModelForGenerate.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
         expectedModelForGenerate.updateFilteredLocationList(locationPredicate);
 
@@ -145,12 +143,11 @@ public class GenerateLocationsCommandTest {
         model.addVisit(testVisitOne);
         Model expectedModelForGenerate = expectedModel;
         expectedModelForGenerate.addVisit(testVisitOne);
-        Predicate<Location> locationPredicate = location -> location.getId().equals(new Id("L456D"));
+        Predicate<Location> locationPredicate = location -> location.getId().equals(new Id("L4567"));
         expectedModelForGenerate.updateFilteredLocationList(locationPredicate);
         Index index = Index.fromOneBased(4);
         GenerateLocationsCommand command = new GenerateLocationsCommand(new IndexIdPairStub(index, null));
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                CommandResult.SWITCH_TO_VIEW_LOCATIONS);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
         assertCommandSuccess(command, model, expectedCommandResult, expectedModelForGenerate);
     }
 

@@ -63,8 +63,7 @@ public class GeneratePeopleCommand extends Command {
         }
         model.updateFilteredPersonList(ModelPredicate.getPredicateShowPeopleById(personIds));
         return new CommandResult(
-                "Generated people for: " + infectedPerson.getName(),
-                false, false, CommandResult.SWITCH_TO_VIEW_PEOPLE);
+                "Generated people for: " + infectedPerson.getName());
     }
 
     @Override

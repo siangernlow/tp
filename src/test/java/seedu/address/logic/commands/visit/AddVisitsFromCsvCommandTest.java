@@ -53,9 +53,7 @@ public class AddVisitsFromCsvCommandTest {
         }
 
         AddVisitsFromCsvCommand actualCommand = new AddVisitsFromCsvCommand(vpcsToAdd);
-        CommandResult commandResult =
-                new CommandResult(String.format(MESSAGE_SUCCESS, vpcsToAdd.size(), VISITS),
-                        false, false, CommandResult.SWITCH_TO_VIEW_VISITS);
+        CommandResult commandResult = new CommandResult(String.format(MESSAGE_SUCCESS, vpcsToAdd.size(), VISITS));
         assertCommandSuccess(actualCommand, actualModel, commandResult, expectedModel);
     }
 
@@ -100,9 +98,7 @@ public class AddVisitsFromCsvCommandTest {
         String linesWithDuplicates = String.format("%d %d ", vpcsToAdd.size() - 1, vpcsToAdd.size());
         String expectedMessage = String.format(MESSAGE_SUCCESS, numOfUniqueAdditions, VISITS)
                 + String.format(MESSAGE_DUPLICATES_NOT_ADDED, VISITS, linesWithDuplicates);
-        CommandResult commandResult =
-                new CommandResult(expectedMessage,
-                        false, false, CommandResult.SWITCH_TO_VIEW_VISITS);
+        CommandResult commandResult = new CommandResult(expectedMessage);
         assertCommandSuccess(actualCommand, actualModel, commandResult, expectedModel);
     }
 
