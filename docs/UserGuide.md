@@ -112,6 +112,8 @@ Focuses on information that you should be careful about. Being cautious is recom
 </div>
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
+
 ## Glossary
 
 The following table presents a list of key terms that will be used in this user guide. 
@@ -168,12 +170,16 @@ The User Interface is made up of multiple components whose purpose are explained
 | Toolbar         | Displays the toolbar for VirusTracker. Clicking on `File` and `Help` will show you the exit and help buttons respectively.  | 
 | Command Box     | You may type in your inputs into this textbox.    | 
 | Command Result  | VirusTracker displays responses inside this box. You may read success messages or warnings from this box.  | 
+
+<div style="page-break-after: always;"></div>
+
+| Component | Description |
+| --------------- | ---------------------------------------- | 
 | Persons List    | Displays a list of Persons. Panels contain detailed information about each person. |
 | Locations List  | Displays a list of Locations. Panels contain detailed information about each location. | 
 | Visits List     | Displays a list of visits. Panels contain information about the person, location and date of the visit. | 
 
 --------------------------------------------------------------------------------------------------------------------
-<div style="page-break-after: always;"></div>
 
 ## Features
 
@@ -275,14 +281,16 @@ You may also prefer to use indexes which tend to be shorter than the ids of peop
 **:warning: Warnings about indexes and ids**<br>
 * Take note that the index of a person/location may change depending on the index of the person/location as viewed from the most recently displayed person/location list.
   Observe that the index of ION Orchard changes from 1 to 2 after adding a new location (_Great World City_) in the figure below. <br>
+</div>
 
    ![indexes](images/ion1.png)
    ![indexes](images/ion2.png)
  
+<div markdown="block" class="alert alert-danger">
 * Indexes **must be positive integers**: 1, 2, 3, …​ and within the range of its shown list, otherwise warnings will be triggered.
 * Ids used must belong to a person/location within VirusTracker.
-
 </div>
+
 
 <div style="page-break-after: always;"></div>
 
@@ -411,6 +419,8 @@ lowest risk are displayed.
 
 </div>
   
+<div style="page-break-after: always;"></div>
+
 #### Listing summary of data
 
 Shows the general summary of the data in the form of statistics.
@@ -464,6 +474,8 @@ Format: `addFromCsv FILE_PATH l/LIST_TYPE`
     2. Select 'Properties'
     3. Take note of the path specified in the 'Location' field. `E.g. C:/Users/user/Desktop`
     4. The absolute file path is the path found in Step 3 along with your file name. `C:/Users/user/Desktop/personList.csv`
+
+<div style="page-break-after: always;"></div>
 
 * `LIST_TYPE` refers to 'people', 'locations' or 'visits'.
   * The prefix `l/` is also used for [listing data](#listing-data-list)
@@ -731,6 +743,8 @@ Examples:
 *  `editPerson 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `editPerson idp/S123A n/Betsy Crower` Edits the name of the person with ID S123 to be `Betsy Crower`.
 
+<div style="page-break-after: always;"></div>
+
 #### Editing a location
 
 Edits an existing location in VirusTracker.
@@ -750,8 +764,6 @@ Format: `editLocation LOCATION_IDENTIFIER [n/NAME] [a/ADDRESS]`
 Examples:
 *  `editLocation 1 n/NTU a/Bugis street` Edits the name and address of the 1st location to be `NTU` and `Bugis Street` respectively.
 *  `editLocation idl/L123A n/NUS` Edits the name of the location with ID L123A to be `NUS`.
-
-<div style="page-break-after: always;"></div>
 
 ### Finding persons by name
 
@@ -776,6 +788,8 @@ Examples:
 * `findPerson John` returns `john` and `John Doe`
 * `findPerson alex david` returns `Alex Yeoh`, `David Li`<br>
 
+<div style="page-break-after: always;"></div>
+
 ### Generating all locations visited by a person
 
 Shows a list of locations visited by an infected person in the past 2 weeks. 
@@ -795,8 +809,6 @@ Format: `generateLocations PERSON_IDENTIFIER`
 Examples:
 * `generateLocation 4`
 * `generateLocation idp/S456D`
-
-<div style="page-break-after: always;"></div>
 
 ### Generating all people in contact with an infected person
 
@@ -818,6 +830,8 @@ Examples:
 * `generatePeople 4`
 * `generatePeople idp/S456D`
 
+<div style="page-break-after: always;"></div>
+
 ### Clearing all entries
 
 Clears all entries from VirusTracker.
@@ -832,8 +846,6 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
-<div style="page-break-after: always;"></div>
-
 ### Exiting the program
 
 Exits the program.
@@ -846,6 +858,7 @@ Format: `exit`
 VirusTracker data saves in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## FAQ
 
