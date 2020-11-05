@@ -140,7 +140,7 @@ The following table presents a list of key terms that will be used in this user 
 4. Double-click the file to start the app. The GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui_Updated.png)
 
-<div style="page-break-after: always;"></div>
+    <div style="page-break-after: always;"></div>
 
 5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
