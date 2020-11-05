@@ -1,6 +1,10 @@
 ---
 layout: page
 title: Developer Guide
+hr {
+    margin-top: -10px;
+    # margin-bottom: 20px;
+}
 ---
 * Table of Contents
 - [**Setting up, getting started**](#--setting-up--getting-started--)
