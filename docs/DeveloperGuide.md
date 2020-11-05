@@ -96,14 +96,14 @@ The `UI` component,
 1. The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 1. In addition, the `CommandResult` object can also instruct the `Ui` to perform certain actions, such as displaying help to the user.
 
+<div style="page-break-after: always;"></div>
+
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 ![Interactions Inside the Logic Component for the `delete 1` Command](images/DeleteSequenceDiagram.png)
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </div>
-
-<div style="page-break-after: always;"></div>
 
 ### Model component
 
@@ -125,13 +125,12 @@ The `Person`, `Location` and `Visit` components are shown in more detail below.
 ![Structure of Person and Location components](images/PersonLocationClassDiagram.png)
 ![Structure of the Visit component](images/VisitClassDiagram.png)
 
-<div style="page-break-after: always;"></div>
-
 <div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique `Tag`, instead of each `Person` needing their own `Tag` object.<br>
 ![BetterModelClassDiagram](images/BetterModelClassDiagram.png)
 
 </div>
 
+<div style="page-break-after: always;"></div>
 
 ### Storage component
 
@@ -159,9 +158,16 @@ This section describes some noteworthy details on how certain features are imple
 
 This is a placeholder section for the "Manage data using CSV files section." Please update the link in that section if the header of this
 section is changed.
+
+<div style="page-break-after: always;"></div>
+
 ### Add location
 
+<div style="page-break-after: always;"></div>
+
 ### Add visit
+
+<div style="page-break-after: always;"></div>
 
 ### Manage Persons, Locations and Visits using Unique Identifiers (Ho Pin Xian)
 
@@ -182,6 +188,8 @@ An example of how VirusTracker makes use of Unique Identifiers will be shown in 
 However, we will only be showing the Unique Identifier case in the following example.
 </div>
 
+<div style="page-break-after: always;"></div>
+
 #### Adding Visit using Unique Identifiers
 
 Users may add a Visit from a specified Person to a specified Location on a specified date to the VirusTracker.
@@ -199,6 +207,8 @@ to key in all properties of the Person and Location.
 The sequence diagram below shows how the adding operation works.
 
 ![AddVisitUniqueIdentifierSequenceDiagram](images/AddVisitUniqueIdentifierSequenceDiagram.png)
+
+<div style="page-break-after: always;"></div>
 
 #### Activity diagram
 
@@ -233,6 +243,8 @@ already be aware of the state given Unique Identifier of the object.
 
 If VirusTracker creates the Unique Identifiers, this benefit would be lost since users will need to find the
 Unique Identifier provided by the VirusTracker. 
+
+<div style="page-break-after: always;"></div>
 
 ### Deleting Visit using a specific Index (Shu long)
 This feature allows the VirusTracker to delete the certain visit histories easily from the visit book as it may contain
