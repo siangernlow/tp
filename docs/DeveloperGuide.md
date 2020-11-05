@@ -358,9 +358,10 @@ The sequence diagram below shows how the deleteVisits operation works. Certain u
 
 The following activity diagram summarizes what happens when a user executes the `deleteVisits d/Date` command.
 ![DeleteVisitsActivityDiagram](images/DeleteVisitsActivityDiagram.png)
-#### Design consideration
 
 <div style="page-break-after: always;"></div>
+
+#### Design consideration
 
 The design considerations below highlight alternative ways to delete Visits from the visit list
 
@@ -408,6 +409,8 @@ This feature essentially acts as a "bulk add" operation. The number of rows in t
     3. [visits](#add-visit)
 * Each row in the specified CSV file must follow the format for the add command of the respective type. To find out about the format, you may click the relevant list type above.
 
+<div style="page-break-after: always;"></div>
+
 An example of a CSV file that is used to add people is shown below. Notice that column G is not completely filled as the field is optional.
 
 ![SamplePersonCsv](images/ExamplePersonCsv.png)
@@ -415,8 +418,6 @@ An example of a CSV file that is used to add people is shown below. Notice that 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The number of columns in the CSV file should correspond to the number of parameters required to create the related object. Information on additional columns **will be disregarded**.
 
 </div>
-
-<div style="page-break-after: always;"></div>
 
 #### Sequence diagram
 
@@ -466,7 +467,9 @@ For this aspect, we make a distinction between fatal exceptions and non-fatal ex
 * **Alternative 2:** Stop execution for every exception that occurs.
   * Pros: Ensures correctness of the added objects.
   * Cons: May lead to worse user experience having to constantly rerun the command.
-  
+
+<div style="page-break-after: always;"></div>
+
 **Implementation**
  
 Alternative 1 was chosen as the implementation with considerations from alternative 2.
@@ -489,8 +492,6 @@ As such, the above implementation helps to reduce the need to read the large fil
 
 This would minimise the impact to user experience as the user would spend less time fixing the errors.
 
-<div style="page-break-after: always;"></div>
-
 ##### Aspect: Absolute file path
 
 The file path the command uses is the absolute path.
@@ -512,8 +513,6 @@ By using a format similar to the `list` command, it avoids the need for implemen
 significant difference from list type.
 
 Furthermore, it allows the user to use a format that they are already comfortable with.
-
-_{more aspects and alternatives to be added}_
 
 <div style="page-break-after: always;"></div>
 
@@ -593,9 +592,10 @@ The sequence diagram below shows how the GUI updates using the list all people c
 The activity diagram below shows how the GUI updates using the list all people command as an example: `list l/people`
 ![DisplayListOfAllPeopleActivityDiagram](images/DisplayListOfAllPeopleActivityDiagram.png)
 
-<div style="page-break-after: always;"></div>
 
 --------------------------------------------------------------------------------------------------------------------
+
+<div style="page-break-after: always;"></div>
 
 ## **Documentation, logging, testing, configuration, dev-ops**
 
@@ -642,7 +642,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | user | generate a list of quarantined people currently stored in VirusTracker|  
 
 <div style="page-break-after: always;"></div>
-  
+
+| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |  
 | `* * *`  | user with access to visits data from SafeEntry app   | add visit data to a list | generate desired lists and track contacts with the infected cases|
 | `* * *`  | user with access to the visit list| delete a visit data | remove the invalid visit inside the visit list |
 | `* * *`  | user with access to the visit list| delete all visits by date | remove all the outdated visits inside the visit list |
@@ -653,6 +654,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | user worried about virus outbreaks | generate locations that infected people have been to | disinfect those locations |
 | `* * *`  | user worried about virus outbreaks | generate people that have been in contact with infected people | quarantine them for safety measures |
 | `* * *`  | user with data stored in Excel files | import data from Excel files into VirusTracker | avoid typing out the data again |
+
+<div style="page-break-after: always;"></div>
+
+| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |
 | `* * *`  | user | export data from VirusTracker into a portable format | use the same data on multiple devices |
 
 
