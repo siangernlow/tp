@@ -1,10 +1,3 @@
-<style>
-hr {
-    margin-top: -10px;
-    margin-bottom: -30px;
-}
-</style>
-
 ---
 layout: page
 title: Developer Guide
@@ -81,7 +74,7 @@ title: Developer Guide
 Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 --------------------------------------------------------------------------------------------------------------------
-<div style="page-break-after: always; padding-bottom: 10px;"></div>
+<div style="page-break-after: always; padding-bottom: 200px;"></div>
 
 ## **Design**
 
