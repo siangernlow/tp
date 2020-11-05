@@ -36,7 +36,10 @@ title: Developer Guide
     + [Design considerations:](#design-considerations--1)
       - [Aspect: How are exceptions handled](#aspect--how-are-exceptions-handled)
       - [Aspect: Absolute file path](#aspect--absolute-file-path)
-      - [Aspect: Reusing list types and the list prefix 'l/'](#aspect--reusing-list-types-and-the-list-prefix--l--) <div style="page-break-after: always;"></div>
+      - [Aspect: Reusing list types and the list prefix 'l/'](#aspect--reusing-list-types-and-the-list-prefix--l--) 
+      
+      <div style="page-break-after: always;"></div>
+      
   * [List high risk locations of infection](#list-high-risk-locations-of-infection)
     + [Implementation](#implementation-2)
     + [Sequence diagram](#sequence-diagram-4)
