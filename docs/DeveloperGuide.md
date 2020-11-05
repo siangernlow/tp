@@ -36,7 +36,7 @@ title: Developer Guide
   * [Manage data using CSV files (Siang Ern)](#manage-data-using-csv-files-siang-ern)
     + [Importing data from a CSV file](#importing-data-from-a-csv-file)
     + [Sequence diagram](#sequence-diagram-3)
-    + [Design considerations:](#design-considerations-3)
+    + [Design consideration](#design-consideration-3)
       - [Aspect: How are exceptions handled](#aspect-how-are-exceptions-handled)
       - [Aspect: Absolute file path](#aspect-absolute-file-path)
       - [Aspect: Reusing list types and the list prefix 'l/'](#aspect-reusing-list-types-and-the-list-prefix-l) 
@@ -48,14 +48,14 @@ title: Developer Guide
   * [GUI Functionality for displaying lists of people, locations and visits (Koh Han Ming)](#gui-functionality-for-displaying-lists-of-people-locations-and-visits-koh-han-ming)
     + [Sequence diagram](#sequence-diagram-5)
     + [Activity diagram](#activity-diagram-1)
-- [**Documentation, logging, testing, configuration, dev-ops**](#-documentation-logging-testing-configuration-dev-ops)
-- [**Appendix: Requirements**](#-appendix-requirements)
+- [**Documentation, logging, testing, configuration, dev-ops**](#documentation-logging-testing-configuration-dev-ops)
+- [**Appendix: Requirements**](#appendix-requirements)
   * [Product scope](#product-scope)
   * [User stories](#user-stories)
   * [Use cases](#use-cases)
   * [Non-Functional Requirements](#non-functional-requirements)
   * [Glossary](#glossary)
-- [**Appendix: Instructions for manual testing**](#-appendix-instructions-for-manual-testing)
+- [**Appendix: Instructions for manual testing**](#appendix-instructions-for-manual-testing)
   * [Launch and shutdown](#launch-and-shutdown)
   * [Deleting a person](#deleting-a-person)
   * [Saving data](#saving-data)
@@ -440,7 +440,7 @@ The following activity diagram summarizes what happens when a user executes the 
 
 <div style="page-break-after: always;"></div>
 
-#### Design considerations:
+#### Design consideration
 
 The design considerations below highlight alternative ways the command could have been implemented, and provides reasons for the choice of implementation.
 
