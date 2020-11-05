@@ -2,8 +2,70 @@
 layout: page
 title: Developer Guide
 ---
-* Table of Contents
-{:toc}
+# Table of Contents
+- [**Setting up, getting started**](#--setting-up--getting-started--)
+- [**Design**](#--design--)
+  * [Architecture](#architecture)
+  * [UI component](#ui-component)
+  * [Logic component](#logic-component)
+  * [Model component](#model-component)
+  * [Storage component](#storage-component)
+  * [Common classes](#common-classes)
+- [**Implementation**](#--implementation--)
+  * [Add person](#add-person)
+  * [Add location](#add-location)
+  * [Add visit](#add-visit)
+  * [Manage Persons, Locations and Visits using Unique Identifiers (Ho Pin Xian)](#manage-persons--locations-and-visits-using-unique-identifiers--ho-pin-xian-)
+    + [Adding Visit using Unique Identifiers](#adding-visit-using-unique-identifiers)
+    + [Sequence diagram](#sequence-diagram)
+    + [Activity diagram](#activity-diagram)
+    + [Design considerations:](#design-considerations-)
+      - [Aspect: User Input Identifiers Vs VirusTracker Created Identifiers](#aspect--user-input-identifiers-vs-virustracker-created-identifiers)
+  * [Deleting Visit using a specific Index (Shu long)](#deleting-visit-using-a-specific-index--shu-long-)
+    + [Implementation](#implementation)
+    + [Sequence diagram](#sequence-diagram-1)
+    + [Design consideration](#design-consideration)
+  * [Deleting Visits using a specific date (Shu long)](#deleting-visits-using-a-specific-date--shu-long-)
+    + [Implementation](#implementation-1)
+    + [Sequence diagram](#sequence-diagram-2)
+    + [Design consideration](#design-consideration-1)
+      - [Aspect: Deleting visits using person and location vs using date](#aspect--deleting-visits-using-person-and-location-vs-using-date)
+  * [Manage data using CSV files (Siang Ern)](#manage-data-using-csv-files--siang-ern-)
+    + [Importing data from a CSV file](#importing-data-from-a-csv-file)
+    + [Sequence diagram](#sequence-diagram-3)
+    + [Design considerations:](#design-considerations--1)
+      - [Aspect: How are exceptions handled](#aspect--how-are-exceptions-handled)
+      - [Aspect: Absolute file path](#aspect--absolute-file-path)
+      - [Aspect: Reusing list types and the list prefix 'l/'](#aspect--reusing-list-types-and-the-list-prefix--l--) 
+      
+      <div style="page-break-after: always;"></div>
+      
+  * [List high risk locations of infection](#list-high-risk-locations-of-infection)
+    + [Implementation](#implementation-2)
+    + [Sequence diagram](#sequence-diagram-4)
+    + [Design consideration](#design-consideration-2)
+      - [Aspect: Definition of number of high risk location of infection](#aspect--definition-of-number-of-high-risk-location-of-infection)
+  * [GUI Functionality for displaying lists of people, locations and visits (Koh Han Ming)](#gui-functionality-for-displaying-lists-of-people--locations-and-visits--koh-han-ming-)
+    + [Sequence diagram](#sequence-diagram-5)
+    + [Activity diagram](#activity-diagram-1)
+  * [\[Proposed\] Undo/redo feature](#--proposed---undo-redo-feature)
+    + [Proposed Implementation](#proposed-implementation)
+    + [Design consideration:](#design-consideration-)
+      - [Aspect: How undo & redo executes](#aspect--how-undo---redo-executes)
+  * [\[Proposed\] Data archiving](#--proposed---data-archiving)
+- [**Documentation, logging, testing, configuration, dev-ops**](#--documentation--logging--testing--configuration--dev-ops--)
+- [**Appendix: Requirements**](#--appendix--requirements--)
+  * [Product scope](#product-scope)
+  * [User stories](#user-stories)
+  * [Use cases](#use-cases)
+  * [Non-Functional Requirements](#non-functional-requirements)
+  * [Glossary](#glossary)
+- [**Appendix: Instructions for manual testing**](#--appendix--instructions-for-manual-testing--)
+  * [Launch and shutdown](#launch-and-shutdown)
+  * [Deleting a person](#deleting-a-person)
+  * [Saving data](#saving-data)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -12,6 +74,7 @@ title: Developer Guide
 Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## **Design**
 
@@ -26,6 +89,8 @@ The ***Architecture Diagram*** given above explains the high-level design of the
 :bulb: **Tip:** The `.puml` files used to create diagrams in this document can be found in the [diagrams](https://github.com/AY2021S1-CS2103T-T13-1/tp/tree/master/docs/diagrams) folder. Refer to the [_PlantUML Tutorial_ at se-edu/guides](https://se-education.org/guides/tutorials/plantUml.html) to learn how to create and edit diagrams.
 
 </div>
+
+<div style="page-break-after: always;"></div>
 
 **`Main`** has two classes called [`Main`](https://github.com/AY2021S1-CS2103T-T13-1/tp/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/AY2021S1-CS2103T-T13-1/tp/tree/master/src/main/java/seedu/address/MainApp.java). It is responsible for,
 * At app launch: Initializes the components in the correct sequence, and connects them up with each other.
@@ -49,6 +114,8 @@ For example, the `Logic` component (see the class diagram given below) defines i
 
 ![Class Diagram of the Logic Component](images/LogicClassDiagram.png)
 
+<div style="page-break-after: always;"></div>
+
 **How the architecture components interact with each other**
 
 The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
@@ -56,6 +123,8 @@ The *Sequence Diagram* below shows how the components interact with each other f
 <img src="images/ArchitectureSequenceDiagram.png" width="574" />
 
 The sections below give more details of each component.
+
+<div style="page-break-after: always;"></div>
 
 ### UI component
 
@@ -73,6 +142,8 @@ The `UI` component,
 * Executes user commands using the `Logic` component.
 * Listens for changes to `Model` data so that the UI can be updated with the modified data.
 
+<div style="page-break-after: always;"></div>
+
 ### Logic component
 
 ![Structure of the Logic Component](images/LogicClassDiagram.png)
@@ -86,12 +157,16 @@ The `UI` component,
 1. The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 1. In addition, the `CommandResult` object can also instruct the `Ui` to perform certain actions, such as displaying help to the user.
 
+<div style="page-break-after: always;"></div>
+
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 ![Interactions Inside the Logic Component for the `delete 1` Command](images/DeleteSequenceDiagram.png)
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </div>
+
+<div style="page-break-after: always;"></div>
 
 ### Model component
 
@@ -106,17 +181,14 @@ The `Model`,
 * exposes an unmodifiable `ObservableList` of each type which can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
+<div style="page-break-after: always;"></div>
+
 The `Person`, `Location` and `Visit` components are shown in more detail below.
 
 ![Structure of Person and Location components](images/PersonLocationClassDiagram.png)
 ![Structure of the Visit component](images/VisitClassDiagram.png)
 
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique `Tag`, instead of each `Person` needing their own `Tag` object.<br>
-![BetterModelClassDiagram](images/BetterModelClassDiagram.png)
-
-</div>
-
+<div style="page-break-after: always;"></div>
 
 ### Storage component
 
@@ -133,6 +205,7 @@ The `Storage` component,
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## **Implementation**
 
@@ -142,9 +215,16 @@ This section describes some noteworthy details on how certain features are imple
 
 This is a placeholder section for the "Manage data using CSV files section." Please update the link in that section if the header of this
 section is changed.
+
+<div style="page-break-after: always;"></div>
+
 ### Add location
 
+<div style="page-break-after: always;"></div>
+
 ### Add visit
+
+<div style="page-break-after: always;"></div>
 
 ### Manage Persons, Locations and Visits using Unique Identifiers (Ho Pin Xian)
 
@@ -165,6 +245,8 @@ An example of how VirusTracker makes use of Unique Identifiers will be shown in 
 However, we will only be showing the Unique Identifier case in the following example.
 </div>
 
+<div style="page-break-after: always;"></div>
+
 #### Adding Visit using Unique Identifiers
 
 Users may add a Visit from a specified Person to a specified Location on a specified date to the VirusTracker.
@@ -183,11 +265,15 @@ The sequence diagram below shows how the adding operation works.
 
 ![AddVisitUniqueIdentifierSequenceDiagram](images/AddVisitUniqueIdentifierSequenceDiagram.png)
 
+<div style="page-break-after: always;"></div>
+
 #### Activity diagram
 
 The following activity diagram summarizes what happens when a user executes the `addVisit` command.
 
 ![AddVisitUniqueIdentifiersActivityDiagram](images/AddVisitUniqueIdentifiersActivityDiagram.png)
+
+<div style="page-break-after: always;"></div>
 
 #### Design considerations:
 
@@ -217,6 +303,8 @@ already be aware of the state given Unique Identifier of the object.
 If VirusTracker creates the Unique Identifiers, this benefit would be lost since users will need to find the
 Unique Identifier provided by the VirusTracker. 
 
+<div style="page-break-after: always;"></div>
+
 ### Deleting Visit using a specific Index (Shu long)
 This feature allows the VirusTracker to delete the certain visit histories easily from the visit book as it may contain
 incorrect information that does not contribute to contact tracing and generating the potential list for quarantine.
@@ -245,6 +333,8 @@ way to quickly identify which visit the user is referring to, compared to using 
 as the details of the person, details of the location and details of the location, which requires a lot of input from the user
 for the same intended outcome.
 
+<div style="page-break-after: always;"></div>
+
 ### Deleting Visits using a specific date (Shu long)
 This feature allows the VirusTracker to delete the outdated visit histories easily from the visit book as certain visit 
 records will not contribute to contact tracing and generating the potential list for quarantine. The rationale is that 
@@ -264,9 +354,13 @@ removing the outdated visits record from the data.
 The sequence diagram below shows how the deleteVisits operation works. Certain utility classes have been omitted for readability.
 ![DeleteVisitsSequenceDiagram](images/DeleteVisitsSequenceDiagram.png)
 
+<div style="page-break-after: always;"></div>
+
 The following activity diagram summarizes what happens when a user executes the `deleteVisits d/Date` command.
 ![DeleteVisitsActivityDiagram](images/DeleteVisitsActivityDiagram.png)
 #### Design consideration
+
+<div style="page-break-after: always;"></div>
 
 The design considerations below highlight alternative ways to delete Visits from the visit list
 
@@ -292,6 +386,8 @@ less of such purposes. It is only helpful when the location or the person inform
 need to be removed. This implementation can be merged into the execution of deleting location or deleting person command.
 Also, deleting by location and person tend to be much slower compared to using dates, especially when the number of people 
 and locations are large.
+
+<div style="page-break-after: always;"></div>
 
 ### Manage data using CSV files (Siang Ern)
 
@@ -320,6 +416,8 @@ An example of a CSV file that is used to add people is shown below. Notice that 
 
 </div>
 
+<div style="page-break-after: always;"></div>
+
 #### Sequence diagram
 
 The sequence diagram below shows how the adding operation works. Certain utility classes have been omitted for readability.
@@ -336,10 +434,13 @@ The sequence diagram below shows how the adding operation works. Certain utility
 
 </div>
 
+<div style="page-break-after: always;"></div>
+
 The following activity diagram summarizes what happens when a user executes the `addFromCsv` command.
 
 ![AddFromCsvActivityDiagram](images/AddFromCsvActivityDiagram.png)
 
+<div style="page-break-after: always;"></div>
 
 #### Design considerations:
 
@@ -388,6 +489,8 @@ As such, the above implementation helps to reduce the need to read the large fil
 
 This would minimise the impact to user experience as the user would spend less time fixing the errors.
 
+<div style="page-break-after: always;"></div>
+
 ##### Aspect: Absolute file path
 
 The file path the command uses is the absolute path.
@@ -411,6 +514,8 @@ significant difference from list type.
 Furthermore, it allows the user to use a format that they are already comfortable with.
 
 _{more aspects and alternatives to be added}_
+
+<div style="page-break-after: always;"></div>
 
 ### List high risk locations of infection
 This feature allows the VirusTracker to display a list high risk location of infection. This list of high risk location 
@@ -439,12 +544,19 @@ location as the value. Generate this `HashMap` from the list of visits in step 2
 5. Calculate the number of high risk locaiton `n`, using number of infected location and number of total location.
 6. Display the top `n` locations of the sorted infected location list as the list of high risk locations.
 
+<div style="page-break-after: always;"></div>
+
 #### Sequence diagram
 The sequence diagram below shows how the list operation works. Certain utility classes have been omitted for readability.
 ![ListHighRiskLocationSequenceDiagram](images/ListHighRiskLocationSequenceDiagram.png)
 
+<div style="page-break-after: always;"></div>
+
 The following activity diagram summarizes what happens when a user executes the `list l/high-risk-locations` command.
 ![ListHighRiskLocationActivityDiagram](images/ListHighRiskLocationActivityDiagram.png)
+
+<div style="page-break-after: always;"></div>
+
 #### Design consideration
 ##### Aspect: Definition of number of high risk location of infection
 When displaying the list of high risk location of infection, the top few locations that has been most visited by any 
@@ -456,6 +568,8 @@ infected locations will be displayed.
 
 Else, number of high risk location is the number of infected location. Since less than 40% of total locations are 
 infected, all infected locations can be considered as high risk because they are the only few locations that are infected.
+
+<div style="page-break-after: always;"></div>
 
 ### GUI Functionality for displaying lists of people, locations and visits (Koh Han Ming)
 VirusTracker manages lists of person, location and visit objects. Accordingly, it needs to be able to display the information stored in these objects in a meaningful way. As the lists can be updated, the information displayed must also be changed.
@@ -473,9 +587,13 @@ These changes will be reflected on the GUI every time a list is updated. The lis
 The sequence diagram below shows how the GUI updates using the list all people command as an example: `list l/people`
 ![DisplayListOfAllPeopleSequenceDiagram](images/DisplayListOfAllPeopleSequenceDiagram.png)
 
+<div style="page-break-after: always;"></div>
+
 #### Activity diagram
 The activity diagram below shows how the GUI updates using the list all people command as an example: `list l/people`
 ![DisplayListOfAllPeopleActivityDiagram](images/DisplayListOfAllPeopleActivityDiagram.png)
+
+<div style="page-break-after: always;"></div>
 
 ### \[Proposed\] Undo/redo feature
 
