@@ -67,7 +67,7 @@ title: Developer Guide
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
-<hr style="margin-bottom: -20px" />
+<hr style="margin-bottom: -20px; margin-top:0px" />
 
 ## **Setting up, getting started**
 
