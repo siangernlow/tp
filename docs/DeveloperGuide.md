@@ -74,7 +74,7 @@ title: Developer Guide
 Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 --------------------------------------------------------------------------------------------------------------------
-<div style="page-break-after: always; padding-bottom: 200px;"></div>
+<div style="page-break-after: always;"></div>
 
 ## **Design**
 
