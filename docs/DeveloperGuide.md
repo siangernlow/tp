@@ -316,9 +316,11 @@ removing the invalid visit record from the data before adding the updated versio
 
 #### Sequence diagram
 The sequence diagram below shows how the deleteVisit operation works. Certain utility classes have been omitted for readability.
+
 ![DeleteVisitSequenceDiagram](images/DeleteVisitSequenceDiagram.png)
 
 The following activity diagram summarizes what happens when a user executes the `deleteVisit 1` command.
+
 ![DeleteVisitActivityDiagram](images/DeleteVisitActivityDiagram.png)
 
 #### Design consideration
@@ -347,11 +349,13 @@ removing the outdated visits record from the data.
 
 #### Sequence diagram
 The sequence diagram below shows how the deleteVisits operation works. Certain utility classes have been omitted for readability.
+
 ![DeleteVisitsSequenceDiagram](images/DeleteVisitsSequenceDiagram.png)
 
 <div style="page-break-after: always;"></div>
 
 The following activity diagram summarizes what happens when a user executes the `deleteVisits d/Date` command.
+
 ![DeleteVisitsActivityDiagram](images/DeleteVisitsActivityDiagram.png)
 
 <div style="page-break-after: always;"></div>
@@ -546,11 +550,13 @@ location as the value. Generate this `HashMap` from the list of visits in step 2
 
 #### Sequence diagram
 The sequence diagram below shows how the list operation works. Certain utility classes have been omitted for readability.
+
 ![ListHighRiskLocationSequenceDiagram](images/ListHighRiskLocationSequenceDiagram.png)
 
 <div style="page-break-after: always;"></div>
 
 The following activity diagram summarizes what happens when a user executes the `list l/high-risk-locations` command.
+
 ![ListHighRiskLocationActivityDiagram](images/ListHighRiskLocationActivityDiagram.png)
 
 <div style="page-break-after: always;"></div>
@@ -583,12 +589,14 @@ These changes will be reflected on the GUI every time a list is updated. The lis
 
 #### Sequence diagram
 The sequence diagram below shows how the GUI updates using the list all people command as an example: `list l/people`
+
 ![DisplayListOfAllPeopleSequenceDiagram](images/DisplayListOfAllPeopleSequenceDiagram.png)
 
 <div style="page-break-after: always;"></div>
 
 #### Activity diagram
 The activity diagram below shows how the GUI updates using the list all people command as an example: `list l/people`
+
 ![DisplayListOfAllPeopleActivityDiagram](images/DisplayListOfAllPeopleActivityDiagram.png)
 
 
