@@ -2,8 +2,56 @@
 layout: page
 title: User Guide
 ---
-* Table of Contents
-{:toc}
+Table of Contents
+- [Preface](#preface)
+- [Notations](#notations)
+- [Glossary](#glossary)
+- [Quick start](#quick-start)
+- [User Interface](#user-interface)
+- [Features](#features)
+  * [Valid Formats for Command Parameters](#valid-formats-for-command-parameters)
+    + [Email Format](#email-format)
+  * [Index and Ids](#index-and-ids)
+  * [Adding data](#adding-data)
+    + [Adding a person](#adding-a-person)
+    + [Adding a location](#adding-a-location)
+    + [Adding a visit](#adding-a-visit)
+  * [Listing data](#listing-data)
+    + [Listing all people](#listing-all-people)
+    + [Listing all infected people](#listing-all-infected-people)
+    + [Listing all quarantined people](#listing-all-quarantined-people)
+    + [Listing all locations](#listing-all-locations)
+    + [Listing all visits](#listing-all-visits)
+    + [Listing high risk locations](#listing-high-risk-locations)
+    + [Listing summary of data](#listing-summary-of-data)
+    + [Adding data from CSV files](#adding-data-from-csv-files)
+      - [_Error Handling_](#error-handling)
+    + [Exporting data to CSV files](#exporting-data-to-csv-files)
+  * [Format for CSV files](#format-for-csv-files)
+    + [Using Excel to add prefixes](#using-excel-to-add-prefixes)
+    + [Replacing the data](#replacing-the-data)
+  * [Deleting data](#deleting-data)
+    + [Deleting a person](#deleting-a-person)
+    + [Deleting a location](#deleting-a-location)
+    + [Deleting a visit](#deleting-a-visit)
+    + [Deleting visits using date](#deleting-visits-using-date)
+    
+    <div style="page-break-after: always;"></div>
+
+  * [Editing data](#editing-data)
+    + [Editing a person](#editing-a-person)
+    + [Editing a location](#editing-a-location)
+  * [Finding persons by name](#finding-persons-by-name)
+  * [Generating all locations visited by a person](#generating-all-locations-visited-by-a-person)
+  * [Generating all people in contact with an infected person](#generating-all-people-in-contact-with-an-infected-person)
+  * [Clearing all entries](#clearing-all-entries)
+  * [Viewing help](#viewing-help)
+  * [Exiting the program](#exiting-the-program)
+  * [Saving the data](#saving-the-data)
+- [FAQ](#faq)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
 ---
 
 **VirusTracker** is a **desktop app for generating statistics for Covid-19, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI).
@@ -11,6 +59,8 @@ It is mainly targeted towards healthcare officials who are handling large amount
 VirusTracker aims to provide a faster and quicker alternative to common statistical programs.
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
+
 ## Preface
 
 Welcome to the user guide on VirusTracker.
@@ -31,6 +81,7 @@ Then, whenever a person visits a location, add the corresponding `visit`.
 VirusTracker would be able to generate useful information based off the data that is input into the system.
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## Notations
 
@@ -61,6 +112,8 @@ Focuses on information that you should be careful about. Being cautious is recom
 </div>
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
+
 ## Glossary
 
 The following table presents a list of key terms that will be used in this user guide. 
@@ -73,6 +126,8 @@ The following table presents a list of key terms that will be used in this user 
 | Prefix     | Refers to prefixes used in commands. These precede fields that are typed in user input |
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
+
 ## Quick start
 
 1. Ensure you have Java `11` or above installed in your Computer.
@@ -83,7 +138,9 @@ The following table presents a list of key terms that will be used in this user 
 3. Copy the file to the folder you want to use as the _home folder_ for your VirusTracker.
 
 4. Double-click the file to start the app. The GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
-   ![Ui](images/Ui_updated.png)
+   ![Ui](images/Ui_Updated.png)
+
+    <div style="page-break-after: always;"></div>
 
 5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
@@ -101,6 +158,7 @@ The following table presents a list of key terms that will be used in this user 
 6. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## User Interface
 
@@ -114,11 +172,17 @@ The User Interface is made up of multiple components whose purpose are explained
 | Toolbar         | Displays the toolbar for VirusTracker. Clicking on `File` and `Help` will show you the exit and help buttons respectively.  | 
 | Command Box     | You may type in your inputs into this textbox.    | 
 | Command Result  | VirusTracker displays responses inside this box. You may read success messages or warnings from this box.  | 
+
+<div style="page-break-after: always;"></div>
+
+| Component | Description |
+| --------------- | ---------------------------------------- | 
 | Persons List    | Displays a list of Persons. Panels contain detailed information about each person. |
 | Locations List  | Displays a list of Locations. Panels contain detailed information about each location. | 
 | Visits List     | Displays a list of visits. Panels contain information about the person, location and date of the visit. | 
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## Features
 
@@ -153,6 +217,8 @@ This section introduces you to important notations and details that apply to the
   4. For locations, they are duplicates if they have the same address. 
 </div>
 
+<div style="page-break-after: always;"></div>
+
 ### Valid Formats for Command Parameters
 
 From the following table, you may see a list of command parameters that found in this user guide.
@@ -170,6 +236,8 @@ Each row shows the parameter, the corresponding prefix and conditions for the pa
 | Infected Status | i/ | Infection status should either be false or if infected, the infected date. |
 | Person Id | idp/   | Person Ids can take any values, and it should be at least 5 characters long.|
 | Location Id | idl/ | Location Ids can take any values, and it should be at least 5 characters long.|
+
+<div style="page-break-after: always;"></div>
 
 #### Email Format
 Emails should be of the format `local-part@domain` and adhere to the following constraints:
@@ -196,6 +264,7 @@ In the example shown above, you may use either `deletePerson 1` or `deletePerson
 You may prefer to use ids when they do not wish to scroll the list to find the relevant index.
 You may also prefer to use indexes which tend to be shorter than the ids of people and locations.
 
+<div style="page-break-after: always;"></div>
 
 <div markdown="block" class="alert alert-info">
 
@@ -210,20 +279,27 @@ You may also prefer to use indexes which tend to be shorter than the ids of peop
 
 </div>
 
+<div style="page-break-after: always;"></div>
 <div markdown="block" class="alert alert-danger">
 
 **:warning: Warnings about indexes and ids**<br>
 * Take note that the index of a person/location may change depending on the index of the person/location as viewed from the most recently displayed person/location list.
   Observe that the index of ION Orchard changes from 1 to 2 after adding a new location (_Great World City_) in the figure below. <br>
-
-   ![indexes](images/ion1.png)
-   ![indexes](images/ion2.png)
- 
-* Indexes **must be positive integers**: 1, 2, 3, …​ and within the range of its shown list, otherwise warnings will be triggered.
-* Ids used must belong to a person/location within VirusTracker.
-
 </div>
 
+   ![indexes](images/ion1.png)
+   
+   <div style="page-break-after: always;"></div>
+   
+   ![indexes](images/ion2.png)
+ 
+<div markdown="block" class="alert alert-danger">
+* Indexes **must be positive integers**: 1, 2, 3, …​ and within the range of its shown list, otherwise warnings will be triggered.
+* Ids used must belong to a person/location within VirusTracker.
+</div>
+
+
+<div style="page-break-after: always;"></div>
 
 ### Adding data
 
@@ -247,6 +323,8 @@ Format: `addPerson idp/ID n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS q/QUARANTINE_S
 Examples:
 * `addPerson idp/S123 n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 q/true i/false`
 * `addPerson idp/S234 n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 q/false i/true t/criminal`
+
+<div style="page-break-after: always;"></div>
 
 #### Adding a location
 
@@ -288,7 +366,9 @@ Examples:
 * `addVisit 1 1 d/2020-09-12`
 * `addVisit idp/S123A idl/L123A d/2020-02-20`
 
-### Listing data:
+<div style="page-break-after: always;"></div>
+
+### Listing data
 
 There are a variety of `list` commands that list different types of data.
 
@@ -317,6 +397,8 @@ Format: `list l/visits`
 
 * Updates the visits list to displays all visits currently stored in VirusTracker.
 
+<div style="page-break-after: always;"></div>
+
 #### Listing high risk locations
 
 Lists the locations with high risk of Covid infection.
@@ -344,6 +426,8 @@ lowest risk are displayed.
 
 </div>
   
+<div style="page-break-after: always;"></div>
+
 #### Listing summary of data
 
 Shows the general summary of the data in the form of statistics.
@@ -363,6 +447,7 @@ Format: `list l/stats`
 
 </div>
 
+<div style="page-break-after: always;"></div>
 
 #### Adding data from CSV files
 
@@ -397,6 +482,8 @@ Format: `addFromCsv FILE_PATH l/LIST_TYPE`
     3. Take note of the path specified in the 'Location' field. `E.g. C:/Users/user/Desktop`
     4. The absolute file path is the path found in Step 3 along with your file name. `C:/Users/user/Desktop/personList.csv`
 
+<div style="page-break-after: always;"></div>
+
 * `LIST_TYPE` refers to 'people', 'locations' or 'visits'.
   * The prefix `l/` is also used for [listing data](#listing-data-list)
 * The CSV file should have its data in [VirusTracker readable format](#format-for-csv-files).
@@ -409,6 +496,7 @@ the same directory as the VirusTracker application.
 
 </div>
 
+<div style="page-break-after: always;"></div>
 
 ##### _Error Handling_
 Sometimes, the format of the CSV file may be wrong when executing the command. VirusTracker has different behaviour for different
@@ -432,6 +520,8 @@ types of errors.
 Examples:
 * `addFromCsv C:/Users/alice/Desktop/peopleToAdd.csv l/people`
 * `addFromCsv D:/visits on Dec 20.csv l/visits`
+
+<div style="page-break-after: always;"></div>
 
 #### Exporting data to CSV files
 
@@ -463,6 +553,8 @@ Examples:
 * `exportToCsv C:/Users/alice/Desktop/peopleToAdd.csv l/people` creates a people data CSV file named `peopleToAdd.csv`
 * `exportToCsv D:/visits on Dec 20.csv l/visits` creates a visit data CSV file named `visits on Dec 20.csv`
 
+<div style="page-break-after: always;"></div>
+
 ### Format for CSV files
 
 As data can be formatting differently from file to file, VirusTracker specifies a certain format for CSV files to be imported.
@@ -480,6 +572,8 @@ The conversion of pre-existing data to the required CSV format may require a bit
 * Copy the rows of relevant data (name, addresses, dates, etc) into the new file.
 * Using Excel functions, you can prepend the required prefixes to each data field.
 * CSV files exported by VirusTracker already have this format and do not need to be reformatted.
+
+<div style="page-break-after: always;"></div>
 
 #### Using Excel to add prefixes
 
@@ -501,6 +595,8 @@ Upon pressing enter, you should see that the prefix has been prepended to the fi
 You may then click the bottom right corner of the formatted cell, C1 in this case, and drag downwards to fill the remaining cells.
 Alternatively, you could also choose `Fill` -> `Down` from the menu bar.
  
+ <div style="page-break-after: always;"></div>
+
  You should see a result similar to below.
 
 ![Format CSV 4](images/FormatCSV/FormatCsv4.png)
@@ -518,6 +614,8 @@ You may then similarly fill the cells as shown in the two diagrams below.
 
 ![Format CSV 7](images/FormatCSV/FormatCsv7.png)
 
+<div style="page-break-after: always;"></div>
+
 #### Replacing the data
 
 After creating the formatted data, you may be tempted to directly copy the new data into the column containing the preformatted data.
@@ -529,6 +627,8 @@ For example, if you wished to copy formatted data from column C to column A, rig
 
 ![Format CSV 8](images/FormatCSV/FormatCsv8.png)
 
+<div style="page-break-after: always;"></div>
+
 Select `Paste Special` -> `Values` as shown below.
 
 ![Format CSV 9](images/FormatCSV/FormatCsv9.png)
@@ -537,7 +637,9 @@ Column A now has the formatted data and column C can be deleted.
 
 ![Format CSV 10](images/FormatCSV/FormatCsv10.png)
 
-### Deleting data: 
+<div style="page-break-after: always;"></div>
+
+### Deleting data
 To delete data from VirusTracker, there are various `delete` commands that can be used.
 
 #### Deleting a person
@@ -562,6 +664,8 @@ Examples:
 * `list l/infected` followed by `delete 2` deletes the 2nd infected person in the displayed people list.
 * `findPerson Betsy` followed by `delete 1` deletes the 1st person in the results of the `findPerson` command.
 * `deletePerson idp/S123` deletes the person with the id S123.
+
+<div style="page-break-after: always;"></div>
 
 #### Deleting a location
 
@@ -600,6 +704,8 @@ Be careful that deleting a visit is irreversible!
 Examples:
 * `list l/visits` followed by `deleteVisit 2` deletes the 2nd visit in the displayed visit list.
 
+<div style="page-break-after: always;"></div>
+
 #### Deleting visits using date
 
 Deletes all visits before and including the date.
@@ -619,7 +725,9 @@ Format: `deleteVisits d/DATE`
 Examples:
 * `deleteVisits d/2020-09-12`
 
-### Editing data: 
+<div style="page-break-after: always;"></div>
+
+### Editing data
 To edit data in VirusTracker, there are various `edit` commands that could be used.
 
 #### Editing a person
@@ -642,6 +750,8 @@ Examples:
 *  `editPerson 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `editPerson idp/S123A n/Betsy Crower` Edits the name of the person with ID S123 to be `Betsy Crower`.
 
+<div style="page-break-after: always;"></div>
+
 #### Editing a location
 
 Edits an existing location in VirusTracker.
@@ -662,7 +772,7 @@ Examples:
 *  `editLocation 1 n/NTU a/Bugis street` Edits the name and address of the 1st location to be `NTU` and `Bugis Street` respectively.
 *  `editLocation idl/L123A n/NUS` Edits the name of the location with ID L123A to be `NUS`.
 
-### Finding persons by name:
+### Finding persons by name
 
 Finds persons whose names contain any of the given keywords.
 
@@ -685,7 +795,9 @@ Examples:
 * `findPerson John` returns `john` and `John Doe`
 * `findPerson alex david` returns `Alex Yeoh`, `David Li`<br>
 
-### Generating all locations visited by a person:
+<div style="page-break-after: always;"></div>
+
+### Generating all locations visited by a person
 
 Shows a list of locations visited by an infected person in the past 2 weeks. 
 
@@ -705,7 +817,7 @@ Examples:
 * `generateLocation 4`
 * `generateLocation idp/S456D`
 
-### Generating all people in contact with an infected person:
+### Generating all people in contact with an infected person
 
 Shows a list of people who were in contact with an infected person in the past 2 weeks. 
 
@@ -725,13 +837,15 @@ Examples:
 * `generatePeople 4`
 * `generatePeople idp/S456D`
 
-### Clearing all entries : 
+<div style="page-break-after: always;"></div>
+
+### Clearing all entries
 
 Clears all entries from VirusTracker.
 
 Format: `clear`
 
-### Viewing help :
+### Viewing help
 
 Shows a message explaining how to access the help page.
 
@@ -739,8 +853,7 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
-
-### Exiting the program :
+### Exiting the program
 
 Exits the program.
 
@@ -752,6 +865,7 @@ Format: `exit`
 VirusTracker data saves in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## FAQ
 
