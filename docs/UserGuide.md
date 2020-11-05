@@ -16,7 +16,7 @@ Table of Contents
     + [Adding a person](#adding-a-person)
     + [Adding a location](#adding-a-location)
     + [Adding a visit](#adding-a-visit)
-  * [Listing data:](#listing-data)
+  * [Listing data](#listing-data)
     + [Listing all people](#listing-all-people)
     + [Listing all infected people](#listing-all-infected-people)
     + [Listing all quarantined people](#listing-all-quarantined-people)
@@ -30,7 +30,7 @@ Table of Contents
   * [Format for CSV files](#format-for-csv-files)
     + [Using Excel to add prefixes](#using-excel-to-add-prefixes)
     + [Replacing the data](#replacing-the-data)
-  * [Deleting data:](#deleting-data)
+  * [Deleting data](#deleting-data)
     + [Deleting a person](#deleting-a-person)
     + [Deleting a location](#deleting-a-location)
     + [Deleting a visit](#deleting-a-visit)
@@ -138,7 +138,7 @@ The following table presents a list of key terms that will be used in this user 
 3. Copy the file to the folder you want to use as the _home folder_ for your VirusTracker.
 
 4. Double-click the file to start the app. The GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
-   ![Ui](images/Ui_updated.png)
+   ![Ui](images/Ui_Updated.png)
 
 5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
@@ -180,6 +180,7 @@ The User Interface is made up of multiple components whose purpose are explained
 | Visits List     | Displays a list of visits. Panels contain information about the person, location and date of the visit. | 
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## Features
 
@@ -276,6 +277,7 @@ You may also prefer to use indexes which tend to be shorter than the ids of peop
 
 </div>
 
+<div style="page-break-after: always;"></div>
 <div markdown="block" class="alert alert-danger">
 
 **:warning: Warnings about indexes and ids**<br>
@@ -284,6 +286,9 @@ You may also prefer to use indexes which tend to be shorter than the ids of peop
 </div>
 
    ![indexes](images/ion1.png)
+   
+   <div style="page-break-after: always;"></div>
+   
    ![indexes](images/ion2.png)
  
 <div markdown="block" class="alert alert-danger">
@@ -361,7 +366,7 @@ Examples:
 
 <div style="page-break-after: always;"></div>
 
-### Listing data:
+### Listing data
 
 There are a variety of `list` commands that list different types of data.
 
@@ -632,7 +637,7 @@ Column A now has the formatted data and column C can be deleted.
 
 <div style="page-break-after: always;"></div>
 
-### Deleting data: 
+### Deleting data
 To delete data from VirusTracker, there are various `delete` commands that can be used.
 
 #### Deleting a person
