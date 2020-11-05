@@ -419,6 +419,8 @@ An example of a CSV file that is used to add people is shown below. Notice that 
 
 </div>
 
+<div style="page-break-after: always;"></div>
+
 #### Sequence diagram
 
 The sequence diagram below shows how the adding operation works. Certain utility classes have been omitted for readability.
@@ -491,6 +493,8 @@ As such, the above implementation helps to reduce the need to read the large fil
   * Execution of the command would be faster than if the same large file was executed again.
 
 This would minimise the impact to user experience as the user would spend less time fixing the errors.
+
+<div style="page-break-after: always;"></div>
 
 ##### Aspect: Absolute file path
 
@@ -643,6 +647,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 <div style="page-break-after: always;"></div>
 
+| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
 | -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |  
 | `* * *`  | user with access to visits data from SafeEntry app   | add visit data to a list | generate desired lists and track contacts with the infected cases|
 | `* * *`  | user with access to the visit list| delete a visit data | remove the invalid visit inside the visit list |
@@ -657,9 +662,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 <div style="page-break-after: always;"></div>
 
+| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
 | -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |
 | `* * *`  | user | export data from VirusTracker into a portable format | use the same data on multiple devices |
 
+<div style="page-break-after: always;"></div>
 
 ### Use cases
 
