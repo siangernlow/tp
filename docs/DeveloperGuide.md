@@ -52,10 +52,10 @@ title: Developer Guide
         - [Aspect: How to identify the location to be edited](#aspect-how-to-identify-the-location-to-be-edited)
         - [Aspect: Update visit book with updated location](#aspect-update-visit-book-with-updated-location)
   * [Delete Locations (Wu Qirui)](#delete-locations-wu-qirui)
-        + [Implementation](#implementation-4)
-        + [Sequence diagram](#sequence-diagram-6)
-        + [Design consideration](#design-consideration-6)
-          - [Aspect: How to identify the location to be deleted](#aspect-how-to-identify-the-location-to-be-deleted)
+      + [Implementation](#implementation-4)
+      + [Sequence diagram](#sequence-diagram-6)
+      + [Design consideration](#design-consideration-6)
+        - [Aspect: How to identify the location to be deleted](#aspect-how-to-identify-the-location-to-be-deleted)
   * [GUI Functionality for displaying lists of people, locations and visits (Koh Han Ming)](#gui-functionality-for-displaying-lists-of-people-locations-and-visits-koh-han-ming)
     + [Sequence diagram](#sequence-diagram-7)
     + [Activity diagram](#activity-diagram-1)
@@ -709,7 +709,7 @@ The design considerations below highlight alternative ways the command could hav
 for the choice of implementation.
 
 ##### Aspect: How to identify the location to be deleted
-Consideration of this aspect is same as [Aspect: How to identify the location to be deleted](#aspect-how-to-identify-the-location-to-be-deleted).
+Consideration of this aspect is same as [Aspect: How to identify the location to be edited](#aspect-how-to-identify-the-location-to-be-edited).
 
 ### GUI Functionality for displaying lists of people, locations and visits (Koh Han Ming)
 VirusTracker manages lists of person, location and visit objects. Accordingly, it needs to be able to display the information stored in these objects in a meaningful way. As the lists can be updated, the information displayed must also be changed.
