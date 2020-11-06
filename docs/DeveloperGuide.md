@@ -519,12 +519,13 @@ Furthermore, it allows the user to use a format that they are already comfortabl
 
 <div style="page-break-after: always;"></div>
 
-### List high risk locations of infection
+### List high risk locations of infection (Wu Qirui)
 This feature allows the VirusTracker to display a list high risk location of infection. This list of high risk location 
 of infection is generated using data currently stored in VirusTracker. The data include the infection status of all 
 people, all visits that are made by infected people and all locations. 
 
-**Format:** `list l/high-risk-locations`
+**Format:** `list [HIGH_RISK_LOCATION_NUMBER] l/high-risk-locations`
+* `HIGH_RISK_LOCATION_NUMBER` refers to how many top most infected locations that will be displayed in the GUI.
 
 #### Implementation
 This feature is one of the different `list` commands. It has the same command word as other `list` commands, which is 
@@ -533,7 +534,10 @@ This feature is one of the different `list` commands. It has the same command wo
 * Infected person is defined as person with infection status as `true`
 * Infected visit is defined as visit made by any infected person
 * Infected location is defined as location that has been visited by any infected person
-* Number of high risk location of infection is defined as:    
+* If user specifies number of high risk locations in the command, then number of high risk locations would be the user 
+specified value.
+* If user does not specifies number of high risk locations, then number of high risk location of infection is 
+determined using the following rule:    
     * If number of infected location is larger than 60% of number of total number of location, then the number of high risk 
 location is `40% * (number of total locations)`.  
     * Else, number of high risk location is the number of infected location. 
@@ -543,17 +547,22 @@ location is `40% * (number of total locations)`.
 3. Use a `HashMap` to store the location as the key and the number of visits made by any infected person to this 
 location as the value. Generate this `HashMap` from the list of visits in step 2.
 4. Sort the `HashMap` in Step 3 from most infected visits to least infected visits.
-5. Calculate the number of high risk locaiton `n`, using number of infected location and number of total location.
+5. Obtain the number of high risk locaiton `n` from user specified value or calculation using the pre-defined rule 
+stated above.
 6. Display the top `n` locations of the sorted infected location list as the list of high risk locations.
 
 <div style="page-break-after: always;"></div>
 
 #### Sequence diagram
-The sequence diagram below shows how the list operation works. Certain utility classes have been omitted for readability.
+The sequence diagram below shows an example of how the command of listing high risk locations with no user input works.
+Certain utility classes and certain parameters of some methods have been omitted for readability.
 
-![ListHighRiskLocationSequenceDiagram](images/ListHighRiskLocationSequenceDiagram.png)
+![ListHighRiskLocationNoUserInputSequenceDiagram](images/ListHighRiskLocationNoUserInputSequenceDiagram.png)
 
-<div style="page-break-after: always;"></div>
+The sequence diagram below shows an example of how the command of listing high risk locations with user input of `3`
+works. Certain utility classes and certain parameters of some methods have been omitted for readability.
+
+![ListHighRiskLocationHaveUserInputSequenceDiagram](images/ListHighRiskLocationHaveUserInputSequenceDiagram.png)
 
 The following activity diagram summarizes what happens when a user executes the `list l/high-risk-locations` command.
 
@@ -562,18 +571,84 @@ The following activity diagram summarizes what happens when a user executes the 
 <div style="page-break-after: always;"></div>
 
 #### Design consideration
-##### Aspect: Definition of number of high risk location of infection
-When displaying the list of high risk location of infection, the top few locations that has been most visited by any 
-infected people are wanted. 
+##### Aspect: User input for number of high risk locations
+The parameter for list high risk locations command is optional. Users can choose to or choose not to input the number of
+high risk locations for this command. 
 
-If number of infected location is larger than 60% of number of total number of location, then the number of high risk 
+**Rationale**
+Instead of always using the pre-defined rule within VirusTracker, this implementation allows users to customize the
+number of high risk locations displayed in VirusTracker. If the pre-defined rule is in used, users might not be able to 
+view more infected locations beyond the displayed high risk locations that are selected automatically by VirusTracker.
+
+##### Aspect: Determining number of high risk locations for infection when user does not specify the number
+In the case when user does not specify the number of high risk locations in the command, the system itself will
+determine the number of high risk locations using the following rule:
+
+* If number of infected location is larger than 60% of number of total number of location, then the number of high risk 
 location is `40% * (number of total locations)`.  The number `40%` is an appropriate number as not too many nor too few
 infected locations will be displayed.
 
-Else, number of high risk location is the number of infected location. Since less than 40% of total locations are 
+* Else, number of high risk location is the number of infected location. Since less than 40% of total locations are 
 infected, all infected locations can be considered as high risk because they are the only few locations that are infected.
 
+**Rationale**
+This rule can ensure that not too few infected locations are displayed especially when the number of total infected
+locations are low because all infected locations will be displayed when all infected locations are less that 40% of 
+total locations. This rule can also ensure that not too many infected locations are displayed especially when the 
+number of total infected locations are high because only the top most 40% of infected locations will be display when 
+total infected locations are more 60% of total infected locations.
+
 <div style="page-break-after: always;"></div>
+
+### Delete Locations (Wu Qirui)
+This feature allows VirusTracker to delete a certain location from the location book inside VirusTracker. When a 
+location is no longer needed in VirusTracker, user can delete the particular location using `deleteLocation` command.
+One important thing to note is when deleting a location from VirusTracker, all visits associated with this location 
+would also be deleted from the visit book inside VirusTracker. The action of deleting a location is irreversible.
+
+**Format:** `deleteLocation LOCATION_INDEX` or `deleteLocation idl/LOCATION_IDENTIFIER`
+
+* `LOCATION_INDEX` refers to the index of the location displayed on the list in VirusTracker.
+* `LOCATION_IDENTIFIER` refers to the unique identifier of the location.
+
+#### Sequence diagram
+The sequence diagram below shows an example of how the command of deleting a location using the index on displayed
+list works. Certain utility classes and certain parameters of some methods have been omitted for readability.
+
+![DeleteLocationByIndexSequenceDiagram](images/DeleteLocationByIndexSequenceDiagram.png)
+
+The sequence diagram below shows an example of how the command of deleting a location using the unique identifier of 
+the location works. Certain utility classes and certain parameters of some methods have been omitted for readability.
+
+![DeleteLocationByIdSequenceDiagram](images/DeleteLocationByIdSequenceDiagram.png)
+
+The following activity diagram summarizes what happens when a user executes the `deleteLocation` command.
+
+![DeleteLocationActivityDiagram](images/DeleteLocationActivityDiagram.png)
+
+#### Design consideration
+The design considerations below highlight alternative ways the command could have been implemented, and provides reasons
+for the choice of implementation.
+
+##### Aspect: How to identify the location to be deleted
+* **Alternative 1:** Identify the location using index displayed in the GUI.
+  * Pros: Allows users to delete the location they see on the list.
+  * Cons: If there are many locations, users may need to spend a lot of time to look for the location and its index.
+ 
+* **Alternative 2:** Identify the location using unique location id.
+  * Pros: Save time for looking through the list to find the location and its index.
+  * Cons: Need to know the unique id of the location which users might not remember.
+
+##### Implementation
+A combination of Alternative 1 and Alternative 2 is used as the implementation.
+Users are allowed to input either the index of location shown on the list in the GUI or the unique location id with 
+prefix `idl/` in front of the unique location id. If users input both index and unique location id, index will take 
+precedence over unique location id (i.e. the location to be deleted is retrieved using index without checking any
+location with the inputted unique location id).
+
+##### Rationale
+This implementation allow more flexibility and convenience for users to delete locations they want. It combines strength
+of both Alternatives.
 
 ### GUI Functionality for displaying lists of people, locations and visits (Koh Han Ming)
 VirusTracker manages lists of person, location and visit objects. Accordingly, it needs to be able to display the information stored in these objects in a meaningful way. As the lists can be updated, the information displayed must also be changed.
