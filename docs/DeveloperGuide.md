@@ -40,13 +40,24 @@ title: Developer Guide
       - [Aspect: How are exceptions handled](#aspect-how-are-exceptions-handled)
       - [Aspect: Absolute file path](#aspect-absolute-file-path)
       - [Aspect: Reusing list types and the list prefix 'l/'](#aspect-reusing-list-types-and-the-list-prefix-l) 
-  * [List high risk locations of infection](#list-high-risk-locations-of-infection)
+  * [List high risk locations of infection (Wu Qirui)](#list-high-risk-locations-of-infection)
     + [Implementation](#implementation-2)
     + [Sequence diagram](#sequence-diagram-4)
     + [Design consideration](#design-consideration-4)
-      - [Aspect: Definition of number of high risk location of infection](#aspect-definition-of-number-of-high-risk-location-of-infection)
+      - [Aspect: Determining number of high risk locations for infection when user does not specify the number](#aspect-determining-number-of-high-risk-locations-for-infection-when-user-does-not-specify-the-number)
+  * [Edit Locations (Wu Qirui)](#edit-locations-wu-qirui)
+      + [Implementation](#implementation-3)
+      + [Sequence diagram](#sequence-diagram-5)
+      + [Design consideration](#design-consideration-5)
+        - [Aspect: How to identify the location to be edited](#aspect-how-to-identify-the-location-to-be-edited)
+        - [Aspect: Update visit book with updated location](#aspect-update-visit-book-with-updated-location)
+  * [Delete Locations (Wu Qirui)](#delete-locations-wu-qirui)
+        + [Implementation](#implementation-4)
+        + [Sequence diagram](#sequence-diagram-6)
+        + [Design consideration](#design-consideration-6)
+          - [Aspect: How to identify the location to be deleted](#aspect-how-to-identify-the-location-to-be-deleted)
   * [GUI Functionality for displaying lists of people, locations and visits (Koh Han Ming)](#gui-functionality-for-displaying-lists-of-people-locations-and-visits-koh-han-ming)
-    + [Sequence diagram](#sequence-diagram-5)
+    + [Sequence diagram](#sequence-diagram-7)
     + [Activity diagram](#activity-diagram-1)
 - [**Documentation, logging, testing, configuration, dev-ops**](#documentation-logging-testing-configuration-dev-ops)
 - [**Appendix: Requirements**](#appendix-requirements)
@@ -589,7 +600,8 @@ location is `40% * (number of total locations)`.  The number `40%` is an appropr
 infected locations will be displayed.
 
 * Else, number of high risk location is the number of infected location. Since less than 40% of total locations are 
-infected, all infected locations can be considered as high risk because they are the only few locations that are infected.
+infected, all infected locations can be considered as high risk because they are the only few locations that are 
+infected.
 
 **Rationale**
 This rule can ensure that not too few infected locations are displayed especially when the number of total infected
@@ -600,16 +612,82 @@ total infected locations are more 60% of total infected locations.
 
 <div style="page-break-after: always;"></div>
 
+### Edit Locations (Wu Qirui)
+This feature allows VirusTracker to edit a location inside the location book of VirusTracker. When users decide to 
+change some field(s) or details about the location, they would be able to change the fields or details about the 
+locations using `editLocation` command. When a location is edited, all visits that are associated to this location
+will be updated with the latest details.
+
+**Format:** `editLocation LOCATION_IDENTIFIER [n/NAME] [a/ADDRESS]` 
+* `LOCATION_IDENTIFIER` refers to the index of the location displayed on the list in the GUI or unique identifier of
+the location.
+
+#### Sequence diagram
+The sequence diagram below shows an example of how the command of editing a location using the index on displayed
+list with request to change both name and address works. Certain utility classes and certain parameters of some methods 
+have been omitted for readability.
+
+![EditLocationByIndexSequenceDiagram](images/EditLocationByIndexSequenceDiagram.png)
+
+The sequence diagram below shows an example of how the command of editing a location using the unique identifier of 
+the location with request to change name only works. Certain utility classes and certain parameters of some methods have
+been omitted for readability.
+
+![EditLocationByIdSequenceDiagram](images/EditLocationByIdSequenceDiagram.png)
+
+The following activity diagram summarizes what happens when a user executes the `EditLocation` command.
+
+![EditLocationActivityDiagram](images/EditLocationActivityDiagram.png)
+
+#### Design consideration
+The design considerations below highlight alternative ways the command could have been implemented, and provides reasons
+for the choice of implementation.
+
+##### Aspect: How to identify the location to be edited
+* **Alternative 1:** Identify the location using index displayed in the GUI.
+  * Pros: Allows users to delete the location they see on the list.
+  * Cons: If there are many locations, users may need to spend a lot of time to look for the location and its index.
+ 
+* **Alternative 2:** Identify the location using unique location id.
+  * Pros: Save time for looking through the list to find the location and its index.
+  * Cons: Need to know the unique id of the location which users might not remember.
+
+##### Implementation
+A combination of Alternative 1 and Alternative 2 is used as the implementation.
+Users are allowed to input either the index of location shown on the list in the GUI or the unique location id with 
+prefix `idl/` in front of the unique location id. If users input both index and unique location id, index will take 
+precedence over unique location id (i.e. the location to be deleted is retrieved using index without checking any
+location with the inputted unique location id).
+
+##### Rationale
+This implementation allow more flexibility and convenience for users to delete locations they want. It combines strength
+of both Alternatives.
+
+#### Aspect: Update visit book with updated location
+* **Alternative 1:** Keep a copy of original location and a copy of edited location. Iterate through the list of visits
+and compare the location of each visit in the list with the original location. If there is a match, then replace the
+location in the visit with the edited location.
+
+* **Alternative 2:** Keep a copy of edited location only. Iterate through the list of visits and compare the
+unique id of location of each visit in the list with the unique id of the edited location. If there is a match, then
+replace the location in the visit with the edited location.
+
+##### Implementation
+Alternative 2 was chose as the implementation.
+
+##### Rationale
+Since the unique id of a location will not change, it is sufficient to identify a unique location with its id only.
+
 ### Delete Locations (Wu Qirui)
 This feature allows VirusTracker to delete a certain location from the location book inside VirusTracker. When a 
 location is no longer needed in VirusTracker, user can delete the particular location using `deleteLocation` command.
 One important thing to note is when deleting a location from VirusTracker, all visits associated with this location 
 would also be deleted from the visit book inside VirusTracker. The action of deleting a location is irreversible.
 
-**Format:** `deleteLocation LOCATION_INDEX` or `deleteLocation idl/LOCATION_IDENTIFIER`
+**Format:** `deleteLocation LOCATION_IDENTIFIER`
 
-* `LOCATION_INDEX` refers to the index of the location displayed on the list in VirusTracker.
-* `LOCATION_IDENTIFIER` refers to the unique identifier of the location.
+* `LOCATION_IDENTIFIER` refers to the index of the location displayed on the list in the GUI or unique identifier of
+the location.
 
 #### Sequence diagram
 The sequence diagram below shows an example of how the command of deleting a location using the index on displayed
@@ -631,24 +709,7 @@ The design considerations below highlight alternative ways the command could hav
 for the choice of implementation.
 
 ##### Aspect: How to identify the location to be deleted
-* **Alternative 1:** Identify the location using index displayed in the GUI.
-  * Pros: Allows users to delete the location they see on the list.
-  * Cons: If there are many locations, users may need to spend a lot of time to look for the location and its index.
- 
-* **Alternative 2:** Identify the location using unique location id.
-  * Pros: Save time for looking through the list to find the location and its index.
-  * Cons: Need to know the unique id of the location which users might not remember.
-
-##### Implementation
-A combination of Alternative 1 and Alternative 2 is used as the implementation.
-Users are allowed to input either the index of location shown on the list in the GUI or the unique location id with 
-prefix `idl/` in front of the unique location id. If users input both index and unique location id, index will take 
-precedence over unique location id (i.e. the location to be deleted is retrieved using index without checking any
-location with the inputted unique location id).
-
-##### Rationale
-This implementation allow more flexibility and convenience for users to delete locations they want. It combines strength
-of both Alternatives.
+Consideration of this aspect is same as [Aspect: How to identify the location to be deleted](#aspect-how-to-identify-the-location-to-be-deleted).
 
 ### GUI Functionality for displaying lists of people, locations and visits (Koh Han Ming)
 VirusTracker manages lists of person, location and visit objects. Accordingly, it needs to be able to display the information stored in these objects in a meaningful way. As the lists can be updated, the information displayed must also be changed.
