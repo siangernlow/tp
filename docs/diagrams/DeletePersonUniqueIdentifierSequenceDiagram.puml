@@ -1,0 +1,61 @@
+@startuml
+!include style.puml
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":VirusTrackerParser" as VirusTrackerParser LOGIC_COLOR
+participant ":EditPersonCommandParser" as EditPersonCommandParser LOGIC_COLOR
+participant ":EditPersonCommand" as EditPersonCommand LOGIC_COLOR
+participant ":IndexIdPair" as IndexIdPair LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute(commandText)
+activate LogicManager
+
+LogicManager -> VirusTrackerParser : parseCommand(commandText)
+activate VirusTrackerParser
+
+VirusTrackerParser -> EditPersonCommandParser : parse(args)
+activate EditPersonCommandParser
+
+create IndexIdPair
+EditPersonCommandParser -> IndexIdPair : IndexIdPair(argMultimap, prefix)
+activate IndexIdPair
+IndexIdPair --> EditPersonCommandParser : IndexIdPair
+
+create EditPersonCommand
+EditPersonCommandParser -> EditPersonCommand : EditPersonCommand(IndexIdPair)
+activate EditPersonCommand
+
+EditPersonCommand --> EditPersonCommandParser : EditPersonCommand
+deactivate EditPersonCommand
+
+EditPersonCommandParser --> VirusTrackerParser : EditPersonCommand
+deactivate EditPersonCommandParser
+
+VirusTrackerParser --> LogicManager : EditPersonCommand
+deactivate VirusTrackerParser
+
+LogicManager -> EditPersonCommand : execute()
+activate EditPersonCommand
+
+EditPersonCommand -> IndexIdPair : getPersonFromPair()
+IndexIdPair --> EditPersonCommand : personToEdit
+deactivate IndexIdPair
+
+EditPersonCommand -> Model : setPerson(personToEdit, editedPerson)
+activate Model
+
+Model --> EditPersonCommand
+deactivate Model
+
+EditPersonCommand --> LogicManager
+deactivate EditPersonCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

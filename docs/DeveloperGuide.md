@@ -168,7 +168,7 @@ With reference to the diagram above, this section explains the structure of the 
 
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("deletePerson 1")` API call.
 
-![Interactions Inside the Logic Component for the `deletePerson 1` Command](images/DeletePersonSequenceDiagram.png)
+![Interactions Inside the Logic Component for the `deletePerson 1` Command](images/DeleteSequenceDiagram.png)
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `DeletePersonCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </div>
@@ -220,97 +220,85 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### Add person
-
-This is a placeholder section for the "Manage data using CSV files section." Please update the link in that section if the header of this
-section is changed.
-
-<div style="page-break-after: always;"></div>
-
-### Add location
-
-<div style="page-break-after: always;"></div>
-
-### Add visit
-
-<div style="page-break-after: always;"></div>
+<div markdown="span" class="alert alert-info">:information_source: **Note:** 
+    Not all sections below will have a UML sequence/activity diagram. These diagrams serve to highlight the behaviours of the feature being discussed in the section.
+    Should a diagram be omitted, the reader may assume that it has similar behaviour to similar features. 
+    For example, the diagrams for `addLocation` and `addVisit` would be similar to `addPerson` hence only the `addPerson` section would have the diagrams. 
+</div>
 
 ### Manage Persons, Locations and Visits using Unique Identifiers (Ho Pin Xian)
 
-Person objects have different aspects (including Name, Address, Phone Number, infection status etc) but none of which can
-uniquely identify a single Person. Family members may live in the same Address. Common names such as John may belong to multiple
-people. Young people without their own phones may be using their house number or a parent's number.
-The same can be said for Location objects as well. Hence, unique identifiers are required to uniquely and reliably identify
-each Person and Location.
+VirusTracker provides users with two ways to uniquely refer to an object, indexes and Ids.
+This guide collectively refers to Ids and indexes as unique identifiers.
+Indexes refer to the position of a person or location in the shown list.
+An example of indexes and Ids can be seen in the image below. <br>
+![personPanel](images/personPanel.PNG) 
+Alex Yeoh is the first person on the persons list. He has an index of 1 and Id of S123A.
+Bernice Yu is the second person. She has an index of 2 and Id of S234B.
 
-Since VirusTracker manages lists of Person and Location objects, it is necessary for VirusTracker to
-uniquely identify the Person and Location involved in a Visit. Unique Identifiers have great significance within VirusTracker
-and support many information generating functions and basic Model managing functions. 
+The index of a person may change depending on the order of the list. For instance, the person with Index 1 will not be Alex
+if the list only shows infected people. Hence, we have decided to add in Ids as a way to uniquely identify people and locations.
+While indexes are short and easy to type, Ids have an advantage where the Id of each person and location
+do not change. In addition, users do not need to scroll the list to find the Id of a particular person. 
 
-An example of how VirusTracker makes use of Unique Identifiers will be shown in the following Add Visit command example.
+VirusTracker has many functionalities that require the user to identify a specific person or location. These functions can
+range from simple add, delete functions to functions involving the generating the list of people in contact with a specific person.
+To allow the smooth extension of using either indexes or Ids in these commands, an IndexIdPair is used as an intermediate
+to store the information used to identify person or location.
 
-<div markdown="span" class="alert alert-info">:information_source: 
-**Note:** Users may add Visits to VirusTracker via Unique Identifiers or Indexes. 
-However, we will only be showing the Unique Identifier case in the following example.
-</div>
+An example of how VirusTracker makes use of Unique Identifiers will be shown in the following Edit Person command example.
 
 <div style="page-break-after: always;"></div>
 
-#### Adding Visit using Unique Identifiers
+#### Editing Person using Unique Identifiers
 
-Users may add a Visit from a specified Person to a specified Location on a specified date to the VirusTracker.
-Notice how VirusTracker is able to identify the Person and Location involved in the Visit without requiring the user
-to key in all properties of the Person and Location.
-
-**Format:** `addVisit idp/PERSON_ID idl/LOCATION_ID d/DATE`
-
-* `PERSON_ID` refers to the ID of the Person making the Visit. A Person with the specified ID must exist in VirusTracker.
-* `LOCATION_ID` refers to the ID of the Location where the Visit is at. A Location with the specified ID must exist in VirusTracker.
-* `DATE` is the date when the Visit occurred. 
+Users may edit a Person inside VirusTracker.
+In this example, VirusTracker can identify the Person to be edited using either index or Id via the use of the IndexIdPair.
+Specific details about the details to update the person with are omitted for brevity.
 
 #### Sequence diagram
 
-The sequence diagram below shows how the adding operation works.
+The sequence diagram below shows how the editing operation works.
 
-![AddVisitUniqueIdentifierSequenceDiagram](images/AddVisitUniqueIdentifierSequenceDiagram.png)
+![DeletePersonUniqueIdentifierSequenceDiagram](images/EditPersonUniqueIdentifierSequenceDiagram.png)
 
 <div style="page-break-after: always;"></div>
 
 #### Activity diagram
 
-The following activity diagram summarizes what happens when a user executes the `addVisit` command.
+The following activity diagram summarizes what happens when VirusTracker executes the command to edit a person.
 
-![AddVisitUniqueIdentifiersActivityDiagram](images/AddVisitUniqueIdentifiersActivityDiagram.png)
+![DeletePersonUniqueIdentifiersActivityDiagram](images/EditPersonUniqueIdentifiersActivityDiagram.png)
 
 <div style="page-break-after: always;"></div>
 
 #### Design consideration
 
-The design considerations below highlight alternative solutions to Unique Identifiers in the management of Persons and Locations within VirusTracker and provides reasons for the choice of implementation.
+The design considerations below highlight alternative solutions to implementing Unique Identifiers
+and provides reasons for the choice of implementation.
 
-##### Aspect: User Input Identifiers Vs VirusTracker Created Identifiers
+##### Aspect: User Input Ids Vs VirusTracker Created Ids
   
-* **Alternative 1:** User Input Unique Identifiers.
+* **Alternative 1:** User Input Ids.
   * User inputs Unique Identifier during creation of Person and Location objects.
  
-* **Alternative 2:** VirusTracker Created Unique Identifiers.
+* **Alternative 2:** VirusTracker Created Ids.
   * VirusTracker creates a Unique Identifier for each Person and Location object upon creation.
 
-For this aspect, we choose to make use of Unique Identifiers provided by the user as opposed to VirusTracker creating Unique Identifiers at the backend.
+For this aspect, we choose to make use of Ids provided by the user as opposed to VirusTracker-created Ids.
       
 **Rationale**
 
 The target audience of VirusTracker are healthcare officials in charge of managing the response to an infectious pandemic. 
-It would thus be reasonable to assume that they have access to the Unique Identifiers given by the State to each Person.
+It would thus be reasonable to assume that they have access to the Ids given by the State to each Person.
 In Singapore's context, this would refer to the NRIC number. Similarly, the same would go for Locations.
 
-VirusTracker overloads functions to take in Unique Identifiers instead of Indexes as input when referring to Locations and Persons.
-The benefit of using Unique Identifiers over Indexes is that users do not have to scroll the list to find the Index of the
+VirusTracker overloads functions to take in Ids instead of indexes as input when referring to Locations and Persons.
+The benefit of using Ids over indexes is that users do not have to scroll the list to find the Index of the
 Person/Location they wish to refer to. We expect that a user whom wants to generate data involving an object, would
-already be aware of the state given Unique Identifier of the object. 
+already be aware of the state given Id of the object. 
 
-If VirusTracker creates the Unique Identifiers, this benefit would be lost since users will need to find the
-Unique Identifier provided by the VirusTracker. 
+If VirusTracker creates the Id, this benefit would be lost since users will need to find the Id provided by the VirusTracker. 
 
 <div style="page-break-after: always;"></div>
 
@@ -385,9 +373,9 @@ This feature essentially acts as a "bulk add" operation. The number of rows in t
 
 * `FILEPATH` refers to the absolute path that the file would be located at.
 * `LIST_TYPE` is the data type that the user is attempting to add. The `addFromCsv` command supports three list types:
-    1. [people](#add-person)
-    2. [locations](#add-location)
-    3. [visits](#add-visit)
+    1. people
+    2. locations
+    3. visits
 * Each row in the specified CSV file must follow the format for the add command of the respective type. To find out about the format, you may click the relevant list type above.
 
 <div style="page-break-after: always;"></div>
@@ -406,15 +394,19 @@ An example of a CSV file that is used to add people is shown below. Notice that 
 
 The sequence diagram below shows how the adding operation works. Certain utility classes have been omitted for readability.
 
-![AddFromCsvCommandSequenceDiagram](images/AddFromCsvSequenceDiagram.png)
-
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** The above sequence diagram uses the `AddPersonsFromCsvCommand` to handle adding people from CSV files. For locations and visits, replace the command with `AddLocationsFromCsvCommand` and
-`AddVisitsFromCsvCommand` respectively. The behaviour of the three commands are the same as the above sequence diagram.
+<div markdown="span" class="alert alert-info">:information_source: **Note:** Lifelines should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 
 </div>
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** Lifelines should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+![AddFromCsvCommandSequenceDiagram](images/AddFromCsvSequenceDiagram.png)
+
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** `XYZ` in the above sequence diagram can be used to denote either Persons, Locations or Visits.
+For example, `generateXYZList` could be `generatePersonsList`, `generateLocationsList` or `generateVisitsList`. The behaviour of the three different entities are the same as the above sequence diagram.
+
+</div>
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** `listType` determines the type of entity to be used for `XYZ`.
 
 </div>
 
@@ -485,6 +477,9 @@ The file path the command uses is the absolute path.
 
 By allowing the user to specify the path name, it also gives the user a choice on where to put his CSV files instead of enforcing a particular directory for
 him to store the files.
+
+**Note:** While it is recommended for the user to use absolute file paths, there is nothing enforcing the user to do so. In the case when the user specfies a relative path,
+VirusTracker would still attempt to locate the path, starting from the directory that the application is placed in. However, it is still required that the file path provided be valid.
 
 ##### Aspect: Reusing list types and the list prefix 'l/'
 
@@ -810,10 +805,21 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |
 | `* * *`  | user | generate a list of people currently stored in VirusTracker|  
 | `* * *`  | user | generate a list of locations currently stored in VirusTracker|    
-| `* * *`  | user | generate a list of visits currently stored in VirusTracker|    
-| `* * *`  | user | add location data to a list | generate information about which location needs to be disinfected |
-| `* * *`  | user | delete location data | to keep the locations list up to date|
+| `* * *`  | user | generate a list of visits currently stored in VirusTracker|   
+| `* * *`  | user | add a person's data to a list | update the list of people that are currently being tracked |
+| `* * *`  | user | delete a person's data | to keep the persons list up to date |
+| `* * *`  | user | edit a person's data | to keep the person's information up to date | 
+| `* * *`  | user | add location data to a list | update the list of locations that are currently being tracked |
+
+<div style="page-break-after: always;"></div>
+
+| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
+| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |  
+| `* * *`  | user | delete location data | to keep the locations list up to date |
 | `* * *`  | user | edit location data | to keep the location information up to date with the latest address or name |
+| `* * *`  | user with access to visits data from SafeEntry app  | add visit data to a list | track contacts with the infected cases |
+| `* * *`  | user | delete visit data | remove visits when they are no longer relevant |
+| `* * *`  | user | edit visit data | to update information about the visit |
 | `* * *`  | user | generate a list of infected people currently stored in VirusTracker|    
 | `* * *`  | user | generate a list of quarantined people currently stored in VirusTracker|  
 
@@ -821,16 +827,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 | Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
 | -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |  
-| `* * *`  | user with access to visits data from SafeEntry app   | add visit data to a list | generate desired lists and track contacts with the infected cases|
-| `* * *`  | user with access to the visit list| delete a visit data | remove the invalid visit inside the visit list |
-| `* * *`  | user with access to the visit list| delete all visits by date | remove all the outdated visits inside the visit list |
+| `* * *`  | user with access to the visit list| delete all visits past a certain date | remove all the outdated visits inside the visit list at once |
 | `* * *`  | user setting up SafeEntry checkpoints | identify locations with high risk of infection | know which places need these checkpoints the most |
 | `* * *`  | user publishing daily reports | generate daily statistics quickly and easily|                                                         |
-| `* * *`  | user managing infected patient | update people's infection status | keep the current epidemic situation up to date |
+| `* * *`  | user managing infected patients | update people's infection status | keep the current epidemic situation up to date |
 | `* * *`  | user managing quarantined people | update people's quarantine status | be aware of a person's quarantine status |
 | `* * *`  | user worried about virus outbreaks | generate locations that infected people have been to | disinfect those locations |
 | `* * *`  | user worried about virus outbreaks | generate people that have been in contact with infected people | quarantine them for safety measures |
-| `* * *`  | user with data stored in Excel files | import data from Excel files into VirusTracker | avoid typing out the data again |
+| `* * *`  | user with data stored in Excel files | import data from Excel files into VirusTracker | integrate the use of VirusTracker into existing data |
 
 <div style="page-break-after: always;"></div>
 
@@ -1306,6 +1310,32 @@ Use case ends.
     Otherwise, use case ends.
 
 <div style="page-break-after: always;"></div>
+
+**UC23 - Export data to a CSV file**
+
+**MSS**
+
+1. User requests to export data to a CSV file.
+2. System requests for information.
+3. User enters the information required.
+4. System exports the item to a CSV file and informs the user.
+
+  Use case ends.
+
+**Extensions**
+
+* 3a. There is an error in the information entered.
+    * 3a1. System requests for correct information.
+    * 3a2. User enters new input.
+    
+    Steps 3a1 - 3a2 are repeated until the information entered is correct.  
+        Use case resumes at step 3.
+* 4a. The system is unable to export data to a file.
+    * 4a1. System informs the user of the error.
+   
+    Use case ends.
+
+<div style="page-break-after: always;"></div>
   
 ### Non-Functional Requirements
 
@@ -1314,13 +1344,19 @@ Use case ends.
 3.  Should be able to switch between different types of data and manipulate them efficiently and quickly.
 4.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 5.  Summary of statistics presented should be relevant and useful to the reader.
-*{More to be added}*
+
 
 ### Glossary
 
-* **Visits**: A visit event occurs whenever a `Person` enters a `Location`. The `Date` of this visit is also recorded.
-* **Mainstream OS**: Windows, Linux, Unix, OS-X
-* **Private contact detail**: A contact detail that is not meant to be shared with others
+| Term       | Meaning                                                                                |
+|------------|----------------------------------------------------------------------------------------|
+| Entity     | Refers to people, locations or visits                                                  |
+| Command    | Refers to user input that instructs VirusTracker on what to do                         |
+| Identifier | Refers to ids or indexes. These are used to uniquely identify a location or person     |
+| Prefix     | Refers to prefixes used in commands. These precede fields that are typed in user input |
+| Visit      | A visit event occurs whenever a `Person` enters a `Location`. The `Date` of this visit is also recorded. |
+| Mainstream OS | Windows, Linux, Unix, OS-X |
+| Private contact detail | A contact detail that is not meant to be shared with others |
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -1350,13 +1386,13 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
-
 <div style="page-break-after: always;"></div>
 
 ### Deleting a person
 
 1. Deleting a person while all persons are being shown
+
+   1. Prerequisites: List all persons using the `list l/people` command. Multiple persons in the list.
 
    1. Test case: `deletePerson 1`<br>
       Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
@@ -1365,14 +1401,5 @@ testers are expected to do more *exploratory* testing.
       Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 
    1. Other incorrect deletePerson commands to try: `deletePerson`, `deletePerson x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
 
-### Saving data
-
-1. Dealing with missing/corrupted data files
-
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
-
-1. _{ more test cases …​ }_
