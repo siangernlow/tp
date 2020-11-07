@@ -124,7 +124,7 @@ For example, the `Logic` component (see the class diagram given below) defines i
 
 **How the architecture components interact with each other**
 
-The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
+The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `deletePerson 1`.
 
 <img src="images/ArchitectureSequenceDiagram.png" width="574" />
 
@@ -139,7 +139,7 @@ The sections below give more details of each component.
 **API** :
 [`Ui.java`](https://github.com/AY2021S1-CS2103T-T13-1/tp/blob/master/src/main/java/seedu/address/ui/Ui.java)
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+With reference to the diagram above, the UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `LocationListPanel`, `VisitListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2021S1-CS2103T-T13-1/tp/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2021S1-CS2103T-T13-1/tp/tree/master/src/main/resources/view/MainWindow.fxml)
 
@@ -157,19 +157,20 @@ The `UI` component,
 **API** :
 [`Logic.java`](https://github.com/AY2021S1-CS2103T-T13-1/tp/tree/master/src/main/java/seedu/address/logic/Logic.java)
 
-1. `Logic` uses the `AddressBookParser` class to parse the user command.
-1. This results in a `Command` object which is executed by the `LogicManager`.
-1. The command execution can affect the `Model` (e.g. adding a person).
-1. The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
-1. In addition, the `CommandResult` object can also instruct the `Ui` to perform certain actions, such as displaying help to the user.
+With reference to the diagram above, this section explains the structure of the logic component:
+1. `Logic` uses the `VirusTrackerParser` class to parse the user command.
+2. This results in a `Command` object which is executed by the `LogicManager`.
+3. The command execution can affect the `Model` (e.g. adding a person).
+4. The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+5. In addition, the `CommandResult` object can also instruct the `Ui` to perform certain actions, such as displaying help to the user.
 
 <div style="page-break-after: always;"></div>
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("deletePerson 1")` API call.
 
-![Interactions Inside the Logic Component for the `delete 1` Command](images/DeleteSequenceDiagram.png)
+![Interactions Inside the Logic Component for the `deletePerson 1` Command](images/DeletePersonSequenceDiagram.png)
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `DeletePersonCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </div>
 
 <div style="page-break-after: always;"></div>
@@ -180,7 +181,7 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 
 **API** : [`Model.java`](https://github.com/AY2021S1-CS2103T-T13-1/tp/tree/master/src/main/java/seedu/address/model/Model.java)
 
-The `Model`,
+With reference to the diagram above, the `Model`,
 
 * stores a `UserPref` object that represents the user’s preferences.
 * stores a `PersonBook`, `LocationBook` and `VisitBook` for the three types of data.
@@ -202,13 +203,15 @@ The `Person`, `Location` and `Visit` components are shown in more detail below.
 
 **API** : [`Storage.java`](https://github.com/AY2021S1-CS2103T-T13-1/tp/tree/master/src/main/java/seedu/address/storage/Storage.java)
 
-The `Storage` component,
+With reference to the diagram above, the `Storage` component,
 * can save `UserPref` objects in json format and read it back.
-* can save the address book data in json format and read it back.
+* can save the person book data in json format and read it back.
+* can save the location book data in json format and read it back.
+* can save the visit book data in json format and read it back.
 
 ### Common classes
 
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
+Classes used by multiple components are in the `seedu.address.commons` package.
 
 --------------------------------------------------------------------------------------------------------------------
 <div style="page-break-after: always;"></div>
@@ -308,38 +311,6 @@ already be aware of the state given Unique Identifier of the object.
 
 If VirusTracker creates the Unique Identifiers, this benefit would be lost since users will need to find the
 Unique Identifier provided by the VirusTracker. 
-
-<div style="page-break-after: always;"></div>
-
-### Deleting Visit using a specific Index (Shu long)
-This feature allows the VirusTracker to delete the certain visit histories easily from the visit book as it may contain
-incorrect information that does not contribute to contact tracing and generating the potential list for quarantine.
-Hence, implementing this feature is necessary which enables the user to be more flexible in handling the data by 
-removing the invalid visit record from the data before adding the updated version.
-
-**Format:** `deleteVisit Index`
-
-* `Index` refers to the Index of the targeted visit inside the displayed visit list. The targeted visit must exist in VirusTracker.
-
-#### Implementation
-
-* The visit that corresponds to the specified Index will be removed from the visit list.
-
-#### Sequence diagram
-The sequence diagram below shows how the deleteVisit operation works. Certain utility classes have been omitted for readability.
-
-![DeleteVisitSequenceDiagram](images/DeleteVisitSequenceDiagram.png)
-
-The following activity diagram summarizes what happens when a user executes the `deleteVisit 1` command.
-
-![DeleteVisitActivityDiagram](images/DeleteVisitActivityDiagram.png)
-
-#### Design consideration
-
-To specifically remove an invalid visit from the visit list, the index of that targeted visit as shown in the list offers an easy
-way to quickly identify which visit the user is referring to, compared to using other fields of that visit information such
-as the details of the person, details of the location and details of the location, which requires a lot of input from the user
-for the same intended outcome.
 
 <div style="page-break-after: always;"></div>
 
@@ -1387,15 +1358,13 @@ testers are expected to do more *exploratory* testing.
 
 1. Deleting a person while all persons are being shown
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-
-   1. Test case: `delete 1`<br>
+   1. Test case: `deletePerson 1`<br>
       Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 
-   1. Test case: `delete 0`<br>
+   1. Test case: `deletePerson 0`<br>
       Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
+   1. Other incorrect deletePerson commands to try: `deletePerson`, `deletePerson x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
 1. _{ more test cases …​ }_
