@@ -549,10 +549,37 @@ This feature is one of the different `list` commands. It has the same command wo
 specified value.
 * If user does not specifies number of high risk locations, then number of high risk location of infection is 
 determined using the following rule:    
-    * If number of infected location is larger than 60% of number of total number of location, then the number of high risk 
+    * If number of infected location is larger than 60% of total number of locations, then the number of high risk 
 location is `40% * (number of total locations)`.  
-    * Else, number of high risk location is the number of infected location. 
+    * Else, number of high risk location is the number of infected location.
+      
+  Below shows two examples of how the number of high risk locations is calculated when user does not specify a value
+  for it.
+  
+  Example 1 (number of infected locations is larger than 60% total number of locations):
+  ```
+  total number of locations: 100
+  number of infected locations: 72
+  
+  // 72 is larger than 60 which is 60% of total number of locations 
+  72 > 60 = 100 * 60% -> number of high risk locations = 100 * 40% = 40
+  
+  // The top most 40 infected locations will be displayed as high risk locations
+  ```
+  
+  Example 2 (num of infected locations is smaller than 60% of total number of locations):
+  ```
+  total number of locations: 100
+  number of infected locations: 23
+    
+  // 23 is smaller than 60 which is 60% of total number of locations 
+  23 < 60 = 100 * 60% -> number of high risk locations = number of infected locations = 23
+    
+  // The top most 23 infected locations will be displayed as high risk locations (i.e. all 
+  infected locations are high risk locations)
+  ```
 
+##### Implementation detail
 1. When this command is executed, a list of all infected people is obtained.
 2. A list of all visits made by all infected people is obtained using the list of infected people.
 3. Use a `HashMap` to store the location as the key and the number of visits made by any infected person to this 
@@ -588,11 +615,11 @@ high risk locations for this command.
 
 **Rationale**
 Instead of always using the pre-defined rule within VirusTracker, this implementation allows users to customize the
-number of high risk locations displayed in VirusTracker. If the pre-defined rule is in used, users might not be able to 
+number of high risk locations displayed in VirusTracker. If the pre-defined rule is in use, users might not be able to 
 view more infected locations beyond the displayed high risk locations that are selected automatically by VirusTracker.
 
 ##### Aspect: Determining number of high risk locations for infection when user does not specify the number
-In the case when user does not specify the number of high risk locations in the command, the system itself will
+In the case where user does not specify the number of high risk locations in the command, the system itself will
 determine the number of high risk locations using the following rule:
 
 * If number of infected location is larger than 60% of number of total number of location, then the number of high risk 
