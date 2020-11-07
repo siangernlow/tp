@@ -4,7 +4,7 @@ start
 'Since the beta syntax does not support placing the condition outside the
 'diamond we place it as the true branch instead.
 
-repeat :User executes command to delete Person;
+repeat :User executes command to edit Person;
 repeat while () is ([incorrect args])
 ->[else];
 
@@ -19,8 +19,7 @@ if () then ( [Person Id is stored inside IndexIdPair] )
         :Retrieve person with
         specified Id;
     endif
-    :Removes person from VirusTracker;
-    :Removes all visits involving said person from VirusTracker;
+    :Edits person;
     :Command success message is displayed;
     stop
 else ( [Person index is stored inside IndexIdPair])
@@ -33,8 +32,8 @@ else ( [Person index is stored inside IndexIdPair])
        specified index;
 endif
 
-:Removes person from VirusTracker;
-:Removes all visits involving said person from VirusTracker;
+:Edits person from VirusTracker;
+:Updates all visits involving said person from VirusTracker;
 :Command success message is displayed;
 stop
 

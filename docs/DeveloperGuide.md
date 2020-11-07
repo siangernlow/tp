@@ -206,21 +206,6 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### Add person
-
-This is a placeholder section for the "Manage data using CSV files section." Please update the link in that section if the header of this
-section is changed.
-
-<div style="page-break-after: always;"></div>
-
-### Add location
-
-<div style="page-break-after: always;"></div>
-
-### Add visit
-
-<div style="page-break-after: always;"></div>
-
 ### Manage Persons, Locations and Visits using Unique Identifiers (Ho Pin Xian)
 
 VirusTracker provides users with two ways to uniquely refer to an object, indexes and Ids.
@@ -241,28 +226,29 @@ range from simple add, delete functions to functions involving the generating th
 To allow the smooth extension of using either indexes or Ids in these commands, an IndexIdPair is used as an intermediate
 to store the information used to identify person or location.
 
-An example of how VirusTracker makes use of Unique Identifiers will be shown in the following Delete Person command example.
+An example of how VirusTracker makes use of Unique Identifiers will be shown in the following Edit Person command example.
 
 <div style="page-break-after: always;"></div>
 
-#### Deleting Person using Unique Identifiers
+#### Editing Person using Unique Identifiers
 
-Users may delete a Person from VirusTracker.
-In this example, VirusTracker can identify the Person to be deleted using either index or Id via the use of the IndexIdPair.
+Users may edit a Person inside VirusTracker.
+In this example, VirusTracker can identify the Person to be edited using either index or Id via the use of the IndexIdPair.
+Specific details about the details to update the person with are omitted for brevity.
 
 #### Sequence diagram
 
-The sequence diagram below shows how the deleting operation works.
+The sequence diagram below shows how the editing operation works.
 
-![DeletePersonUniqueIdentifierSequenceDiagram](images/DeletePersonUniqueIdentifierSequenceDiagram.png)
+![DeletePersonUniqueIdentifierSequenceDiagram](images/EditPersonUniqueIdentifierSequenceDiagram.png)
 
 <div style="page-break-after: always;"></div>
 
 #### Activity diagram
 
-The following activity diagram summarizes what happens when VirusTracker executes the command to delete a person.
+The following activity diagram summarizes what happens when VirusTracker executes the command to edit a person.
 
-![DeletePersonUniqueIdentifiersActivityDiagram](images/DeletePersonUniqueIdentifiersActivityDiagram.png)
+![DeletePersonUniqueIdentifiersActivityDiagram](images/EditPersonUniqueIdentifiersActivityDiagram.png)
 
 <div style="page-break-after: always;"></div>
 
@@ -399,9 +385,9 @@ This feature essentially acts as a "bulk add" operation. The number of rows in t
 
 * `FILEPATH` refers to the absolute path that the file would be located at.
 * `LIST_TYPE` is the data type that the user is attempting to add. The `addFromCsv` command supports three list types:
-    1. [people](#add-person)
-    2. [locations](#add-location)
-    3. [visits](#add-visit)
+    1. people
+    2. locations
+    3. visits
 * Each row in the specified CSV file must follow the format for the add command of the respective type. To find out about the format, you may click the relevant list type above.
 
 <div style="page-break-after: always;"></div>

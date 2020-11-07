@@ -4,8 +4,8 @@
 box Logic LOGIC_COLOR_T1
 participant ":LogicManager" as LogicManager LOGIC_COLOR
 participant ":VirusTrackerParser" as VirusTrackerParser LOGIC_COLOR
-participant ":DeletePersonCommandParser" as DeletePersonCommandParser LOGIC_COLOR
-participant ":DeletePersonCommand" as DeletePersonCommand LOGIC_COLOR
+participant ":EditPersonCommandParser" as EditPersonCommandParser LOGIC_COLOR
+participant ":EditPersonCommand" as EditPersonCommand LOGIC_COLOR
 participant ":IndexIdPair" as IndexIdPair LOGIC_COLOR
 end box
 
@@ -19,42 +19,42 @@ activate LogicManager
 LogicManager -> VirusTrackerParser : parseCommand(commandText)
 activate VirusTrackerParser
 
-VirusTrackerParser -> DeletePersonCommandParser : parse(args)
-activate DeletePersonCommandParser
+VirusTrackerParser -> EditPersonCommandParser : parse(args)
+activate EditPersonCommandParser
 
 create IndexIdPair
-DeletePersonCommandParser -> IndexIdPair : IndexIdPair(argMultimap, prefix)
+EditPersonCommandParser -> IndexIdPair : IndexIdPair(argMultimap, prefix)
 activate IndexIdPair
-IndexIdPair --> DeletePersonCommandParser : IndexIdPair
+IndexIdPair --> EditPersonCommandParser : IndexIdPair
 
-create DeletePersonCommand
-DeletePersonCommandParser -> DeletePersonCommand : DeletePersonCommand(IndexIdPair)
-activate DeletePersonCommand
+create EditPersonCommand
+EditPersonCommandParser -> EditPersonCommand : EditPersonCommand(IndexIdPair)
+activate EditPersonCommand
 
-DeletePersonCommand --> DeletePersonCommandParser : DeletePersonCommand
-deactivate DeletePersonCommand
+EditPersonCommand --> EditPersonCommandParser : EditPersonCommand
+deactivate EditPersonCommand
 
-DeletePersonCommandParser --> VirusTrackerParser : DeletePersonCommand
-deactivate DeletePersonCommandParser
+EditPersonCommandParser --> VirusTrackerParser : EditPersonCommand
+deactivate EditPersonCommandParser
 
-VirusTrackerParser --> LogicManager : DeletePersonCommand
+VirusTrackerParser --> LogicManager : EditPersonCommand
 deactivate VirusTrackerParser
 
-LogicManager -> DeletePersonCommand : execute()
-activate DeletePersonCommand
+LogicManager -> EditPersonCommand : execute()
+activate EditPersonCommand
 
-DeletePersonCommand -> IndexIdPair : getPersonFromPair()
-IndexIdPair --> DeletePersonCommand : personToDelete
+EditPersonCommand -> IndexIdPair : getPersonFromPair()
+IndexIdPair --> EditPersonCommand : personToEdit
 deactivate IndexIdPair
 
-DeletePersonCommand -> Model : DeletePerson(personToDelete)
+EditPersonCommand -> Model : setPerson(personToEdit, editedPerson)
 activate Model
 
-Model --> DeletePersonCommand
+Model --> EditPersonCommand
 deactivate Model
 
-DeletePersonCommand --> LogicManager
-deactivate DeletePersonCommand
+EditPersonCommand --> LogicManager
+deactivate EditPersonCommand
 
 [<--LogicManager
 deactivate LogicManager
