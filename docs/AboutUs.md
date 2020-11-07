@@ -46,7 +46,7 @@ You can reach us at the email `seer@comp.nus.edu.sg`
 [[portfolio](team/hopinxian.md)]
 
 * Role: Developer
-* Responsibilities: Dev Ops + Threading
+* Responsibilities: Team Lead
 
 ### Han Ming
 

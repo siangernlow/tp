@@ -226,93 +226,79 @@ This section describes some noteworthy details on how certain features are imple
     For example, the diagrams for `addLocation` and `addVisit` would be similar to `addPerson` hence only the `addPerson` section would have the diagrams. 
 </div>
 
-### Add person
-
-This is a placeholder section for the "Manage data using CSV files section." Please update the link in that section if the header of this
-section is changed.
-
-<div style="page-break-after: always;"></div>
-
-### Add location
-
-<div style="page-break-after: always;"></div>
-
 ### Manage Persons, Locations and Visits using Unique Identifiers (Ho Pin Xian)
 
-Person objects have different aspects (including Name, Address, Phone Number, infection status etc) but none of which can
-uniquely identify a single Person. Family members may live in the same Address. Common names such as John may belong to multiple
-people. Young people without their own phones may be using their house number or a parent's number.
-The same can be said for Location objects as well. Hence, unique identifiers are required to uniquely and reliably identify
-each Person and Location.
+VirusTracker provides users with two ways to uniquely refer to an object, indexes and Ids.
+This guide collectively refers to Ids and indexes as unique identifiers.
+Indexes refer to the position of a person or location in the shown list.
+An example of indexes and Ids can be seen in the image below. <br>
+![personPanel](images/personPanel.PNG) 
+Alex Yeoh is the first person on the persons list. He has an index of 1 and Id of S123A.
+Bernice Yu is the second person. She has an index of 2 and Id of S234B.
 
-Since VirusTracker manages lists of Person and Location objects, it is necessary for VirusTracker to
-uniquely identify the Person and Location involved in a Visit. Unique Identifiers have great significance within VirusTracker
-and support many information generating functions and basic Model managing functions. 
+The index of a person may change depending on the order of the list. For instance, the person with Index 1 will not be Alex
+if the list only shows infected people. Hence, we have decided to add in Ids as a way to uniquely identify people and locations.
+While indexes are short and easy to type, Ids have an advantage where the Id of each person and location
+do not change. In addition, users do not need to scroll the list to find the Id of a particular person. 
 
-An example of how VirusTracker makes use of Unique Identifiers will be shown in the following Add Visit command example.
+VirusTracker has many functionalities that require the user to identify a specific person or location. These functions can
+range from simple add, delete functions to functions involving the generating the list of people in contact with a specific person.
+To allow the smooth extension of using either indexes or Ids in these commands, an IndexIdPair is used as an intermediate
+to store the information used to identify person or location.
 
-<div markdown="span" class="alert alert-info">:information_source: 
-**Note:** Users may add Visits to VirusTracker via Unique Identifiers or Indexes. 
-However, we will only be showing the Unique Identifier case in the following example.
-</div>
+An example of how VirusTracker makes use of Unique Identifiers will be shown in the following Edit Person command example.
 
 <div style="page-break-after: always;"></div>
 
-#### Adding Visit using Unique Identifiers
+#### Editing Person using Unique Identifiers
 
-Users may add a Visit from a specified Person to a specified Location on a specified date to the VirusTracker.
-Notice how VirusTracker is able to identify the Person and Location involved in the Visit without requiring the user
-to key in all properties of the Person and Location.
-
-**Format:** `addVisit idp/PERSON_ID idl/LOCATION_ID d/DATE`
-
-* `PERSON_ID` refers to the ID of the Person making the Visit. A Person with the specified ID must exist in VirusTracker.
-* `LOCATION_ID` refers to the ID of the Location where the Visit is at. A Location with the specified ID must exist in VirusTracker.
-* `DATE` is the date when the Visit occurred. 
+Users may edit a Person inside VirusTracker.
+In this example, VirusTracker can identify the Person to be edited using either index or Id via the use of the IndexIdPair.
+Specific details about the details to update the person with are omitted for brevity.
 
 #### Sequence diagram
 
-The sequence diagram below shows how the adding operation works.
+The sequence diagram below shows how the editing operation works.
 
-![AddVisitUniqueIdentifierSequenceDiagram](images/AddVisitUniqueIdentifierSequenceDiagram.png)
+![DeletePersonUniqueIdentifierSequenceDiagram](images/EditPersonUniqueIdentifierSequenceDiagram.png)
 
 <div style="page-break-after: always;"></div>
 
 #### Activity diagram
 
-The following activity diagram summarizes what happens when a user executes the `addVisit` command.
+The following activity diagram summarizes what happens when VirusTracker executes the command to edit a person.
 
-![AddVisitUniqueIdentifiersActivityDiagram](images/AddVisitUniqueIdentifiersActivityDiagram.png)
+![DeletePersonUniqueIdentifiersActivityDiagram](images/EditPersonUniqueIdentifiersActivityDiagram.png)
 
 <div style="page-break-after: always;"></div>
 
 #### Design consideration
 
-The design considerations below highlight alternative solutions to Unique Identifiers in the management of Persons and Locations within VirusTracker and provides reasons for the choice of implementation.
+The design considerations below highlight alternative solutions to implementing Unique Identifiers
+and provides reasons for the choice of implementation.
 
-##### Aspect: User Input Identifiers Vs VirusTracker Created Identifiers
+##### Aspect: User Input Ids Vs VirusTracker Created Ids
   
-* **Alternative 1:** User Input Unique Identifiers.
+* **Alternative 1:** User Input Ids.
   * User inputs Unique Identifier during creation of Person and Location objects.
  
-* **Alternative 2:** VirusTracker Created Unique Identifiers.
+* **Alternative 2:** VirusTracker Created Ids.
   * VirusTracker creates a Unique Identifier for each Person and Location object upon creation.
 
-For this aspect, we choose to make use of Unique Identifiers provided by the user as opposed to VirusTracker creating Unique Identifiers at the backend.
+For this aspect, we choose to make use of Ids provided by the user as opposed to VirusTracker-created Ids.
       
 **Rationale**
 
 The target audience of VirusTracker are healthcare officials in charge of managing the response to an infectious pandemic. 
-It would thus be reasonable to assume that they have access to the Unique Identifiers given by the State to each Person.
+It would thus be reasonable to assume that they have access to the Ids given by the State to each Person.
 In Singapore's context, this would refer to the NRIC number. Similarly, the same would go for Locations.
 
-VirusTracker overloads functions to take in Unique Identifiers instead of Indexes as input when referring to Locations and Persons.
-The benefit of using Unique Identifiers over Indexes is that users do not have to scroll the list to find the Index of the
+VirusTracker overloads functions to take in Ids instead of indexes as input when referring to Locations and Persons.
+The benefit of using Ids over indexes is that users do not have to scroll the list to find the Index of the
 Person/Location they wish to refer to. We expect that a user whom wants to generate data involving an object, would
-already be aware of the state given Unique Identifier of the object. 
+already be aware of the state given Id of the object. 
 
-If VirusTracker creates the Unique Identifiers, this benefit would be lost since users will need to find the
-Unique Identifier provided by the VirusTracker. 
+If VirusTracker creates the Id, this benefit would be lost since users will need to find the Id provided by the VirusTracker. 
 
 <div style="page-break-after: always;"></div>
 
@@ -387,9 +373,9 @@ This feature essentially acts as a "bulk add" operation. The number of rows in t
 
 * `FILEPATH` refers to the absolute path that the file would be located at.
 * `LIST_TYPE` is the data type that the user is attempting to add. The `addFromCsv` command supports three list types:
-    1. [people](#add-person)
-    2. [locations](#add-location)
-    3. [visits](#adding-visit-using-unique-identifiers)
+    1. people
+    2. locations
+    3. visits
 * Each row in the specified CSV file must follow the format for the add command of the respective type. To find out about the format, you may click the relevant list type above.
 
 <div style="page-break-after: always;"></div>
