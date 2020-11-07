@@ -810,6 +810,7 @@ Format: `generateLocations PERSON_IDENTIFIER`
 * Locations listed were visited by the infected person of the index given.
 * The result given is a filtered list of locations that the person visited in the past 2 weeks.
 * This function can be used to identify locations needing to be disinfected after being visited by an infected person.
+* "2 weeks" refers to a 14-day period that is inclusive of the current date, but exclusive of the date 14 days ago.
 
 </div>
 
@@ -830,6 +831,7 @@ Format `generatePeople PERSON_IDENTIFIER`
 * People listed were in contact with the infected person of the index given.
 * The result given is a filtered list of people who visited the same locations as that the infected person in the past 2 weeks.
 * This function can be used to identify people who need to be quarantined or issued Stay Home Notices.
+* "2 weeks" refers to a 14-day period that is inclusive of the current date, but exclusive of the date 14 days ago.
 
 </div>
 
