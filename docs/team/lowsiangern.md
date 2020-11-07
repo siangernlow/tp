@@ -23,6 +23,8 @@ Given below are my contributions to the project.
   * Justification: As VirusTracker tracks the interactions between infected people and the places they visit, it was necessary to modify the existing Person class to store the infection status of a person 
   as well.
   
+   <div style="page-break-after: always;"></div>
+   
 * **New Class**: Created an InfoHandler class to handle the information stored in the model.
   * What it does: It provides the team with a class which has the ability to manipulate read-only data from the model without being worried that the data would be modified.
   * Justification: As VirusTracker needed to be able to generate statistics from the current data, a new class was required to provide this functionality. By doing so, it prevents the issue of the model class
@@ -42,6 +44,8 @@ Given below are my contributions to the project.
   
 * **Code contributed**: [RepoSense link](https://nus-cs2103-ay2021s1.github.io/tp-dashboard/#breakdown=true&search=&sort=groupTitle&sortWithin=title&since=2020-08-14&timeframe=commit&mergegroup=&groupSelect=groupByRepos&checkedFileTypes=docs~functional-code~test-code~other&tabOpen=true&tabType=authorship&tabAuthor=siangernlow&tabRepo=AY2021S1-CS2103T-T13-1%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code)
 
+ <div style="page-break-after: always;"></div>
+ 
 * **Project management**:
   * Set up the GitHub team organisation
   * Managed releases `v1.1` - `v1.4` (4 releases) on GitHub
@@ -51,6 +55,7 @@ Given below are my contributions to the project.
   * Wrote additional tests for existing features to increase coverage from 78% to 84% [\#220](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/220)
 
 * **Documentation**:
+  * Added page breaks for both User Guide and Developer Guide to ensure proper formatting when converted to PDF. [\#289](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/289)
   * User Guide:
     * Added documentation for the features `list l/high-risk-locations` and `list l/stats`. [\#21](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/21)
     * Adapted existing AB3 user guide markdown file to VirusTracker by making the user guide relevant to VirusTracker. [\#86](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/86)
