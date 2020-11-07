@@ -71,14 +71,18 @@ VirusTracker works with three main entities:
 * Locations
 * Visits
 
-A person refers to any person whom may be at risk from Covid-19. VirusTracker stores data about the id, name, address, phone number and email of each person. 
-A location refers to any location which are open for visiting. VirusTracker stores data about the id, name and address of each location.
+A person refers to any person who may be at risk from Covid-19. VirusTracker stores data about the id, name, address, phone number and email of each person.
+Furthermore, the infection and quarantine status of a person is also stored within VirusTracker. 
+A location refers to any location which are open for visiting. VirusTracker stores the id, name and address of each location.
 A visit refers to when a Person visits a Location on a given date. VirusTracker stores the data of the Person and the Location involved in the Visit.
 
 The recommended way for you to use VirusTracker is to first store the information of all the people and locations you wish to track.
 Then, whenever a person visits a location, add the corresponding `visit`.
 
-VirusTracker would be able to generate useful information based off the data that is input into the system.
+VirusTracker would then be able to generate useful information based off the data that is input into the system.
+
+While VirusTracker was created with the purpose to process data based on Covid-19, VirusTracker could also be used to monitor other
+future epidemics or pandemics should they occur.
 
 --------------------------------------------------------------------------------------------------------------------
 <div style="page-break-after: always;"></div>
@@ -252,30 +256,48 @@ Emails should be of the format `local-part@domain` and adhere to the following c
 ### Index and Ids
 
 There are many situations where you may want to refer to a specific location or person when giving a command.
+
 For example, you may want to delete a location or add a visit involving a specific location and person.
-In such cases, VirusTracker provides two methods for you to use when referring to a specific person or location, either index or id.
-This guide collectively refers to indexes and ids as identifiers.
-In the figure below showing a person panel, there is a number beside the person's name and there is a person id.<br>
+
+VirusTracker allows you to refer to people and locations using either their index or id.
+The differences between the two are as follows:
+
+|  | Index | ID |
+| ----------| ------ | ------------ | 
+| Format     |  An integer corresponding to the item's position on the list   | No set format, but must be at least **5** characters long. |
+| User-specified?| No | Yes |
+| Does it change as the list is updated? |  Yes    | No | 
+
+This guide collectively refers to indexes and ids as identifiers. When executing commands that take in a `PERSON_IDENTIFIER` or `LOCATION_IDENTIFIER`,
+you may use either indexes or ids **(but NOT both)**.
+
+In the figure below showing a person panel, the person's index is beside his name and the id is under the `Person ID` field.<br>
  ![personPanel](images/personPanel.PNG)
 
 You may use either the index number (which corresponds to the position of the person within the persons list) or the id to refer to a person. 
 The same applies for locations.
+
 In the example shown above, you may use either `deletePerson 1` or `deletePerson idp/S123A` to remove the person named `Alex Yeoh` from VirusTracker.
-You may prefer to use ids when they do not wish to scroll the list to find the relevant index.
-You may also prefer to use indexes which tend to be shorter than the ids of people and locations.
+
+Ids allow you to refer to a person or location without knowing their position on the list. This is useful if you would like to change a specific person
+or location and do not wish to scroll through large amounts of data.
+
+You may also prefer to use indexes which tend to be shorter than the ids of people and locations. These would likely be used when you do not know the 
+exact identity of the item you would be referring to, e.g. you are unlikely to know the ids of every infected person currently stored in VirusTracker.
 
 <div style="page-break-after: always;"></div>
 
 <div markdown="block" class="alert alert-info">
 
-**:information_source: Notes about using indexes and ids in commands:**<br>
+**:information_source: Summary about using indexes and ids in commands:**<br>
 * The field `IDENTIFIER` means that the user needs to input either an id or index. You are not allowed to use both at the same time. 
   `LOCATION_IDENTIFIER` and `PERSON_IDENTIFIER` refers to location and person identifiers respectively.
 * You may input an index by just using the number alone. However, ids must have a prefix in front of them.
   `idp` is the prefix for person while `idl` is the prefix for locations. <br>
-  e.g.  `deleteLocation 3` and `deleteLocation idl/L123A`. The first command uses an index of 3 while the second command uses the id `L123A`.
+  
+  E.g.  `deleteLocation 3` and `deleteLocation idl/L123A`. The first command uses an index of 3 while the second command uses the id `L123A`.
 * When using indexes, it should before any other fields which need prefixes. <br>
-  e.g. `addVisit 1 1 d/2020-02-02` is allowed but `addVisit 1 d/2020-02-02 1` is not allowed.
+  E.g. `addVisit 1 1 d/2020-02-02` is allowed but `addVisit 1 d/2020-02-02 1` is not allowed.
 
 </div>
 
@@ -283,7 +305,7 @@ You may also prefer to use indexes which tend to be shorter than the ids of peop
 <div markdown="block" class="alert alert-danger">
 
 **:warning: Warnings about indexes and ids**<br>
-* Take note that the index of a person/location may change depending on the index of the person/location as viewed from the most recently displayed person/location list.
+* Note that the index of a person/location may change depending on the index of the person/location as viewed from the most recently displayed person/location list.
   Observe that the index of ION Orchard changes from 1 to 2 after adding a new location (_Great World City_) in the figure below. <br>
 </div>
 
@@ -292,10 +314,13 @@ You may also prefer to use indexes which tend to be shorter than the ids of peop
    <div style="page-break-after: always;"></div>
    
    ![indexes](images/ion2.png)
+
+_Please take note of the above when using indexes._
  
 <div markdown="block" class="alert alert-danger">
 * Indexes **must be positive integers**: 1, 2, 3, …​ and within the range of its shown list, otherwise warnings will be triggered.
 * Ids used must belong to a person/location within VirusTracker.
+* Ids are unique for each item in the list - no two items can have the same id.
 </div>
 
 
