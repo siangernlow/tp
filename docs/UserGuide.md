@@ -137,7 +137,7 @@ The following table presents a list of key terms that will be used in this user 
    
 3. Copy the file to the folder you want to use as the _home folder_ for your VirusTracker.
 
-4. Double-click the file to start the app. The GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+4. Double-click the file to start the app. The GUI similar to the figure below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui_Updated.png)
 
     <div style="page-break-after: always;"></div>
@@ -284,7 +284,7 @@ You may also prefer to use indexes which tend to be shorter than the ids of peop
 
 **:warning: Warnings about indexes and ids**<br>
 * Take note that the index of a person/location may change depending on the index of the person/location as viewed from the most recently displayed person/location list.
-  Observe that the index of ION Orchard changes from 1 to 2 after adding a new location (_Great World City_) in the figure below. <br>
+  Observe that the index of ION Orchard changes from 1 to 2 after adding a new location (_Great World City_) in the figures below. <br>
 </div>
 
    ![indexes](images/ion1.png)
@@ -810,6 +810,7 @@ Format: `generateLocations PERSON_IDENTIFIER`
 * Locations listed were visited by the infected person of the index given.
 * The result given is a filtered list of locations that the person visited in the past 2 weeks.
 * This function can be used to identify locations needing to be disinfected after being visited by an infected person.
+* "2 weeks" refers to a 14-day period that is inclusive of the current date, but exclusive of the date 14 days ago.
 
 </div>
 
@@ -830,6 +831,7 @@ Format `generatePeople PERSON_IDENTIFIER`
 * People listed were in contact with the infected person of the index given.
 * The result given is a filtered list of people who visited the same locations as that the infected person in the past 2 weeks.
 * This function can be used to identify people who need to be quarantined or issued Stay Home Notices.
+* "2 weeks" refers to a 14-day period that is inclusive of the current date, but exclusive of the date 14 days ago.
 
 </div>
 

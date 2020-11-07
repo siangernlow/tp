@@ -37,10 +37,14 @@ infected people ot least visited by infected people;
 
 :Let "n" be the number of high risk locations of infected;
 
-if () then ([number of infected locations > 60% * number of total location])
-    :n = 40% * number of total locations;
-else ([else])
-    :n = number of infected locations;
+if () then ([user specifies value for "n"])
+    :n = user-specidied value;
+else ([use does not specify value for "n"])
+    if () then ([number of infected locations > 60% * number of total location])
+        :n = 40% * number of total locations;
+    else ([else])
+        :n = number of infected locations;
+    endif
 endif
 
 :VirusTracker displays the top n locations of sorted infected locations list;

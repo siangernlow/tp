@@ -4,7 +4,7 @@ start
 'Since the beta syntax does not support placing the condition outside the
 'diamond we place it as the true branch instead.
 
-repeat :User executes deleteVisit command;
+repeat :User executes deleteLocation command;
 repeat while () is ([incorrect args])
 ->[else];
 
