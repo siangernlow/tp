@@ -546,7 +546,7 @@ location is `40% * (number of total locations)`.
 3. Use a `HashMap` to store the location as the key and the number of visits made by any infected person to this 
 location as the value. Generate this `HashMap` from the list of visits in step 2.
 4. Sort the `HashMap` in Step 3 from most infected visits to least infected visits.
-5. Calculate the number of high risk locaiton `n`, using number of infected location and number of total location.
+5. Calculate the number of high risk location `n`, using number of infected location and number of total location.
 6. Display the top `n` locations of the sorted infected location list as the list of high risk locations.
 
 <div style="page-break-after: always;"></div>
