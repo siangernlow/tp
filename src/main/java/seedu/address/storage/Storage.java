@@ -29,7 +29,7 @@ public interface Storage extends PersonBookStorage, LocationBookStorage, UserPre
     Optional<ReadOnlyPersonBook> readAddressBook() throws DataConversionException, IOException;
 
     @Override
-    void saveAddressBook(ReadOnlyPersonBook addressBook) throws IOException;
+    void savePersonBook(ReadOnlyPersonBook addressBook) throws IOException;
 
     @Override
     Path getLocationBookFilePath();

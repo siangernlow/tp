@@ -67,20 +67,20 @@ public class JsonPersonBookStorageTest {
         JsonPersonBookStorage jsonPersonBookStorage = new JsonPersonBookStorage(filePath);
 
         // Save in new file and read back
-        jsonPersonBookStorage.saveAddressBook(original, filePath);
+        jsonPersonBookStorage.savePersonBook(original, filePath);
         ReadOnlyPersonBook readBack = jsonPersonBookStorage.readAddressBook(filePath).get();
         assertEquals(original, new PersonBook(readBack));
 
         // Modify data, overwrite exiting file, and read back
         original.addPerson(HOON);
         original.removePerson(ALICE);
-        jsonPersonBookStorage.saveAddressBook(original, filePath);
+        jsonPersonBookStorage.savePersonBook(original, filePath);
         readBack = jsonPersonBookStorage.readAddressBook(filePath).get();
         assertEquals(original, new PersonBook(readBack));
 
         // Save and read without specifying file path
         original.addPerson(IDA);
-        jsonPersonBookStorage.saveAddressBook(original); // file path not specified
+        jsonPersonBookStorage.savePersonBook(original); // file path not specified
         readBack = jsonPersonBookStorage.readAddressBook().get(); // file path not specified
         assertEquals(original, new PersonBook(readBack));
 
@@ -88,16 +88,16 @@ public class JsonPersonBookStorageTest {
 
     @Test
     public void saveAddressBook_nullAddressBook_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> saveAddressBook(null, "SomeFile.json"));
+        assertThrows(NullPointerException.class, () -> savePersonBook(null, "SomeFile.json"));
     }
 
     /**
      * Saves {@code personBook} at the specified {@code filePath}.
      */
-    private void saveAddressBook(ReadOnlyPersonBook personBook, String filePath) {
+    private void savePersonBook(ReadOnlyPersonBook personBook, String filePath) {
         try {
             new JsonPersonBookStorage(Paths.get(filePath))
-                    .saveAddressBook(personBook, addToTestDataPathIfNotNull(filePath));
+                    .savePersonBook(personBook, addToTestDataPathIfNotNull(filePath));
         } catch (IOException ioe) {
             throw new AssertionError("There should not be an error writing to the file.", ioe);
         }
@@ -105,6 +105,6 @@ public class JsonPersonBookStorageTest {
 
     @Test
     public void saveAddressBook_nullFilePath_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> saveAddressBook(new PersonBook(), null));
+        assertThrows(NullPointerException.class, () -> savePersonBook(new PersonBook(), null));
     }
 }
