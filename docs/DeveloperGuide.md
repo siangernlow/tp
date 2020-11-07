@@ -254,7 +254,7 @@ In this example, VirusTracker can identify the Person to be deleted using either
 
 The sequence diagram below shows how the deleting operation works.
 
-![DeletePersonUniqueIdentifierSequenceDiagram](images/AddVisitUniqueIdentifierSequenceDiagram.png)
+![DeletePersonUniqueIdentifierSequenceDiagram](images/DeletePersonUniqueIdentifierSequenceDiagram.png)
 
 <div style="page-break-after: always;"></div>
 
@@ -262,7 +262,7 @@ The sequence diagram below shows how the deleting operation works.
 
 The following activity diagram summarizes what happens when VirusTracker executes the command to delete a person.
 
-![DeletePersonUniqueIdentifiersActivityDiagram](images/AddVisitUniqueIdentifiersActivityDiagram.png)
+![DeletePersonUniqueIdentifiersActivityDiagram](images/DeletePersonUniqueIdentifiersActivityDiagram.png)
 
 <div style="page-break-after: always;"></div>
 
