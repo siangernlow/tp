@@ -50,8 +50,6 @@ Table of Contents
   * [Saving the data](#saving-the-data)
 - [FAQ](#faq)
 
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
-
 ---
 
 **VirusTracker** is a **desktop app for generating statistics for Covid-19, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI).
@@ -77,7 +75,7 @@ A location refers to any location which are open for visiting. VirusTracker stor
 A visit refers to when a Person visits a Location on a given date. VirusTracker stores the data of the Person and the Location involved in the Visit.
 
 The recommended way for you to use VirusTracker is to first store the information of all the people and locations you wish to track.
-Then, whenever a person visits a location, add the corresponding `visit`.
+Then, whenever a person visits a location, add the corresponding visit.
 
 VirusTracker would then be able to generate useful information based off the data that is input into the system.
 
