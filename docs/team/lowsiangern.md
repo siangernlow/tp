@@ -65,7 +65,9 @@ Given below are my contributions to the project.
     * Added documentation for the features `addFromCsv` and `exportToCsv`. [\#181](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/181), [\#201](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/201) 
   * AboutUs:
     * Modified the template About Us file to include the names of my team members and their GitHub repos. [\#88](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/88) 
-
+  * General Cleanup of documentation:
+    * These PRs fix formatting of existing documentation
+    * [\#160](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/160), [\#291](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/291)
 * **Community**:
   * PRs reviewed (with non-trivial review comments): [\#53](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/53), [\#126](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/126),
    [\#132](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/132), [\#206](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/206)
