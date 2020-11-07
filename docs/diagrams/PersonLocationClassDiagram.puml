@@ -17,10 +17,8 @@ Package Person <<Rectangle>>{
     Class Person
     Class Email
     Class Phone
-}
-
-Package Tag {
-    Class Tag
+    Class QuarantineStatus
+    Class InfectionStatus
 }
 
 Class Name
@@ -39,7 +37,8 @@ Address -down[hidden]-> Id
 
 Person *-left-> Phone
 Person *-left-> Email
-Person *-down-> Tag
+Person *-left-> InfectionStatus
+Person *-left-> QuarantineStatus
 
 Person *--> Name
 Location *--> Name
@@ -48,4 +47,6 @@ Location *--> Address
 Person *--> Id
 Location *--> Id
 
+Email -down[hidden]-> InfectionStatus
+Phone -down[hidden]-> InfectionStatus
 @enduml
