@@ -1,0 +1,75 @@
+@startuml
+!include style.puml
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":VirusTrackerParser" as VirusTrackerParser LOGIC_COLOR
+participant ":ListCommandParser" as ListCommandParser LOGIC_COLOR
+participant ":ListCommand" as ListCommand LOGIC_COLOR
+participant ":CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":ModelPredicate" as ModelPredicate <<class>> MODEL_COLOR
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("list 3 l/high-risk-locations")
+activate LogicManager
+
+LogicManager -> VirusTrackerParser : parseCommand("list 3 l/high-risk-locations")
+activate VirusTrackerParser
+
+create ListCommandParser
+VirusTrackerParser -> ListCommandParser
+activate ListCommandParser
+
+ListCommandParser --> VirusTrackerParser
+deactivate ListCommandParser
+
+VirusTrackerParser -> ListCommandParser : parse(arguments)
+activate ListCommandParser
+
+create ListCommand
+ListCommandParser -> ListCommand
+activate ListCommand
+
+ListCommand --> ListCommandParser
+deactivate ListCommand
+
+ListCommandParser --> VirusTrackerParser
+deactivate ListCommandParser
+ListCommandParser -[hidden]-> VirusTrackerParser
+destroy ListCommandParser
+
+VirusTrackerParser --> LogicManager
+deactivate VirusTrackerParser
+
+LogicManager -> ListCommand : execute()
+activate ListCommand
+
+ListCommand -> ModelPredicate : getPredicateForHighRiskLocations(3)
+activate ModelPredicate
+
+ModelPredicate --> ListCommand : predicate
+deactivate ModelPredicate
+
+ListCommand -> Model : updateFilteredLocationList(predicate)
+activate Model
+
+Model --> ListCommand
+deactivate Model
+
+create CommandResult
+ListCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> ListCommand
+deactivate CommandResult
+
+ListCommand --> LogicManager : result
+deactivate ListCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml
