@@ -90,7 +90,7 @@ Recall from the User Guide that the `edit` command has the format: `edit INDEX [
         try {
             //We can deduce that the previous line of code modifies model in some way
             // since it's being stored here.
-            storage.saveAddressBook(model.getAddressBook());
+            storage.savePersonBook(model.getPersonBook());
         } catch (IOException ioe) {
             throw new CommandException(FILE_OPS_ERROR_MESSAGE + ioe, ioe);
         }
@@ -166,7 +166,7 @@ Recall from the User Guide that the `edit` command has the format: `edit INDEX [
 1. As suspected, `command#execute()` does indeed make changes to `model`.
 
 1. We can a closer look at how storage works by repeatedly stepping into the code until we arrive at
-    `JsonAddressBook#saveAddressBook()`.
+    `JsonAddressBook#savePersonBook()`.
 
 1. Again, it appears that the heavy lifting is delegated. Let’s take a look at `JsonSerializableAddressBook`'s constructor.
 
