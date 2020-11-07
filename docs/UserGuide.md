@@ -24,12 +24,12 @@ Table of Contents
     + [Listing all visits](#listing-all-visits)
     + [Listing high risk locations](#listing-high-risk-locations)
     + [Listing summary of data](#listing-summary-of-data)
-    + [Adding data from CSV files](#adding-data-from-csv-files)
-      - [_Error Handling_](#error-handling)
-    + [Exporting data to CSV files](#exporting-data-to-csv-files)
-  * [Format for CSV files](#format-for-csv-files)
-    + [Using Excel to add prefixes](#using-excel-to-add-prefixes)
-    + [Replacing the data](#replacing-the-data)
+  * [Using CSV files (Siang Ern)](#using-csv-files)
+      + [Adding data from CSV files](#adding-data-from-csv-files)
+      + [Exporting data to CSV files](#exporting-data-to-csv-files)
+      + [Format for CSV files](#format-for-csv-files)
+        - [Using Excel to add prefixes](#using-excel-to-add-prefixes)
+        - [Replacing the data](#replacing-the-data)
   * [Deleting data](#deleting-data)
     + [Deleting a person](#deleting-a-person)
     + [Deleting a location](#deleting-a-location)
@@ -474,13 +474,17 @@ Format: `list l/stats`
 
 <div style="page-break-after: always;"></div>
 
+### Using CSV files
+
+VirusTracker mainly uses CSV files to import and export data. You may refer to the commands below to find out how to do so.
+
 #### Adding data from CSV files
 
 As you may have pre-existing data stored in the Excel file format, VirusTracker provides a way to import data directly from
 files in the CSV format. Excel provides an option to save existing _.xlsx_ extension files as _.csv_ files.
 
 <div markdown="span" class="alert alert-primary">:bulb: **Note:**
-If you are importing data from a pre-existing Excel file, you may have to first format it to a format that is readable by VirusTracker.
+If you are importing data from a pre-existing Excel file, you may have to first format it to a [format that is readable by VirusTracker].
 </div>
 
 You may read more about it [here](#format-for-csv-files).
@@ -490,14 +494,11 @@ As visits rely on people and locations, it is recommended that person and locati
 as to ensure that the referenced people and locations in the visits data csv file exist.
 </div>
 
-
 Format: `addFromCsv FILE_PATH l/LIST_TYPE`
 
-<div markdown="block" class="alert alert-info"> 
+##### _Information on parameters_
 
-:information_source: **Note:**
-
-* `FILE_PATH` refers to the absolute file path where the CSV file resides.
+* `FILE_PATH` refers to the file path where the CSV file resides. It is recommended to use absolute file paths to avoid pathing errors.
   * For example, if you wish to import data from `personList.csv` located in your desktop, the absolute file path could look
   something like this: `C:/Users/user/Desktop/personList.csv` _(for Windows)_, `/Users/admin/Documents/personList.csv` _(for MacOS)_,
   `/home/user/docs/personList.csv` _(for Linux)_
@@ -506,6 +507,11 @@ Format: `addFromCsv FILE_PATH l/LIST_TYPE`
     2. Select 'Properties'
     3. Take note of the path specified in the 'Location' field. `E.g. C:/Users/user/Desktop`
     4. The absolute file path is the path found in Step 3 along with your file name. `C:/Users/user/Desktop/personList.csv`
+
+<div markdown="span" class="alert alert-primary">:bulb: **Note:**
+It is possible for you to use relative paths in the `FILE_PATH` parameter. In this case, the default directory would
+be the same as the directory where the VirusTracker.jar file is placed in. 
+</div>
 
 <div style="page-break-after: always;"></div>
 
@@ -519,7 +525,9 @@ the same directory as the VirusTracker application.
   * For example, if the VirusTracker.jar file is located in a folder named `app` and the following command is run: `addFromCsv peopleList.csv l/people`,
   VirusTracker would search for a `peopleList.csv` file inside the `app` folder. 
 
-</div>
+Examples:
+* `addFromCsv C:/Users/alice/Desktop/peopleToAdd.csv l/people`
+* `addFromCsv D:/visits on Dec 20.csv l/visits`
 
 <div style="page-break-after: always;"></div>
 
@@ -541,10 +549,6 @@ types of errors.
     * The line number of the erroneous row will be displayed alongside the correct format for the field
     * Only the first line with such an error will be displayed, so it is possible that other rows after it have an error as well
     * Within the row, only the first erroneous field will be displayed. It is possible that other fields after it may have the wrong format as well
-    
-Examples:
-* `addFromCsv C:/Users/alice/Desktop/peopleToAdd.csv l/people`
-* `addFromCsv D:/visits on Dec 20.csv l/visits`
 
 <div style="page-break-after: always;"></div>
 
@@ -557,9 +561,7 @@ which could then be read by the VirusTracker application on another device.
 
 Format: `exportToCsv FILE_PATH l/LIST_TYPE`
 
-<div markdown="block" class="alert alert-info"> 
-
-:information_source: **Note:**
+##### _Information on parameters_
 
 * `FILE_PATH` refers to the absolute file path where the CSV file should reside.
   * Refer to the [Adding data from CSV files](#adding-data-from-csv-files) section to find out the absolute path of a file.
@@ -572,15 +574,13 @@ the same directory as the VirusTracker application.
   * For example, if the VirusTracker.jar file is located in a folder named `app` and the following command is run: `exportToCsv peopleList.csv l/people`,
   VirusTracker would create a `peopleList.csv` file inside the `app` folder. 
 
-</div>
-
 Examples:
 * `exportToCsv C:/Users/alice/Desktop/peopleToAdd.csv l/people` creates a people data CSV file named `peopleToAdd.csv`
 * `exportToCsv D:/visits on Dec 20.csv l/visits` creates a visit data CSV file named `visits on Dec 20.csv`
 
 <div style="page-break-after: always;"></div>
 
-### Format for CSV files
+#### Format for CSV files
 
 As data can be formatting differently from file to file, VirusTracker specifies a certain format for CSV files to be imported.
 
@@ -600,7 +600,7 @@ The conversion of pre-existing data to the required CSV format may require a bit
 
 <div style="page-break-after: always;"></div>
 
-#### Using Excel to add prefixes
+##### Using Excel to add prefixes
 
 The data present may be in a different format than what VirusTracker requires. Hence, below is a step by step guide to convert the common 
 types of data fields to their required format.
@@ -641,7 +641,7 @@ You may then similarly fill the cells as shown in the two diagrams below.
 
 <div style="page-break-after: always;"></div>
 
-#### Replacing the data
+##### Replacing the data
 
 After creating the formatted data, you may be tempted to directly copy the new data into the column containing the preformatted data.
 
