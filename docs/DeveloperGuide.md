@@ -303,38 +303,6 @@ Unique Identifier provided by the VirusTracker.
 
 <div style="page-break-after: always;"></div>
 
-### Deleting Visit using a specific Index (Shu long)
-This feature allows the VirusTracker to delete the certain visit histories easily from the visit book as it may contain
-incorrect information that does not contribute to contact tracing and generating the potential list for quarantine.
-Hence, implementing this feature is necessary which enables the user to be more flexible in handling the data by 
-removing the invalid visit record from the data before adding the updated version.
-
-**Format:** `deleteVisit Index`
-
-* `Index` refers to the Index of the targeted visit inside the displayed visit list. The targeted visit must exist in VirusTracker.
-
-#### Implementation
-
-* The visit that corresponds to the specified Index will be removed from the visit list.
-
-#### Sequence diagram
-The sequence diagram below shows how the deleteVisit operation works. Certain utility classes have been omitted for readability.
-
-![DeleteVisitSequenceDiagram](images/DeleteVisitSequenceDiagram.png)
-
-The following activity diagram summarizes what happens when a user executes the `deleteVisit 1` command.
-
-![DeleteVisitActivityDiagram](images/DeleteVisitActivityDiagram.png)
-
-#### Design consideration
-
-To specifically remove an invalid visit from the visit list, the index of that targeted visit as shown in the list offers an easy
-way to quickly identify which visit the user is referring to, compared to using other fields of that visit information such
-as the details of the person, details of the location and details of the location, which requires a lot of input from the user
-for the same intended outcome.
-
-<div style="page-break-after: always;"></div>
-
 ### Deleting Visits using a specific date (Shu long)
 This feature allows the VirusTracker to delete the outdated visit histories easily from the visit book as certain visit 
 records will not contribute to contact tracing and generating the potential list for quarantine. The rationale is that 
