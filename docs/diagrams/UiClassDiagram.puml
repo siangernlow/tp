@@ -13,6 +13,10 @@ Class HelpWindow
 Class ResultDisplay
 Class PersonListPanel
 Class PersonCard
+Class LocationListPanel
+Class LocationCard
+Class VisitListPanel
+Class VisitCard
 Class StatusBarFooter
 Class CommandBox
 }
@@ -31,23 +35,33 @@ HiddenOutside ..> Ui
 UiManager .left.|> Ui
 UiManager -down-> MainWindow
 MainWindow --> HelpWindow
-MainWindow *-down-> CommandBox
-MainWindow *-down-> ResultDisplay
+MainWindow *-left-> CommandBox
+MainWindow *-up-> ResultDisplay
 MainWindow *-down-> PersonListPanel
+MainWindow *-down-> LocationListPanel
+MainWindow *-down-> VisitListPanel
 MainWindow *-down-> StatusBarFooter
 
 PersonListPanel -down-> PersonCard
-
+LocationListPanel -down-> LocationCard
+VisitListPanel -down-> VisitCard
 MainWindow -left-|> UiPart
 
 ResultDisplay --|> UiPart
 CommandBox --|> UiPart
-PersonListPanel --|> UiPart
-PersonCard --|> UiPart
 StatusBarFooter --|> UiPart
 HelpWindow -down-|> UiPart
+PersonListPanel --|> UiPart
+PersonCard --|> UiPart
+LocationListPanel --|> UiPart
+LocationCard --|> UiPart
+VisitListPanel --|> UiPart
+VisitCard --|> UiPart
+
 
 PersonCard ..> Model
+LocationCard ..> Model
+VisitCard ..> Model
 UiManager -right-> Logic
 MainWindow -left-> Logic
 
