@@ -137,7 +137,7 @@ The following table presents a list of key terms that will be used in this user 
    
 3. Copy the file to the folder you want to use as the _home folder_ for your VirusTracker.
 
-4. Double-click the file to start the app. The GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+4. Double-click the file to start the app. The GUI similar to the figure below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui_Updated.png)
 
     <div style="page-break-after: always;"></div>
@@ -284,7 +284,7 @@ You may also prefer to use indexes which tend to be shorter than the ids of peop
 
 **:warning: Warnings about indexes and ids**<br>
 * Take note that the index of a person/location may change depending on the index of the person/location as viewed from the most recently displayed person/location list.
-  Observe that the index of ION Orchard changes from 1 to 2 after adding a new location (_Great World City_) in the figure below. <br>
+  Observe that the index of ION Orchard changes from 1 to 2 after adding a new location (_Great World City_) in the figures below. <br>
 </div>
 
    ![indexes](images/ion1.png)

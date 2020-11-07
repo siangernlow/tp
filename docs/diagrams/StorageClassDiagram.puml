@@ -6,19 +6,34 @@ skinparam classBackgroundColor STORAGE_COLOR
 
 Interface Storage <<Interface>>
 Interface UserPrefsStorage <<Interface>>
-Interface AddressBookStorage <<Interface>>
+Interface PersonBookStorage <<Interface>>
+Interface LocationBookStorage <<Interface>>
+Interface VisitBookStorage <<Interface>>
 
 Class StorageManager
 Class JsonUserPrefsStorage
-Class JsonAddressBookStorage
+Class JsonPersonBookStorage
+Class JsonLocationBookStorage
+Class JsonVisitBookStorage
 
 StorageManager .left.|> Storage
 StorageManager o-right-> UserPrefsStorage
-StorageManager o--> AddressBookStorage
+StorageManager o-down-> PersonBookStorage
+StorageManager o--> LocationBookStorage
+StorageManager o-up-> VisitBookStorage
 
 JsonUserPrefsStorage .left.|> UserPrefsStorage
-JsonAddressBookStorage .left.|> AddressBookStorage
-JsonAddressBookStorage .down.> JsonSerializableAddressBookStorage
-JsonSerializableAddressBookStorage .right.> JsonSerializablePerson
-JsonSerializablePerson .right.> JsonAdaptedTag
+JsonPersonBookStorage .left.|> PersonBookStorage
+JsonPersonBookStorage .down.> JsonSerializablePersonBookStorage
+JsonSerializablePersonBookStorage .down.> JsonSerializablePerson
+JsonSerializablePerson .down.> JsonAdaptedTag
+
+JsonLocationBookStorage .left.|> LocationBookStorage
+JsonLocationBookStorage .down.> JsonSerializableLocationBookStorage
+JsonSerializableLocationBookStorage .down.> JsonSerializableLocation
+
+JsonVisitBookStorage .left.|> VisitBookStorage
+JsonVisitBookStorage .up.> JsonSerializableVisitBookStorage
+JsonSerializableVisitBookStorage .right.> JsonSerializableVisit
+
 @enduml
