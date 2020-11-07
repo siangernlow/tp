@@ -206,6 +206,12 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
+<div markdown="span" class="alert alert-info">:information_source: **Note:** 
+    Not all sections below will have a UML sequence/activity diagram. These diagrams serve to highlight the behaviours of the feature being discussed in the section.
+    Should a diagram be omitted, the reader may assume that it has similar behaviour to similar features. 
+    For example, the diagrams for `addLocation` and `addVisit` would be similar to `addPerson` hence only the `addPerson` section would have the diagrams. 
+</div>
+
 ### Add person
 
 This is a placeholder section for the "Manage data using CSV files section." Please update the link in that section if the header of this
