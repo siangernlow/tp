@@ -758,6 +758,41 @@ The activity diagram below shows how the GUI updates using the list all people c
 
 ![DisplayListOfAllPeopleActivityDiagram](images/DisplayListOfAllPeopleActivityDiagram.png)
 
+<div style="page-break-after: always;"></div>
+
+#### Design consideration
+
+These considerations take a look at different variations of how the GUI could have been implemented, and why the final version was chosen.
+
+##### Aspect: Ease of viewing
+
+The primary concern with the GUI was how the layout of the lists of people, locations and visits affected the readability of information.
+  
+* **Alternative 1:** All lists are viewed on the same screen.
+  * Pros: User will be able to see every single type of information at a glance.
+  * Cons: Each list takes up a smaller section of the screen, it hard to read each individual person, location or visit
+
+* **Alternative 2:** Each list has its own screen and the user will switch between them when necessary.
+  * Pros: No clutter of UI elements.
+  * Cons: Referencing other lists becomes troublesome.
+
+<div style="page-break-after: always;"></div>
+
+**Implementation**
+ 
+Alternative 1 was chosen as the implementation and included considerations from alternative 2 as well.
+* All lists are viewed on the same screen.
+* Size of each list on screen provides enough space to display all information about people, locations and visits adequately.
+* Default screen size was also increased to prevent any list from getting clipped at the edges.
+    
+**Rationale**
+Some commands require references to multiple lists. For example, addVisit uses the indexes from the people and location lists. If each list is given individual screens, the user has 2 options:
+  * User must remember the indexes to be used.
+  * User will have to switch screens to view people and locations before being able to enter the addVisit command.
+
+Hence, it made more sense to have all 3 lists and their information always readily available to the user.
+
+<div style="page-break-after: always;"></div>
 
 --------------------------------------------------------------------------------------------------------------------
 
