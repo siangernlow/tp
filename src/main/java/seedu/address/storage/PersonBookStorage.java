@@ -36,11 +36,11 @@ public interface PersonBookStorage {
      * @param personBook cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
-    void saveAddressBook(ReadOnlyPersonBook personBook) throws IOException;
+    void savePersonBook(ReadOnlyPersonBook personBook) throws IOException;
 
     /**
-     * @see #saveAddressBook(ReadOnlyPersonBook)
+     * @see #savePersonBook(ReadOnlyPersonBook)
      */
-    void saveAddressBook(ReadOnlyPersonBook personBook, Path filePath) throws IOException;
+    void savePersonBook(ReadOnlyPersonBook personBook, Path filePath) throws IOException;
 
 }

@@ -74,14 +74,14 @@ public class StorageManager implements Storage {
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyPersonBook personBook) throws IOException {
-        saveAddressBook(personBook, personBookStorage.getAddressBookFilePath());
+    public void savePersonBook(ReadOnlyPersonBook personBook) throws IOException {
+        savePersonBook(personBook, personBookStorage.getAddressBookFilePath());
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyPersonBook personBook, Path filePath) throws IOException {
+    public void savePersonBook(ReadOnlyPersonBook personBook, Path filePath) throws IOException {
         logger.fine("Attempting to write to data file: " + filePath);
-        personBookStorage.saveAddressBook(personBook, filePath);
+        personBookStorage.savePersonBook(personBook, filePath);
     }
 
     // ================ LocationBook methods ==============================
