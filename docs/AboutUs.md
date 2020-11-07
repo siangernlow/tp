@@ -24,7 +24,7 @@ You can reach us at the email `seer@comp.nus.edu.sg`
 <img src="images/hhdqirui.png" width="200px">
 
 [[github](https://github.com/hhdqirui)]
-[[portfolio](team/johndoe.md)]
+[[portfolio](team/hhdqirui.md)]
 
 * Role: Team Lead
 * Responsibilities: UI
