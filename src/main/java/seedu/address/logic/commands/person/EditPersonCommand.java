@@ -8,12 +8,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_QUARANTINE_STATUS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.Command;
@@ -28,7 +24,6 @@ import seedu.address.model.attribute.InfectionStatus;
 import seedu.address.model.attribute.Name;
 import seedu.address.model.attribute.Phone;
 import seedu.address.model.attribute.QuarantineStatus;
-import seedu.address.model.attribute.Tag;
 import seedu.address.model.person.Person;
 
 /**
@@ -48,8 +43,7 @@ public class EditPersonCommand extends Command {
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_QUARANTINE_STATUS + "QUARANTINE STATUS] "
-            + "[" + PREFIX_INFECTION_STATUS + "INFECTION STATUS] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_INFECTION_STATUS + "INFECTION STATUS]\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com\n"
@@ -91,8 +85,7 @@ public class EditPersonCommand extends Command {
         model.setPerson(personToEdit, editedPerson);
         model.updateVisitBookWithEditedPerson(editedPerson);
 
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson), false, false,
-                CommandResult.SWITCH_TO_VIEW_PEOPLE);
+        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
     }
 
     /**
@@ -111,10 +104,9 @@ public class EditPersonCommand extends Command {
         InfectionStatus updatedInfectionStatus = editPersonDescriptor.getInfectionStatus()
                                             .orElse(personToEdit.getInfectionStatus());
         Id updatedId = personToEdit.getId();
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(updatedId, updatedName, updatedPhone, updatedEmail, updatedAddress,
-                updatedQuarantineStatus, updatedInfectionStatus, updatedTags);
+                updatedQuarantineStatus, updatedInfectionStatus);
     }
 
     @Override
@@ -146,13 +138,11 @@ public class EditPersonCommand extends Command {
         private Address address;
         private QuarantineStatus quarantineStatus;
         private InfectionStatus infectionStatus;
-        private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
 
         /**
          * Copy constructor.
-         * A defensive copy of {@code tags} is used internally.
          */
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             setName(toCopy.name);
@@ -161,14 +151,13 @@ public class EditPersonCommand extends Command {
             setAddress(toCopy.address);
             setQuarantineStatus(toCopy.quarantineStatus);
             setInfectionStatus(toCopy.infectionStatus);
-            setTags(toCopy.tags);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, quarantineStatus, infectionStatus, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, quarantineStatus, infectionStatus);
         }
 
         public void setName(Name name) {
@@ -219,23 +208,6 @@ public class EditPersonCommand extends Command {
             return Optional.ofNullable(infectionStatus);
         }
 
-        /**
-         * Sets {@code tags} to this object's {@code tags}.
-         * A defensive copy of {@code tags} is used internally.
-         */
-        public void setTags(Set<Tag> tags) {
-            this.tags = (tags != null) ? new HashSet<>(tags) : null;
-        }
-
-        /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
-         * if modification is attempted.
-         * Returns {@code Optional#empty()} if {@code tags} is null.
-         */
-        public Optional<Set<Tag>> getTags() {
-            return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
-        }
-
         @Override
         public boolean equals(Object other) {
             // short circuit if same object
@@ -255,8 +227,7 @@ public class EditPersonCommand extends Command {
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
                     && getQuarantineStatus().equals(e.getQuarantineStatus())
-                    && getInfectionStatus().equals(e.getInfectionStatus())
-                    && getTags().equals(e.getTags());
+                    && getInfectionStatus().equals(e.getInfectionStatus());
         }
     }
 }

@@ -9,9 +9,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_QUARANTINE_STATUS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-
-import java.util.Set;
 
 import seedu.address.logic.commands.person.AddPersonCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
@@ -26,7 +23,6 @@ import seedu.address.model.attribute.InfectionStatus;
 import seedu.address.model.attribute.Name;
 import seedu.address.model.attribute.Phone;
 import seedu.address.model.attribute.QuarantineStatus;
-import seedu.address.model.attribute.Tag;
 import seedu.address.model.person.Person;
 
 /**
@@ -42,7 +38,7 @@ public class AddPersonCommandParser implements Parser<AddPersonCommand> {
     public AddPersonCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_PERSON_ID, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                        PREFIX_ADDRESS, PREFIX_QUARANTINE_STATUS, PREFIX_INFECTION_STATUS, PREFIX_TAG);
+                        PREFIX_ADDRESS, PREFIX_QUARANTINE_STATUS, PREFIX_INFECTION_STATUS);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_PERSON_ID, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL,
                 PREFIX_QUARANTINE_STATUS, PREFIX_INFECTION_STATUS) || !argMultimap.getPreamble().isEmpty()) {
@@ -58,9 +54,8 @@ public class AddPersonCommandParser implements Parser<AddPersonCommand> {
                 argMultimap.getValue(PREFIX_QUARANTINE_STATUS).get());
         InfectionStatus infectionStatus = ParserUtil.parseInfectionStatus(
                 argMultimap.getValue(PREFIX_INFECTION_STATUS).get());
-        Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        Person person = new Person(id, name, phone, email, address, quarantineStatus, infectionStatus, tagList);
+        Person person = new Person(id, name, phone, email, address, quarantineStatus, infectionStatus);
 
         return new AddPersonCommand(person);
     }

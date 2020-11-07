@@ -37,8 +37,7 @@ public class AddPersonCommandIntegrationTest {
                 model.getVisitBook(), new UserPrefs());
         expectedModel.addPerson(validPerson);
         String expectedMessage = String.format(AddPersonCommand.MESSAGE_SUCCESS, validPerson);
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                CommandResult.SWITCH_TO_VIEW_PEOPLE);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
 
         assertCommandSuccess(new AddPersonCommand(validPerson), model, expectedCommandResult, expectedModel);
     }

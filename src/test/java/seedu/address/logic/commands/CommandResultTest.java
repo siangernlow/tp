@@ -14,8 +14,6 @@ public class CommandResultTest {
 
         // same values -> returns true
         assertTrue(commandResult.equals(new CommandResult("feedback")));
-        assertTrue(commandResult.equals(new CommandResult("feedback",
-                false, false, CommandResult.SWITCH_NONE)));
 
         // same object -> returns true
         assertTrue(commandResult.equals(commandResult));
@@ -31,11 +29,11 @@ public class CommandResultTest {
 
         // different showHelp value -> returns false
         assertFalse(commandResult.equals(new CommandResult("feedback",
-                true, false, CommandResult.SWITCH_NONE)));
+                true, false)));
 
         // different exit value -> returns false
         assertFalse(commandResult.equals(new CommandResult("feedback",
-                false, true, CommandResult.SWITCH_NONE)));
+                false, true)));
     }
 
     @Test
@@ -50,19 +48,19 @@ public class CommandResultTest {
 
         // different showHelp value -> returns different hashcode
         assertNotEquals(commandResult.hashCode(), new CommandResult("feedback",
-                true, false, CommandResult.SWITCH_NONE).hashCode());
+                true, false).hashCode());
 
         // different exit value -> returns different hashcode
         assertNotEquals(commandResult.hashCode(), new CommandResult("feedback",
-                false, true, CommandResult.SWITCH_NONE).hashCode());
+                false, true).hashCode());
     }
 
     @Test
     public void isShowHelp() {
         CommandResult showHelpCommandResult =
-                new CommandResult("feedback", true, false, CommandResult.SWITCH_NONE);
+                new CommandResult("feedback", true, false);
         CommandResult noHelpCommandResult =
-                new CommandResult("feedback", false, false, CommandResult.SWITCH_NONE);
+                new CommandResult("feedback");
         assertTrue(showHelpCommandResult.isShowHelp());
         assertFalse(noHelpCommandResult.isShowHelp());
     }
@@ -70,9 +68,9 @@ public class CommandResultTest {
     @Test
     public void isExit() {
         CommandResult exitCommandResult =
-                new CommandResult("feedback", false, true, CommandResult.SWITCH_NONE);
+                new CommandResult("feedback", false, true);
         CommandResult noExitCommandResult =
-                new CommandResult("feedback", false, false, CommandResult.SWITCH_NONE);
+                new CommandResult("feedback", false, false);
         assertTrue(exitCommandResult.isExit());
         assertFalse(noExitCommandResult.isExit());
     }

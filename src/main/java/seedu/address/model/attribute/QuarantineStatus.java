@@ -16,6 +16,7 @@ public class QuarantineStatus {
 
     public static final String MESSAGE_CONSTRAINTS =
             "Quarantine status should either be false or if infected, the quarantine start date.\n"
+            + "The start date cannot be from the future.\n"
             + "e.g. 2020-02-02 and false are valid values.";
 
     /*
@@ -52,7 +53,10 @@ public class QuarantineStatus {
     public static boolean isValidQuarantineStatus(String test) {
         if (!test.matches(VALIDATION_REGEX)) {
             try {
-                LocalDate.parse(test);
+                LocalDate date = LocalDate.parse(test);
+                if (date.isAfter(LocalDate.now())) {
+                    return false;
+                }
             } catch (DateTimeParseException e) {
                 return false;
             }
@@ -74,6 +78,22 @@ public class QuarantineStatus {
      */
     public Optional<LocalDate> getQuarantineDate() {
         return quarantineDate;
+    }
+
+    public Optional<String> getReaderFriendlyDate() {
+        if (quarantineDate.isEmpty()) {
+            return Optional.empty();
+        }
+
+        LocalDate date = quarantineDate.get();
+
+        String day = String.valueOf(date.getDayOfMonth());
+        String month = date.getMonth().toString();
+        month = month.substring(0, 1).toUpperCase() + month.substring(1, 3).toLowerCase();
+        String year = String.valueOf(date.getYear());
+        String readerFriendlyDate = day + " " + month + " " + year;
+
+        return Optional.of(readerFriendlyDate);
     }
 
     @Override

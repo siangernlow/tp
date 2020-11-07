@@ -382,6 +382,10 @@ public class ModelManager implements Model {
                 && visitBook.equals(other.visitBook)
                 && userPrefs.equals(other.userPrefs)
                 && filteredPersons.equals(other.filteredPersons)
-                && sortedPersons.equals(other.sortedPersons);
+                && filteredLocations.equals(other.filteredLocations)
+                && filteredVisits.equals(other.filteredVisits)
+                && sortedPersons.equals(other.sortedPersons)
+                && sortedLocations.equals(other.sortedLocations)
+                && sortedVisits.equals(other.sortedVisits);
     }
 }
