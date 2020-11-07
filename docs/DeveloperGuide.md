@@ -217,10 +217,6 @@ section is changed.
 
 <div style="page-break-after: always;"></div>
 
-### Add visit
-
-<div style="page-break-after: always;"></div>
-
 ### Manage Persons, Locations and Visits using Unique Identifiers (Ho Pin Xian)
 
 Person objects have different aspects (including Name, Address, Phone Number, infection status etc) but none of which can
@@ -405,7 +401,7 @@ This feature essentially acts as a "bulk add" operation. The number of rows in t
 * `LIST_TYPE` is the data type that the user is attempting to add. The `addFromCsv` command supports three list types:
     1. [people](#add-person)
     2. [locations](#add-location)
-    3. [visits](#add-visit)
+    3. [visits](#adding-visit-using-unique-identifiers)
 * Each row in the specified CSV file must follow the format for the add command of the respective type. To find out about the format, you may click the relevant list type above.
 
 <div style="page-break-after: always;"></div>
@@ -424,15 +420,19 @@ An example of a CSV file that is used to add people is shown below. Notice that 
 
 The sequence diagram below shows how the adding operation works. Certain utility classes have been omitted for readability.
 
-![AddFromCsvCommandSequenceDiagram](images/AddFromCsvSequenceDiagram.png)
-
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** The above sequence diagram uses the `AddPersonsFromCsvCommand` to handle adding people from CSV files. For locations and visits, replace the command with `AddLocationsFromCsvCommand` and
-`AddVisitsFromCsvCommand` respectively. The behaviour of the three commands are the same as the above sequence diagram.
+<div markdown="span" class="alert alert-info">:information_source: **Note:** Lifelines should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 
 </div>
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** Lifelines should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+![AddFromCsvCommandSequenceDiagram](images/AddFromCsvSequenceDiagram.png)
+
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** `XYZ` in the above sequence diagram can be used to denote either Persons, Locations or Visits.
+For example, `generateXYZList` could be `generatePersonsList`, `generateLocationsList` or `generateVisitsList`. The behaviour of the three different entities are the same as the above sequence diagram.
+
+</div>
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** `listType` determines the type of entity to be used for `XYZ`.
 
 </div>
 
@@ -503,6 +503,9 @@ The file path the command uses is the absolute path.
 
 By allowing the user to specify the path name, it also gives the user a choice on where to put his CSV files instead of enforcing a particular directory for
 him to store the files.
+
+**Note:** While it is recommended for the user to use absolute file paths, there is nothing enforcing the user to do so. In the case when the user specfies a relative path,
+VirusTracker would still attempt to locate the path, starting from the directory that the application is placed in. However, it is still required that the file path provided be valid.
 
 ##### Aspect: Reusing list types and the list prefix 'l/'
 

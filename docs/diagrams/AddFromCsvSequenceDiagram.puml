@@ -6,61 +6,67 @@ participant ":LogicManager" as LogicManager LOGIC_COLOR
 participant ":VirusTrackerParser" as VirusTrackerParser LOGIC_COLOR
 participant ":AddFromCsvCommandParser" as AddFromCsvCommandParser LOGIC_COLOR
 participant ":DataGenerator" as DataGenerator LOGIC_COLOR
-participant "addFromCsv:AddPersonsFromCsvCommand" as AddPersonsFromCsvCommand LOGIC_COLOR
+participant "a:AddXYZFromCsvCommand" as AddXYZFromCsvCommand LOGIC_COLOR
 end box
 
 box Model MODEL_COLOR_T1
 participant ":Model" as Model MODEL_COLOR
 end box
 
-[-> LogicManager : execute(addFromCsv)
+[-> LogicManager : execute(args)
 activate LogicManager
 
-LogicManager -> VirusTrackerParser : parseCommand(addFromCsv)
+LogicManager -> VirusTrackerParser : parseCommand(args)
 activate VirusTrackerParser
 
-VirusTrackerParser -> AddFromCsvCommandParser : parse(args)
+create AddFromCsvCommandParser
+VirusTrackerParser -> AddFromCsvCommandParser
 activate AddFromCsvCommandParser
 
-AddFromCsvCommandParser -> DataGenerator : generatePersonsList(filepath)
+AddFromCsvCommandParser -> VirusTrackerParser
+deactivate AddFromCsvCommandParser
+
+VirusTrackerParser -> AddFromCsvCommandParser : parse("filepath listType")
+activate AddFromCsvCommandParser
+
+AddFromCsvCommandParser -> DataGenerator : generateXYZList(filepath)
 activate DataGenerator
 
-DataGenerator --> AddFromCsvCommandParser : personsList
+DataGenerator --> AddFromCsvCommandParser : list
 deactivate DataGenerator
-DataGenerator -[hidden]-> AddFromCsvCommandParser : personsList
+
+DataGenerator -[hidden]-> AddFromCsvCommandParser : list
 destroy DataGenerator
 
-create AddPersonsFromCsvCommand
-AddFromCsvCommandParser -> AddPersonsFromCsvCommand : AddPersonsFromCsvCommand(personsList)
-activate AddPersonsFromCsvCommand
+create AddXYZFromCsvCommand
+AddFromCsvCommandParser -> AddXYZFromCsvCommand : AddXYZFromCsvCommand(list)
+activate AddXYZFromCsvCommand
 
-AddPersonsFromCsvCommand --> AddFromCsvCommandParser
-deactivate AddPersonsFromCsvCommand
+AddXYZFromCsvCommand --> AddFromCsvCommandParser
+deactivate AddXYZFromCsvCommand
 
 AddFromCsvCommandParser --> VirusTrackerParser
 deactivate AddFromCsvCommandParser
 
-VirusTrackerParser --> LogicManager : addFromCsv
+VirusTrackerParser --> LogicManager : a
 deactivate VirusTrackerParser
 
-LogicManager -> AddPersonsFromCsvCommand : execute()
-activate AddPersonsFromCsvCommand
+LogicManager -> AddXYZFromCsvCommand : execute()
+activate AddXYZFromCsvCommand
 
-loop until entire personsList has been read
-    AddPersonsFromCsvCommand -> Model : addPerson(person)
+loop through entire list
+    AddXYZFromCsvCommand -> Model : addXYZ(xyz)
     activate Model
 
-    Model --> AddPersonsFromCsvCommand
+    Model --> AddXYZFromCsvCommand
     deactivate Model
 end
 
+AddXYZFromCsvCommand --> LogicManager : result
+deactivate AddXYZFromCsvCommand
 
-
-AddPersonsFromCsvCommand --> LogicManager : result
-deactivate AddPersonsFromCsvCommand
-
-AddPersonsFromCsvCommand -[hidden]-> LogicManager : result
-destroy AddPersonsFromCsvCommand
+AddXYZFromCsvCommand -[hidden]-> LogicManager : result
+destroy AddXYZFromCsvCommand
 
 [<--LogicManager
 deactivate LogicManager
