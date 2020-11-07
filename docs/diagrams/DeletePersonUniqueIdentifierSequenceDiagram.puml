@@ -1,0 +1,59 @@
+@startuml
+!include style.puml
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":VirusTrackerParser" as VirusTrackerParser LOGIC_COLOR
+participant ":DeletePersonCommandParser" as DeletePersonCommandParser LOGIC_COLOR
+participant ":DeletePersonCommand" as DeletePersonCommand LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute(commandText)
+activate LogicManager
+
+LogicManager -> VirusTrackerParser : parseCommand(commandText)
+activate VirusTrackerParser
+
+VirusTrackerParser -> DeletePersonCommandParser : parse(args)
+activate DeletePersonCommandParser
+
+DeletePersonCommandParser -> DeletePersonCommandParser : parseId(id)
+
+create DeletePersonCommand
+DeletePersonCommandParser -> DeletePersonCommand
+activate DeletePersonCommand
+
+DeletePersonCommand --> DeletePersonCommandParser : DeletePersonCommand
+deactivate DeletePersonCommand
+
+DeletePersonCommandParser --> VirusTrackerParser : DeletePersonCommand
+deactivate DeletePersonCommandParser
+
+VirusTrackerParser --> LogicManager : DeletePersonCommand
+deactivate VirusTrackerParser
+
+LogicManager -> DeletePersonCommand : execute()
+activate DeletePersonCommand
+
+DeletePersonCommand -> Model : getPersonFromId(personId)
+activate Model
+
+Model --> DeletePersonCommand : person
+deactivate Model
+
+DeletePersonCommand -> Model : DeletePerson(newVisit)
+activate Model
+
+Model --> DeletePersonCommand
+deactivate Model
+
+DeletePersonCommand --> LogicManager
+deactivate DeletePersonCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml
