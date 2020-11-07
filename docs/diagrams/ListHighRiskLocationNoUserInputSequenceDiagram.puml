@@ -34,15 +34,15 @@ create ListCommand
 ListCommandParser -> ListCommand
 activate ListCommand
 
-ListCommand --> ListCommandParser
+ListCommand --> ListCommandParser : listCommand
 deactivate ListCommand
 
-ListCommandParser --> VirusTrackerParser
+ListCommandParser --> VirusTrackerParser : listCommand
 deactivate ListCommandParser
 ListCommandParser -[hidden]-> VirusTrackerParser
 destroy ListCommandParser
 
-VirusTrackerParser --> LogicManager
+VirusTrackerParser --> LogicManager : listCommand
 deactivate VirusTrackerParser
 
 LogicManager -> ListCommand : execute()

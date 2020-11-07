@@ -1,0 +1,49 @@
+@startuml
+start
+
+'Since the beta syntax does not support placing the condition outside the
+'diamond we place it as the true branch instead.
+
+repeat :User executes editLocation command;
+repeat while () is ([incorrect args])
+->[else];
+
+:VirusTracker parse command and arguments;
+
+:VirusTracker create an edited location descriptor;
+note right
+    **descriptor** in this case contains
+    the edited name and/or edited address
+endnote
+
+:execute command;
+
+:VirusTracker try to identify the exact location to edit;
+
+if () then ( [location identifier is index on list] )
+    if (check if index is valid) then ( [invalid] )
+        :Alerts user with warning that
+        index is out of bound;
+        stop
+    else ( [valid] )
+        :return the location
+        at that index;
+        :VirusTracker edit the location
+        according to descriptor;
+    stop
+    endif
+else ( [location identifier is unique id] )
+    if (identify the location with id) then ( [have match] )
+        :return the location
+        with matching id;
+        :VirusTracker edit the location
+        according to descriptor;
+        stop
+    else ([no match])
+        :Alerts user with warning
+        that id is invalid;
+        stop
+    endif
+endif
+
+@enduml
