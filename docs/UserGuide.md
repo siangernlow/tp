@@ -24,12 +24,12 @@ Table of Contents
     + [Listing all visits](#listing-all-visits)
     + [Listing high risk locations](#listing-high-risk-locations)
     + [Listing summary of data](#listing-summary-of-data)
-    + [Adding data from CSV files](#adding-data-from-csv-files)
-      - [_Error Handling_](#error-handling)
-    + [Exporting data to CSV files](#exporting-data-to-csv-files)
-  * [Format for CSV files](#format-for-csv-files)
-    + [Using Excel to add prefixes](#using-excel-to-add-prefixes)
-    + [Replacing the data](#replacing-the-data)
+  * [Using CSV files (Siang Ern)](#using-csv-files)
+      + [Adding data from CSV files](#adding-data-from-csv-files)
+      + [Exporting data to CSV files](#exporting-data-to-csv-files)
+      + [Format for CSV files](#format-for-csv-files)
+        - [Using Excel to add prefixes](#using-excel-to-add-prefixes)
+        - [Replacing the data](#replacing-the-data)
   * [Deleting data](#deleting-data)
     + [Deleting a person](#deleting-a-person)
     + [Deleting a location](#deleting-a-location)
@@ -71,14 +71,18 @@ VirusTracker works with three main entities:
 * Locations
 * Visits
 
-A person refers to any person whom may be at risk from Covid-19. VirusTracker stores data about the id, name, address, phone number and email of each person. 
-A location refers to any location which are open for visiting. VirusTracker stores data about the id, name and address of each location.
+A person refers to any person who may be at risk from Covid-19. VirusTracker stores data about the id, name, address, phone number and email of each person.
+Furthermore, the infection and quarantine status of a person is also stored within VirusTracker. 
+A location refers to any location which are open for visiting. VirusTracker stores the id, name and address of each location.
 A visit refers to when a Person visits a Location on a given date. VirusTracker stores the data of the Person and the Location involved in the Visit.
 
 The recommended way for you to use VirusTracker is to first store the information of all the people and locations you wish to track.
 Then, whenever a person visits a location, add the corresponding `visit`.
 
-VirusTracker would be able to generate useful information based off the data that is input into the system.
+VirusTracker would then be able to generate useful information based off the data that is input into the system.
+
+While VirusTracker was created with the purpose to process data based on Covid-19, VirusTracker could also be used to monitor other
+future epidemics or pandemics should they occur.
 
 --------------------------------------------------------------------------------------------------------------------
 <div style="page-break-after: always;"></div>
@@ -137,7 +141,7 @@ The following table presents a list of key terms that will be used in this user 
    
 3. Copy the file to the folder you want to use as the _home folder_ for your VirusTracker.
 
-4. Double-click the file to start the app. The GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+4. Double-click the file to start the app. The GUI similar to the figure below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui_Updated.png)
 
     <div style="page-break-after: always;"></div>
@@ -252,30 +256,48 @@ Emails should be of the format `local-part@domain` and adhere to the following c
 ### Index and Ids
 
 There are many situations where you may want to refer to a specific location or person when giving a command.
+
 For example, you may want to delete a location or add a visit involving a specific location and person.
-In such cases, VirusTracker provides two methods for you to use when referring to a specific person or location, either index or id.
-This guide collectively refers to indexes and ids as identifiers.
-In the figure below showing a person panel, there is a number beside the person's name and there is a person id.<br>
+
+VirusTracker allows you to refer to people and locations using either their index or id.
+The differences between the two are as follows:
+
+|  | Index | ID |
+| ----------| ------ | ------------ | 
+| Format     |  An integer corresponding to the item's position on the list   | No set format, but must be at least **5** characters long. |
+| User-specified?| No | Yes |
+| Does it change as the list is updated? |  Yes    | No | 
+
+This guide collectively refers to indexes and ids as identifiers. When executing commands that take in a `PERSON_IDENTIFIER` or `LOCATION_IDENTIFIER`,
+you may use either indexes or ids **(but NOT both)**.
+
+In the figure below showing a person panel, the person's index is beside his name and the id is under the `Person ID` field.<br>
  ![personPanel](images/personPanel.PNG)
 
 You may use either the index number (which corresponds to the position of the person within the persons list) or the id to refer to a person. 
 The same applies for locations.
+
 In the example shown above, you may use either `deletePerson 1` or `deletePerson idp/S123A` to remove the person named `Alex Yeoh` from VirusTracker.
-You may prefer to use ids when they do not wish to scroll the list to find the relevant index.
-You may also prefer to use indexes which tend to be shorter than the ids of people and locations.
+
+Ids allow you to refer to a person or location without knowing their position on the list. This is useful if you would like to change a specific person
+or location and do not wish to scroll through large amounts of data.
+
+You may also prefer to use indexes which tend to be shorter than the ids of people and locations. These would likely be used when you do not know the 
+exact identity of the item you would be referring to, e.g. you are unlikely to know the ids of every infected person currently stored in VirusTracker.
 
 <div style="page-break-after: always;"></div>
 
 <div markdown="block" class="alert alert-info">
 
-**:information_source: Notes about using indexes and ids in commands:**<br>
+**:information_source: Summary about using indexes and ids in commands:**<br>
 * The field `IDENTIFIER` means that the user needs to input either an id or index. You are not allowed to use both at the same time. 
   `LOCATION_IDENTIFIER` and `PERSON_IDENTIFIER` refers to location and person identifiers respectively.
 * You may input an index by just using the number alone. However, ids must have a prefix in front of them.
   `idp` is the prefix for person while `idl` is the prefix for locations. <br>
-  e.g.  `deleteLocation 3` and `deleteLocation idl/L123A`. The first command uses an index of 3 while the second command uses the id `L123A`.
+  
+  E.g.  `deleteLocation 3` and `deleteLocation idl/L123A`. The first command uses an index of 3 while the second command uses the id `L123A`.
 * When using indexes, it should before any other fields which need prefixes. <br>
-  e.g. `addVisit 1 1 d/2020-02-02` is allowed but `addVisit 1 d/2020-02-02 1` is not allowed.
+  E.g. `addVisit 1 1 d/2020-02-02` is allowed but `addVisit 1 d/2020-02-02 1` is not allowed.
 
 </div>
 
@@ -283,8 +305,10 @@ You may also prefer to use indexes which tend to be shorter than the ids of peop
 <div markdown="block" class="alert alert-danger">
 
 **:warning: Warnings about indexes and ids**<br>
-* Take note that the index of a person/location may change depending on the index of the person/location as viewed from the most recently displayed person/location list.
+
+* Note that the index of a person/location may change depending on the index of the person/location as viewed from the most recently displayed person/location list.
   Observe that the index of ION Orchard changes from 1 to 2 after adding a new location (_Great World City_) in the figure below. <br>
+
 </div>
 
    ![indexes](images/ion1.png)
@@ -292,10 +316,13 @@ You may also prefer to use indexes which tend to be shorter than the ids of peop
    <div style="page-break-after: always;"></div>
    
    ![indexes](images/ion2.png)
+
+_Please take note of the above when using indexes._
  
 <div markdown="block" class="alert alert-danger">
 * Indexes **must be positive integers**: 1, 2, 3, …​ and within the range of its shown list, otherwise warnings will be triggered.
 * Ids used must belong to a person/location within VirusTracker.
+* Ids are unique for each item in the list - no two items can have the same id.
 </div>
 
 
@@ -449,13 +476,17 @@ Format: `list l/stats`
 
 <div style="page-break-after: always;"></div>
 
+### Using CSV files
+
+VirusTracker mainly uses CSV files to import and export data. You may refer to the commands below to find out how to do so.
+
 #### Adding data from CSV files
 
 As you may have pre-existing data stored in the Excel file format, VirusTracker provides a way to import data directly from
 files in the CSV format. Excel provides an option to save existing _.xlsx_ extension files as _.csv_ files.
 
 <div markdown="span" class="alert alert-primary">:bulb: **Note:**
-If you are importing data from a pre-existing Excel file, you may have to first format it to a format that is readable by VirusTracker.
+If you are importing data from a pre-existing Excel file, you may have to first format it to a [format that is readable by VirusTracker].
 </div>
 
 You may read more about it [here](#format-for-csv-files).
@@ -465,14 +496,11 @@ As visits rely on people and locations, it is recommended that person and locati
 as to ensure that the referenced people and locations in the visits data csv file exist.
 </div>
 
-
 Format: `addFromCsv FILE_PATH l/LIST_TYPE`
 
-<div markdown="block" class="alert alert-info"> 
+##### _Information on parameters_
 
-:information_source: **Note:**
-
-* `FILE_PATH` refers to the absolute file path where the CSV file resides.
+* `FILE_PATH` refers to the file path where the CSV file resides. It is recommended to use absolute file paths to avoid pathing errors.
   * For example, if you wish to import data from `personList.csv` located in your desktop, the absolute file path could look
   something like this: `C:/Users/user/Desktop/personList.csv` _(for Windows)_, `/Users/admin/Documents/personList.csv` _(for MacOS)_,
   `/home/user/docs/personList.csv` _(for Linux)_
@@ -481,6 +509,11 @@ Format: `addFromCsv FILE_PATH l/LIST_TYPE`
     2. Select 'Properties'
     3. Take note of the path specified in the 'Location' field. `E.g. C:/Users/user/Desktop`
     4. The absolute file path is the path found in Step 3 along with your file name. `C:/Users/user/Desktop/personList.csv`
+
+<div markdown="span" class="alert alert-primary">:bulb: **Note:**
+It is possible for you to use relative paths in the `FILE_PATH` parameter. In this case, the default directory would
+be the same as the directory where the VirusTracker.jar file is placed in. 
+</div>
 
 <div style="page-break-after: always;"></div>
 
@@ -494,7 +527,9 @@ the same directory as the VirusTracker application.
   * For example, if the VirusTracker.jar file is located in a folder named `app` and the following command is run: `addFromCsv peopleList.csv l/people`,
   VirusTracker would search for a `peopleList.csv` file inside the `app` folder. 
 
-</div>
+Examples:
+* `addFromCsv C:/Users/alice/Desktop/peopleToAdd.csv l/people`
+* `addFromCsv D:/visits on Dec 20.csv l/visits`
 
 <div style="page-break-after: always;"></div>
 
@@ -516,10 +551,6 @@ types of errors.
     * The line number of the erroneous row will be displayed alongside the correct format for the field
     * Only the first line with such an error will be displayed, so it is possible that other rows after it have an error as well
     * Within the row, only the first erroneous field will be displayed. It is possible that other fields after it may have the wrong format as well
-    
-Examples:
-* `addFromCsv C:/Users/alice/Desktop/peopleToAdd.csv l/people`
-* `addFromCsv D:/visits on Dec 20.csv l/visits`
 
 <div style="page-break-after: always;"></div>
 
@@ -532,9 +563,7 @@ which could then be read by the VirusTracker application on another device.
 
 Format: `exportToCsv FILE_PATH l/LIST_TYPE`
 
-<div markdown="block" class="alert alert-info"> 
-
-:information_source: **Note:**
+##### _Information on parameters_
 
 * `FILE_PATH` refers to the absolute file path where the CSV file should reside.
   * Refer to the [Adding data from CSV files](#adding-data-from-csv-files) section to find out the absolute path of a file.
@@ -547,15 +576,13 @@ the same directory as the VirusTracker application.
   * For example, if the VirusTracker.jar file is located in a folder named `app` and the following command is run: `exportToCsv peopleList.csv l/people`,
   VirusTracker would create a `peopleList.csv` file inside the `app` folder. 
 
-</div>
-
 Examples:
 * `exportToCsv C:/Users/alice/Desktop/peopleToAdd.csv l/people` creates a people data CSV file named `peopleToAdd.csv`
 * `exportToCsv D:/visits on Dec 20.csv l/visits` creates a visit data CSV file named `visits on Dec 20.csv`
 
 <div style="page-break-after: always;"></div>
 
-### Format for CSV files
+#### Format for CSV files
 
 As data can be formatting differently from file to file, VirusTracker specifies a certain format for CSV files to be imported.
 
@@ -575,7 +602,7 @@ The conversion of pre-existing data to the required CSV format may require a bit
 
 <div style="page-break-after: always;"></div>
 
-#### Using Excel to add prefixes
+##### Using Excel to add prefixes
 
 The data present may be in a different format than what VirusTracker requires. Hence, below is a step by step guide to convert the common 
 types of data fields to their required format.
@@ -616,7 +643,7 @@ You may then similarly fill the cells as shown in the two diagrams below.
 
 <div style="page-break-after: always;"></div>
 
-#### Replacing the data
+##### Replacing the data
 
 After creating the formatted data, you may be tempted to directly copy the new data into the column containing the preformatted data.
 
@@ -810,6 +837,7 @@ Format: `generateLocations PERSON_IDENTIFIER`
 * Locations listed were visited by the infected person of the index given.
 * The result given is a filtered list of locations that the person visited in the past 2 weeks.
 * This function can be used to identify locations needing to be disinfected after being visited by an infected person.
+* "2 weeks" refers to a 14-day period that is inclusive of the current date, but exclusive of the date 14 days ago.
 
 </div>
 
@@ -830,6 +858,7 @@ Format `generatePeople PERSON_IDENTIFIER`
 * People listed were in contact with the infected person of the index given.
 * The result given is a filtered list of people who visited the same locations as that the infected person in the past 2 weeks.
 * This function can be used to identify people who need to be quarantined or issued Stay Home Notices.
+* "2 weeks" refers to a 14-day period that is inclusive of the current date, but exclusive of the date 14 days ago.
 
 </div>
 

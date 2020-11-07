@@ -5,61 +5,45 @@ skinparam arrowColor MODEL_COLOR
 skinparam classBackgroundColor MODEL_COLOR
 
 Package Model <<Rectangle>>{
-    Interface ReadOnlyAddressBook <<Interface>>
+    Interface ReadOnlyXYZBook <<Interface>>
     Interface Model <<Interface>>
     Interface ObservableList <<Interface>>
-    Class PersonBook
-    Class LocationBook
-    Class VisitBook
-    Class ReadOnlyPersonBook
-    Class ReadOnlyLocationBook
-    Class ReadOnlyVisitBook
+    Class XYZBook
+    Class ReadOnlyXYZBook
     Class Model
     Class ModelManager
     Class UserPrefs
     Class ReadOnlyUserPrefs
 
-Package Person {
-    Class Person
-    Class UniquePersonList
-}
-
-Package Location {
-    Class Location
-    Class UniqueLocationList
-}
-
-Package Visit {
-    Class Visit
-    Class UniqueVisitList
+Package XYZ {
+    Class XYZ
+    Class UniqueXYZList
 }
 }
 
 Class HiddenOutside #FFFFFF
 HiddenOutside ..> Model
 
-PersonBook .up.|> ReadOnlyPersonBook
-LocationBook .up.|> ReadOnlyLocationBook
-VisitBook .up.|> ReadOnlyVisitBook
+XYZBook .up.|> ReadOnlyXYZBook
 
 ModelManager .up.|> Model
 Model .right.> ObservableList
-ModelManager o--> "1" PersonBook
-ModelManager o--> "1" LocationBook
-ModelManager o--> "1" VisitBook
+ModelManager o--> "1" XYZBook
 ModelManager o-left-> "1" UserPrefs
 UserPrefs .up.|> ReadOnlyUserPrefs
 
-PersonBook *--> "1" UniquePersonList
-UniquePersonList o--> "*" Person
+XYZBook *--> "1" UniqueXYZList
+UniqueXYZList o--> "*" XYZ
 
-LocationBook *--> "1" UniqueLocationList
-UniqueLocationList o--> "*" Location
+ModelManager -->"1" XYZ : filtered list
 
-VisitBook *--> "1" UniqueVisitList
-UniqueVisitList o--> "*" Visit
+note as N1
+    XYZ = Person,
+   Location or Visit
+end note
 
-ModelManager -->"1" Person : filtered list
-ModelManager -->"1" Location : filtered list
-ModelManager -->"1" Visit : filtered list
+N1 .. ReadOnlyXYZBook
+N1 .. XYZBook
+N1 .. UniqueXYZList
+N1 .. XYZ
 @enduml

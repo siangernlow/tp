@@ -3,7 +3,6 @@
 skinparam arrowThickness 1.1
 skinparam arrowColor UI_COLOR_T4
 skinparam classBackgroundColor UI_COLOR
-
 package UI <<Rectangle>>{
 Interface Ui <<Interface>>
 Class "{abstract}\nUiPart" as UiPart
@@ -11,50 +10,55 @@ Class UiManager
 Class MainWindow
 Class HelpWindow
 Class ResultDisplay
-Class PersonListPanel
-Class PersonCard
+Class XYZListPanel
+Class XYZCard
 Class StatusBarFooter
 Class CommandBox
 }
-
 package Model <<Rectangle>> {
 Class HiddenModel #FFFFFF
 }
-
 package Logic <<Rectangle>> {
 Class HiddenLogic #FFFFFF
 }
 
 Class HiddenOutside #FFFFFF
 HiddenOutside ..> Ui
-
 UiManager .left.|> Ui
 UiManager -down-> MainWindow
 MainWindow --> HelpWindow
 MainWindow *-down-> CommandBox
 MainWindow *-down-> ResultDisplay
-MainWindow *-down-> PersonListPanel
+MainWindow *-down-> XYZListPanel
 MainWindow *-down-> StatusBarFooter
 
-PersonListPanel -down-> PersonCard
+XYZListPanel -down-> XYZCard
 
 MainWindow -left-|> UiPart
 
 ResultDisplay --|> UiPart
 CommandBox --|> UiPart
-PersonListPanel --|> UiPart
-PersonCard --|> UiPart
+XYZListPanel --|> UiPart
+XYZCard --|> UiPart
 StatusBarFooter --|> UiPart
 HelpWindow -down-|> UiPart
 
-PersonCard ..> Model
+XYZCard ..> Model
 UiManager -right-> Logic
 MainWindow -left-> Logic
 
-PersonListPanel -[hidden]left- HelpWindow
+XYZListPanel -[hidden]left- HelpWindow
 HelpWindow -[hidden]left- CommandBox
 CommandBox -[hidden]left- ResultDisplay
 ResultDisplay -[hidden]left- StatusBarFooter
+
+note as N1
+    XYZ = Person,
+   Location or Visit
+end note
+
+XYZListPanel .. N1
+N1 .. XYZCard
 
 MainWindow -[hidden]-|> UiPart
 @enduml

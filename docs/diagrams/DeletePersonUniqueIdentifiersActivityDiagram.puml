@@ -1,0 +1,40 @@
+@startuml
+start
+
+'Since the beta syntax does not support placing the condition outside the
+'diamond we place it as the true branch instead.
+
+repeat :User executes command to edit Person;
+repeat while () is ([incorrect args])
+->[else];
+
+:VirusTracker stores the unique identifier given into an IndexIdPair;
+
+if () then ( [Person Id is stored inside IndexIdPair] )
+    if () then ( [Person with unique identifier cannot be found] )
+        :Alerts user with warning that
+        there is no person with given Id;
+        stop
+    else ( [else] )
+        :Retrieve person with
+        specified Id;
+    endif
+    :Edits person;
+    :Command success message is displayed;
+    stop
+else ( [Person index is stored inside IndexIdPair])
+   if () then ( [Index is out of range of shown list] )
+       :Alerts user with warning that
+       invalid index is given;
+       stop
+   else ( [else] )
+       :Retrieve person with
+       specified index;
+endif
+
+:Edits person from VirusTracker;
+:Updates all visits involving said person from VirusTracker;
+:Command success message is displayed;
+stop
+
+@enduml
