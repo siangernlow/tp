@@ -1,0 +1,41 @@
+@startuml
+start
+
+'Since the beta syntax does not support placing the condition outside the
+'diamond we place it as the true branch instead.
+
+repeat :User executes deleteVisit command;
+repeat while () is ([incorrect args])
+->[else];
+
+:VirusTracker parse command and arguments;
+
+:execute command;
+
+:VirusTracker try to identify the exact location to delete;
+
+if () then ( [location identifier is index on the list] )
+    if (check if index is valid) then ( [invalid] )
+        :Alerts user with warning that
+        index is out of bound;
+        stop
+    else ( [valid] )
+        :return the location
+        at that index;
+        :VirusTracker removes the location;
+    stop
+    endif
+else ( [location identifier is unique id] )
+    if (identify the location with id) then ( [have match] )
+        :return the location
+        with matching id;
+        :VirusTracker removes the location;
+        stop
+    else ([no match])
+        :Alerts user with warning
+        that id is invalid;
+        stop
+    endif
+endif
+
+@enduml
