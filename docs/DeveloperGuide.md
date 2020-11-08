@@ -1464,7 +1464,8 @@ testers are expected to do more *exploratory* testing.
 
 ## **Appendix: Effort**
 
-1. the difficulty level, challenges faced, effort required, and achievements of the project.
-   Use AB3 as a reference point e.g., you can explain that while AB3 deals with only one entity type, your project was harder because it deals with multiple entity types.
-   
-
+1. Creating VirusTracker has an extraodinary high level of difficulty. VirusTracker unlike most other applications is 
+   managing three different types of objects at once (persons, locations and visits). These objects are interlinked
+   which makes ensuring the correctness of VirusTracker even tougher. A lof of effort was required to make an effective
+   and correct design. Many challenges were faced and thousands of lines of code are added to reach the quality that
+   VirusTracker has now.
