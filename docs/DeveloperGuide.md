@@ -37,12 +37,11 @@ title: Developer Guide
     + [Design consideration](#design-consideration-3)
       - [Aspect: Determining number of high risk locations for infection when user does not specify the number](#aspect-determining-number-of-high-risk-locations-for-infection-when-user-does-not-specify-the-number)
   * [Delete Locations (Wu Qirui)](#delete-locations-wu-qirui)
-      + [Implementation](#implementation-3)
       + [Design consideration](#design-consideration-4)
         - [Aspect: How to identify the location to be deleted](#aspect-how-to-identify-the-location-to-be-deleted)
         - [Aspect: Update visit book after deleting a location](#aspect-update-visit-book-after-deleting-a-location)
   * [GUI Functionality for displaying lists of people, locations and visits (Koh Han Ming)](#gui-functionality-for-displaying-lists-of-people-locations-and-visits-koh-han-ming)
-    + [Implementation](#implementation-4)
+    + [Implementation](#implementation-3)
     + [Design consideration](#design-consideration-5)
       - [Aspect: Ease of viewing](#aspect-ease-of-viewing)
 - [**Documentation, logging, testing, configuration, dev-ops**](#documentation-logging-testing-configuration-dev-ops)
@@ -718,7 +717,7 @@ for the choice of implementation.
   * Pros: Save time for looking through the list to find the location and its index.
   * Cons: Need to know the unique id of the location which users might not remember.
 
-##### Implementation
+**Implementation**
 
 A combination of Alternative 1 and Alternative 2 is used as the implementation.
 Users are allowed to input either the index of location shown on the list in the GUI or the unique location id with 
@@ -741,13 +740,13 @@ location in the visit with the edited location.
 unique id of location of each visit in the list with the unique id of the edited location. If there is a match, then
 replace the location in the visit with the edited location.
 
-##### Implementation
+**Implementation**
 
 Alternative 1 was chose as the implementation with consideration from Alternative 2. A copy of Location object is used
 to identify the same location in the visits list. To check whether both locations are the same, the unique id of the 
 location is used along with the name and address of the location.
 
-##### Rationale
+**Rationale**
 
 This implementation can improve the robustness of the code for more accurate checks for identical locations. This 
 implementation can also reduce lines of code to improve readability.
