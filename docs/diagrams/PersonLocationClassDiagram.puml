@@ -10,35 +10,34 @@ Class UniquePersonList
 
 Package Location <<Rectangle>>{
     Class Location
-    Class hidden #FFFFFFF
 }
 
-Package Person <<Rectangle>>{
+Package Person {
     Class Person
+}
+
+Package Attribute {
+    Class Name
+    Class Address
+    Class Id
     Class Email
     Class Phone
     Class QuarantineStatus
     Class InfectionStatus
 }
-
-Class Name
-Class Address
-Class Id
 }
 
 
 UniquePersonList o--> "*" Person
 UniqueLocationList o--> "*" Location
 
-hidden -[hidden]> Location
-
 Name -down[hidden]-> Address
 Address -down[hidden]-> Id
 
-Person *-left-> Phone
-Person *-left-> Email
-Person *-left-> InfectionStatus
-Person *-left-> QuarantineStatus
+Person *--> Phone
+Person *--> Email
+Person *--> InfectionStatus
+Person *--> QuarantineStatus
 
 Person *--> Name
 Location *--> Name
@@ -47,6 +46,4 @@ Location *--> Address
 Person *--> Id
 Location *--> Id
 
-Email -down[hidden]-> InfectionStatus
-Phone -down[hidden]-> InfectionStatus
 @enduml
