@@ -14,7 +14,8 @@ We are a team based in the [School of Computing, National University of Singapor
 [[github](https://github.com/DreamerDragon)]
 [[portfolio](team/dreamerdragon.md)]
 
-* Role: Project Advisor
+* Role: Developer
+* Responsibilities: Visit class
 
 ### Qirui
 
