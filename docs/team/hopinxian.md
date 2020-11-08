@@ -1,5 +1,3 @@
-# Ho Pin Xian's Project Portfolio Page
-
 ## Project: VirusTracker
 
 **VirusTracker is a desktop app for generating statistics for Covid-19**, optimized for use via a Command Line Interface (CLI)
