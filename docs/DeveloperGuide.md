@@ -3,6 +3,9 @@ layout: page
 title: Developer Guide
 ---
 # Table of Contents
+- [**Preface**](#preface)
+- [**Using this guide**](#using-this-guide)
+- [**Notations**](#notations)
 - [**Setting up, getting started**](#setting-up-getting-started)
 - [**Design**](#design)
   * [Architecture](#architecture)
@@ -12,9 +15,6 @@ title: Developer Guide
   * [Storage component](#storage-component)
   * [Common classes](#common-classes)
 - [**Implementation**](#implementation)
-  * [Add person](#add-person)
-  * [Add location](#add-location)
-  * [Add visit](#add-visit)
   * [Manage Persons, Locations and Visits using Unique Identifiers (Ho Pin Xian)](#manage-persons-locations-and-visits-using-unique-identifiers-ho-pin-xian)
     + [Adding Visit using Unique Identifiers](#adding-visit-using-unique-identifiers)
     + [Sequence diagram](#sequence-diagram)
@@ -68,6 +68,80 @@ title: Developer Guide
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
 --------------------------------------------------------------------------------------------------------------------
+
+<div style="page-break-after: always;"></div>
+
+**VirusTracker** is a **desktop app** for generating statistics for Covid-19, optimized for use via a **Command Line Interface** (CLI) while still having the benefits of a **Graphical User Interface** (GUI).
+It is mainly targeted towards healthcare officials who are handling large amounts of data due to the pandemic.
+VirusTracker aims to provide a faster and quicker alternative to common statistical programs.
+
+## **Preface**
+
+Welcome to the Developer Guide on VirusTracker.
+
+This guide will guide you through how VirusTracker was designed, implemented and tested. 
+
+VirusTracker works with three main entities:
+* People
+* Locations
+* Visits
+
+A person refers to any person who may be at risk from Covid-19. VirusTracker stores data about the id, name, address, phone number and email of each person.
+Furthermore, the infection and quarantine status of a person is also stored within VirusTracker. 
+
+A location refers to any location which are open for visiting. VirusTracker stores the id, name and address of each location.
+
+A visit refers to when a Person visits a Location on a given date. VirusTracker stores the data of the Person and the Location involved in the Visit.
+
+VirusTracker would then be able to generate useful information based off the data that is input into the system.
+
+While VirusTracker was created with the purpose to process data based on Covid-19, VirusTracker could also be used to monitor other
+future epidemics or pandemics should they occur.
+
+--------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
+
+## **Using this guide**
+
+This Developer Guide is to be used as a reference for developers who want to maintain and expand on the existing VirusTracker code base.
+ 
+As there are multiple components interacting with each other given any user actions, it is recommended that you use this guide alongside experimentation with the program itself.
+You may wish to trace an execution path using one of the following commands:
+
+   * **`list l/people`** : Lists all people.
+
+   * **`addLocation`**`idl/L123A n/NTU a/50 Nanyang Ave, 639798` : Adds a location named `NTU` to the VirusTracker.
+
+   * **`deletePerson`**`3` : Deletes the 3rd person shown in the current list.
+
+   * **`clear`** : Deletes all entries from VirusTracker.
+
+--------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
+
+## **Notations**
+
+Here are a few notations which may be used in this Developer Guide. Each notation represents a different meaning to help you understand the guide better.
+
+<div markdown="block" class="alert alert-info"> 
+
+:information_source: **Note:**
+
+Presents information which are helpful to take note about. 
+
+</div>
+
+<div markdown="block" class="alert alert-primary">
+
+:bulb: **Tip:**
+
+Good to learn, but not necessary to know.
+
+</div>
+
+--------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
+
 
 ## **Setting up, getting started**
 
