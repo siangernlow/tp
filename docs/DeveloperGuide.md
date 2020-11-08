@@ -17,42 +17,33 @@ title: Developer Guide
 - [**Implementation**](#implementation)
   * [Manage Persons, Locations and Visits using Unique Identifiers (Ho Pin Xian)](#manage-persons-locations-and-visits-using-unique-identifiers-ho-pin-xian)
     + [Editing person using Unique Identifiers](#editing-person-using-unique-identifiers)
-    + [Sequence diagram](#sequence-diagram)
-    + [Activity diagram](#activity-diagram)
     + [Design consideration](#design-consideration)
-      - [Aspect: User Input Identifiers Vs VirusTracker Created Identifiers](#aspect-user-input-identifiers-vs-virustracker-created-identifiers)
-  * [Deleting Visit using a specific Index (Shu long)](#deleting-visit-using-a-specific-index-shu-long)
-    + [Implementation](#implementation)
-    + [Sequence diagram](#sequence-diagram-1)
-    + [Design consideration](#design-consideration-1)
+      - [Aspect: User Input Identifiers Vs VirusTracker Created Identifiers](#aspect-user-input-ids-vs-virustracker-created-ids)
   * [Deleting Visits using a specific date (Shu long)](#deleting-visits-using-a-specific-date-shu-long)
     + [Implementation](#implementation-1)
-    + [Sequence diagram](#sequence-diagram-2)
-    + [Design consideration](#design-consideration-2)
+    + [Design consideration](#design-consideration-1)
       - [Aspect: Deleting visits using person and location vs using date](#aspect-deleting-visits-using-person-and-location-vs-using-date)
         
       <div style="page-break-after: always;"></div>
       
   * [Manage data using CSV files (Siang Ern)](#manage-data-using-csv-files-siang-ern)
     + [Importing data from a CSV file](#importing-data-from-a-csv-file)
-    + [Sequence diagram](#sequence-diagram-3)
-    + [Design consideration](#design-consideration-3)
+    + [Design consideration](#design-consideration-2)
       - [Aspect: How are exceptions handled](#aspect-how-are-exceptions-handled)
       - [Aspect: Absolute file path](#aspect-absolute-file-path)
       - [Aspect: Reusing list types and the list prefix 'l/'](#aspect-reusing-list-types-and-the-list-prefix-l) 
-  * [List high risk locations of infection (Wu Qirui)](#list-high-risk-locations-of-infection)
+  * [List high risk locations of infection (Wu Qirui)](#list-high-risk-locations-of-infection-wu-qirui)
     + [Implementation](#implementation-2)
-    + [Sequence diagram](#sequence-diagram-4)
-    + [Design consideration](#design-consideration-4)
+    + [Design consideration](#design-consideration-3)
       - [Aspect: Determining number of high risk locations for infection when user does not specify the number](#aspect-determining-number-of-high-risk-locations-for-infection-when-user-does-not-specify-the-number)
   * [Delete Locations (Wu Qirui)](#delete-locations-wu-qirui)
-      + [Implementation](#implementation-4)
-      + [Sequence diagram](#sequence-diagram-6)
-      + [Design consideration](#design-consideration-6)
+      + [Design consideration](#design-consideration-4)
         - [Aspect: How to identify the location to be deleted](#aspect-how-to-identify-the-location-to-be-deleted)
+        - [Aspect: Update visit book after deleting a location](#aspect-update-visit-book-after-deleting-a-location)
   * [GUI Functionality for displaying lists of people, locations and visits (Koh Han Ming)](#gui-functionality-for-displaying-lists-of-people-locations-and-visits-koh-han-ming)
-    + [Sequence diagram](#sequence-diagram-7)
-    + [Activity diagram](#activity-diagram-1)
+    + [Implementation](#implementation-3)
+    + [Design consideration](#design-consideration-5)
+      - [Aspect: Ease of viewing](#aspect-ease-of-viewing)
 - [**Documentation, logging, testing, configuration, dev-ops**](#documentation-logging-testing-configuration-dev-ops)
 - [**Appendix: Requirements**](#appendix-requirements)
   * [Product scope](#product-scope)
@@ -63,7 +54,6 @@ title: Developer Guide
 - [**Appendix: Instructions for manual testing**](#appendix-instructions-for-manual-testing)
   * [Launch and shutdown](#launch-and-shutdown)
   * [Deleting a person](#deleting-a-person)
-  * [Saving data](#saving-data)
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
@@ -727,7 +717,7 @@ for the choice of implementation.
   * Pros: Save time for looking through the list to find the location and its index.
   * Cons: Need to know the unique id of the location which users might not remember.
 
-##### Implementation
+**Implementation**
 
 A combination of Alternative 1 and Alternative 2 is used as the implementation.
 Users are allowed to input either the index of location shown on the list in the GUI or the unique location id with 
@@ -750,13 +740,13 @@ location in the visit with the edited location.
 unique id of location of each visit in the list with the unique id of the edited location. If there is a match, then
 replace the location in the visit with the edited location.
 
-##### Implementation
+**Implementation**
 
 Alternative 1 was chose as the implementation with consideration from Alternative 2. A copy of Location object is used
 to identify the same location in the visits list. To check whether both locations are the same, the unique id of the 
 location is used along with the name and address of the location.
 
-##### Rationale
+**Rationale**
 
 This implementation can improve the robustness of the code for more accurate checks for identical locations. This 
 implementation can also reduce lines of code to improve readability.
@@ -764,7 +754,10 @@ implementation can also reduce lines of code to improve readability.
 ### GUI Functionality for displaying lists of people, locations and visits (Koh Han Ming)
 
 VirusTracker manages lists of person, location and visit objects. Accordingly, it needs to be able to display the information stored in these objects in a meaningful way. As the lists can be updated, the information displayed must also be changed.
-These changes will be reflected on the GUI every time a list is updated. The lists are updated when the user inputs one of the following commands:
+These changes will be reflected on the GUI every time a list is updated. 
+
+#### Implementation
+The lists are updated when the user inputs one of the following commands:
 
 1. Adding data: `add`
 2. Deleting data: `delete`
