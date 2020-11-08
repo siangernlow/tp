@@ -1,3 +1,8 @@
+---
+layout: page
+title: Ho Pin Xian's Project Portfolio Page
+---
+
 ## Project: VirusTracker
 
 **VirusTracker is a desktop app for generating statistics for Covid-19**, optimized for use via a Command Line Interface (CLI)
@@ -13,7 +18,6 @@ Given below are my contributions to this project.
   * Highlights: This enhancement is very code intensive. It requires creation of a number of core classes such as
   Locations, UniqueLocationList, LocationBook to allow VirusTracker to manage location data correctly.
   The PR exceeding 2 thousand  lines can be seen [here](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/69).
-
 * **New Feature**: Add ability to use either index or Ids when referring to person or location
   * What it does: Allows users to use either index or Id to uniquely identify a specific location or person when entering a command.
   Users will need to input a unique Id to VirusTracker when adding person and location data. Relevant PRs are
@@ -22,24 +26,17 @@ Given below are my contributions to this project.
   * Highlights: All commands that need users to identify a specific person or location, have this feature.
   I created the IndexIdPair class as an abstraction to allow easy scaling of this feature to other commands.
   Future commands can use the IndexIdPair class to easily add on this feature. 
-
 * **New Feature**: Add dates to quarantine and infection statuses:
- 
 * **New Feature**: Add quarantine status to Person
-  
 * **Feature Modification**: Refactor addressbook classes and maintain Code Quality
   * Justification: The purpose of refactoring is to fit all existing functionalities with VirusTracker.  
   This creates a more synchronised user experience and makes it easy for future developers to understand the codebase.
   A relevant PR is [here](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/139).
-<div style="page-break-after: always;"></div>
   * Highlights: The main highlight of this modification is that I need to thoroughly read through the entire code base
-  of addressbook level 3. This is a very time intensive procedure.
-   
+  of addressbook level 3. This is a very time intensive procedure.   
 * **Feature Modification**: Set minimum width and height of GUI
   * Justification: I have set the new minimum width and height such that users will always be able to see all three lists shown.
-  
 * **Code contributed**: [RepoSense link](https://nus-cs2103-ay2021s1.github.io/tp-dashboard/#breakdown=true&search=hopinxian&sort=groupTitle&sortWithin=title&since=2020-08-14&timeframe=commit&mergegroup=&groupSelect=groupByRepos&checkedFileTypes=docs~functional-code~test-code~other&tabOpen=true&tabType=authorship&tabAuthor=hopinxian&tabRepo=AY2021S1-CS2103T-T13-1%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code~other)
-
 * **Project management and Team Tasks**:
   * Made releases on GitHub repository `v1.3, v1.3.trial, v1.4.mockExam, v1.4`
   * Add screenshots of VirusTracker to the team document during checking of the app as required by CS2103t
@@ -52,7 +49,6 @@ Given below are my contributions to this project.
     * Update corresponding visits when person or location is deleted
   * Refactor addressbook into VirusTracker
   * Came up with the name and idea of the application (VirusTracker) and made the application icon
-
 * **Documentation**:
   * User Guide: 
     * Add a section on `Indexes and Ids`, documentation on `valid formats for command parameters`,
