@@ -14,7 +14,7 @@ You can reach us at the email `seer@comp.nus.edu.sg`
 <img src="images/dreamerdragon.png" width="200px">
 
 [[github](https://github.com/DreamerDragon)]
-[[portfolio](team/DreamerDragon.md)]
+[[portfolio](team/dreamerdragon.md)]
 
 * Role: Project Advisor
 
