@@ -38,6 +38,9 @@ is deleted by the execution a `deletePerson` command. This is also known as casc
 is edited by the execution a `editLocation` command.
   * What it does: It iterates through the list of visits and replace the not yet edited location with edited location
   into those visits associated to this location.
+  
+  <div style="page-break-after: always;"></div>
+  
   * Justification: This feature ensures that all visits stored in the visit book are consistent with locations in the
   location book.
 
