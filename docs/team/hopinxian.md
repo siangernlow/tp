@@ -43,8 +43,6 @@ Given below are my contributions to this project.
   * What it does: Each person has a quarantine status to indicate whether the person is quarantined.
   * Justification: VirusTracker should store a quarantine status to keep track of who is being quarantined.
   This quarantine status is especially useful for giving users alerts when a person is making a visit despite being quarantined.
-   
- <div style="page-break-after: always;"></div>
   
 * **Feature Modification**: Refactor addressbook classes to fit with VirusTracker and maintain Code Quality
   * What it does: Refactors all classes inherited from addressbook to work with VirusTracker cohesively.
@@ -57,6 +55,8 @@ Given below are my contributions to this project.
   of addressbook level 3. This is a time intensive procedure to ensure that all code classes have been refactored properly.
   Some changes that were made only through intensive searching includes changing logging messages and updating 
   storage file names in userPreferences.
+  
+  <div style="page-break-after: always;"></div>
   
 * **Feature Modification**: Remove tag fields from person
   * What it does: Remove tags from Person
