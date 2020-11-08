@@ -330,11 +330,11 @@ _Please take note of the above when using indexes._
 
 ### Adding data
 
-To add data to VirusTracker, there are `add` commands for each entity.
+If you want to add data to VirusTracker, there are `add` commands for each entity.
 
 #### Adding a person
 
-Adds a person to VirusTracker.
+When you want to add a person to VirusTracker, you can use the following command.
 
 Format: `addPerson idp/ID n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS q/QUARANTINE_STATUS i/INFECTED_STATUS` 
 
@@ -355,7 +355,7 @@ Examples:
 
 #### Adding a location
 
-Adds a location to VirusTracker.
+When you want to add a location to VirusTracker, you can use the following command.
 
 Format: `addLocation idl/ID n/NAME a/ADDRESS`
 
@@ -373,7 +373,7 @@ Examples:
 
 #### Adding a visit
 
-Adds a visit by the person, location of visit and date of visit
+When you want to add a visit, you can use the following command to add a visit by the person, location of visit and date of visit
 
 Format: `addVisit PERSON_IDENTIFIER LOCATION_IDENTIFIER d/DATE`
 
@@ -400,34 +400,44 @@ Examples:
 There are a variety of `list` commands that list different types of data.
 
 #### Listing all people 
+If you want to view information of all people stored in VirusTracker, you can use the following command.
 Format: `list l/people`
 
-* Updates the persons list to display all people currently stored in VirusTracker.
+##### What it does
+* It updates the persons list to display all people currently stored in VirusTracker.
 
 #### Listing all infected people 
+If you want to view a list of all infected people, you can use the following command.
 Format: `list l/infected`
 
-* Filters the persons list to display all people that are currently infected.
+##### What it does
+* It filters the persons list to display all people that are currently infected.
 
 #### Listing all quarantined people 
+It you want to view a list of all quarantined people, you can use the following command.
 Format: `list l/quarantined`
 
-* Filters the persons list to display all people currently in quarantine.
+##### What it does
+* It filters the persons list to display all people currently in quarantine.
 
 #### Listing all locations
+It you want ot view information of all locations stored in VirusTracker, you can use the following command.
 Format: `list l/locations`
 
-* Updates the locations list to displays all locations currently stored in VirusTracker.
+##### What it does
+* It updates the locations list to displays all locations currently stored in VirusTracker.
 
 #### Listing all visits
+It you want to view information of all visis stored in VirusTracker, you can use the following command.
 Format: `list l/visits`
 
-* Updates the visits list to displays all visits currently stored in VirusTracker.
+##### What it does
+* It updates the visits list to displays all visits currently stored in VirusTracker.
 
 <div style="page-break-after: always;"></div>
 
 #### Listing high risk locations
-
+If you want to view a list of high risk locations, you can use the following command.
 Lists the locations with high risk of Covid infection.
 
 Format: `list [HIGH_RISK_LOCATIONS_NUMBER] l/high-risk-locations`
@@ -457,7 +467,8 @@ lowest risk are displayed.
 
 #### Listing summary of data
 
-Shows the general summary of the data in the form of statistics.
+If you want to view a summary of data stored in VirusTracker, you can use this command to get a general summary of the
+data in the form of statistics.
 
 Format: `list l/stats`
 
@@ -667,11 +678,11 @@ Column A now has the formatted data and column C can be deleted.
 <div style="page-break-after: always;"></div>
 
 ### Deleting data
-To delete data from VirusTracker, there are various `delete` commands that can be used.
+If you want to delete data from VirusTracker, there are various `delete` commands that can be used.
 
 #### Deleting a person
 
-Deletes the specified person from the persons list.
+It you want to delete the specified person from the persons list, you can use the following command. 
 
 Format: `deletePerson PERSON_IDENTIFIER` <br>
 
@@ -696,7 +707,7 @@ Examples:
 
 #### Deleting a location
 
-Deletes the specified location from the location list.
+If you want to delete the specified location from the location list, you can use the following command.
 
 Format: `deleteLocation LOCATION_IDENTIFIER` <br>
 
@@ -719,7 +730,7 @@ Examples:
 
 #### Deleting a visit
 
-Deletes the specified visit from the visit list.
+If you want to delete the specified visit from the visit list, you can use the following command.
 
 Format: `deleteVisit Index`
 
@@ -735,7 +746,7 @@ Examples:
 
 #### Deleting visits using date
 
-Deletes all visits before and including the date.
+If you want to delete all visits before and including the date, you can use the following command.
 
 Format: `deleteVisits d/DATE`
 
@@ -755,11 +766,11 @@ Examples:
 <div style="page-break-after: always;"></div>
 
 ### Editing data
-To edit data in VirusTracker, there are various `edit` commands that could be used.
+If you want to edit data in VirusTracker, there are various `edit` commands that could be used.
 
 #### Editing a person
 
-Edits an existing person in VirusTracker.
+If you want to edit an existing person in VirusTracker, you can use the following command.
 
 Format: `editPerson PERSON_IDENTIFIER [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [q/QUARANTINE_STATUS] [i/INFECTION_STATUS]` <br>
 
@@ -781,7 +792,7 @@ Examples:
 
 #### Editing a location
 
-Edits an existing location in VirusTracker.
+If you want to edit an existing location in VirusTracker, you can use the following command.
 
 Format: `editLocation LOCATION_IDENTIFIER [n/NAME] [a/ADDRESS]`
 
@@ -801,7 +812,7 @@ Examples:
 
 ### Finding persons by name
 
-Finds persons whose names contain any of the given keywords.
+It you want to find persons whose names contain any of the given keywords, you can use the following command.
 
 Format: `findPerson KEYWORD [MORE_KEYWORDS]`
 
@@ -826,7 +837,7 @@ Examples:
 
 ### Generating all locations visited by a person
 
-Shows a list of locations visited by an infected person in the past 2 weeks. 
+If you want to view a list of locations visited by an infected person in the past 2 weeks, you can use the following command. 
 
 Format: `generateLocations PERSON_IDENTIFIER`
 
@@ -847,7 +858,7 @@ Examples:
 
 ### Generating all people in contact with an infected person
 
-Shows a list of people who were in contact with an infected person in the past 2 weeks. 
+If you want to view a list of people who were in contact with an infected person in the past 2 weeks, you can use the following command.
 
 Format `generatePeople PERSON_IDENTIFIER`
 
@@ -870,13 +881,14 @@ Examples:
 
 ### Clearing all entries
 
-Clears all entries from VirusTracker.
+If you want to clear all entries from VirusTracker, you can use the following command.
 
 Format: `clear`
 
 ### Viewing help
 
-Shows a message explaining how to access the help page.
+If you are sure how to use VirusTracker and want get some help, you can use the following command which will show
+a message explaining how to access the help page.
 
 ![help message](images/helpMessage.png)
 
@@ -884,7 +896,7 @@ Format: `help`
 
 ### Exiting the program
 
-Exits the program.
+If you want to exits the program, you can use the following command.
 
 Format: `exit`
 
