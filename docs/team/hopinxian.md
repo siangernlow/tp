@@ -24,8 +24,6 @@ Given below are my contributions to this project.
   Users will need to input a unique Id to VirusTracker when adding person and location data. Relevant PRs are
   [here](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/168) and [here](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/206).
   * Justification: This creates a user-friendly experience since indexes and Ids have their separate advantages.
-  Users may use indexes when the shown list of persons or locations is short, as it is shorter to type and easy to find.
-  Users may instead use Ids when the shown list is long since Ids are consistent regardless of the position of the object in the list.
   * Highlights: All commands that need users to identify a specific person or location, have this feature.
   I created the IndexIdPair class as an abstraction to allow easy scaling of this feature to other commands.
   Future commands can use the IndexIdPair class to easily add on this feature. 
