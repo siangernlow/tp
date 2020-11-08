@@ -51,7 +51,7 @@ We are a team based in the [School of Computing, National University of Singapor
 <img src="images/kohhanming.png" width="200px">
 
 [[github](https://github.com/KohHanMing)]
-[[portfolio](team/johndoe.md)]
+[[portfolio](team/kohhanming.md)]
 
 * Role: Developer
 * Responsibilities: UI
