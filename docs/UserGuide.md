@@ -334,7 +334,7 @@ If you want to add data to VirusTracker, there are `add` commands for each entit
 
 #### Adding a person
 
-When you want to add a person to VirusTracker, you can use the following command.
+If you want to add a person to VirusTracker, you can use the following command.
 
 Format: `addPerson idp/ID n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS q/QUARANTINE_STATUS i/INFECTED_STATUS` 
 
@@ -355,7 +355,7 @@ Examples:
 
 #### Adding a location
 
-When you want to add a location to VirusTracker, you can use the following command.
+If you want to add a location to VirusTracker, you can use the following command.
 
 Format: `addLocation idl/ID n/NAME a/ADDRESS`
 
@@ -373,7 +373,7 @@ Examples:
 
 #### Adding a visit
 
-When you want to add a visit, you can use the following command to add a visit by the person, location of visit and date of visit
+If you want to add a visit, you can use the following command to add a visit by the person, location of visit and date of visit
 
 Format: `addVisit PERSON_IDENTIFIER LOCATION_IDENTIFIER d/DATE`
 
@@ -414,21 +414,21 @@ Format: `list l/infected`
 * It filters the persons list to display all people that are currently infected.
 
 #### Listing all quarantined people 
-It you want to view a list of all quarantined people, you can use the following command.
+If you want to view a list of all quarantined people, you can use the following command.
 Format: `list l/quarantined`
 
 ##### What it does
 * It filters the persons list to display all people currently in quarantine.
 
 #### Listing all locations
-It you want ot view information of all locations stored in VirusTracker, you can use the following command.
+If you want ot view information of all locations stored in VirusTracker, you can use the following command.
 Format: `list l/locations`
 
 ##### What it does
 * It updates the locations list to displays all locations currently stored in VirusTracker.
 
 #### Listing all visits
-It you want to view information of all visis stored in VirusTracker, you can use the following command.
+If you want to view information of all visis stored in VirusTracker, you can use the following command.
 Format: `list l/visits`
 
 ##### What it does
@@ -438,7 +438,6 @@ Format: `list l/visits`
 
 #### Listing high risk locations
 If you want to view a list of high risk locations, you can use the following command.
-Lists the locations with high risk of Covid infection.
 
 Format: `list [HIGH_RISK_LOCATIONS_NUMBER] l/high-risk-locations`
 
@@ -812,7 +811,7 @@ Examples:
 
 ### Finding persons by name
 
-It you want to find persons whose names contain any of the given keywords, you can use the following command.
+If you want to find persons whose names contain any of the given keywords, you can use the following command.
 
 Format: `findPerson KEYWORD [MORE_KEYWORDS]`
 
@@ -887,7 +886,7 @@ Format: `clear`
 
 ### Viewing help
 
-If you are sure how to use VirusTracker and want get some help, you can use the following command which will show
+If you are not sure how to use VirusTracker and want to access the user guide for instructions, you can use the following command which will show
 a message explaining how to access the help page.
 
 ![help message](images/helpMessage.png)
@@ -896,7 +895,7 @@ Format: `help`
 
 ### Exiting the program
 
-If you want to exits the program, you can use the following command.
+If you want to exit the program, you can use the following command.
 
 Format: `exit`
 
