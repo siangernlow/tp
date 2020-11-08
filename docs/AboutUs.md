@@ -33,7 +33,7 @@ You can reach us at the email `seer@comp.nus.edu.sg`
 <img src="images/siangernlow.png" width="200px">
 
 [[github](http://github.com/siangernlow)]
-[[portfolio](team/lowsiangern.md)]
+[[portfolio](team/siangernlow.md)]
 
 * Role: Developer
 * Responsibilities: Data
