@@ -61,6 +61,7 @@ public class GeneratePeopleCommand extends Command {
         if (personIds.isEmpty()) {
             throw new CommandException(MESSAGE_NO_PEOPLE_FOUND);
         }
+        assert !personIds.isEmpty();
         model.updateFilteredPersonList(ModelPredicate.getPredicateShowPeopleById(personIds));
         return new CommandResult(
                 "Generated people for: " + infectedPerson.getName());
