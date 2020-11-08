@@ -1,4 +1,5 @@
 # Ho Pin Xian's Project Portfolio Page
+
 ## Project: VirusTracker
 
 **VirusTracker is a desktop app for generating statistics for Covid-19**, optimized for use via a Command Line Interface (CLI)
@@ -28,7 +29,7 @@ Given below are my contributions to this project.
  
 * **New Feature**: Add quarantine status to Person
   
-* **Feature Modification**: Refactor addressbook classes to fit with VirusTracker and maintain Code Quality
+* **Feature Modification**: Refactor addressbook classes and maintain Code Quality
   * Justification: The purpose of refactoring is to fit all existing functionalities with VirusTracker.  
   This creates a more synchronised user experience and makes it easy for future developers to understand the codebase.
   A relevant PR is [here](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/139).
