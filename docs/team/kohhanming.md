@@ -19,7 +19,6 @@ Given below are my contributions to the project.
 * **Documentation**:
   * User Guide:
     * Added documentation for the features `generateLocations` and `generatePeople` [\#72]()
-    * Did cosmetic tweaks to existing documentation of features `clear`, `exit`: [\#74]()
   * Developer Guide:
     * Added implementation details of the `generateLocations` and `generatePeople` features.
     * Added use cases for the `generateLocations` and `generatePeople` features.
