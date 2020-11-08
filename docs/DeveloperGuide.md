@@ -1386,3 +1386,9 @@ testers are expected to do more *exploratory* testing.
    1. Other incorrect deletePerson commands to try: `deletePerson`, `deletePerson x`, `...` (where x is larger than the list size)<br>
 
 
+## **Appendix: Effort**
+
+1. the difficulty level, challenges faced, effort required, and achievements of the project.
+   Use AB3 as a reference point e.g., you can explain that while AB3 deals with only one entity type, your project was harder because it deals with multiple entity types.
+   
+

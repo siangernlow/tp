@@ -1,6 +1,6 @@
 ---
 layout: page
-title: User Guide
+title: VirusTracker User Guide
 ---
 Table of Contents
 - [Preface](#preface)
@@ -11,7 +11,7 @@ Table of Contents
 - [Features](#features)
   * [Valid Formats for Command Parameters](#valid-formats-for-command-parameters)
     + [Email Format](#email-format)
-  * [Index and Ids](#index-and-ids)
+  * [Indexes and Ids](#indexes-and-ids)
   * [Adding data](#adding-data)
     + [Adding a person](#adding-a-person)
     + [Adding a location](#adding-a-location)
@@ -69,26 +69,27 @@ VirusTracker works with three main entities:
 * Locations
 * Visits
 
-A person refers to any person who may be at risk from Covid-19. VirusTracker stores data about the id, name, address, phone number and email of each person.
-Furthermore, the infection and quarantine status of a person is also stored within VirusTracker. 
+A person refers to any person who may be at risk from Covid-19. VirusTracker stores data about the Id, name, address, phone number and email of each person.
+Furthermore, the infection and quarantine statuses of each person are stored within VirusTracker. 
 
-A location refers to any location which are open for visiting. VirusTracker stores the id, name and address of each location.
-A visit refers to when a Person visits a Location on a given date. VirusTracker stores the data of the Person and the Location involved in the Visit.
+A location refers to any location which are open for visiting. VirusTracker stores the Id, name and address of each location.
+
+A visit refers to when a person visits a location on a given date. VirusTracker stores the date and data of the person and location involved in the visit.
 
 The recommended way for you to use VirusTracker is to first store the information of all the people and locations you wish to track.
 Then, whenever a person visits a location, add the corresponding visit.
 
-VirusTracker would then be able to generate useful information based off the data that is input into the system.
+VirusTracker would be able to generate useful information for you based off the data that is input into the system.
 
-While VirusTracker was created with the purpose to process data based on Covid-19, VirusTracker could also be used to monitor other
-future epidemics or pandemics should they occur.
+While VirusTracker is created with the purpose of processing data from Covid-19, VirusTracker can also monitor other
+future epidemics or pandemics.
 
 --------------------------------------------------------------------------------------------------------------------
 <div style="page-break-after: always;"></div>
 
 ## Notations
 
-Here are a few notations which may be used in this User Guide. Each notation represents a different meaning to help you understand the guide better.
+Our user guide uses the following notations. Each notation has a different meaning to help you understand this guide better.
 
 <div markdown="block" class="alert alert-info"> 
 
@@ -121,67 +122,69 @@ Focuses on information that you should be careful about. Being cautious is recom
 
 The following table presents a list of key terms that will be used in this user guide. 
 
-| Term       | Meaning                                                                                |
-|------------|----------------------------------------------------------------------------------------|
-| Entity     | Refers to people, locations or visits                                                  |
-| Command    | Refers to user input that instructs VirusTracker on what to do                         |
-| Identifier | Refers to ids or indexes. These are used to uniquely identify a location or person     |
-| Prefix     | Refers to prefixes used in commands. These precede fields that are typed in user input |
+| Term       | Meaning                                                                                     |
+|------------|---------------------------------------------------------------------------------------------|
+| Entity     | Refers to people, locations and visits.                                                     |
+| Command    | Refers to user input that instructs VirusTracker on what to do.                             |
+| Identifier | Refers to Ids and indexes. These can uniquely identify a location or person.                |
+| Prefix     | Refers to prefixes used in commands. These precede parameters that are typed in user input. <br> An example is `n/John` where `n/` is the prefix for names. |
+| Data       | Refers to the information on people, locations and visits stored in VirusTracker.           |
 
 --------------------------------------------------------------------------------------------------------------------
 <div style="page-break-after: always;"></div>
 
 ## Quick start
 
-1. Ensure you have Java `11` or above installed in your Computer.
+1. Ensure you have Java `11` or above installed in your computer.
 
-2. Download the latest `virustracker.jar` from [here](https://github.com/AY2021S1-CS2103T-T13-1/tp/releases). <br>
+2. Download the latest `VirusTracker.jar` from [here](https://github.com/AY2021S1-CS2103T-T13-1/tp/releases). <br>
    
 3. Copy the file to the folder you want to use as the _home folder_ for your VirusTracker.
 
-4. Double-click the file to start the app. The GUI similar to the figure below should appear in a few seconds. Note how the app contains some sample data.<br>
-   ![Ui](images/Ui_Updated.png)
+4. Double-click the file to start the app. The GUI similar to the figure below should appear in a few seconds. Note how VirusTracker contains some sample data.<br>
+   ![Ui](images/Ui.png)
 
     <div style="page-break-after: always;"></div>
 
-5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
-   Some example commands you can try:
-
-   * **`list l/people`** : Lists all people.
-
-   * **`addLocation`**`idl/L123A n/NTU a/50 Nanyang Ave, 639798` : Adds a location named `NTU` to the VirusTracker.
+5. Type the command in the command box and press Enter to execute it. e.g. You may type **`help`** and press Enter to open the help window.<br>
+   Here are some example commands you can try:
+   
+   * **`addLocation`**`idl/L789A n/NTU a/50 Nanyang Ave, 639798` : Adds a location named `NTU` to VirusTracker.
 
    * **`deletePerson`**`3` : Deletes the 3rd person shown in the current list.
+
+   * **`addVisit`**`1 1 d/2020-11-08` : Adds a visit made by the 1st person shown on the list to the 1st location shown on the list on 8 November 2020.
 
    * **`clear`** : Deletes all entries from VirusTracker.
 
    * **`exit`** : Exits the app.
 
-6. Refer to the [Features](#features) below for details of each command.
+6. You may refer to the [Features](#features) below for further details about each command.
 
 --------------------------------------------------------------------------------------------------------------------
 <div style="page-break-after: always;"></div>
 
 ## User Interface
 
-You may refer to the following table and figure on the components of the User Interface.
+You may refer to the figure and table below to understand the different components of the user interface. <br>
+
  ![annotatedUI](images/annotatedUI.png)
 
-The User Interface is made up of multiple components whose purpose are explained in the table below.
+The table below explains the purpose of each component in the user interface.
 
-| Component | Description |
+| Component       | Description                              |
 | --------------- | ---------------------------------------- | 
-| Toolbar         | Displays the toolbar for VirusTracker. Clicking on `File` and `Help` will show you the exit and help buttons respectively.  | 
-| Command Box     | You may type in your inputs into this textbox.    | 
-| Command Result  | VirusTracker displays responses inside this box. You may read success messages or warnings from this box.  | 
+| Toolbar         | Displays the toolbar for VirusTracker. You may click on `File` and `Help` to see the exit and help buttons respectively.  | 
+| Command Box     | You may type your inputs into this textbox.    | 
+| Command Result  | VirusTracker displays responses inside this box. You may read success messages or warnings from this box. | 
 
 <div style="page-break-after: always;"></div>
 
-| Component | Description |
+| Component       | Description                              |
 | --------------- | ---------------------------------------- | 
-| Persons List    | Displays a list of Persons. Panels contain detailed information about each person. |
-| Locations List  | Displays a list of Locations. Panels contain detailed information about each location. | 
-| Visits List     | Displays a list of visits. Panels contain information about the person, location and date of the visit. | 
+| Persons List    | Displays a list of people. Panels contain detailed information about each person. This list is sorted by name followed by Id. |
+| Locations List  | Displays a list of locations. Panels contain detailed information about each location. This list is sorted by name followed by Id. | 
+| Visits List     | Displays a list of visits. Panels contain information about the person, location and date of the visit. This list is sorted by date, followed by person, then location. | 
 
 --------------------------------------------------------------------------------------------------------------------
 <div style="page-break-after: always;"></div>
@@ -194,50 +197,52 @@ This section introduces you to important notations and details that apply to the
 
 **:information_source: Notes about the command format:**<br>
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
+* Words in `UPPER_CASE` are parameters for you to give.<br>
   e.g. in `addPerson n/NAME`, `NAME` is a parameter which can be used as `addPerson n/John Doe`.
 
 * Items in square brackets are optional.<br>
   e.g `list [high-risk-location-number] l/high-risk-locations` can be used as `list 5 l/high-risk-locations` or as `list l/high-risk-locations`.
 
-* Parameters can be in any order.<br>
+* You can give the parameters with prefixes in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
-* In the case where you give multiple responses to the same parameter, VirusTracker takes the last response.<br>
+* If you give multiple responses to the same parameter, VirusTracker takes the last response.<br>
   e.g. Given the command format `addPerson n/NAME p/PHONE_NUMBER` and your command `addPerson n/John p/12345678 p/87654321`,
   VirusTracker takes the phone number to be `87654321` and ignores `12345678`.
 
-* **Data** refers collectively to people, locations and visits unless stated otherwise.
-
 * VirusTracker will actively stop the user from creating duplicates of entities. VirusTracker will alert you if it detects you are adding a duplicate entity.
   Entities are duplicates if they meet any of the following conditions.
-  1. They have the same id.
-  2. For visits, they are duplicates if they have the same date and involve the same person and location.
-  3. For persons, they are duplicates if either
+  1. For visits, they are duplicates if they have the same date and involve the same person and location.
+  2. For persons, they are duplicates if either
        - their name and phone are the same or
-       - their name and email are the same.
-  4. For locations, they are duplicates if they have the same address. 
+       - their name and email are the same or
+       - they have the same Id.
+  3. For locations, they are duplicates if either
+       - they have the same address or
+       - they have the same Id. 
 </div>
 
 <div style="page-break-after: always;"></div>
 
 ### Valid Formats for Command Parameters
 
-From the following table, you may see a list of command parameters that found in this user guide.
+From the following table, you may see a list of command parameters that are found in this user guide.
 Each row shows the parameter, the corresponding prefix and conditions for the parameter to be valid. 
 
 | Parameter | Prefix | Valid Format |
 | ----------| ------ | ------------ | 
-| Date      |  d/    | Date format should follow `yyyy-MM-dd`.<br> e.g. 23 January 2020 is "2020-01-23". | 
+| Date      |  d/    | Date format should follow `yyyy-mm-dd`.<br> e.g. 23 January 2020 is "2020-01-23". | 
 | List type |  l/    | List types can only be `people`, `quarantined`, `infected`, `locations`, `visits`, `high-risk-locations`, `stats`. | 
 | Name      |  n/    | Names may only contain alphanumeric characters and spaces, and it should not be blank. |
 | Phone     |  p/    | Phone numbers may only contain numbers, and it should be at least 3 digits long. |
 | Address   |  a/    | Addresses can take any values, and it should not be blank.|
-| Email     |  e/    | Please refer to [Email Format](#Email Format) below for more details.|
+| Email     |  e/    | Please refer to [Email Format](#email-format) below for more details.|
 | Quarantine Status | q/| Quarantine status should either be false or if quarantined, the quarantined date.|
 | Infected Status | i/ | Infection status should either be false or if infected, the infected date. |
 | Person Id | idp/   | Person Ids can take any values, and it should be at least 5 characters long.|
 | Location Id | idl/ | Location Ids can take any values, and it should be at least 5 characters long.|
+
+
 
 <div style="page-break-after: always;"></div>
 
@@ -251,50 +256,48 @@ Emails should be of the format `local-part@domain` and adhere to the following c
      - consist of alphanumeric characters, a period or a hyphen for the characters in between, if any.
      - not have consecutive special characters. (E.g. `example@mail..com` has two consecutive periods.)
      
-### Index and Ids
+### Indexes and Ids
 
-There are many situations where you may want to refer to a specific location or person when giving a command.
+There are many commands where you will need to refer to a specific location or person.
 
 For example, you may want to delete a location or add a visit involving a specific location and person.
 
-VirusTracker allows you to refer to people and locations using either their index or id.
-The differences between the two are as follows:
+VirusTracker allows you to refer to people and locations using either their index or Id.
+The difference between the two are as follows:
 
 |  | Index | ID |
 | ----------| ------ | ------------ | 
-| Format     |  An integer corresponding to the item's position on the list   | No set format, but must be at least **5** characters long. |
+| Format     |  An integer corresponding to the item's position on the list.  | No set format, but must be at least **5** characters long. |
 | User-specified?| No | Yes |
 | Does it change as the list is updated? |  Yes    | No | 
 
-This guide collectively refers to indexes and ids as identifiers. When executing commands that take in a `PERSON_IDENTIFIER` or `LOCATION_IDENTIFIER`,
-you may use either indexes or ids **(but NOT both)**.
+When giving commands that take in a `PERSON_IDENTIFIER` or `LOCATION_IDENTIFIER`, you may use either indexes or Ids **(but NOT both)**.
 
-In the figure below showing a person panel, the person's index is beside his name and the id is under the `Person ID` field.<br>
+In the figure below showing a part of the person list, the person's index is beside his name and the Id is under the `ID` field.<br>
  ![personPanel](images/personPanel.PNG)
 
-You may use either the index number (which corresponds to the position of the person within the persons list) or the id to refer to a person. 
-The same applies for locations.
+You may use either the index number or Id to refer to a person. The same applies for locations.
 
-In the example shown above, you may use either `deletePerson 1` or `deletePerson idp/S123A` to remove the person named `Alex Yeoh` from VirusTracker.
+Using the example shown above, you may use either `deletePerson 1` or `deletePerson idp/S123A` to remove the person named `Alex Yeoh` from VirusTracker.
 
-**Ids allow you to refer to a person or location without knowing their position on the list.** This is useful if you would like to change a specific person
-or location and do not wish to scroll through large amounts of data.
+**Ids allow you to refer to a person or location without knowing their position on the list.** This is useful if you would like to refer to a specific person
+or location and do not wish to scroll through large amounts of data to find the index.
 
-You may also prefer to use **indexes which tend to be shorter than the ids of people and locations.** These would likely be used when you do not know the 
-exact identity of the item you would be referring to, e.g. you are unlikely to know the ids of every infected person currently stored in VirusTracker.
+You may also prefer to use **indexes which tend to be shorter than the Ids of people and locations.** These would likely be used when you do not know the 
+exact identity of the item you would be referring to, e.g. you are unlikely to know the Ids of every infected person currently stored in VirusTracker.
 
 <div style="page-break-after: always;"></div>
 
 <div markdown="block" class="alert alert-info">
 
-**:information_source: Summary about using indexes and ids in commands:**<br>
-* The field `IDENTIFIER` means that the user needs to input either an id or index. You are not allowed to use both at the same time. 
+**:information_source: Summary about using indexes and Ids in commands:**<br>
+* The field `IDENTIFIER` means that the user needs to input either an Id or index. You are not allowed to use both at the same time. 
   `LOCATION_IDENTIFIER` and `PERSON_IDENTIFIER` refers to location and person identifiers respectively.
-* You may input an index by just using the number alone. However, ids must have a prefix in front of them.
+* You may input an index by just using the number alone. However, Ids must have a prefix in front of them.
   `idp` is the prefix for person while `idl` is the prefix for locations. <br>
   
-  E.g.  `deleteLocation 3` and `deleteLocation idl/L123A`. The first command uses an index of 3 while the second command uses the id `L123A`.
-* When using indexes, it should before any other fields which need prefixes. <br>
+  E.g.  `deleteLocation 3` and `deleteLocation idl/L123A`. The first command uses an index of 3 while the second command uses the Id `L123A`.
+* When using indexes, it should be before any other parameters which need prefixes. <br>
   E.g. `addVisit 1 1 d/2020-02-02` is allowed but `addVisit 1 d/2020-02-02 1` is not allowed.
 
 </div>
@@ -302,9 +305,9 @@ exact identity of the item you would be referring to, e.g. you are unlikely to k
 <div style="page-break-after: always;"></div>
 <div markdown="block" class="alert alert-danger">
 
-**:warning: Warnings about indexes and ids**<br>
+**:warning: Warnings about indexes and Ids**<br>
 
-* Note that the index of a person/location may change depending on the index of the person/location as viewed from the most recently displayed person/location list.
+* Note that the index of a person/location may change when the shown list changes. Changes may include deleting or adding a person/location.
   Observe that the index of ION Orchard changes from 1 to 2 after adding a new location (_Great World City_) in the figure below. <br>
 
 </div>
