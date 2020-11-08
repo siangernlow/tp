@@ -12,7 +12,6 @@ Class HelpWindow
 Class ResultDisplay
 Class XYZListPanel
 Class XYZCard
-Class StatusBarFooter
 Class CommandBox
 }
 package Model <<Rectangle>> {
@@ -30,7 +29,6 @@ MainWindow --> HelpWindow
 MainWindow *-down-> CommandBox
 MainWindow *-down-> ResultDisplay
 MainWindow *-down-> XYZListPanel
-MainWindow *-down-> StatusBarFooter
 
 XYZListPanel -down-> XYZCard
 
@@ -40,7 +38,6 @@ ResultDisplay --|> UiPart
 CommandBox --|> UiPart
 XYZListPanel --|> UiPart
 XYZCard --|> UiPart
-StatusBarFooter --|> UiPart
 HelpWindow -down-|> UiPart
 
 XYZCard ..> Model
@@ -50,7 +47,6 @@ MainWindow -left-> Logic
 XYZListPanel -[hidden]left- HelpWindow
 HelpWindow -[hidden]left- CommandBox
 CommandBox -[hidden]left- ResultDisplay
-ResultDisplay -[hidden]left- StatusBarFooter
 
 note as N1
     XYZ = Person,
