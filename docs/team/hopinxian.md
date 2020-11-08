@@ -11,14 +11,12 @@ VirusTracker helps users manage lists of people, locations and visits relevant t
 
 Given below are my contributions to this project.
 
-* **New Feature**: Add ability to add, delete and edit Location data in VirusTracker
+* **New Feature**: Add ability for VirusTracker to manage Location data
   * What it does: Allows the user to add, delete and edit location data within VirusTracker.
-  VirusTracker also stores the data into a json file and reads from a json file upon startup and exiting.
+  VirusTracker also stores and reads data from a json file upon startup and exiting.
   * Justification: This feature allows users to create visits from locations and to generate useful information about location in VirusTracker.
   * Highlights: This enhancement is very code intensive. It requires creation of a number of core classes such as
   Locations, UniqueLocationList, LocationBook to allow VirusTracker to manage location data correctly.
-  Other statistics related functionalities consistently refer to locations to generate new information.
-  Storage-related classes also have to be created to ensure VirusTracker can read and store location data.
   The PR exceeding 2 thousand  lines can be seen [here](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/69).
 
 * **New Feature**: Add ability to use either index or Ids when referring to person or location
@@ -27,39 +25,24 @@ Given below are my contributions to this project.
   [here](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/168) and [here](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/206).
   * Justification: This creates a user-friendly experience since indexes and Ids have their separate advantages.
   Users may use indexes when the shown list of persons or locations is short, as it is shorter to type and easy to find.
-  Users may instead use Ids when the shown list is long. The Id of a person or location stays consistent. We expect
-  that users would know the Id of the person or location they want to refer to, since Ids are provided to VirusTracker by the user.
+  Users may instead use Ids when the shown list is long since Ids are consistent regardless of the position of the object in the list.
   * Highlights: All commands that need users to identify a specific person or location, have this feature.
-  Examples include all edit, delete commands and generate commands. I created the IndexIdPair class as an abstraction
-  to allow easy scaling of this feature to other commands. Future commands that need to refer to a specific location or
-  person can use the IndexIdPair class to easily add on this feature. 
+  I created the IndexIdPair class as an abstraction to allow easy scaling of this feature to other commands.
+  Future commands can use the IndexIdPair class to easily add on this feature. 
 
 * **New Feature**: Add dates to quarantine and infection statuses:
-  * What it does: Quarantine and infection statuses contain dates which indicate the date that the person is infected or quarantined.
-  * Justification: This feature supports more detailed information gathering by VirusTracker. Warnings given when adding visits
-  are more accurate since they check whether a person is quarantined or infected before the visit is made.
-
+ 
 * **New Feature**: Add quarantine status to Person
-  * What it does: Each person has a quarantine status to indicate whether the person is quarantined.
-  * Justification: VirusTracker should store a quarantine status to keep track of who is being quarantined.
-  This quarantine status is especially useful for giving users alerts when a person is making a visit despite being quarantined.
   
 * **Feature Modification**: Refactor addressbook classes to fit with VirusTracker and maintain Code Quality
-  * What it does: Refactors all classes inherited from addressbook to work with VirusTracker cohesively.
   * Justification: The purpose of refactoring is to fit all existing functionalities with VirusTracker.  
-  This creates a more synchronised user experience. Some of the modifications include renaming person commands,
-  changing error and help messages. In addition, code has been repackaged to make it easier for future developers to
-  continue developing VirusTracker. A relevant PR is [here](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/139).
+  This creates a more synchronised user experience and makes it easy for future developers to understand the codebase.
+  A relevant PR is [here](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/139).
   * Highlights: The main highlight of this modification is that I need to thoroughly read through the entire code base
-  of addressbook level 3. This is a time intensive procedure to ensure that all code classes have been refactored properly.
-  Some changes that were made only through intensive searching includes changing logging messages and updating 
-  storage file names in userPreferences.
+  of addressbook level 3. This is a very time intensive procedure.
   
 * **Feature Modification**: Set minimum width and height of GUI
-  * What it does: Increase the minimum width and height of the application GUI
-  * Justification: VirusTracker shows three lists simultaneously. The previous minimum width and height allows users to reduce
-  the size such that the lists are clipped. I have set the new minimum width and height such that this cannot happen, which
-  improves user experience.
+  * Justification: I have set the new minimum width and height such that users will always be able to see all three lists shown.
   
 * **Code contributed**: [RepoSense link](https://nus-cs2103-ay2021s1.github.io/tp-dashboard/#breakdown=true&search=hopinxian&sort=groupTitle&sortWithin=title&since=2020-08-14&timeframe=commit&mergegroup=&groupSelect=groupByRepos&checkedFileTypes=docs~functional-code~test-code~other&tabOpen=true&tabType=authorship&tabAuthor=hopinxian&tabRepo=AY2021S1-CS2103T-T13-1%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code~other)
 
@@ -81,7 +64,7 @@ Given below are my contributions to this project.
 * **Documentation**:
   * User Guide: 
     * Add a section on Indexes and Ids
-    * Add documentation on valid formats
+    * Add documentation on valid input formats
     * Add section describing the view of the user interface
     * Add a summary of notations used
     * Update command descriptions for add, edit, find, delete person commands
@@ -89,7 +72,7 @@ Given below are my contributions to this project.
   * Developer Guide:
     * Add activity and sequence diagrams for edit person to demonstrate use of indexes and Ids
     * Add the section on managing person, location and visits using unique identifiers
-    * Add use cases regarding add, edit, delete location commands and quarantine status 
+    * Add use cases regarding add, edit, delete location commands
 * **Review/mentoring contributions**:  
    * I made a total of **68** comments across all PRs. I have reviewed 66 PRs which is more than half of all PRs made. 
    * Here are the links to some notable PRs that were made: [\#133](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/133), [\#278](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/278),
