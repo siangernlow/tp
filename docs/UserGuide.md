@@ -511,6 +511,8 @@ as to ensure that the referenced people and locations in the visits data CSV fil
 
 Format: `addFromCsv FILE_PATH l/LIST_TYPE`
 
+<div style="page-break-after: always;"></div>
+
 ##### _Information on parameters_
 
 * `FILE_PATH` refers to the file path where the CSV file resides. It is recommended to use absolute file paths to avoid pathing errors.
@@ -527,8 +529,6 @@ Format: `addFromCsv FILE_PATH l/LIST_TYPE`
 It is possible for you to use relative paths in the `FILE_PATH` parameter. In this case, the default directory would
 be the same as the directory where the VirusTracker.jar file is placed in. 
 </div>
-
-<div style="page-break-after: always;"></div>
 
 * `LIST_TYPE` refers to 'people', 'locations' or 'visits'.
   * The prefix `l/` is also used for [listing data](#listing-data)
