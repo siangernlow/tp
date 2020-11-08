@@ -1458,6 +1458,6 @@ testers are expected to do more *exploratory* testing.
 
 1. Creating VirusTracker has an extraodinary high level of difficulty. VirusTracker unlike most other applications is 
    managing three different types of objects at once (persons, locations and visits). These objects are interlinked
-   which makes ensuring the correctness of VirusTracker even tougher. A lof of effort was required to make an effective
+   which makes ensuring the correctness of VirusTracker even tougher. A lot of effort was required to make an effective
    and correct design. Many challenges were faced and thousands of lines of code are added to reach the quality that
    VirusTracker has now.
