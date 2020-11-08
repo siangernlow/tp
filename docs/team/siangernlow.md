@@ -23,24 +23,11 @@ Given below are my contributions to the project.
   * Justification: As VirusTracker tracks the interactions between infected people and the places they visit, it was necessary to modify the existing Person class to store the infection status of a person 
   as well.
   
-   <div style="page-break-after: always;"></div>
-   
 * **New Class**: Created an InfoHandler class to handle the information stored in the model.
   * What it does: It provides the team with a class which has the ability to manipulate read-only data from the model without being worried that the data would be modified.
-  * Justification: As VirusTracker needed to be able to generate statistics from the current data, a new class was required to provide this functionality. By doing so, it prevents the issue of the model class
-  doing more than its specification, and provided a class that was easily extendable to include different ways of calculating the required data.
-  * Highlights: The InfoHandler class is coupled with the Model class, with each class having navigability to the other. By doing so, it avoids needing to change the execute method of the commands as certain newer commands required the use 
-  of the InfoHandler class rather than the Model class. Despite increased coupling with such an implementation, I believed that it was a suitable implementation as it prevented us from needing to modify the execute method of the Command class.
-  
+
 * **New Class**: Created a DataGenerator class to help parse the attributes from CSV files and to convert the attributes to Strings that were CSV compatible. 
-  * What it does: It serves as an interface to handle CSV related commands.
-  * Justification: The DataGenerator class serves as a facade for commands to access in order to avoid accessing the attributes of the entities they were handling as commands only had knowledge of the 
-  Model class. The DataGenerator provides the functionality to convert attributes to CSV strings and vice versa.
-  
-* **Feature Modification**: Refactored the existing list command to take in additional parameters.
-  * What it does: allows the user to specify which list is displayed by typing the relevant keyword.
-  * Justification: In addressbook-level3, there was only the need to display a people list, as the application only stored people. However, in anticipation of having to display people, locations and visits, which are
-  the three main entities stored by VirusTracker, it was necessary to refactor the list command to take in a keyword so that VirusTracker could display the relevant list.
+  * What it does: It serves as an facade for commands to handle CSV related commands.
   
 * **Code contributed**: [RepoSense link](https://nus-cs2103-ay2021s1.github.io/tp-dashboard/#breakdown=true&search=&sort=groupTitle&sortWithin=title&since=2020-08-14&timeframe=commit&mergegroup=&groupSelect=groupByRepos&checkedFileTypes=docs~functional-code~test-code~other&tabOpen=true&tabType=authorship&tabAuthor=siangernlow&tabRepo=AY2021S1-CS2103T-T13-1%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code)
 
