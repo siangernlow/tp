@@ -814,8 +814,6 @@ Some commands require references to multiple lists. For example, addVisit uses t
 
 Hence, it made more sense to have all 3 lists and their information always readily available to the user.
 
-<div style="page-break-after: always;"></div>
-
 --------------------------------------------------------------------------------------------------------------------
 
 <div style="page-break-after: always;"></div>
