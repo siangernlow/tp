@@ -5,8 +5,8 @@ title: Ho Pin Xian's Project Portfolio Page
 
 ## Project: VirusTracker
 
-**VirusTracker is a desktop application to generate Covid-19 related statistics.**
-While it has a GUI, most of the user interactions happen using a CLI (Command Line Interface).
+**VirusTracker is a desktop app for generating statistics for Covid-19**, optimized for use via a Command Line Interface (CLI)
+while still having the benefits of a Graphical User Interface (GUI). The GUI is created with JavaFX.
 VirusTracker helps users manage lists of people, locations and visits relevant to the pandemic.
 
 Given below are my contributions to this project.
@@ -49,19 +49,11 @@ Given below are my contributions to this project.
   * Justification: The purpose of refactoring is to fit all existing functionalities with VirusTracker.  
   This creates a more synchronised user experience. Some of the modifications include renaming person commands,
   changing error and help messages. In addition, code has been repackaged to make it easier for future developers to
-  continue developing VirusTracker. Code quality is also maintained by packaging other classes in VirusTracker into appropriate packages.
-  A relevant PR is [here](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/139).
+  continue developing VirusTracker. A relevant PR is [here](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/139).
   * Highlights: The main highlight of this modification is that I need to thoroughly read through the entire code base
   of addressbook level 3. This is a time intensive procedure to ensure that all code classes have been refactored properly.
   Some changes that were made only through intensive searching includes changing logging messages and updating 
   storage file names in userPreferences.
-  
-  <div style="page-break-after: always;"></div>
-  
-* **Feature Modification**: Remove tag fields from person
-  * What it does: Remove tags from Person
-  * Justification: Tags do not serve any purpose inside VirusTracker. They have thus been removed to make VirusTracker
-  more specialised and simpler for the intended users.
   
 * **Feature Modification**: Set minimum width and height of GUI
   * What it does: Increase the minimum width and height of the application GUI
