@@ -16,7 +16,7 @@ end box
 [-> LogicManager : execute("deletePerson 1")
 activate LogicManager
 
-LogicManager -> VirusTrackerParser : parsePersonCommand("deletePerson 1")
+LogicManager -> VirusTrackerParser : parseCommand("deletePerson 1")
 activate VirusTrackerParser
 
 create DeletePersonCommandParser
