@@ -29,6 +29,8 @@ title: DreamerDragon's Project Portfolio Page
   * What it does: When a person is edited by user, the person's information can also be updated inside the visit list. 
   All the relevant visit should contain the person with the most recent information. 
   
+ <div style="page-break-after: always;"></div>
+ 
 * **Code contributed**: 
 [RepoSense link](https://nus-cs2103-ay2021s1.github.io/tp-dashboard/#breakdown=true&search=&sort=groupTitle&sortWithin=title&since=2020-08-14&timeframe=commit&mergegroup=&groupSelect=groupByRepos&checkedFileTypes=docs~functional-code~test-code~other&tabOpen=true&tabType=authorship&tabAuthor=DreamerDragon&tabRepo=AY2021S1-CS2103T-T13-1%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code~other)
 
