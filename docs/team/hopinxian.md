@@ -33,7 +33,7 @@ Given below are my contributions to this project.
   This creates a more synchronised user experience and makes it easy for future developers to understand the codebase.
   A relevant PR is [here](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/139).
   * Highlights: The main highlight of this modification is that I need to thoroughly read through the entire code base
-  of addressbook level 3. This is a very time intensive procedure.  
+  of addressbook level 3. This is very time intensive. 
    <div style="page-break-after: always;"></div> 
 * **Feature Modification**: Set minimum width and height of GUI
   * Justification: I have set the new minimum width and height such that users will always be able to see all three lists shown.
