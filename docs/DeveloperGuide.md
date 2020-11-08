@@ -76,17 +76,17 @@ VirusTracker works with three main entities:
 * Locations
 * Visits
 
-A person refers to any person who may be at risk from Covid-19. VirusTracker stores data about the id, name, address, phone number and email of each person.
-Furthermore, the infection and quarantine status of a person is also stored within VirusTracker. 
+A person refers to any person who may be at risk from Covid-19. VirusTracker stores data about the Id, name, address, phone number and email of each person.
+Furthermore, the infection and quarantine statuses of each person are stored within VirusTracker. 
 
-A location refers to any location which are open for visiting. VirusTracker stores the id, name and address of each location.
+A location refers to any location which are open for visiting. VirusTracker stores the Id, name and address of each location.
 
-A visit refers to when a Person visits a Location on a given date. VirusTracker stores the data of the Person and the Location involved in the Visit.
+A visit refers to when a person visits a location on a given date. VirusTracker stores the date and data of the person and location involved in the Visit.
 
 VirusTracker would then be able to generate useful information based off the data that is input into the system.
 
-While VirusTracker was created with the purpose to process data based on Covid-19, VirusTracker could also be used to monitor other
-future epidemics or pandemics should they occur.
+While VirusTracker is created with the purpose of processing data based on Covid-19, VirusTracker can also monitor other
+future epidemics or pandemics.
 
 --------------------------------------------------------------------------------------------------------------------
 <div style="page-break-after: always;"></div>
@@ -113,7 +113,7 @@ You might also find the sequence diagrams under [`Implementation`](#implementati
 
 ## **Notations**
 
-Here are a few notations which may be used in this Developer Guide. Each notation represents a different meaning to help you understand the guide better.
+Here are a few notations which used in this Developer Guide. Each notation has a different meaning to help you understand the guide better.
 
 <div markdown="block" class="alert alert-info"> 
 
@@ -842,6 +842,7 @@ Hence, it made more sense to have all 3 lists and their information always readi
 * can type fast
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
+* posseses lots of data related to persons, locations and visits
 
 **Value proposition**: produce useful statistics quickly and efficiently
 
@@ -871,7 +872,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | user | edit location data | to keep the location information up to date with the latest address or name |
 | `* * *`  | user with access to visits data from SafeEntry app  | add visit data to a list | track contacts with the infected cases |
 | `* * *`  | user | delete visit data | remove visits when they are no longer relevant |
-| `* * *`  | user | edit visit data | to update information about the visit |
 | `* * *`  | user | generate a list of infected people currently stored in VirusTracker|    
 | `* * *`  | user | generate a list of quarantined people currently stored in VirusTracker|  
 
@@ -1402,10 +1402,10 @@ Use case ends.
 
 | Term       | Meaning                                                                                |
 |------------|----------------------------------------------------------------------------------------|
-| Entity     | Refers to people, locations or visits                                                  |
-| Command    | Refers to user input that instructs VirusTracker on what to do                         |
-| Identifier | Refers to ids or indexes. These are used to uniquely identify a location or person     |
-| Prefix     | Refers to prefixes used in commands. These precede fields that are typed in user input |
+| Entity     | Refers to people, locations and visits.                                                  |
+| Command    | Refers to user input that instructs VirusTracker on what to do.                         |
+| Identifier | Refers to Ids and indexes. These are used to uniquely identify a location or person.     |
+| Prefix     | Refers to prefixes used in commands. These precede parameters that are typed in user input. |
 | Visit      | A visit event occurs whenever a `Person` enters a `Location`. The `Date` of this visit is also recorded. |
 | Mainstream OS | Windows, Linux, Unix, OS-X |
 | Private contact detail | A contact detail that is not meant to be shared with others |
@@ -1429,7 +1429,7 @@ testers are expected to do more *exploratory* testing.
 
    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   1. Double-click the jar file Expected: Shows the GUI with a set of sample person, location and visit data.
 
 1. Saving window preferences
 
@@ -1447,11 +1447,18 @@ testers are expected to do more *exploratory* testing.
    1. Prerequisites: List all persons using the `list l/people` command. Multiple persons in the list.
 
    1. Test case: `deletePerson 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message.
 
    1. Test case: `deletePerson 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+      Expected: No person is deleted. Error details shown in the status message.
 
    1. Other incorrect deletePerson commands to try: `deletePerson`, `deletePerson x`, `...` (where x is larger than the list size)<br>
 
 
+## **Appendix: Effort**
+
+1. Creating VirusTracker has an extraodinary high level of difficulty. VirusTracker unlike most other applications is 
+   managing three different types of objects at once (persons, locations and visits). These objects are interlinked
+   which makes ensuring the correctness of VirusTracker even tougher. A lof of effort was required to make an effective
+   and correct design. Many challenges were faced and thousands of lines of code are added to reach the quality that
+   VirusTracker has now.
