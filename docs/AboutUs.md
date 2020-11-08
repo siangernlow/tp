@@ -23,8 +23,8 @@ We are a team based in the [School of Computing, National University of Singapor
 [[github](https://github.com/hhdqirui)]
 [[portfolio](team/hhdqirui.md)]
 
-* Role: Team Lead
-* Responsibilities: UI
+* Role: Developer
+* Responsibilities: Data
 
 ### Siang Ern
 
