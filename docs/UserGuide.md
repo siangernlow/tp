@@ -73,6 +73,7 @@ VirusTracker works with three main entities:
 
 A person refers to any person who may be at risk from Covid-19. VirusTracker stores data about the id, name, address, phone number and email of each person.
 Furthermore, the infection and quarantine status of a person is also stored within VirusTracker. 
+
 A location refers to any location which are open for visiting. VirusTracker stores the id, name and address of each location.
 A visit refers to when a Person visits a Location on a given date. VirusTracker stores the data of the Person and the Location involved in the Visit.
 
@@ -137,7 +138,6 @@ The following table presents a list of key terms that will be used in this user 
 1. Ensure you have Java `11` or above installed in your Computer.
 
 2. Download the latest `virustracker.jar` from [here](https://github.com/AY2021S1-CS2103T-T13-1/tp/releases). <br>
-   _Note: VirusTracker is still a work-in-progress and official releases are not available yet._
    
 3. Copy the file to the folder you want to use as the _home folder_ for your VirusTracker.
 
@@ -279,10 +279,10 @@ The same applies for locations.
 
 In the example shown above, you may use either `deletePerson 1` or `deletePerson idp/S123A` to remove the person named `Alex Yeoh` from VirusTracker.
 
-Ids allow you to refer to a person or location without knowing their position on the list. This is useful if you would like to change a specific person
+**Ids allow you to refer to a person or location without knowing their position on the list.** This is useful if you would like to change a specific person
 or location and do not wish to scroll through large amounts of data.
 
-You may also prefer to use indexes which tend to be shorter than the ids of people and locations. These would likely be used when you do not know the 
+You may also prefer to use **indexes which tend to be shorter than the ids of people and locations.** These would likely be used when you do not know the 
 exact identity of the item you would be referring to, e.g. you are unlikely to know the ids of every infected person currently stored in VirusTracker.
 
 <div style="page-break-after: always;"></div>
@@ -486,14 +486,14 @@ As you may have pre-existing data stored in the Excel file format, VirusTracker 
 files in the CSV format. Excel provides an option to save existing _.xlsx_ extension files as _.csv_ files.
 
 <div markdown="span" class="alert alert-primary">:bulb: **Note:**
-If you are importing data from a pre-existing Excel file, you may have to first format it to a [format that is readable by VirusTracker].
+If you are importing data from a pre-existing Excel file, you may have to first format it to a format that is readable by VirusTracker.
 </div>
 
 You may read more about it [here](#format-for-csv-files).
 
 <div markdown="span" class="alert alert-primary">:bulb: **Note:**
 As visits rely on people and locations, it is recommended that person and location data csv files be added before visits so
-as to ensure that the referenced people and locations in the visits data csv file exist.
+as to ensure that the referenced people and locations in the visits data CSV file exist.
 </div>
 
 Format: `addFromCsv FILE_PATH l/LIST_TYPE`
@@ -536,16 +536,16 @@ Examples:
 ##### _Error Handling_
 Sometimes, the format of the CSV file may be wrong when executing the command. VirusTracker has different behaviour for different
 types of errors.
-1. Duplicate entities detected within the CSV file 
+1. **Duplicate entities detected within the CSV file** 
     * Command operation does not terminate
     * VirusTracker adds all entities which are not duplicates
     * At the end of the operation, the lines in the CSV files with duplicates are displayed so that you could make adjustments to the file. 
-2. Erroneous entry _(Not enough parameters)_
+2. **Erroneous entry _(Not enough parameters)_**
     * Occurs when one or more rows do not have enough compulsory parameters
     * Command operation terminates immediately and nothing is added
     * The line number of the erroneous row lacking parameters will be displayed
     * Only the first line with such an error will be displayed, so it is possible that other lines may not have enough paramters as well
-3. Erroneous entry _(Wrong format for field)_
+3. **Erroneous entry _(Wrong format for field)_**
     * Occurs when an input field is of the wrong format
     * Command operation terminates immediately and nothing is added
     * The line number of the erroneous row will be displayed alongside the correct format for the field
