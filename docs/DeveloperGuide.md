@@ -531,6 +531,8 @@ location is `40% * (number of total locations)`.
   // The top most 40 infected locations will be displayed as high risk locations
   ```
   
+  <div style="page-break-after: always;"></div>
+  
   Example 2 (number of infected locations is smaller than 60% of total number of locations):
   ```
   total number of locations: 100
@@ -543,6 +545,7 @@ location is `40% * (number of total locations)`.
   infected locations are high risk locations)
   ```
 
+##### Implementation detail
 1. When this command is executed, a list of all infected people is obtained.
 2. A list of all visits made by all infected people is obtained using the list of infected people.
 3. Use a `HashMap` to store the location as the key and the number of visits made by any infected person to this 
