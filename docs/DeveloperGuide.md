@@ -45,12 +45,6 @@ title: Developer Guide
     + [Sequence diagram](#sequence-diagram-4)
     + [Design consideration](#design-consideration-4)
       - [Aspect: Determining number of high risk locations for infection when user does not specify the number](#aspect-determining-number-of-high-risk-locations-for-infection-when-user-does-not-specify-the-number)
-  * [Edit Locations (Wu Qirui)](#edit-locations-wu-qirui)
-      + [Implementation](#implementation-3)
-      + [Sequence diagram](#sequence-diagram-5)
-      + [Design consideration](#design-consideration-5)
-        - [Aspect: How to identify the location to be edited](#aspect-how-to-identify-the-location-to-be-edited)
-        - [Aspect: Update visit book with updated location](#aspect-update-visit-book-with-updated-location)
   * [Delete Locations (Wu Qirui)](#delete-locations-wu-qirui)
       + [Implementation](#implementation-4)
       + [Sequence diagram](#sequence-diagram-6)
@@ -177,14 +171,14 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 
 ### Model component
 
-![Structure of the Model Component](images/ModelClassDiagramNew.png)
+![Structure of the Model Component](images/ModelClassDiagram.png)
 
 **API** : [`Model.java`](https://github.com/AY2021S1-CS2103T-T13-1/tp/tree/master/src/main/java/seedu/address/model/Model.java)
 
 With reference to the diagram above, the `Model`,
 
 * stores a `UserPref` object that represents the user’s preferences.
-* stores a `PersonBook`, `LocationBook` and `VisitBook` for the three types of data.
+* stores a `PersonBook`, `LocationBook` and `VisitBook` for the three types of data (denoted by XYZ).
 * exposes an unmodifiable `ObservableList` of each type which can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
@@ -232,7 +226,9 @@ VirusTracker provides users with two ways to uniquely refer to an object, indexe
 This guide collectively refers to Ids and indexes as unique identifiers.
 Indexes refer to the position of a person or location in the shown list.
 An example of indexes and Ids can be seen in the image below. <br>
+
 ![personPanel](images/personPanel.PNG) 
+
 Alex Yeoh is the first person on the persons list. He has an index of 1 and Id of S123A.
 Bernice Yu is the second person. She has an index of 2 and Id of S234B.
 
@@ -406,7 +402,7 @@ For example, `generateXYZList` could be `generatePersonsList`, `generateLocation
 
 </div>
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** `listType` determines the type of entity to be used for `XYZ`.
+<div markdown="span" class="alert alert-info">:information_source: **Note:** `listType` determines the type of entity to be used for `XYZ`. It may be Person, Location or Visit.
 
 </div>
 
@@ -478,8 +474,10 @@ The file path the command uses is the absolute path.
 By allowing the user to specify the path name, it also gives the user a choice on where to put his CSV files instead of enforcing a particular directory for
 him to store the files.
 
-**Note:** While it is recommended for the user to use absolute file paths, there is nothing enforcing the user to do so. In the case when the user specfies a relative path,
+<div markdown="span" class="alert alert-info">:information_source: **Note:** While it is recommended for the user to use absolute file paths, there is nothing enforcing the user to do so. In the case when the user specfies a relative path,
 VirusTracker would still attempt to locate the path, starting from the directory that the application is placed in. However, it is still required that the file path provided be valid.
+
+</div>
 
 ##### Aspect: Reusing list types and the list prefix 'l/'
 
@@ -533,7 +531,7 @@ location is `40% * (number of total locations)`.
   // The top most 40 infected locations will be displayed as high risk locations
   ```
   
-  Example 2 (num of infected locations is smaller than 60% of total number of locations):
+  Example 2 (number of infected locations is smaller than 60% of total number of locations):
   ```
   total number of locations: 100
   number of infected locations: 23
@@ -545,7 +543,6 @@ location is `40% * (number of total locations)`.
   infected locations are high risk locations)
   ```
 
-##### Implementation detail
 1. When this command is executed, a list of all infected people is obtained.
 2. A list of all visits made by all infected people is obtained using the list of infected people.
 3. Use a `HashMap` to store the location as the key and the number of visits made by any infected person to this 
@@ -575,16 +572,20 @@ The following activity diagram summarizes what happens when a user executes the 
 <div style="page-break-after: always;"></div>
 
 #### Design consideration
+
 ##### Aspect: User input for number of high risk locations
+
 The parameter for list high risk locations command is optional. Users can choose to or choose not to input the number of
 high risk locations for this command. 
 
 **Rationale**
+
 Instead of always using the pre-defined rule within VirusTracker, this implementation allows users to customize the
 number of high risk locations displayed in VirusTracker. If the pre-defined rule is in use, users might not be able to 
 view more infected locations beyond the displayed high risk locations that are selected automatically by VirusTracker.
 
 ##### Aspect: Determining number of high risk locations for infection when user does not specify the number
+
 In the case where user does not specify the number of high risk locations in the command, the system itself will
 determine the number of high risk locations using the following rule:
 
@@ -597,79 +598,16 @@ infected, all infected locations can be considered as high risk because they are
 infected.
 
 **Rationale**
+
 This rule can ensure that not too few infected locations are displayed especially when the number of total infected
 locations are low because all infected locations will be displayed when all infected locations are less that 40% of 
-total locations. This rule can also ensure that not too many infected locations are displayed especially when the 
+total locations. 
+
+This rule can also ensure that not too many infected locations are displayed especially when the 
 number of total infected locations are high because only the top most 40% of infected locations will be display when 
 total infected locations are more 60% of total infected locations.
 
 <div style="page-break-after: always;"></div>
-
-### Edit Locations (Wu Qirui)
-This feature allows VirusTracker to edit a location inside the location book of VirusTracker. When users decide to 
-change some field(s) or details about the location, they would be able to change the fields or details about the 
-locations using `editLocation` command. When a location is edited, all visits that are associated to this location
-will be updated with the latest details.
-
-**Format:** `editLocation LOCATION_IDENTIFIER [n/NAME] [a/ADDRESS]` 
-* `LOCATION_IDENTIFIER` refers to the index of the location displayed on the list in the GUI or unique identifier of
-the location.
-
-#### Sequence diagram
-The sequence diagram below shows an example of how the command of editing a location using the index on displayed
-list with request to change both name and address works. Certain utility classes and certain parameters of some methods 
-have been omitted for readability.
-
-![EditLocationByIndexSequenceDiagram](images/EditLocationByIndexSequenceDiagram.png)
-
-The sequence diagram below shows an example of how the command of editing a location using the unique identifier of 
-the location with request to change name only works. Certain utility classes and certain parameters of some methods have
-been omitted for readability.
-
-![EditLocationByIdSequenceDiagram](images/EditLocationByIdSequenceDiagram.png)
-
-The following activity diagram summarizes what happens when a user executes the `EditLocation` command.
-
-![EditLocationActivityDiagram](images/EditLocationActivityDiagram.png)
-
-#### Design consideration
-The design considerations below highlight alternative ways the command could have been implemented, and provides reasons
-for the choice of implementation.
-
-##### Aspect: How to identify the location to be edited
-* **Alternative 1:** Identify the location using index displayed in the GUI.
-  * Pros: Allows users to delete the location they see on the list.
-  * Cons: If there are many locations, users may need to spend a lot of time to look for the location and its index.
- 
-* **Alternative 2:** Identify the location using unique location id.
-  * Pros: Save time for looking through the list to find the location and its index.
-  * Cons: Need to know the unique id of the location which users might not remember.
-
-##### Implementation
-A combination of Alternative 1 and Alternative 2 is used as the implementation.
-Users are allowed to input either the index of location shown on the list in the GUI or the unique location id with 
-prefix `idl/` in front of the unique location id. If users input both index and unique location id, index will take 
-precedence over unique location id (i.e. the location to be deleted is retrieved using index without checking any
-location with the inputted unique location id).
-
-##### Rationale
-This implementation allow more flexibility and convenience for users to delete locations they want. It combines strength
-of both Alternatives.
-
-#### Aspect: Update visit book with updated location
-* **Alternative 1:** Keep a copy of original location and a copy of edited location. Iterate through the list of visits
-and compare the location of each visit in the list with the original location. If there is a match, then replace the
-location in the visit with the edited location.
-
-* **Alternative 2:** Keep a copy of edited location only. Iterate through the list of visits and compare the
-unique id of location of each visit in the list with the unique id of the edited location. If there is a match, then
-replace the location in the visit with the edited location.
-
-##### Implementation
-Alternative 2 was chose as the implementation.
-
-##### Rationale
-Since the unique id of a location will not change, it is sufficient to identify a unique location with its id only.
 
 ### Delete Locations (Wu Qirui)
 This feature allows VirusTracker to delete a certain location from the location book inside VirusTracker. When a 
@@ -702,9 +640,50 @@ The design considerations below highlight alternative ways the command could hav
 for the choice of implementation.
 
 ##### Aspect: How to identify the location to be deleted
-Consideration of this aspect is same as [Aspect: How to identify the location to be edited](#aspect-how-to-identify-the-location-to-be-edited).
+* **Alternative 1:** Identify the location using index displayed in the GUI.
+  * Pros: Allows users to delete the location they see on the list.
+  * Cons: If there are many locations, users may need to spend a lot of time to look for the location and its index.
+ 
+* **Alternative 2:** Identify the location using unique location id.
+  * Pros: Save time for looking through the list to find the location and its index.
+  * Cons: Need to know the unique id of the location which users might not remember.
+
+##### Implementation
+
+A combination of Alternative 1 and Alternative 2 is used as the implementation.
+Users are allowed to input either the index of location shown on the list in the GUI or the unique location id with 
+prefix `idl/` in front of the unique location id. If users input both index and unique location id, index will take 
+precedence over unique location id (i.e. the location to be deleted is retrieved using index without checking any
+location with the inputted unique location id).
+
+**Rationale**
+
+This implementation allow more flexibility and convenience for users to delete locations they want. It combines strength
+of both Alternatives.
+
+#### Aspect: Update visit book after deleting a location
+
+* **Alternative 1:** Keep a copy of original location and a copy of edited location. Iterate through the list of visits
+and compare the location of each visit in the list with the original location. If there is a match, then replace the
+location in the visit with the edited location.
+
+* **Alternative 2:** Keep a copy of edited location only. Iterate through the list of visits and compare the
+unique id of location of each visit in the list with the unique id of the edited location. If there is a match, then
+replace the location in the visit with the edited location.
+
+##### Implementation
+
+Alternative 1 was chose as the implementation with consideration from Alternative 2. A copy of Location object is used
+to identify the same location in the visits list. To check whether both locations are the same, the unique id of the 
+location is used along with the name and address of the location.
+
+##### Rationale
+
+This implementation can improve the robustness of the code for more accurate checks for identical locations. This 
+implementation can also reduce lines of code to improve readability.
 
 ### GUI Functionality for displaying lists of people, locations and visits (Koh Han Ming)
+
 VirusTracker manages lists of person, location and visit objects. Accordingly, it needs to be able to display the information stored in these objects in a meaningful way. As the lists can be updated, the information displayed must also be changed.
 These changes will be reflected on the GUI every time a list is updated. The lists are updated when the user inputs one of the following commands:
 
@@ -756,6 +735,7 @@ Alternative 1 was chosen as the implementation and included considerations from 
 * Default screen size was also increased to prevent any list from getting clipped at the edges.
     
 **Rationale**
+
 Some commands require references to multiple lists. For example, addVisit uses the indexes from the people and location lists. If each list is given individual screens, the user has 2 options:
   * User must remember the indexes to be used.
   * User will have to switch screens to view people and locations before being able to enter the addVisit command.

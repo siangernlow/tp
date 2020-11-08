@@ -13,9 +13,8 @@ You can reach us at the email `seer@comp.nus.edu.sg`
 
 <img src="images/dreamerdragon.png" width="200px">
 
-[[homepage](http://www.comp.nus.edu.sg/~damithch)]
 [[github](https://github.com/DreamerDragon)]
-[[portfolio](team/johndoe.md)]
+[[portfolio](team/DreamerDragon.md)]
 
 * Role: Project Advisor
 
@@ -24,7 +23,7 @@ You can reach us at the email `seer@comp.nus.edu.sg`
 <img src="images/hhdqirui.png" width="200px">
 
 [[github](https://github.com/hhdqirui)]
-[[portfolio](team/johndoe.md)]
+[[portfolio](team/hhdqirui.md)]
 
 * Role: Team Lead
 * Responsibilities: UI
@@ -33,7 +32,8 @@ You can reach us at the email `seer@comp.nus.edu.sg`
 
 <img src="images/siangernlow.png" width="200px">
 
-[[github](http://github.com/siangernlow)] [[portfolio](team/johndoe.md)]
+[[github](http://github.com/siangernlow)]
+[[portfolio](team/lowsiangern.md)]
 
 * Role: Developer
 * Responsibilities: Data
