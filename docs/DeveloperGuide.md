@@ -115,6 +115,8 @@ You may wish to trace an execution path using one of the following commands:
    * **`deletePerson`**`3` : Deletes the 3rd person shown in the current list.
 
    * **`clear`** : Deletes all entries from VirusTracker.
+   
+You might also find the sequence diagrams under [`Implementation`](#implementation) helpful in the tracing process.
 
 --------------------------------------------------------------------------------------------------------------------
 <div style="page-break-after: always;"></div>
