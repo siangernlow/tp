@@ -1,8 +1,5 @@
----
 layout: page
 title: Ho Pin Xian's Project Portfolio Page
----
-
 ## Project: VirusTracker
 
 **VirusTracker is a desktop app for generating statistics for Covid-19**, optimized for use via a Command Line Interface (CLI)
@@ -36,9 +33,10 @@ Given below are my contributions to this project.
   * Justification: The purpose of refactoring is to fit all existing functionalities with VirusTracker.  
   This creates a more synchronised user experience and makes it easy for future developers to understand the codebase.
   A relevant PR is [here](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/139).
+<div style="page-break-after: always;"></div>
   * Highlights: The main highlight of this modification is that I need to thoroughly read through the entire code base
   of addressbook level 3. This is a very time intensive procedure.
-  
+   
 * **Feature Modification**: Set minimum width and height of GUI
   * Justification: I have set the new minimum width and height such that users will always be able to see all three lists shown.
   
@@ -47,24 +45,20 @@ Given below are my contributions to this project.
 * **Project management and Team Tasks**:
   * Made releases on GitHub repository `v1.3, v1.3.trial, v1.4.mockExam, v1.4`
   * Add screenshots of VirusTracker to the team document during checking of the app as required by CS2103t
-  * Set up github repository webpage
-  * Enable assertions for the project
-  * Lead the agenda for team meetings and drove the idea creation of the team. Some of the features that I thought of are described below.
-    My teammates implemented these features.
+  * Set up github repository webpage and enable assertions for the project
+  * Lead the agenda for team meetings and drove the idea creation of the team.
+    Some features that I thought of but are implemented by teammates are described below.
     * Generate a list of locations visited by an infected person
     * Generate a list of people in contact with an infected person
-    * Delete visits involving a specific person or location when person or location is deleted
-    * Update visits involving a specific person or location when person or location is deleted
-  * Made the application icon
+    * Delete corresponding visits when person or location is deleted
+    * Update corresponding visits when person or location is deleted
   * Refactor addressbook into VirusTracker
-  * Came up with the name and idea of the application (VirusTracker)
+  * Came up with the name and idea of the application (VirusTracker) and made the application icon
 
 * **Documentation**:
   * User Guide: 
-    * Add a section on Indexes and Ids
-    * Add documentation on valid input formats
-    * Add section describing the view of the user interface
-    * Add a summary of notations used
+    * Add a section on `Indexes and Ids`, documentation on `valid formats for command parameters`,
+    a section describing the `user interface`, summary of `notations` used
     * Update command descriptions for add, edit, find, delete person commands
     * Add command descriptions for add, edit, delete locations
   * Developer Guide:
@@ -72,8 +66,8 @@ Given below are my contributions to this project.
     * Add the section on managing person, location and visits using unique identifiers
     * Add use cases regarding add, edit, delete location commands
 * **Review/mentoring contributions**:  
-   * I made a total of **68** comments across all PRs. I have reviewed 66 PRs which is more than half of all PRs made. 
-   * Here are the links to some notable PRs that were made: [\#133](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/133), [\#278](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/278),
+   * I made a total of **68** comments across all PRs and reviewed 66 PRs (more than half of all PRs made). 
+   * Here are the links to some notable PRs: [\#133](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/133), [\#278](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/278),
      [\#127](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/127), [\#132](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/132), 
      [\#201](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/201). 
    * Took the initiative to volunteer and assisted Shulong with getting CheckStyle implemented on his IntelliJ
