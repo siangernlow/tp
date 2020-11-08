@@ -62,6 +62,8 @@ Given below are my contributions to the project.
     , [#292](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/292))
     * Added sections to provide a preface, explain how to use the guide and explain notations used
     within the guide. (Pull request [#309](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/309))
+    * Fix broken links in the table of contents.
+    (Pull request [#317](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/317))
 
 * **Review Contributions**:
   * PRs reviewed (with non-trivial review comments): [#133](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/133)
