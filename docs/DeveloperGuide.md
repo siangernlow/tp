@@ -32,7 +32,7 @@ title: Developer Guide
       - [Aspect: How are exceptions handled](#aspect-how-are-exceptions-handled)
       - [Aspect: Absolute file path](#aspect-absolute-file-path)
       - [Aspect: Reusing list types and the list prefix 'l/'](#aspect-reusing-list-types-and-the-list-prefix-l) 
-  * [List high risk locations of infection (Wu Qirui)](#list-high-risk-locations-of-infection)
+  * [List high risk locations of infection (Wu Qirui)](#list-high-risk-locations-of-infection-wu-qirui)
     + [Implementation](#implementation-2)
     + [Design consideration](#design-consideration-3)
       - [Aspect: Determining number of high risk locations for infection when user does not specify the number](#aspect-determining-number-of-high-risk-locations-for-infection-when-user-does-not-specify-the-number)
@@ -40,6 +40,7 @@ title: Developer Guide
       + [Implementation](#implementation-3)
       + [Design consideration](#design-consideration-4)
         - [Aspect: How to identify the location to be deleted](#aspect-how-to-identify-the-location-to-be-deleted)
+        - [Aspect: Update visit book after deleting a location](#aspect-update-visit-book-after-deleting-a-location)
   * [GUI Functionality for displaying lists of people, locations and visits (Koh Han Ming)](#gui-functionality-for-displaying-lists-of-people-locations-and-visits-koh-han-ming)
     + [Implementation](#implementation-4)
     + [Design consideration](#design-consideration-5)
@@ -754,7 +755,10 @@ implementation can also reduce lines of code to improve readability.
 ### GUI Functionality for displaying lists of people, locations and visits (Koh Han Ming)
 
 VirusTracker manages lists of person, location and visit objects. Accordingly, it needs to be able to display the information stored in these objects in a meaningful way. As the lists can be updated, the information displayed must also be changed.
-These changes will be reflected on the GUI every time a list is updated. The lists are updated when the user inputs one of the following commands:
+These changes will be reflected on the GUI every time a list is updated. 
+
+#### Implementation
+The lists are updated when the user inputs one of the following commands:
 
 1. Adding data: `add`
 2. Deleting data: `delete`
