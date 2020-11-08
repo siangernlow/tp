@@ -96,7 +96,9 @@ Given below are my contributions to this project.
     * Add activity and sequence diagrams for edit person to demonstrate use of indexes and Ids
     * Add the section on managing person, location and visits using unique identifiers
 * **Review/mentoring contributions**:  
-   * Links to PRS reviewed: https://nus-cs2103-ay2021s1.github.io/dashboards/contents/tp-comments.html#24-ho-pin-xian-hopinxian-68-comments
-   * Here are the links to some notable PRs that were made: 
+   * I made a total of **68** comments across all PRs. I have reviewed 66 PRs which is more than half of all PRs made. 
+   * Here are the links to some notable PRs that were made: [\#133](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/133), [\#278](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/278),
+     [\#127](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/127), [\#132](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/132), 
+     [\#201](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/201), 
    * Took the initiative to volunteer and assisted Shulong with getting CheckStyle implemented on his IntelliJ
    * Tested for functional bugs and feature flaws in VirusTracker. I found all the bugs that are solved during v1.4 by my teammates.
