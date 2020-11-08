@@ -1,17 +1,17 @@
 ---
 layout: page
-title: VirusTracker User Guide
+title: User Guide
 ---
 Table of Contents
 - [Preface](#preface)
-- [Notations](#notations)
-- [Glossary](#glossary)
+- [Notations (Pin Xian)](#notations)
+- [Glossary (Pin Xian)](#glossary)
 - [Quick start](#quick-start)
-- [User Interface](#user-interface)
+- [User Interface (Pin Xian)](#user-interface)
 - [Features](#features)
-  * [Valid Formats for Command Parameters](#valid-formats-for-command-parameters)
+  * [Valid Formats for Command Parameters (Pin Xian)](#valid-formats-for-command-parameters)
     + [Email Format](#email-format)
-  * [Indexes and Ids](#indexes-and-ids)
+  * [Indexes and Ids (Pin Xian)](#indexes-and-ids)
   * [Adding data](#adding-data)
     + [Adding a person](#adding-a-person)
     + [Adding a location](#adding-a-location)
@@ -343,14 +343,14 @@ Format: `addPerson idp/ID n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS q/QUARANTINE_S
 
 :information_source: **Note:**
 
-* `ID` of person must be unique. No other person in the VirusTracker may have the same ID.
+* `ID` of person must be unique. No other person in the VirusTracker may have the same Id.
 * `QUARANTINE_STATUS` and `INFECTED_STATUS` can only be false or the date of quarantine or infection respectively.
+* Dates of infection and quarantine must not be after the current date.
 
 </div>
 
-Examples:
-* `addPerson idp/S123 n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 q/true i/false`
-* `addPerson idp/S234 n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 q/false i/true t/criminal`
+Example:
+* `addPerson idp/T1234 n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 q/2020-10-10 i/false`
 
 <div style="page-break-after: always;"></div>
 
@@ -364,17 +364,16 @@ Format: `addLocation idl/ID n/NAME a/ADDRESS`
 
 :information_source: **Note:**
 
-* `ID` of location must be unique. No other location in the VirusTracker may have the same ID.
+* `ID` of location must be unique. No other location in the VirusTracker may have the same Id.
 
 </div>
 
 Examples:
-* `addLocation idl/L123 n/Vivocity a/John street, block 123, #01-01`
-* `addLocation idl/L234 n/Parliament House a/1 Parliament Place, Singapore 178880`
+* `addLocation idl/L12345 n/Vivocity a/John street, block 123, #01-01`
 
 #### Adding a visit
 
-If you want to add a visit, you can use the following command to add a visit by the person, location of visit and date of visit
+If you want to add a visit, you can use the following command to add a visit by the person, location of visit and date of visit.
 
 Format: `addVisit PERSON_IDENTIFIER LOCATION_IDENTIFIER d/DATE`
 
@@ -382,9 +381,9 @@ Format: `addVisit PERSON_IDENTIFIER LOCATION_IDENTIFIER d/DATE`
 
 :information_source: **Note:**
 
-* VirusTracker gives a warning if visits involve an infected/quarantined people visiting locations they should not.
-* Visits may be added by either using all indexes or all ids only. A mix of both is not allowed and will trigger a warning. 
-* Date format should follow "yyyy-MM-dd", otherwise exceptions would be thrown.
+* VirusTracker will alert you if visits involve an infected/quarantined person visiting locations they should not.
+* Visits may be added by either using all indexes or all Ids only. A mix of both is not allowed and will trigger a warning. 
+* Date format should follow the "yyyy-mm-dd" format.
 * Dates of the visit must not be after the current date.<br>
   e.g. If today is 31 October 2020, you may set the date as 31 October 2020 or earlier, but not 1 November 2020. 
 
@@ -402,6 +401,7 @@ There are a variety of `list` commands that list different types of data.
 
 #### Listing all people 
 If you want to view information of all people stored in VirusTracker, you can use the following command.
+
 Format: `list l/people`
 
 ##### What it does
@@ -409,6 +409,7 @@ Format: `list l/people`
 
 #### Listing all infected people 
 If you want to view a list of all infected people, you can use the following command.
+
 Format: `list l/infected`
 
 ##### What it does
@@ -416,6 +417,7 @@ Format: `list l/infected`
 
 #### Listing all quarantined people 
 If you want to view a list of all quarantined people, you can use the following command.
+
 Format: `list l/quarantined`
 
 ##### What it does
@@ -423,13 +425,15 @@ Format: `list l/quarantined`
 
 #### Listing all locations
 If you want ot view information of all locations stored in VirusTracker, you can use the following command.
+
 Format: `list l/locations`
 
 ##### What it does
 * It updates the locations list to displays all locations currently stored in VirusTracker.
 
 #### Listing all visits
-If you want to view information of all visis stored in VirusTracker, you can use the following command.
+If you want to view information of all visits stored in VirusTracker, you can use the following command.
+
 Format: `list l/visits`
 
 ##### What it does
@@ -447,13 +451,13 @@ Format: `list [HIGH_RISK_LOCATIONS_NUMBER] l/high-risk-locations`
 :information_source: **Note:**
 
 * A location is considered as infected if an infected person visited that location.
-* The parameter `HIGH_RISK_LOCATIONS_NUMBER` is optional. User who want to see a specific number of high risk locations
+* The parameter `HIGH_RISK_LOCATIONS_NUMBER` is optional. Users who want to see a specific number of high risk locations
 need to specify this parameter.
-* `HIGH_RISK_LOCATIONS_NUMBER` must be a non-negative interger and it must not be larger than the total number of
+* `HIGH_RISK_LOCATIONS_NUMBER` must be a non-negative integer and it must not be larger than the total number of
 locations.
-* If user specify a valid value for `HIGH_RISK_LOCATIONS_NUMBER`, the number of high risk locations displayed will be
-equal to the user specified value.
-* If user does not specify any value for `HIGH_RISK_LOCATIONS_NUMBER` (i.e. leaving this parameter blank), the number of
+* If you specify a valid number for `HIGH_RISK_LOCATIONS_NUMBER`, the number of high risk locations displayed will be
+equal to number you specified.
+* If you do not specify any value for `HIGH_RISK_LOCATIONS_NUMBER` (i.e. leaving this parameter blank), the number of
 high risk locations displayed will be calculated by the app following this rule: If number of infected locations are more than 60% of number of total locations, number of high risk locations equals 
 to 40% of number of total locations. Else, number of high risk locations equals to number of infected locations.
 * Let number of high risk locations be `n`. The first `n` number of most infected locations are shown.
@@ -529,9 +533,9 @@ be the same as the directory where the VirusTracker.jar file is placed in.
 <div style="page-break-after: always;"></div>
 
 * `LIST_TYPE` refers to 'people', 'locations' or 'visits'.
-  * The prefix `l/` is also used for [listing data](#listing-data-list)
+  * The prefix `l/` is also used for [listing data](#listing-data)
 * The CSV file should have its data in [VirusTracker readable format](#format-for-csv-files).
-  * For visits data, the format used references the id of the people and locations. The format using
+  * For visits data, the format used references the Id of the people and locations. The format using
   list indexing is not supported.
 * By default, if only the file name is specified in the `FILE_PATH` parameter, VirusTracker would attempt to import the CSV file in
 the same directory as the VirusTracker application.
@@ -580,7 +584,7 @@ Format: `exportToCsv FILE_PATH l/LIST_TYPE`
   * Refer to the [Adding data from CSV files](#adding-data-from-csv-files) section to find out the absolute path of a file.
   * If the CSV file does not exist at the specified location, VirusTracker will create it for you.
 * `LIST_TYPE` refers to 'people', 'locations' or 'visits'.
-  * The prefix `l/` is also used for [listing data](#listing-data-list)
+  * The prefix `l/` is also used for [listing data](#listing-data)
 * The CSV file will have its data in [VirusTracker readable format](#format-for-csv-files).
 * By default, if only the file name is specified in the `FILE_PATH` parameter, VirusTracker would attempt to export the CSV file to
 the same directory as the VirusTracker application.
@@ -699,9 +703,9 @@ Be careful that deleting a person is irreversible!
 </div>
 
 Examples:
-* `list l/infected` followed by `delete 2` deletes the 2nd infected person in the displayed people list.
-* `findPerson Betsy` followed by `delete 1` deletes the 1st person in the results of the `findPerson` command.
-* `deletePerson idp/S123` deletes the person with the id S123.
+* `list l/infected` followed by `deletePerson 2` deletes the 2nd infected person in the displayed people list.
+* `findPerson Betsy` followed by `deletePerson 1` deletes the 1st person in the results of the `findPerson` command.
+* `deletePerson idp/S123A` deletes the person with the Id S123A.
 
 <div style="page-break-after: always;"></div>
 
@@ -725,8 +729,8 @@ Be careful that deleting a location is irreversible!
 </div>
 
 Examples:
-* `list l/locations` followed by `deleteLocation 2` deletes the 2nd location in the displayed location list.
-* `deleteLocation idl/L123` deletes the location with the ID L123.
+* `list l/locations` followed by `deleteLocation 2` deletes the 2nd location in the displayed locations list.
+* `deleteLocation idl/L123A` deletes the location with the Id L123A.
 
 #### Deleting a visit
 
@@ -740,7 +744,7 @@ Be careful that deleting a visit is irreversible!
 </div>
 
 Examples:
-* `list l/visits` followed by `deleteVisit 2` deletes the 2nd visit in the displayed visit list.
+* `list l/visits` followed by `deleteVisit 2` deletes the 2nd visit in the displayed visits list.
 
 <div style="page-break-after: always;"></div>
 
@@ -756,7 +760,7 @@ Format: `deleteVisits d/DATE`
 
 * A `DATE` is valid if **at least one** visit occurs before or on the specified date.
 * All the visits before and including the date will be removed from the visits list.
-* Date format should follow "yyyy-MM-dd", otherwise exceptions would be thrown.
+* Date format should follow "yyyy-mm-dd".
 
 </div>
 
@@ -766,7 +770,7 @@ Examples:
 <div style="page-break-after: always;"></div>
 
 ### Editing data
-If you want to edit data in VirusTracker, there are various `edit` commands that could be used.
+If you want to edit data in VirusTracker, there are various `edit` commands that can be used.
 
 #### Editing a person
 
@@ -778,15 +782,15 @@ Format: `editPerson PERSON_IDENTIFIER [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [
 
 :information_source: **Note:**
 
-* A person's id cannot be edited.
+* A person's Id cannot be edited.
 * At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
+* Existing values will be updated to the new values.
 
 </div>
 
 Examples:
 *  `editPerson 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `editPerson idp/S123A n/Betsy Crower` Edits the name of the person with ID S123 to be `Betsy Crower`.
+*  `editPerson idp/S123A n/Betsy Crower` Edits the name of the person with Id S123A to be `Betsy Crower`.
 
 <div style="page-break-after: always;"></div>
 
@@ -800,19 +804,19 @@ Format: `editLocation LOCATION_IDENTIFIER [n/NAME] [a/ADDRESS]`
 
 :information_source: **Note:**
 
-* A location's ID cannot be edited.
+* A location's Id cannot be edited.
 * At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
+* Existing values will be updated to the new values.
 
 </div>
 
 Examples:
 *  `editLocation 1 n/NTU a/Bugis street` Edits the name and address of the 1st location to be `NTU` and `Bugis Street` respectively.
-*  `editLocation idl/L123A n/NUS` Edits the name of the location with ID L123A to be `NUS`.
+*  `editLocation idl/L123A n/NUS` Edits the name of the location with Id L123A to be `NUS`.
 
 ### Finding persons by name
 
-If you want to find persons whose names contain any of the given keywords, you can use the following command.
+If you want to find people whose names contain any of the given keywords, you can use the following command.
 
 Format: `findPerson KEYWORD [MORE_KEYWORDS]`
 
@@ -824,7 +828,7 @@ Format: `findPerson KEYWORD [MORE_KEYWORDS]`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
+* People matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 </div>
@@ -835,7 +839,7 @@ Examples:
 
 <div style="page-break-after: always;"></div>
 
-### Generating all locations visited by a person
+### Generating all locations visited by an infected person
 
 If you want to view a list of locations visited by an infected person in the past 2 weeks, you can use the following command. 
 
@@ -845,9 +849,8 @@ Format: `generateLocations PERSON_IDENTIFIER`
 
 :information_source: **Note:**
 
-* Locations listed were visited by the infected person of the index given.
-* The result given is a filtered list of locations that the person visited in the past 2 weeks.
-* This function can be used to identify locations needing to be disinfected after being visited by an infected person.
+* The result given is a filtered list of locations that the infected person visited in the past 2 weeks.
+* You may use this function to identify locations needing to be disinfected after being visited by an infected person.
 * "2 weeks" refers to a 14-day period that is inclusive of the current date, but exclusive of the date 14 days ago.
 
 </div>
@@ -866,9 +869,8 @@ Format `generatePeople PERSON_IDENTIFIER`
 
 :information_source: **Note:**
 
-* People listed were in contact with the infected person of the index given.
-* The result given is a filtered list of people who visited the same locations as that the infected person in the past 2 weeks.
-* This function can be used to identify people who need to be quarantined or issued Stay Home Notices.
+* The result given is a filtered list of people who visited the same locations as the infected person in the past 2 weeks.
+* You may use this function to identify people who need to be quarantined or issued Stay Home Notices.
 * "2 weeks" refers to a 14-day period that is inclusive of the current date, but exclusive of the date 14 days ago.
 
 </div>
@@ -887,8 +889,8 @@ Format: `clear`
 
 ### Viewing help
 
-If you are not sure how to use VirusTracker and want to access the user guide for instructions, you can use the following command which will show
-a message explaining how to access the help page.
+If you want to know more about how to use VirusTracker, you can use the following command which will show
+a message explaining how to access the user guide.
 
 ![help message](images/helpMessage.png)
 
@@ -903,7 +905,7 @@ Format: `exit`
 
 ### Saving the data
 
-VirusTracker data saves in the hard disk automatically after any command that changes the data. There is no need to save manually.
+VirusTracker saves data in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 --------------------------------------------------------------------------------------------------------------------
 <div style="page-break-after: always;"></div>
@@ -912,6 +914,6 @@ VirusTracker data saves in the hard disk automatically after any command that ch
 
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer. Create a folder named `data` in the same location as the app and copy over `personbook.json, locationbook.json and visitbook.json` into that folder. <br>
-       Another solution is to use the import and export commands that VirusTracker provides. You may export all entities to 3 csv files and import them within the new VirusTracker.
-       Please refer to [adding data for CSV files](#adding-data-from-csv-files) and [exporting data to CSV files](#exporting-data-to-csv-files).
+       Another solution is to use the import and export commands that VirusTracker provides. You may export all entities to 3 CSV files and import them within the new VirusTracker.
+       Please refer to [adding data for CSV files](#adding-data-from-csv-files) and [exporting data to CSV files](#exporting-data-to-csv-files) for more details.
 --------------------------------------------------------------------------------------------------------------------
