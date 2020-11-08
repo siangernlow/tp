@@ -5,12 +5,8 @@ title: Wu Qirui's Project Portfolio Page
 
 ## Project: VirusTracker
 
-VirusTracker - a desktop app for generating statistics for Covid-19, optimized for use via a Command Line Interface 
-(CLI) while still having the benefits of a Graphical User Interface (GUI). It is mainly targeted towards healthcare 
-officials who are handling large amounts of data due to the pandemic. VirusTracker aims to provide a faster and quicker 
-alternative to common statistical programs.Level 3 is a desktop address book application used for teaching Software 
-Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in 
-Java, and has about 10 kLoC.
+**VirusTracker** is a **desktop app** for generating statistics for Covid-19, optimized for use via a **Command Line Interface** (CLI) while still having the benefits of a **Graphical User Interface** (GUI).
+The GUI is created with JavaFX. It is written in Java, and has about 10 kLoC.
 
 Given below are my contributions to the project.
 
@@ -71,3 +67,8 @@ is edited by the execution a `editLocation` command.
     * Added use cases for view all infected people and quarantined people. [\#157](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/157) 
     * Updated documentation for `list l/high-risk-locations`. [\#185](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/185)
     * Added documentation for `editLocation` and `deleteLocation`. [\#290](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/290)
+    * Updated documentation for `editLocation` and `deleteLocation`. [\#301](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/301)
+
+* **Community**:
+  * PRs reviewed (with non-trivial review comments): [\#160](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/160), [\#166](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/166),
+  [\#212](https://github.com/AY2021S1-CS2103T-T13-1/tp/pull/212)
