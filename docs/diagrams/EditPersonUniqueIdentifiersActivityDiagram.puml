@@ -19,9 +19,6 @@ if () then ( [Person Id is stored inside IndexIdPair] )
         :Retrieve person with
         specified Id;
     endif
-    :Edits person;
-    :Command success message is displayed;
-    stop
 else ( [Person index is stored inside IndexIdPair])
    if () then ( [Index is out of range of shown list] )
        :Alerts user with warning that
@@ -30,6 +27,7 @@ else ( [Person index is stored inside IndexIdPair])
    else ( [else] )
        :Retrieve person with
        specified index;
+   endif
 endif
 
 :Edits person from VirusTracker;

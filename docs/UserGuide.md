@@ -273,6 +273,8 @@ The difference between the two are as follows:
 
 When giving commands that take in a `PERSON_IDENTIFIER` or `LOCATION_IDENTIFIER`, you may use either indexes or Ids **(but NOT both)**.
 
+<div style="page-break-after: always;"></div>
+
 In the figure below showing a part of the person list, the person's index is beside his name and the Id is under the `ID` field.<br>
  ![personPanel](images/personPanel.PNG)
 
@@ -312,11 +314,7 @@ exact identity of the item you would be referring to, e.g. you are unlikely to k
 
 </div>
 
-   ![indexes](images/ion1.png)
-   
-   <div style="page-break-after: always;"></div>
-   
-   ![indexes](images/ion2.png)
+   ![indexes](images/ion1.png) ![indexes](images/ion2.png)
 
 _Please take note of the above when using indexes._
  
