@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.location.Location;
 
 public class ModelPredicateTest {
@@ -33,7 +34,7 @@ public class ModelPredicateTest {
     }
 
     @Test
-    public void getPredicateForHighRiskLocations_userNotSpecifyNumber() {
+    public void getPredicateForHighRiskLocations_userNotSpecifyNumber() throws CommandException {
         // Infected Locations(3) are less than 60% of total locations(7)
         model.setVisitBook(getLessThanSixtyPercentVisitBook());
         Predicate<Location> actualPredicate = ModelPredicate.getPredicateForHighRiskLocations(model, false,
@@ -62,7 +63,7 @@ public class ModelPredicateTest {
     }
 
     @Test
-    public void getPredicateForHighRiskLocations_userSpecifyNumber() {
+    public void getPredicateForHighRiskLocations_userSpecifyNumber() throws CommandException {
         model.setVisitBook(getLessThanSixtyPercentVisitBook());
         Predicate<Location> actualPredicate = ModelPredicate.getPredicateForHighRiskLocations(model, true, 2);
         model.setLocationBook(getUnorderedTypicalLocationBook());
