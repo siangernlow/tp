@@ -123,7 +123,7 @@ public class ListCommandTest {
     }
 
     @Test
-    public void execute_highRiskLocationsUserNotSpecifyNumber_showsSameList() {
+    public void execute_highRiskLocationsUserNotSpecifyNumber_showsSameList() throws CommandException {
         Model expectedModelHighRiskLocations = expectedModel;
         expectedModelHighRiskLocations.updateFilteredLocationList(
                 ModelPredicate.getPredicateForHighRiskLocations(expectedModelHighRiskLocations, false, NEGATIVE_ONE));
@@ -133,7 +133,7 @@ public class ListCommandTest {
     }
 
     @Test
-    public void execute_highRiskLocationsUserSpecifyNumber_showsSameList() {
+    public void execute_highRiskLocationsUserSpecifyNumber_showsSameList() throws CommandException {
         Model expectedModelHighRiskLocations = expectedModel;
         expectedModelHighRiskLocations.updateFilteredLocationList(
                 ModelPredicate.getPredicateForHighRiskLocations(expectedModelHighRiskLocations, true,

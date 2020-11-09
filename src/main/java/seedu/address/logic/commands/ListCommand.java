@@ -93,9 +93,15 @@ public class ListCommand extends Command {
                     || highRiskLocationNumber < 0)) {
                 throw new CommandException(INVALID_HIGH_RISK_LOCATIONS_NUMBER);
             }
-            Predicate<Location> predicateForHighRiskLocations =
-                    ModelPredicate.getPredicateForHighRiskLocations(model, userSpecified, highRiskLocationNumber);
-            model.updateFilteredLocationList(predicateForHighRiskLocations);
+
+            Predicate<Location> predicateForHighRiskLocations;
+            try {
+                predicateForHighRiskLocations =
+                        ModelPredicate.getPredicateForHighRiskLocations(model, userSpecified, highRiskLocationNumber);
+                model.updateFilteredLocationList(predicateForHighRiskLocations);
+            } catch (CommandException e) {
+                throw new CommandException(e.getMessage());
+            }
             return new CommandResult(MESSAGE_SUCCESS_HIGH_RISK_LOCATIONS);
         default:
             throw new CommandException(INVALID_LIST_TYPE);

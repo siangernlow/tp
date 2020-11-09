@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.attribute.Id;
 import seedu.address.model.location.Location;
 import seedu.address.model.person.Person;
@@ -16,6 +17,9 @@ import seedu.address.model.visit.Visit;
  * Contains predicates used by the model to filter the relevant lists.
  */
 public class ModelPredicate {
+
+    public static final String INVALID_HIGH_RISK_LOCATIONS_NUMBER = "Number for high risk locations should not be "
+            + "larger than the number of infected locations. There are only %d infected locations";
 
     /** {@code Predicate} that always evaluate to true */
     // Code duplications in the three lines below; future refactoring should take note of this.
@@ -38,7 +42,8 @@ public class ModelPredicate {
      * for {@code highRiskLocationNumber} as argument.
      */
     public static Predicate<Location> getPredicateForHighRiskLocations(Model model, boolean userSpecified,
-                                                                       int highRiskLocationNumber) {
+                                                                       int highRiskLocationNumber)
+            throws CommandException {
         Optional<Predicate<? super Person>> lastUsedPersonPredicate = model.getPersonPredicate();
         Optional<Predicate<? super Visit>> lastUsedVisitPredicate = model.getVisitPredicate();
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_INFECTED);
@@ -50,6 +55,13 @@ public class ModelPredicate {
         ObservableList<Visit> allInfectedVisits = model.getSortedVisitList();
 
         ArrayList<Id> infectedLocationIds = InfoHandler.getLocationIdsFromInfectedVisitList(allInfectedVisits);
+
+        if (highRiskLocationNumber > infectedLocationIds.size()) {
+            // Restore back the filterPersonList predicate and filterVisitList predicate before throwing exception
+            model.updateFilteredPersonList(lastUsedPersonPredicate.orElse(PREDICATE_SHOW_ALL_PERSONS));
+            model.updateFilteredVisitList(lastUsedVisitPredicate.orElse(PREDICATE_SHOW_ALL_VISITS));
+            throw new CommandException(String.format(INVALID_HIGH_RISK_LOCATIONS_NUMBER, infectedLocationIds.size()));
+        }
 
         model.updateFilteredLocationList(PREDICATE_SHOW_ALL_LOCATIONS);
         int numberOfTotalLocations = model.getSortedLocationList().size();
